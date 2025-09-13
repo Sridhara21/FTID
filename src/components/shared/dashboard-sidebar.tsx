@@ -31,11 +31,11 @@ import { Button } from "@/components/ui/button";
 
 const citizenNav = [
   { href: "/citizen", icon: LayoutGrid, label: "Dashboard" },
-  { href: "#", icon: Wallet, label: "FTID Wallet" },
-  { href: "#", icon: Bot, label: "AI Advisor" },
-  { href: "#", icon: CircleGauge, label: "Credit Score" },
-  { href: "#", icon: Receipt, label: "Auto-Tax" },
-  { href: "#", icon: HandCoins, label: "Subsidies" },
+  { href: "/citizen#ftid-wallet", icon: Wallet, label: "FTID Wallet" },
+  { href: "/citizen#ai-advisor", icon: Bot, label: "AI Advisor" },
+  { href: "/citizen#credit-score", icon: CircleGauge, label: "Credit Score" },
+  { href: "/citizen#auto-tax", icon: Receipt, label: "Auto-Tax" },
+  { href: "/citizen#subsidies", icon: HandCoins, label: "Subsidies" },
 ];
 
 const governmentNav = [
