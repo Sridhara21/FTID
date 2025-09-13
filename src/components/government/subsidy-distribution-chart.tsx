@@ -18,20 +18,20 @@ import {
 import { subsidyDistributionData } from "@/lib/placeholder-data";
 
 const chartConfig = {
-  value: { label: "Percentage" },
-  healthcare: { label: "Healthcare", color: "hsl(var(--chart-1))" },
-  housing: { label: "Housing", color: "hsl(var(--chart-2))" },
-  education: { label: "Education", color: "hsl(var(--chart-3))" },
-  agriculture: { label: "Agriculture", color: "hsl(var(--chart-4))" },
-  other: { label: "Other", color: "hsl(var(--chart-5))" },
+  value: { label: "Crores (INR)" },
+  Food: { label: "Food", color: "hsl(var(--chart-1))" },
+  Fertilizer: { label: "Fertilizer", color: "hsl(var(--chart-2))" },
+  Fuel: { label: "Fuel", color: "hsl(var(--chart-3))" },
+  Healthcare: { label: "Healthcare", color: "hsl(var(--chart-4))" },
+  Other: { label: "Other", color: "hsl(var(--chart-5))" },
 };
 
 export function SubsidyDistributionChart() {
   return (
     <Card className="flex flex-col h-full">
       <CardHeader>
-        <CardTitle>Subsidy Distribution</CardTitle>
-        <CardDescription>Allocation of national subsidies by sector.</CardDescription>
+        <CardTitle>Subsidy Distribution (in Crores)</CardTitle>
+        <CardDescription>Allocation of national subsidies by sector for FY 2025-26.</CardDescription>
       </CardHeader>
       <CardContent className="flex-1 pb-0">
         <ChartContainer
@@ -42,7 +42,7 @@ export function SubsidyDistributionChart() {
             <PieChart>
               <ChartTooltip
                 cursor={false}
-                content={<ChartTooltipContent hideLabel />}
+                content={<ChartTooltipContent hideLabel formatter={(value) => `₹${value.toLocaleString()}`} />}
               />
               <Pie
                 data={subsidyDistributionData}
@@ -52,7 +52,7 @@ export function SubsidyDistributionChart() {
                 strokeWidth={5}
               >
                 {subsidyDistributionData.map((entry) => (
-                  <Cell key={`cell-${entry.name}`} fill={entry.fill} />
+                  <Cell key={`cell-${entry.name}`} fill={entry.fill} name={entry.name} />
                 ))}
               </Pie>
               <ChartLegend

@@ -52,13 +52,12 @@ const formSchema = z.object({
 type OptimizedDistribution = {
   name: string;
   value: number;
-  fill: string;
 };
 
 export function SubsidyOptimizationCard() {
   const [result, setResult] = useState<SubsidyOptimizationOutput | null>(null);
   const [isLoading, setIsLoading] = useState(false);
-  const totalBudget = subsidyDistributionData.reduce((sum, item) => sum + item.value, 0) * 1_00_00_00_00_000;
+  const totalBudget = subsidyDistributionData.reduce((sum, item) => sum + item.value, 0);
 
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
@@ -73,10 +72,11 @@ export function SubsidyOptimizationCard() {
     setResult(null);
     try {
       const currentDistribution = JSON.stringify(
-        subsidyDistributionData.map(({ name, value }) => ({ name, value }))
+        subsidyDistributionData.map(({ name, value }) => ({ name, value: `₹${value} Cr` }))
       );
       const res = await optimizeSubsidies({
         ...values,
+        budgetConstraints: values.budgetConstraints,
         currentDistribution,
       });
       setResult(res);
@@ -172,14 +172,14 @@ export function SubsidyOptimizationCard() {
                         <TableHeader>
                             <TableRow>
                                 <TableHead>Sector</TableHead>
-                                <TableHead className="text-right">Optimized Allocation (%)</TableHead>
+                                <TableHead className="text-right">Optimized Allocation (₹ Cr)</TableHead>
                             </TableRow>
                         </TableHeader>
                         <TableBody>
                             {optimizedData.map((item) => (
                                 <TableRow key={item.name}>
                                     <TableCell>{item.name}</TableCell>
-                                    <TableCell className="text-right font-mono">{item.value}%</TableCell>
+                                    <TableCell className="text-right font-mono">{item.value.toLocaleString()}</TableCell>
                                 </TableRow>
                             ))}
                         </TableBody>

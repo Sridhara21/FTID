@@ -1,4 +1,4 @@
-import { CreditCard, Landmark, PiggyBank, Receipt, HandCoins, ShieldCheck } from "lucide-react";
+import { CreditCard, Landmark, PiggyBank, Receipt, HandCoins, ShieldCheck, Fuel, Utensils, Wheat, HeartPulse, Building } from "lucide-react";
 
 export const transactions = [
   {
@@ -48,9 +48,11 @@ export const creditScoreTips = [
 ];
 
 export const subsidies = [
-  { id: "sub_1", name: "Housing Subsidy (PMAY)", status: "Active", amount: 22000, icon: HandCoins },
-  { id: "sub_2", name: "Health Insurance (PM-JAY)", status: "Active", amount: 41000, icon: ShieldCheck },
-  { id: "sub_3", name: "LPG Subsidy", status: "Active", amount: 200, icon: HandCoins },
+  { id: "sub_1", name: "Food Subsidy (NFSA)", status: "Active", amount: 1500, icon: Utensils },
+  { id: "sub_2", name: "Health Insurance (PM-JAY)", status: "Active", amount: 416, icon: HeartPulse },
+  { id: "sub_3", name: "LPG Subsidy (Ujjwala)", status: "Expired", amount: 200, icon: Fuel },
+  { id: "sub_4", name: "Housing Subsidy (PMAY)", status: "Active", amount: 22000, icon: Building },
+  { id: "sub_5", name: "Fertilizer Subsidy (PM-PRANAM)", status: "Active", amount: 1200, icon: Wheat },
 ];
 
 export const gdpData = [
@@ -72,11 +74,11 @@ export const revenueData = [
 ];
 
 export const subsidyDistributionData = [
-    { name: 'Food', value: 35, fill: 'var(--color-healthcare)' },
-    { name: 'Fertilizer', value: 20, fill: 'var(--color-housing)' },
-    { name: 'Fuel', value: 10, fill: 'var(--color-education)' },
-    { name: 'Healthcare', value: 15, fill: 'var(--color-agriculture)' },
-    { name: 'Other', value: 20, fill: 'var(--color-other)' },
+    { name: 'Food', value: 206800, fill: 'var(--color-chart-1)' },
+    { name: 'Fertilizer', value: 164000, fill: 'var(--color-chart-2)' },
+    { name: 'Fuel', value: 11920, fill: 'var(--color-chart-3)' },
+    { name: 'Healthcare', value: 90658, fill: 'var(--color-chart-4)' },
+    { name: 'Other', value: 30000, fill: 'var(--color-chart-5)' },
 ];
 
 export const donationData = [

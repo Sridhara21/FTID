@@ -14,7 +14,7 @@ import {z} from 'genkit';
 const SubsidyOptimizationInputSchema = z.object({
   currentDistribution: z
     .string()
-    .describe('The current subsidy distribution as a JSON string.'),
+    .describe('The current subsidy distribution as a JSON string. Values are in Crores of INR.'),
   economicGoals: z
     .string()
     .describe(
@@ -22,7 +22,7 @@ const SubsidyOptimizationInputSchema = z.object({
     ),
   budgetConstraints: z
     .number()
-    .describe('The total budget available for subsidies.'),
+    .describe('The total budget available for subsidies in Crores of INR.'),
 });
 export type SubsidyOptimizationInput = z.infer<
   typeof SubsidyOptimizationInputSchema
@@ -32,7 +32,7 @@ const SubsidyOptimizationOutputSchema = z.object({
   optimizedDistribution: z
     .string()
     .describe(
-      'The optimized subsidy distribution as a JSON string, with the same structure as the input distribution.'
+      'The optimized subsidy distribution as a JSON string, with the same structure as the input distribution. Each item should have a name and a numeric value in Crores of INR.'
     ),
   recommendationSummary: z
     .string()
@@ -54,9 +54,9 @@ const prompt = ai.definePrompt({
   name: 'subsidyOptimizationPrompt',
   input: {schema: SubsidyOptimizationInputSchema},
   output: {schema: SubsidyOptimizationOutputSchema},
-  prompt: `You are an expert economist advising a government on how to optimize their subsidy distribution.
+  prompt: `You are an expert economist advising the Indian government on how to optimize their subsidy distribution for the fiscal year 2025-26.
 
-Analyze the current distribution and recommend an optimized allocation based on the stated economic goals and budget constraints.
+Analyze the current distribution and recommend an optimized allocation based on the stated economic goals and budget constraints. The values are in Crores of INR.
 
 Current Distribution:
 {{{currentDistribution}}}
@@ -65,9 +65,9 @@ Economic Goals:
 "{{{economicGoals}}}"
 
 Total Budget Constraints:
-{{{budgetConstraints}}}
+₹{{{budgetConstraints}}} Crores
 
-Provide an 'optimizedDistribution' in the same JSON format as the input, ensuring the total value matches the budget constraint. Also provide a 'recommendationSummary' explaining your reasoning in detail.
+Provide an 'optimizedDistribution' in JSON format as an array of objects, where each object has 'name' (string) and 'value' (number, in Crores). The sum of 'value' in the 'optimizedDistribution' must exactly match the 'budgetConstraints'. Also provide a 'recommendationSummary' explaining your reasoning in detail.
 `,
 });
 

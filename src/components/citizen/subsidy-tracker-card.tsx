@@ -16,7 +16,7 @@ export function SubsidyTrackerCard() {
         <Table>
           <TableHeader>
             <TableRow>
-              <TableHead className="w-[200px]">Benefit Name</TableHead>
+              <TableHead className="w-[250px]">Benefit Name</TableHead>
               <TableHead>Status</TableHead>
               <TableHead className="text-right">Monthly Amount</TableHead>
             </TableRow>
@@ -31,7 +31,7 @@ export function SubsidyTrackerCard() {
                   {subsidy.name}
                 </TableCell>
                 <TableCell>
-                  <Badge variant={subsidy.status === 'Active' ? 'default' : 'secondary'} className={subsidy.status === 'Active' ? 'bg-accent text-accent-foreground' : ''}>
+                  <Badge variant={subsidy.status === 'Active' ? 'default' : 'secondary'} className={subsidy.status === 'Active' ? 'bg-green-600 hover:bg-green-700 text-white' : 'bg-red-600 hover:bg-red-700 text-white'}>
                     {subsidy.status}
                   </Badge>
                 </TableCell>
