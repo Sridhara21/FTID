@@ -19,7 +19,7 @@ import { Download, TrendingUp } from "lucide-react";
 
 const chartConfig = {
   gdp: {
-    label: "GDP (Trillions USD)",
+    label: "GDP (Trillions INR)",
     color: "hsl(var(--primary))",
   },
 };
@@ -63,11 +63,11 @@ export function GdpChartCard() {
                 axisLine={false}
                 tickMargin={8}
                 stroke="hsl(var(--muted-foreground))"
-                tickFormatter={(value) => `$${value}T`}
+                tickFormatter={(value) => `₹${value}T`}
               />
               <Tooltip
                 cursor={false}
-                content={<ChartTooltipContent indicator="dot" />}
+                content={<ChartTooltipContent indicator="dot" formatter={(value) => `₹${value}T`}/>}
               />
               <Area
                 dataKey="gdp"
@@ -84,7 +84,7 @@ export function GdpChartCard() {
         <div className="flex items-center gap-2">
             <TrendingUp className="h-5 w-5 text-accent" />
             <p className="text-sm">
-                <span className="font-semibold text-accent">+4.2%</span>
+                <span className="font-semibold text-accent">+7.8%</span>
                 <span className="text-muted-foreground"> vs last year</span>
             </p>
         </div>

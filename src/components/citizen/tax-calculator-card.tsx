@@ -13,9 +13,9 @@ export function TaxCalculatorCard() {
             <Receipt className="h-8 w-8 text-secondary-foreground" />
          </div>
         <div className="text-4xl font-bold tracking-tighter">
-          $4,812.55
+          ₹12,500
         </div>
-        <p className="text-sm text-muted-foreground">Next payment due: 2025-04-15</p>
+        <p className="text-sm text-muted-foreground">Next payment due: 2025-07-31</p>
       </CardContent>
     </Card>
   );

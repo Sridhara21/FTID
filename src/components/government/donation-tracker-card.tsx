@@ -31,9 +31,9 @@ export function DonationTrackerCard() {
                   <Badge variant="outline">{donation.party}</Badge>
                 </TableCell>
                 <TableCell className="text-right font-mono">
-                  {donation.amount.toLocaleString("en-US", {
+                  {donation.amount.toLocaleString("en-IN", {
                     style: "currency",
-                    currency: "USD",
+                    currency: "INR",
                     minimumFractionDigits: 0,
                     maximumFractionDigits: 0,
                   })}

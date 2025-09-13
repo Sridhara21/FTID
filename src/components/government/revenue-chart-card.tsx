@@ -18,7 +18,7 @@ const chartConfig = {
   value: { label: "Revenue" },
   income: { label: "Income Tax", color: "hsl(var(--chart-1))" },
   corporate: { label: "Corporate Tax", color: "hsl(var(--chart-2))" },
-  vat: { label: "VAT", color: "hsl(var(--chart-3))" },
+  gst: { label: "GST", color: "hsl(var(--chart-3))" },
   customs: { label: "Customs", color: "hsl(var(--chart-4))" },
   other: { label: "Other", color: "hsl(var(--chart-5))" },
 };
@@ -28,7 +28,7 @@ export function RevenueChartCard() {
     <Card>
       <CardHeader>
         <CardTitle>Revenue & Tax Dashboard</CardTitle>
-        <CardDescription>Breakdown of revenue sources (in Billions)</CardDescription>
+        <CardDescription>Breakdown of revenue sources (in Trillions of INR)</CardDescription>
       </CardHeader>
       <CardContent>
         <ChartContainer config={chartConfig} className="h-[300px] w-full">
@@ -54,8 +54,9 @@ export function RevenueChartCard() {
                 axisLine={false}
                 tickMargin={10}
                 stroke="hsl(var(--muted-foreground))"
+                tickFormatter={(value) => `₹${value}`}
               />
-              <Tooltip cursor={false} content={<ChartTooltipContent />} />
+              <Tooltip cursor={false} content={<ChartTooltipContent formatter={(value) => `₹${value}T`} />} />
               <Bar dataKey="value" layout="vertical" radius={4}>
                 {revenueData.map((entry) => (
                     <Bar key={entry.name} dataKey="value" name={entry.name} fill={entry.fill} />

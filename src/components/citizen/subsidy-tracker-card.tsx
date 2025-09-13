@@ -36,9 +36,11 @@ export function SubsidyTrackerCard() {
                   </Badge>
                 </TableCell>
                 <TableCell className="text-right">
-                  {subsidy.amount.toLocaleString("en-US", {
+                  {subsidy.amount.toLocaleString("en-IN", {
                     style: "currency",
-                    currency: "USD",
+                    currency: "INR",
+                    minimumFractionDigits: 0,
+                    maximumFractionDigits: 0
                   })}
                 </TableCell>
               </TableRow>

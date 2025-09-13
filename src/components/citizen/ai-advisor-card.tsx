@@ -40,8 +40,8 @@ export function AiAdvisorCard() {
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
     defaultValues: {
-      income: 4500,
-      expenses: 3200,
+      income: 50000,
+      expenses: 35000,
     },
   });
 
@@ -83,7 +83,7 @@ export function AiAdvisorCard() {
                   <FormItem>
                     <FormLabel>Monthly Income</FormLabel>
                     <FormControl>
-                      <Input type="number" placeholder="4500" {...field} />
+                      <Input type="number" placeholder="50000" {...field} />
                     </FormControl>
                     <FormMessage />
                   </FormItem>
@@ -96,7 +96,7 @@ export function AiAdvisorCard() {
                   <FormItem>
                     <FormLabel>Monthly Expenses</FormLabel>
                     <FormControl>
-                      <Input type="number" placeholder="3200" {...field} />
+                      <Input type="number" placeholder="35000" {...field} />
                     </FormControl>
                     <FormMessage />
                   </FormItem>

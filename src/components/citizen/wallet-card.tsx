@@ -13,9 +13,9 @@ export function WalletCard() {
       </CardHeader>
       <CardContent className="flex flex-col flex-grow">
         <div className="text-4xl font-bold text-primary tracking-tighter">
-          $12,450.78
+          ₹85,250
         </div>
-        <p className="text-sm text-muted-foreground mt-1">+ $3,200 from last month</p>
+        <p className="text-sm text-muted-foreground mt-1">+ ₹15,000 from last month</p>
         
         <div className="grid grid-cols-2 gap-4 my-6">
           <Button>
@@ -44,9 +44,11 @@ export function WalletCard() {
                   transaction.amount > 0 ? "text-accent" : "text-foreground"
                 }`}
               >
-                {transaction.amount > 0 ? `+` : ``}${transaction.amount.toLocaleString("en-US", {
+                {transaction.amount > 0 ? `+` : ``}{transaction.amount.toLocaleString("en-IN", {
                   style: "currency",
-                  currency: "USD",
+                  currency: "INR",
+                  minimumFractionDigits: 0,
+                  maximumFractionDigits: 0,
                 })}
               </div>
             </div>

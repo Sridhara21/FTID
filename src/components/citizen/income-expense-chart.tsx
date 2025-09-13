@@ -49,9 +49,9 @@ export function IncomeExpenseChart() {
                 axisLine={false}
                 tickMargin={10}
                 stroke="hsl(var(--muted-foreground))"
-                tickFormatter={(value) => `$${value / 1000}k`}
+                tickFormatter={(value) => `₹${value / 1000}k`}
               />
-              <Tooltip cursor={false} content={<ChartTooltipContent />} />
+              <Tooltip cursor={false} content={<ChartTooltipContent formatter={(value, name) => `${name}: ₹${value.toLocaleString()}`} />} />
               <Legend />
               <Bar dataKey="income" fill={chartConfig.income.color} radius={[4, 4, 0, 0]} />
               <Bar dataKey="expense" fill={chartConfig.expense.color} radius={[4, 4, 0, 0]} />
