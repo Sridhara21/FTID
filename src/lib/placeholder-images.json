@@ -1,3 +1,17 @@
+
 {
-  "placeholderImages": []
+  "placeholderImages": [
+    {
+      "id": "user-avatar",
+      "description": "Placeholder for user avatar",
+      "imageUrl": "https://picsum.photos/seed/1/100/100",
+      "imageHint": "person face"
+    },
+    {
+      "id": "fraud-heatmap",
+      "description": "Placeholder for fraud heatmap",
+      "imageUrl": "https://picsum.photos/seed/2/800/600",
+      "imageHint": "map heatmap"
+    }
+  ]
 }
