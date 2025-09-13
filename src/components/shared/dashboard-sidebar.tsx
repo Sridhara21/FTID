@@ -31,20 +31,20 @@ import { Button } from "@/components/ui/button";
 
 const citizenNav = [
   { href: "/citizen", icon: LayoutGrid, label: "Dashboard" },
-  { href: "/citizen#ftid-wallet", icon: Wallet, label: "FTID Wallet" },
-  { href: "/citizen#ai-advisor", icon: Bot, label: "AI Advisor" },
-  { href: "/citizen#credit-score", icon: CircleGauge, label: "Credit Score" },
-  { href: "/citizen#auto-tax", icon: Receipt, label: "Auto-Tax" },
-  { href: "/citizen#subsidies", icon: HandCoins, label: "Subsidies" },
+  { href: "/citizen/wallet", icon: Wallet, label: "FTID Wallet" },
+  { href: "/citizen/ai-advisor", icon: Bot, label: "AI Advisor" },
+  { href: "/citizen/credit-score", icon: CircleGauge, label: "Credit Score" },
+  { href: "/citizen/tax", icon: Receipt, label: "Auto-Tax" },
+  { href: "/citizen/subsidies", icon: HandCoins, label: "Subsidies" },
 ];
 
 const governmentNav = [
   { href: "/government", icon: LayoutGrid, label: "Dashboard" },
-  { href: "/government#gdp-tracking", icon: Landmark, label: "GDP Tracking" },
-  { href: "/government#revenue", icon: PieChart, label: "Revenue" },
-  { href: "/government#fraud-heatmaps", icon: Map, label: "Fraud Heatmaps" },
-  { href: "/government#subsidies", icon: ShieldCheck, label: "Subsidies" },
-  { href: "/government#donations", icon: Vote, label: "Donations" },
+  { href: "/government/gdp", icon: Landmark, label: "GDP Tracking" },
+  { href: "/government/revenue", icon: PieChart, label: "Revenue" },
+  { href: "/government/fraud-heatmaps", icon: Map, label: "Fraud Heatmaps" },
+  { href: "/government/subsidies", icon: ShieldCheck, label: "Subsidies" },
+  { href: "/government/donations", icon: Vote, label: "Donations" },
 ];
 
 export function DashboardSidebar() {
