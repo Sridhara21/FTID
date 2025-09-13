@@ -54,29 +54,29 @@ export const subsidies = [
 ];
 
 export const gdpData = [
-  { year: "2018", gdp: 180 },
-  { year: "2019", gdp: 195 },
-  { year: "2020", gdp: 185 },
-  { year: "2021", gdp: 210 },
-  { year: "2022", gdp: 240 },
-  { year: "2023", gdp: 270 },
-  { year: "2024", gdp: 291 },
+  { year: "2020", gdp: 250 },
+  { year: "2021", gdp: 275 },
+  { year: "2022", gdp: 305 },
+  { year: "2023", gdp: 340 },
+  { year: "2024", gdp: 375 },
+  { year: "2025", gdp: 410 },
+  { year: "2026", gdp: 450 },
 ];
 
 export const revenueData = [
-    { name: 'Income Tax', value: 16.5, fill: 'var(--color-income)' },
-    { name: 'Corporate Tax', value: 10, fill: 'var(--color-corporate)' },
-    { name: 'GST', value: 18, fill: 'var(--color-gst)' },
-    { name: 'Customs', value: 4, fill: 'var(--color-customs)' },
-    { name: 'Other', value: 3.5, fill: 'var(--color-other)' },
+    { name: 'Income Tax', value: 22, fill: 'var(--color-income)' },
+    { name: 'Corporate Tax', value: 13, fill: 'var(--color-corporate)' },
+    { name: 'GST', value: 20, fill: 'var(--color-gst)' },
+    { name: 'Customs', value: 5, fill: 'var(--color-customs)' },
+    { name: 'Other', value: 4, fill: 'var(--color-other)' },
 ];
 
 export const subsidyDistributionData = [
-    { name: 'Food', value: 40, fill: 'var(--color-healthcare)' },
-    { name: 'Fertilizer', value: 25, fill: 'var(--color-housing)' },
-    { name: 'Fuel', value: 15, fill: 'var(--color-education)' },
-    { name: 'Healthcare', value: 10, fill: 'var(--color-agriculture)' },
-    { name: 'Other', value: 10, fill: 'var(--color-other)' },
+    { name: 'Food', value: 35, fill: 'var(--color-healthcare)' },
+    { name: 'Fertilizer', value: 20, fill: 'var(--color-housing)' },
+    { name: 'Fuel', value: 10, fill: 'var(--color-education)' },
+    { name: 'Healthcare', value: 15, fill: 'var(--color-agriculture)' },
+    { name: 'Other', value: 20, fill: 'var(--color-other)' },
 ];
 
 export const donationData = [

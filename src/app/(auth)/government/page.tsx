@@ -8,22 +8,22 @@ export default function GovernmentDashboard() {
   return (
     <div className="grid gap-6 md:gap-8">
       <div className="grid grid-cols-1 gap-6 lg:grid-cols-5 lg:gap-8">
-        <div className="lg:col-span-3">
+        <div className="lg:col-span-3" id="gdp-tracking">
             <GdpChartCard />
         </div>
-        <div className="lg:col-span-2">
+        <div className="lg:col-span-2" id="fraud-heatmaps">
             <FraudHeatmapCard />
         </div>
       </div>
       <div className="grid grid-cols-1 gap-6 lg:grid-cols-5 lg:gap-8">
-        <div className="lg:col-span-3">
+        <div className="lg:col-span-3" id="revenue">
           <RevenueChartCard />
         </div>
-        <div className="lg:col-span-2">
+        <div className="lg:col-span-2" id="subsidies">
           <SubsidyDistributionChart />
         </div>
       </div>
-      <div>
+      <div id="donations">
         <DonationTrackerCard />
       </div>
     </div>

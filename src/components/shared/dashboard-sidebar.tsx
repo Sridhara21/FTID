@@ -40,11 +40,11 @@ const citizenNav = [
 
 const governmentNav = [
   { href: "/government", icon: LayoutGrid, label: "Dashboard" },
-  { href: "#", icon: Landmark, label: "GDP Tracking" },
-  { href: "#", icon: PieChart, label: "Revenue" },
-  { href: "#", icon: Map, label: "Fraud Heatmaps" },
-  { href: "#", icon: ShieldCheck, label: "Subsidies" },
-  { href: "#", icon: Vote, label: "Donations" },
+  { href: "/government#gdp-tracking", icon: Landmark, label: "GDP Tracking" },
+  { href: "/government#revenue", icon: PieChart, label: "Revenue" },
+  { href: "/government#fraud-heatmaps", icon: Map, label: "Fraud Heatmaps" },
+  { href: "/government#subsidies", icon: ShieldCheck, label: "Subsidies" },
+  { href: "/government#donations", icon: Vote, label: "Donations" },
 ];
 
 export function DashboardSidebar() {
