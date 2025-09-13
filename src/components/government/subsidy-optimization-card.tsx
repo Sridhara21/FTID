@@ -1,0 +1,195 @@
+"use client";
+
+import { useState } from "react";
+import { useForm } from "react-hook-form";
+import { zodResolver } from "@hookform/resolvers/zod";
+import * as z from "zod";
+import {
+  Card,
+  CardContent,
+  CardDescription,
+  CardHeader,
+  CardTitle,
+  CardFooter,
+} from "@/components/ui/card";
+import { Button } from "@/components/ui/button";
+import { Input } from "@/components/ui/input";
+import { Label } from "@/components/ui/label";
+import { Textarea } from "@/components/ui/textarea";
+import {
+  Form,
+  FormControl,
+  FormField,
+  FormItem,
+  FormLabel,
+  FormMessage,
+} from "@/components/ui/form";
+import {
+  optimizeSubsidies,
+  SubsidyOptimizationOutput,
+} from "@/ai/flows/subsidy-optimization-flow";
+import { Bot, Loader2, WandSparkles } from "lucide-react";
+import { subsidyDistributionData } from "@/lib/placeholder-data";
+import { Skeleton } from "@/components/ui/skeleton";
+import {
+  Table,
+  TableBody,
+  TableCell,
+  TableHead,
+  TableHeader,
+  TableRow,
+} from "@/components/ui/table";
+
+const formSchema = z.object({
+  economicGoals: z
+    .string()
+    .min(10, "Please describe your economic goals in more detail."),
+  budgetConstraints: z.coerce
+    .number()
+    .positive("Budget must be a positive number."),
+});
+
+type OptimizedDistribution = {
+  name: string;
+  value: number;
+  fill: string;
+};
+
+export function SubsidyOptimizationCard() {
+  const [result, setResult] = useState<SubsidyOptimizationOutput | null>(null);
+  const [isLoading, setIsLoading] = useState(false);
+  const totalBudget = subsidyDistributionData.reduce((sum, item) => sum + item.value, 0) * 1_00_00_00_00_000;
+
+  const form = useForm<z.infer<typeof formSchema>>({
+    resolver: zodResolver(formSchema),
+    defaultValues: {
+      economicGoals: "Focus on boosting agriculture and renewable energy sectors.",
+      budgetConstraints: totalBudget,
+    },
+  });
+
+  async function onSubmit(values: z.infer<typeof formSchema>) {
+    setIsLoading(true);
+    setResult(null);
+    try {
+      const currentDistribution = JSON.stringify(
+        subsidyDistributionData.map(({ name, value }) => ({ name, value }))
+      );
+      const res = await optimizeSubsidies({
+        ...values,
+        currentDistribution,
+      });
+      setResult(res);
+    } catch (error) {
+      console.error("Error optimizing subsidies:", error);
+    }
+    setIsLoading(false);
+  }
+
+  const optimizedData: OptimizedDistribution[] | null = result
+    ? JSON.parse(result.optimizedDistribution)
+    : null;
+
+  return (
+    <Card className="flex flex-col h-full">
+      <CardHeader>
+        <CardTitle className="flex items-center gap-2">
+          <WandSparkles className="h-6 w-6 text-primary" />
+          AI Subsidy Optimizer
+        </CardTitle>
+        <CardDescription>
+          Get AI-driven recommendations to reallocate subsidies based on your
+          economic goals.
+        </CardDescription>
+      </CardHeader>
+      <Form {...form}>
+        <form onSubmit={form.handleSubmit(onSubmit)} className="flex flex-col flex-grow">
+          <CardContent className="space-y-4">
+            <FormField
+              control={form.control}
+              name="economicGoals"
+              render={({ field }) => (
+                <FormItem>
+                  <FormLabel>Economic Goals</FormLabel>
+                  <FormControl>
+                    <Textarea
+                      placeholder="e.g., Boost agriculture and support renewable energy."
+                      {...field}
+                    />
+                  </FormControl>
+                  <FormMessage />
+                </FormItem>
+              )}
+            />
+            <FormField
+              control={form.control}
+              name="budgetConstraints"
+              render={({ field }) => (
+                <FormItem>
+                  <FormLabel>Total Budget (in Crores)</FormLabel>
+                  <FormControl>
+                    <Input type="number" {...field} />
+                  </FormControl>
+                  <FormMessage />
+                </FormItem>
+              )}
+            />
+          </CardContent>
+          <CardFooter className="flex-col items-start gap-4 mt-auto pt-4 border-t">
+            <Button type="submit" disabled={isLoading} className="w-full">
+              {isLoading ? (
+                <>
+                  <Loader2 className="mr-2 h-4 w-4 animate-spin" />
+                  Optimizing...
+                </>
+              ) : (
+                "Optimize Subsidies"
+              )}
+            </Button>
+            {isLoading && (
+              <div className="w-full space-y-2">
+                <Skeleton className="h-8 w-full" />
+                <Skeleton className="h-8 w-full" />
+                <Skeleton className="h-8 w-full" />
+              </div>
+            )}
+            {result && optimizedData && (
+              <div className="w-full space-y-4">
+                <div>
+                    <h3 className="font-semibold text-sm flex items-center gap-2 mb-2">
+                        <Bot className="h-4 w-4" />
+                        AI Recommendation Summary
+                    </h3>
+                    <p className="text-sm text-muted-foreground">
+                        {result.recommendationSummary}
+                    </p>
+                </div>
+                <div>
+                     <h3 className="font-semibold text-sm mb-2">
+                        Optimized Distribution
+                    </h3>
+                    <Table>
+                        <TableHeader>
+                            <TableRow>
+                                <TableHead>Sector</TableHead>
+                                <TableHead className="text-right">Optimized Allocation (%)</TableHead>
+                            </TableRow>
+                        </TableHeader>
+                        <TableBody>
+                            {optimizedData.map((item) => (
+                                <TableRow key={item.name}>
+                                    <TableCell>{item.name}</TableCell>
+                                    <TableCell className="text-right font-mono">{item.value}%</TableCell>
+                                </TableRow>
+                            ))}
+                        </TableBody>
+                    </Table>
+                </div>
+              </div>
+            )}
+          </CardFooter>
+        </form>
+      </Form>
+    </Card>
+  );
+}
