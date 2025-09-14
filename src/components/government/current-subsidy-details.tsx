@@ -16,7 +16,7 @@ import {
   ChartLegend,
   ChartLegendContent
 } from "@/components/ui/chart";
-import { PieChart, Pie, ResponsiveContainer, Cell } from "recharts";
+import { PieChart, Pie, ResponsiveContainer, Cell, Tooltip } from "recharts";
 import {
     Accordion,
     AccordionContent,
@@ -27,59 +27,63 @@ import {
 
 const chartConfig = {
   value: { label: "Crores (INR)" },
-  Food: { label: "Food", color: "hsl(var(--chart-1))" },
-  Fertiliser: { label: "Fertiliser", color: "hsl(var(--chart-2))" },
-  Petroleum: { label: "Petroleum", color: "hsl(var(--chart-3))" },
-  Interest: { label: "Interest", color: "hsl(var(--chart-4))" },
-  Other: { label: "Other", color: "hsl(var(--chart-5))" },
+  'Food': { label: "Food", color: "var(--color-chart-1)" },
+  'Fertiliser': { label: "Fertiliser", color: "var(--color-chart-2)" },
+  'Petroleum': { label: "Petroleum", color: "var(--color-chart-3)" },
+  'Interest': { label: "Interest", color: "var(--color-chart-4)" },
+  'Other': { label: "Other", color: "var(--color-chart-5)" },
 };
+
+const COLORS = [
+    "hsl(var(--chart-1))",
+    "hsl(var(--chart-2))",
+    "hsl(var(--chart-3))",
+    "hsl(var(--chart-4))",
+    "hsl(var(--chart-5))"
+];
 
 export function CurrentSubsidyDetails() {
   const totalSubsidies = subsidyDistributionData.reduce((acc, curr) => acc + curr.value, 0);
 
   return (
-    <div className="grid grid-cols-1 lg:grid-cols-5 gap-8">
-        <Card className="lg:col-span-2 flex flex-col h-full">
+    <div className="grid grid-cols-1 gap-8">
+        <Card className="w-full">
             <CardHeader>
                 <CardTitle className="flex items-center gap-2">
                     <PieChartIcon />
-                    Subsidy Distribution
+                    India Union Budget 2025-26 — Subsidy Allocations
                 </CardTitle>
-                <CardDescription>FY 2025-26 Allocation: ₹{totalSubsidies.toLocaleString('en-IN')} Cr</CardDescription>
+                <CardDescription>Total Allocation: ₹{totalSubsidies.toLocaleString('en-IN')} Cr</CardDescription>
             </CardHeader>
-            <CardContent className="flex-1 pb-0">
-                <ChartContainer
-                config={chartConfig}
-                className="mx-auto aspect-square max-h-[300px]"
-                >
-                <ResponsiveContainer>
-                    <PieChart>
-                    <ChartTooltip
-                        cursor={false}
-                        content={<ChartTooltipContent hideLabel formatter={(value) => `₹${Number(value).toLocaleString()} Cr`} />}
-                    />
-                    <Pie
-                        data={subsidyDistributionData}
-                        dataKey="value"
-                        nameKey="name"
-                        innerRadius="60%"
-                        strokeWidth={5}
-                    >
-                        {subsidyDistributionData.map((entry) => (
-                        <Cell key={`cell-${entry.name}`} fill={entry.fill} name={entry.name} />
-                        ))}
-                    </Pie>
-                    <ChartLegend
-                        content={<ChartLegendContent nameKey="name" />}
-                        className="-translate-y-2 flex-wrap gap-2 [&>*]:basis-1/4 [&>*]:justify-center"
-                    />
-                    </PieChart>
-                </ResponsiveContainer>
-                </ChartContainer>
+            <CardContent>
+                <div style={{ width: "100%", height: 400 }}>
+                    <ResponsiveContainer>
+                        <PieChart>
+                        <Pie
+                            data={subsidyDistributionData}
+                            cx="50%"
+                            cy="50%"
+                            outerRadius={130}
+                            fill="#8884d8"
+                            dataKey="value"
+                            nameKey="name"
+                            label={({ name, value }) => `${name}: ₹${value.toLocaleString()}`}
+                        >
+                            {subsidyDistributionData.map((entry, index) => (
+                            <Cell key={`cell-${index}`} fill={COLORS[index % COLORS.length]} />
+                            ))}
+                        </Pie>
+                        <Tooltip
+                            formatter={(value) => `₹${value.toLocaleString()}`}
+                        />
+                        <ChartLegend content={<ChartLegendContent nameKey="name" />} />
+                        </PieChart>
+                    </ResponsiveContainer>
+                </div>
             </CardContent>
         </Card>
 
-        <Card className="lg:col-span-3">
+        <Card>
             <CardHeader>
                  <CardTitle className="flex items-center gap-2">
                     <List />
