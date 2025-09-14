@@ -7,7 +7,7 @@ import {
   ChartTooltipContent,
 } from "@/components/ui/chart";
 import { creditScoreTips } from "@/lib/placeholder-data";
-import { Lightbulb } from "lucide-react";
+import { Lightbulb, HeartPulse } from "lucide-react";
 import { Label, Pie, PieChart, Cell } from "recharts";
 
 const chartData = [{ value: 780 }];
@@ -27,8 +27,11 @@ export function CreditScoreCard() {
   return (
     <Card className="flex flex-col">
       <CardHeader>
-        <CardTitle>Credit Score Builder</CardTitle>
-        <CardDescription>Monitor and improve your credit health.</CardDescription>
+        <CardTitle className="flex items-center gap-2">
+          <HeartPulse className="h-6 w-6 text-primary" />
+          Financial Health Score
+        </CardTitle>
+        <CardDescription>Monitor and improve your financial health.</CardDescription>
       </CardHeader>
       <CardContent className="flex-1 flex flex-col items-center justify-center">
         <ChartContainer

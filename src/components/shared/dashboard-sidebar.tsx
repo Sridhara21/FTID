@@ -18,6 +18,8 @@ import {
   User,
   Vote,
   Wallet,
+  LineChart,
+  Scale
 } from "lucide-react";
 import {
   SidebarHeader,
@@ -31,11 +33,13 @@ import { Button } from "@/components/ui/button";
 
 const citizenNav = [
   { href: "/citizen", icon: LayoutGrid, label: "Dashboard" },
-  { href: "/citizen/wallet", icon: Wallet, label: "FTID Wallet" },
-  { href: "/citizen/ai-advisor", icon: Bot, label: "AI Advisor" },
-  { href: "/citizen/credit-score", icon: CircleGauge, label: "Credit Score" },
-  { href: "/citizen/tax", icon: Receipt, label: "Auto-Tax" },
+  { href: "/citizen/wallet", icon: Wallet, label: "Digital E-Rupee Wallet" },
+  { href: "/citizen/ai-advisor", icon: Bot, label: "AI Financial Advisor" },
+  { href: "/citizen/credit-score", icon: HeartPulse, label: "Financial Health Score" },
+  { href: "/citizen/tax", icon: Receipt, label: "Tax Calculator" },
   { href: "/citizen/subsidies", icon: HandCoins, label: "Subsidies" },
+  { href: "#", icon: LineChart, label: "Financial Analysis" },
+  { href: "#", icon: Scale, label: "Personal Balance Sheet" },
 ];
 
 const governmentNav = [

@@ -7,7 +7,12 @@ import {
   HandCoins,
   ArrowUpRight,
   ArrowDownLeft,
-  PiggyBank
+  PiggyBank,
+  HeartPulse,
+  Send,
+  FileText,
+  LineChart,
+  Scale
 } from "lucide-react";
 import {
   Card,
@@ -22,25 +27,25 @@ const citizenFeatures = [
   {
     href: "/citizen/wallet",
     icon: Wallet,
-    label: "FTID Wallet",
+    label: "Digital E-Rupee Wallet",
     description: "View your balance and transaction history.",
   },
   {
     href: "/citizen/ai-advisor",
     icon: Bot,
-    label: "AI Advisor",
+    label: "AI Financial Advisor",
     description: "Get personalized financial advice.",
   },
   {
     href: "/citizen/credit-score",
-    icon: CircleGauge,
-    label: "Credit Score",
-    description: "Monitor and improve your credit health.",
+    icon: HeartPulse,
+    label: "Financial Health Score",
+    description: "Monitor and improve your financial health.",
   },
   {
     href: "/citizen/tax",
     icon: Receipt,
-    label: "Auto-Tax",
+    label: "Tax Calculator",
     description: "Calculate your estimated taxes.",
   },
   {
@@ -48,6 +53,18 @@ const citizenFeatures = [
     icon: HandCoins,
     label: "Subsidies",
     description: "Track your government benefits.",
+  },
+  {
+    href: "#",
+    icon: LineChart,
+    label: "Financial Analysis",
+    description: "Analyze your spending patterns.",
+  },
+  {
+    href: "#",
+    icon: Scale,
+    label: "Personal Balance Sheet",
+    description: "View your assets and liabilities.",
   },
 ];
 
@@ -96,6 +113,27 @@ export default function CitizenDashboard() {
               </Card>
           ))}
       </div>
+      
+      <Card>
+        <CardHeader>
+          <CardTitle>Quick Actions</CardTitle>
+        </CardHeader>
+        <CardContent className="grid grid-cols-2 md:grid-cols-4 gap-4">
+          <Button>
+            <Send className="mr-2" /> Send Money
+          </Button>
+          <Button variant="secondary">
+            <FileText className="mr-2" /> Pay Bills
+          </Button>
+          <Button variant="secondary">
+            <ArrowDownLeft className="mr-2" /> Request Money
+          </Button>
+          <Button variant="secondary">
+            <PiggyBank className="mr-2" /> Invest
+          </Button>
+        </CardContent>
+      </Card>
+
 
       <div className="grid grid-cols-1 gap-6 md:grid-cols-2 lg:grid-cols-3 lg:gap-8">
         {citizenFeatures.map((feature) => (
