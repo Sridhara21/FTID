@@ -49,6 +49,7 @@ const governmentNav = [
   { href: "/government/fraud-heatmaps", icon: Map, label: "Fraud Heatmaps" },
   { href: "/government/subsidies", icon: ShieldCheck, label: "Subsidies" },
   { href: "/government/donations", icon: Vote, label: "Donations" },
+  { href: "/government/balance-sheet", icon: Scale, label: "National Balance Sheet" },
 ];
 
 export function DashboardSidebar() {

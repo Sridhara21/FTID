@@ -127,6 +127,25 @@ export const balanceSheetData = {
   ],
 };
 
+export const governmentBalanceSheetData = {
+  assets: [
+    { name: "Tax Revenue (YTD)", value: 49000000000000, isIncome: true },
+    { name: "Foreign Exchange Reserves", value: 54000000000000, isIncome: false },
+    { name: "Gold Reserves", value: 4500000000000, isIncome: false },
+    { name: "Public Sector Undertakings (PSU) Equity", value: 35000000000000, isIncome: false },
+    { name: "Infrastructure Assets", value: 150000000000000, isIncome: false },
+  ],
+  liabilities: [
+    { name: "Government Bonds & Securities", value: 120000000000000, isExpense: false },
+    { name: "External Debt", value: 50000000000000, isExpense: false },
+    { name: "Public Provident Fund (PPF) & Small Savings", value: 40000000000000, isExpense: false },
+    { name: "Subsidies (Annual Budget)", value: 5000000000000, isExpense: true },
+    { name: "Defense Expenditure (Annual Budget)", value: 6200000000000, isExpense: true },
+    { name: "Salaries and Pensions", value: 8000000000000, isExpense: true },
+  ],
+};
+
+
 export const userProfileData = {
     name: "Aarav Sharma",
     email: "aarav.sharma@email.com",
