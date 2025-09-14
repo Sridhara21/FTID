@@ -1,4 +1,4 @@
-import { CreditCard, Landmark, PiggyBank, Receipt, HandCoins, ShieldCheck, Fuel, Utensils, Wheat, HeartPulse, Building } from "lucide-react";
+import { CreditCard, Landmark, PiggyBank, Receipt, HandCoins, ShieldCheck, Fuel, Utensils, Wheat, HeartPulse, Building, TrendingUp, TrendingDown, Minus } from "lucide-react";
 
 export const transactions = [
   {
@@ -49,6 +49,23 @@ export const creditScoreData = {
     "Keep your credit utilization ratio below 30%.",
     "Avoid opening multiple new credit accounts at once.",
     "Regularly check your credit report for errors and dispute any inaccuracies.",
+    "A mix of credit types (credit cards, loans) can positively impact your score.",
+    "Limit requests for new credit to avoid numerous hard inquiries."
+  ],
+  factors: [
+    { name: "Payment History", status: "Excellent", impact: "High", icon: TrendingUp, color: "text-green-400" },
+    { name: "Credit Utilization", status: "Good", impact: "High", icon: TrendingUp, color: "text-green-400" },
+    { name: "Length of Credit History", status: "Good", impact: "Medium", icon: TrendingUp, color: "text-green-400" },
+    { name: "New Credit", status: "Excellent", impact: "Low", icon: Minus, color: "text-yellow-400" },
+    { name: "Credit Mix", status: "Fair", impact: "Low", icon: TrendingDown, color: "text-red-400" },
+  ],
+  history: [
+    { month: "Jan", score: 750 },
+    { month: "Feb", score: 755 },
+    { month: "Mar", score: 765 },
+    { month: "Apr", score: 760 },
+    { month: "May", score: 775 },
+    { month: "Jun", score: 780 },
   ]
 };
 
