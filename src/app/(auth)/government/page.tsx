@@ -23,11 +23,11 @@ export default function GovernmentDashboard() {
         </div>
         <StatePerformanceSnapshotCard />
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 lg:gap-8">
-            <SubsidyDistributionChart />
             <SubsidyOptimizationCard />
+            <DonationTrackerCard />
         </div>
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 lg:gap-8">
-            <DonationTrackerCard />
+            <SubsidyDistributionChart />
             <LatestSchemesCard />
         </div>
     </div>
