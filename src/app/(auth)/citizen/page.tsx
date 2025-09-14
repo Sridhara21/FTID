@@ -45,19 +45,19 @@ const summaryData = [
         label: "Total Income",
         value: "₹8,40,000",
         icon: ArrowUpRight,
-        color: "text-green-600"
+        color: "text-green-400"
     },
     {
         label: "Total Expenses",
         value: "₹5,60,000",
         icon: ArrowDownLeft,
-        color: "text-red-600"
+        color: "text-red-400"
     },
     {
         label: "Total Investments",
         value: "₹1,20,000",
         icon: PiggyBank,
-        color: "text-blue-600"
+        color: "text-blue-400"
     }
 ]
 
@@ -136,7 +136,7 @@ export default function CitizenDashboard() {
           </CardHeader>
           <CardContent className="grid grid-cols-1 md:grid-cols-2 gap-8">
               <div>
-                  <h3 className="text-lg font-semibold mb-2 text-green-600">Assets</h3>
+                  <h3 className="text-lg font-semibold mb-2 text-green-400">Assets</h3>
                   <Table>
                       <TableHeader>
                           <TableRow>
@@ -165,7 +165,7 @@ export default function CitizenDashboard() {
                   </Table>
               </div>
               <div>
-                  <h3 className="text-lg font-semibold mb-2 text-red-600">Liabilities</h3>
+                  <h3 className="text-lg font-semibold mb-2 text-red-400">Liabilities</h3>
                   <Table>
                        <TableHeader>
                           <TableRow>

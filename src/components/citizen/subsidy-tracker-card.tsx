@@ -32,7 +32,7 @@ export function SubsidyTrackerCard() {
                   {subsidy.name}
                 </TableCell>
                 <TableCell>
-                  <Badge variant={subsidy.status === 'Active' ? 'default' : 'secondary'} className={subsidy.status === 'Active' ? 'bg-green-600 hover:bg-green-700 text-white' : 'bg-red-600 hover:bg-red-700 text-white'}>
+                  <Badge variant={subsidy.status === 'Active' ? 'default' : 'secondary'} className={subsidy.status === 'Active' ? 'bg-green-500 hover:bg-green-600 text-white' : 'bg-red-500 hover:bg-red-600 text-white'}>
                     {subsidy.status}
                   </Badge>
                 </TableCell>

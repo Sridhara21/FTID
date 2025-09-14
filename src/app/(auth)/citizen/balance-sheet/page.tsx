@@ -31,7 +31,7 @@ export default function BalanceSheetPage() {
             </CardHeader>
             <CardContent className="grid grid-cols-1 md:grid-cols-2 gap-8">
                 <div>
-                    <h3 className="text-lg font-semibold mb-2 text-green-600">Assets</h3>
+                    <h3 className="text-lg font-semibold mb-2 text-green-400">Assets</h3>
                     <Table>
                         <TableHeader>
                             <TableRow>
@@ -60,7 +60,7 @@ export default function BalanceSheetPage() {
                     </Table>
                 </div>
                 <div>
-                    <h3 className="text-lg font-semibold mb-2 text-red-600">Liabilities</h3>
+                    <h3 className="text-lg font-semibold mb-2 text-red-400">Liabilities</h3>
                     <Table>
                          <TableHeader>
                             <TableRow>

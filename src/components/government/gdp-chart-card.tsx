@@ -47,7 +47,7 @@ export function GdpChartCard() {
               <defs>
                 <linearGradient id="colorGdp" x1="0" y1="0" x2="0" y2="1">
                   <stop offset="5%" stopColor={chartConfig.gdp.color} stopOpacity={0.8}/>
-                  <stop offset="95%" stopColor={chartConfig.gdp.color} stopOpacity={0}/>
+                  <stop offset="95%" stopColor={chartConfig.gdp.color} stopOpacity={0.1}/>
                 </linearGradient>
               </defs>
               <CartesianGrid vertical={false} strokeDasharray="3 3" />
@@ -82,9 +82,9 @@ export function GdpChartCard() {
       </CardContent>
       <CardFooter className="flex items-center gap-4 border-t pt-4">
         <div className="flex items-center gap-2">
-            <TrendingUp className="h-5 w-5 text-accent" />
+            <TrendingUp className="h-5 w-5 text-green-400" />
             <p className="text-sm">
-                <span className="font-semibold text-accent">+7.8%</span>
+                <span className="font-semibold text-green-400">+7.8%</span>
                 <span className="text-muted-foreground"> vs last year</span>
             </p>
         </div>
