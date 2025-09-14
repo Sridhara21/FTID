@@ -80,10 +80,10 @@ export default function CitizenDashboard() {
               <Card key={item.label}>
                   <CardHeader className="flex flex-row items-center justify-between pb-2">
                       <CardTitle className="text-sm font-medium">{item.label}</CardTitle>
-                      <item.icon className={`h-4 w-4 text-muted-foreground ${item.color}`} />
+                      <item.icon className={`h-4 w-4 ${item.color}`} />
                   </CardHeader>
                   <CardContent>
-                      <div className="text-2xl font-bold">{item.value}</div>
+                      <div className={`text-2xl font-bold ${item.color}`}>{item.value}</div>
                       <p className="text-xs text-muted-foreground">+5% from last year</p>
                   </CardContent>
               </Card>
