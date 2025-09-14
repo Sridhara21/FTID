@@ -89,6 +89,21 @@ export const donationData = [
   { id: "don_5", election: "Lok Sabha 2024", donor: "Public Crowdfunding", amount: 41000000, party: "National Party" },
 ];
 
+export const balanceSheetData = {
+  assets: [
+    { name: "E-Rupee Wallet", value: 85250 },
+    { name: "Savings Account", value: 250000 },
+    { name: "Fixed Deposits", value: 150000 },
+    { name: "Mutual Funds", value: 75000 },
+    { name: "Real Estate", value: 1200000 },
+  ],
+  liabilities: [
+    { name: "Credit Card Debt", value: 25000 },
+    { name: "Personal Loan", value: 100000 },
+    { name: "Student Loan", value: 300000 },
+  ],
+};
+
 export const dummyFtidData = JSON.stringify([
   {"transaction_id":"a1b2c3d4","timestamp":"2023-10-26T10:00:00Z","amount":12500.50,"currency":"INR","merchant_name":"SuperBazaar","merchant_category":"Groceries","location":{"latitude":19.0760,"longitude":72.8777}},
   {"transaction_id":"e5f6g7h8","timestamp":"2023-10-26T12:30:00Z","amount":2100.00,"currency":"INR","merchant_name":"Chai Point","merchant_category":"Food & Drink","location":{"latitude":19.0765,"longitude":72.8780}},
