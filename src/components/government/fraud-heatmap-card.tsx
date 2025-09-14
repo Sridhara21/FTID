@@ -8,7 +8,6 @@ import {
   CardDescription,
   CardHeader,
   CardTitle,
-  CardFooter
 } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -43,24 +42,60 @@ export function FraudHeatmapCard() {
   }
 
   return (
-    <Card className="flex flex-col h-full">
-      <CardHeader>
-        <CardTitle className="flex items-center gap-2">
-          <AlertTriangle className="h-6 w-6 text-primary" />
-          Fraud Detection Heatmaps
-        </CardTitle>
-        <CardDescription>
-          AI-powered analysis of potential fraud hotspots.
-        </CardDescription>
-      </CardHeader>
-      <CardContent className="flex-1 space-y-4">
-        <div className="relative aspect-[4/3] w-full bg-muted rounded-md overflow-hidden flex items-center justify-center">
+    <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
+      <Card>
+        <CardHeader>
+          <CardTitle>Analysis Controls</CardTitle>
+          <CardDescription>
+            Input your data and region to generate a fraud analysis.
+          </CardDescription>
+        </CardHeader>
+        <CardContent className="space-y-4">
+          <div className="space-y-2">
+            <Label htmlFor="region">Geographical Region</Label>
+            <Input 
+              id="region" 
+              value={region} 
+              onChange={(e) => setRegion(e.target.value)} 
+              placeholder="e.g., California" 
+              disabled={isLoading}
+            />
+          </div>
+          <div className="space-y-2">
+            <Label htmlFor="ftidData">FTID Transaction Data (JSON)</Label>
+            <Textarea
+              id="ftidData"
+              value={ftidData}
+              onChange={(e) => setFtidData(e.target.value)}
+              placeholder="Paste your JSON data here..."
+              className="h-64 font-mono text-xs"
+              disabled={isLoading}
+            />
+          </div>
+          <Button onClick={handleGenerate} disabled={isLoading} className="w-full">
+            {isLoading ? <><Loader2 className="mr-2 h-4 w-4 animate-spin" /> Analyzing Data...</> : "Generate Heatmap"}
+          </Button>
+        </CardContent>
+      </Card>
+
+      <Card className="flex flex-col">
+        <CardHeader>
+          <CardTitle className="flex items-center gap-2">
+            <AlertTriangle className="h-6 w-6 text-primary" />
+            Fraud Analysis Result
+          </CardTitle>
+          <CardDescription>
+            Generated heatmap and AI-powered summary.
+          </CardDescription>
+        </CardHeader>
+        <CardContent className="flex flex-col flex-1 items-center justify-center space-y-4">
+          <div className="relative aspect-[4/3] w-full bg-muted rounded-md overflow-hidden flex items-center justify-center">
             {isLoading && <Skeleton className="h-full w-full" />}
             {!isLoading && result?.heatmapDataUri && (
                 <Image
                     src={result.heatmapDataUri}
                     alt="Fraud Heatmap"
-                    layout="fill"
+                    fill
                     objectFit="cover"
                 />
             )}
@@ -68,26 +103,27 @@ export function FraudHeatmapCard() {
                  <Image
                     src={placeholderMap.imageUrl}
                     alt="Map placeholder"
-                    layout="fill"
+                    fill
                     objectFit="cover"
                     data-ai-hint={placeholderMap.imageHint}
                 />
             )}
-        </div>
-        <div className="space-y-2">
-            <Label htmlFor="region">Geographical Region</Label>
-            <Input id="region" value={region} onChange={(e) => setRegion(e.target.value)} placeholder="e.g., California" />
-        </div>
-         <Button onClick={handleGenerate} disabled={isLoading} className="w-full">
-          {isLoading ? <><Loader2 className="mr-2 h-4 w-4 animate-spin" /> Analyzing Data...</> : "Generate Heatmap"}
-        </Button>
-      </CardContent>
-       {result && (
-        <CardFooter className="flex-col items-start gap-2 border-t pt-4">
-            <h3 className="font-semibold text-sm flex items-center gap-2"><Bot className="h-4 w-4"/>AI Summary</h3>
-            <p className="text-sm text-muted-foreground">{result.summary}</p>
-        </CardFooter>
-      )}
-    </Card>
+            {!isLoading && !result && !placeholderMap && (
+              <div className="flex flex-col items-center gap-2 text-muted-foreground">
+                <AlertTriangle className="h-8 w-8" />
+                <p>No heatmap generated yet.</p>
+              </div>
+            )}
+          </div>
+          {isLoading && <Skeleton className="h-16 w-full" />}
+          {result && (
+            <div className="w-full p-4 rounded-lg bg-secondary/50">
+              <h3 className="font-semibold text-sm flex items-center gap-2 mb-2"><Bot className="h-4 w-4 text-primary"/>AI Summary</h3>
+              <p className="text-sm text-muted-foreground">{result.summary}</p>
+            </div>
+          )}
+        </CardContent>
+      </Card>
+    </div>
   );
 }
