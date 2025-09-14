@@ -70,7 +70,7 @@ export const creditScoreData = {
 };
 
 export const subsidies = [
-  { id: "sub_1", name: "Food Subsidy (NFSA)", status: "Active", amount: 1500, icon: Utensils },
+  { id: "sub_1", name: "Food Subsidy (NFSA)", status: "Active", amount: 600, icon: Utensils },
   { id: "sub_2", name: "Health Insurance (PM-JAY)", status: "Active", amount: 416, icon: HeartPulse },
   { id: "sub_3", name: "LPG Subsidy (Ujjwala)", status: "Expired", amount: 200, icon: Fuel },
   { id: "sub_4", name: "Housing Subsidy (PMAY)", status: "Active", amount: 22000, icon: Building },
