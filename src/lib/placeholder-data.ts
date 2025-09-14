@@ -40,12 +40,17 @@ export const incomeExpenseData = [
   { name: "Jun", income: 60000, expense: 40000 },
 ];
 
-export const creditScoreTips = [
-  "Pay your bills on time, every time.",
-  "Keep your credit utilization ratio low.",
-  "Avoid opening multiple new credit accounts at once.",
-  "Regularly check your credit report for errors.",
-];
+export const creditScoreData = {
+  score: 780,
+  rating: "Excellent",
+  summary: "Your score is strong! Keep up the great work on timely payments and low credit utilization.",
+  tips: [
+    "Pay your bills on time, every time.",
+    "Keep your credit utilization ratio below 30%.",
+    "Avoid opening multiple new credit accounts at once.",
+    "Regularly check your credit report for errors and dispute any inaccuracies.",
+  ]
+};
 
 export const subsidies = [
   { id: "sub_1", name: "Food Subsidy (NFSA)", status: "Active", amount: 1500, icon: Utensils },

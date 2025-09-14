@@ -6,11 +6,11 @@ import {
   ChartTooltip,
   ChartTooltipContent,
 } from "@/components/ui/chart";
-import { creditScoreTips } from "@/lib/placeholder-data";
+import { creditScoreData } from "@/lib/placeholder-data";
 import { Lightbulb, HeartPulse } from "lucide-react";
 import { Label, Pie, PieChart, Cell } from "recharts";
 
-const chartData = [{ value: 780 }];
+const chartData = [{ value: creditScoreData.score }];
 const chartConfig = {
   score: {
     label: "Score",
@@ -18,7 +18,7 @@ const chartConfig = {
   },
 };
 
-const maxScore = 850;
+const maxScore = 900;
 
 export function CreditScoreCard() {
   const score = chartData[0].value;
@@ -76,7 +76,7 @@ export function CreditScoreCard() {
                           dominantBaseline="middle"
                           className="fill-muted-foreground text-sm"
                         >
-                          Excellent
+                          {creditScoreData.rating}
                         </text>
                       </>
                     );
@@ -99,10 +99,10 @@ export function CreditScoreCard() {
           </PieChart>
         </ChartContainer>
         <div className="mt-4 text-center w-full">
-            <p className="text-sm text-muted-foreground">AI Summary: Your score is strong! Keep up the great work on payments.</p>
+            <p className="text-sm text-muted-foreground">{creditScoreData.summary}</p>
         </div>
          <div className="w-full mt-4 space-y-2 text-sm">
-            {creditScoreTips.slice(0, 2).map((tip, index) => (
+            {creditScoreData.tips.slice(0, 2).map((tip, index) => (
                 <div key={index} className="flex items-start gap-2 p-2 rounded-lg bg-secondary/50">
                     <Lightbulb className="h-4 w-4 mt-0.5 text-primary flex-shrink-0"/>
                     <span>{tip}</span>
