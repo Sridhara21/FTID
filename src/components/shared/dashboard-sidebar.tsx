@@ -57,8 +57,8 @@ export function DashboardSidebar() {
     <>
       <SidebarHeader>
         <div className="flex items-center gap-2">
-          <div className="p-1.5 bg-primary/10 rounded-lg border border-primary/20">
-            <Bot className="h-6 w-6 text-primary" />
+          <div className="p-1.5 bg-primary rounded-lg border border-primary/20">
+            <Bot className="h-6 w-6 text-primary-foreground" />
           </div>
           <h2 className="text-xl font-semibold tracking-tight text-foreground">
             FTID Vision
