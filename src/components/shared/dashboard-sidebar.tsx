@@ -57,10 +57,10 @@ export function DashboardSidebar() {
     <>
       <SidebarHeader>
         <div className="flex items-center gap-2">
-          <div className="p-1.5 bg-primary rounded-lg border border-primary/20">
-            <Bot className="h-6 w-6 text-primary-foreground" />
+          <div className="p-1.5 bg-sidebar-primary rounded-lg">
+            <Bot className="h-6 w-6 text-sidebar-primary-foreground" />
           </div>
-          <h2 className="text-xl font-semibold tracking-tight text-foreground">
+          <h2 className="text-xl font-semibold tracking-tight text-sidebar-foreground">
             FTID Vision
           </h2>
         </div>
@@ -84,12 +84,12 @@ export function DashboardSidebar() {
       </SidebarContent>
       <SidebarFooter>
         <div className="p-2">
-          <div className="rounded-lg border bg-card p-4 text-card-foreground shadow-sm">
+          <div className="rounded-lg border bg-sidebar-accent border-sidebar-border p-4 text-sidebar-accent-foreground">
              <div className="flex items-center gap-3">
-              {isGovernment ? <Building className="h-8 w-8 text-muted-foreground" /> : <User className="h-8 w-8 text-muted-foreground" />}
+              {isGovernment ? <Building className="h-8 w-8" /> : <User className="h-8 w-8" />}
               <div>
                 <p className="text-sm font-medium">{userRole} Portal</p>
-                <p className="text-xs text-muted-foreground">Beta Version</p>
+                <p className="text-xs">Beta Version</p>
               </div>
             </div>
           </div>
