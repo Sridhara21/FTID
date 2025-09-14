@@ -72,7 +72,7 @@ export function SubsidyOptimizationCard() {
     setResult(null);
     try {
       const currentDistribution = JSON.stringify(
-        subsidyDistributionData.map(({ name, value }) => ({ name, value: `₹${value} Cr` }))
+        subsidyDistributionData.map(({ name, value }) => ({ name, value }))
       );
       const res = await optimizeSubsidies({
         ...values,
