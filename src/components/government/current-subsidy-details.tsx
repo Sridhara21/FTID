@@ -17,7 +17,7 @@ import {
   ChartLegend,
   ChartLegendContent
 } from "@/components/ui/chart";
-import { PieChart, Pie, ResponsiveContainer, Cell, Tooltip } from "recharts";
+import { PieChart, Pie, ResponsiveContainer, Cell } from "recharts";
 import {
     Accordion,
     AccordionContent,
@@ -55,7 +55,7 @@ export function CurrentSubsidyDetails() {
                         <PieChart>
                         <ChartTooltip
                             cursor={false}
-                            content={<ChartTooltipContent hideLabel formatter={(value) => `₹${value.toLocaleString()}`} />}
+                            content={<ChartTooltipContent hideLabel formatter={(value, name) => `${name}: ₹${Number(value).toLocaleString('en-IN')} Cr`} />}
                         />
                         <Pie
                             data={subsidyDistributionData}
@@ -98,14 +98,17 @@ export function CurrentSubsidyDetails() {
                                     <div className="p-2 bg-muted rounded-md">
                                         <item.icon className="h-5 w-5 text-muted-foreground" />
                                     </div>
-                                    <div className="flex-1 text-left">
-                                        <p className="font-semibold">{item.title}</p>
-                                        <p className="text-sm text-primary font-mono">₹{item.amount} Cr</p>
+                                    <div className="flex-1 text-left flex items-center gap-3">
+                                        <div className="w-1.5 h-10 rounded-full" style={{ backgroundColor: item.color }}/>
+                                        <div>
+                                            <p className="font-semibold">{item.title}</p>
+                                            <p className="text-sm text-primary font-mono">₹{item.amount} Cr</p>
+                                        </div>
                                     </div>
                                 </div>
                             </AccordionTrigger>
                             <AccordionContent>
-                                <p className="text-sm text-muted-foreground pl-14">{item.description}</p>
+                                <p className="text-sm text-muted-foreground pl-20">{item.description}</p>
                             </AccordionContent>
                         </AccordionItem>
                     ))}

@@ -109,30 +109,35 @@ export const subsidyDetailsData = [
         amount: "2,03,420",
         description: "Implemented mainly through the National Food Security Act (NFSA), covering distribution of rice, wheat, and coarse grains to ~81 crore beneficiaries.",
         icon: Utensils,
+        color: "hsl(var(--chart-1))"
     },
     {
         title: "Fertiliser Subsidy",
         amount: "1,67,887",
         description: "Covers both Urea subsidy and Nutrient-Based Subsidy (NBS) for phosphatic & potassic fertilisers, ensuring farmers get fertilisers at affordable prices.",
         icon: Wheat,
+        color: "hsl(var(--chart-2))"
     },
     {
         title: "Petroleum Subsidy",
         amount: "12,100",
         description: "Includes LPG subsidy under the PAHAL Direct Benefit Transfer (DBT) scheme, providing subsidised cooking gas for low-income households.",
         icon: Fuel,
+        color: "hsl(var(--chart-3))"
     },
     {
         title: "Interest Subsidy",
         amount: "27,840",
         description: "Support for sectors like education loans, MSMEs, export promotion, and housing through schemes like the Interest Subvention Scheme (ISS).",
         icon: Banknote,
+        color: "hsl(var(--chart-4))"
     },
     {
         title: "Other Subsidies",
         amount: "14,969",
         description: "Includes Price Support Scheme (PSS), Market Intervention Scheme (MIS), and subsidies for jute, sugar, and other industrial incentives.",
         icon: Landmark,
+        color: "hsl(var(--chart-5))"
     },
 ];
 
