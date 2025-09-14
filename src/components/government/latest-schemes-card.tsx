@@ -17,12 +17,12 @@ export function LatestSchemesCard() {
                 </CardDescription>
             </CardHeader>
             <CardContent>
-                <ScrollArea className="h-[300px] w-full">
+                <ScrollArea className="h-[300px] w-full pr-4">
                     <div className="space-y-4">
                         {schemes.map((scheme, index) => (
                             <div key={scheme.title}>
                                 <div className="flex items-start gap-4">
-                                    <div className="p-2 bg-muted rounded-md">
+                                    <div className="p-3 bg-muted rounded-lg flex items-center justify-center">
                                         <scheme.icon className="h-6 w-6 text-muted-foreground" />
                                     </div>
                                     <div className="flex-1">
@@ -30,7 +30,7 @@ export function LatestSchemesCard() {
                                         <p className="text-xs text-muted-foreground">{scheme.description}</p>
                                     </div>
                                 </div>
-                                {index < schemes.length - 1 && <Separator className="mt-4" />}
+                                {index < schemes.length - 1 && <Separator className="my-4" />}
                             </div>
                         ))}
                     </div>

@@ -50,6 +50,8 @@ export function SubsidyDistributionChart() {
                 nameKey="name"
                 innerRadius="60%"
                 strokeWidth={5}
+                labelLine={false}
+                label={({ percent, name }) => `${name} ${(percent * 100).toFixed(0)}%`}
               >
                 {subsidyDistributionData.map((entry) => (
                   <Cell key={`cell-${entry.name}`} fill={entry.fill} name={entry.name} />
