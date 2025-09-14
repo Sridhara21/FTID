@@ -1,5 +1,5 @@
-import { TaxCalculatorCard } from "@/components/citizen/tax-calculator-card";
+import { DetailedTaxCalculator } from "@/components/citizen/detailed-tax-calculator";
 
 export default function TaxPage() {
-    return <TaxCalculatorCard />;
+    return <DetailedTaxCalculator />;
 }
