@@ -19,7 +19,6 @@ import {
     TableRow,
 } from "@/components/ui/table";
 import { Badge } from "@/components/ui/badge";
-import { CreditScoreCard } from "@/components/citizen/credit-score-card";
 
 const chartData = [{ value: creditScoreData.score }];
 const chartConfig = {
