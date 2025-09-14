@@ -51,7 +51,7 @@ type TaxCalculationResult = {
     }[];
 };
 
-// Simplified tax calculation logic
+// Simplified tax calculation logic for FY 2025-26
 function calculateTax(income: number, deductions: number): TaxCalculationResult {
     const taxableIncome = Math.max(0, income - deductions);
     let totalTax = 0;
@@ -59,8 +59,8 @@ function calculateTax(income: number, deductions: number): TaxCalculationResult 
 
     const taxSlabs = [
         { limit: 300000, rate: 0 },
-        { limit: 600000, rate: 0.05 },
-        { limit: 900000, rate: 0.10 },
+        { limit: 700000, rate: 0.05 },
+        { limit: 1000000, rate: 0.10 },
         { limit: 1200000, rate: 0.15 },
         { limit: 1500000, rate: 0.20 },
         { limit: Infinity, rate: 0.30 },
@@ -74,8 +74,12 @@ function calculateTax(income: number, deductions: number): TaxCalculationResult 
 
         const slabRange = slab.limit - lowerBound;
         const taxableInSlab = Math.min(remainingIncome, slabRange);
-        const taxInSlab = taxableInSlab * slab.rate;
-        totalTax += taxInSlab;
+        
+        let taxInSlab = 0;
+        if(lowerBound >= 300000) {
+          taxInSlab = taxableInSlab * slab.rate;
+          totalTax += taxInSlab;
+        }
 
         slabBreakdown.push({
             slab: `₹${lowerBound.toLocaleString('en-IN')} - ₹${slab.limit === Infinity ? 'Above' : slab.limit.toLocaleString('en-IN')}`,
