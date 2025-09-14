@@ -114,7 +114,8 @@ export const donationData = [
 export const balanceSheetData = {
   assets: [
     { name: "E-Rupee Wallet", value: 85250 },
-    { name: "Savings Account", value: 250000 },
+    { name: "HDFC Bank Savings", value: 175000 },
+    { name: "ICICI Bank Savings", value: 75000 },
     { name: "Fixed Deposits", value: 150000 },
     { name: "Mutual Funds", value: 75000 },
     { name: "Real Estate", value: 1200000 },
@@ -127,11 +128,11 @@ export const balanceSheetData = {
 };
 
 export const userProfileData = {
-    name: "John Doe",
-    email: "john.doe@email.com",
-    address: "123, Main Street, Anytown, 123456",
-    ftid: "IN-JD-19850101-XYZ123",
-    fallback: "JD"
+    name: "Aarav Sharma",
+    email: "aarav.sharma@email.com",
+    address: "45, MG Road, Bangalore, 560001",
+    ftid: "2456-9467-7356-0923",
+    fallback: "AS"
 };
 
 
