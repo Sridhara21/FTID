@@ -22,7 +22,7 @@ import {
   FormLabel,
   FormMessage,
 } from "@/components/ui/form";
-import { Receipt, Loader2, IndianRupee } from "lucide-react";
+import { Receipt, Loader2, IndianRupee, Lightbulb, Bot } from "lucide-react";
 import { Separator } from "@/components/ui/separator";
 import {
     Table,
@@ -34,6 +34,7 @@ import {
     TableFooter
 } from "@/components/ui/table";
 import { Skeleton } from "@/components/ui/skeleton";
+import { getTaxSavingTips, TaxSavingTipsOutput } from "@/ai/flows/tax-saving-tips-flow";
 
 const formSchema = z.object({
   annualIncome: z.coerce.number().positive("Annual income must be a positive number."),
@@ -92,6 +93,7 @@ function calculateTax(income: number, deductions: number): TaxCalculationResult 
 
 export function DetailedTaxCalculator() {
   const [taxResult, setTaxResult] = useState<TaxCalculationResult | null>(null);
+  const [aiTips, setAiTips] = useState<TaxSavingTipsOutput | null>(null);
   const [isLoading, setIsLoading] = useState(false);
 
   const form = useForm<z.infer<typeof formSchema>>({
@@ -105,10 +107,23 @@ export function DetailedTaxCalculator() {
   async function onSubmit(values: z.infer<typeof formSchema>) {
     setIsLoading(true);
     setTaxResult(null);
-    // Simulate async operation
-    await new Promise(resolve => setTimeout(resolve, 500));
+    setAiTips(null);
+    
+    // Simulate async operation for tax calculation
+    await new Promise(resolve => setTimeout(resolve, 300));
     const result = calculateTax(values.annualIncome, values.deductions);
     setTaxResult(result);
+
+    try {
+        const tipsResult = await getTaxSavingTips({
+            ...values,
+            taxableIncome: result.taxableIncome,
+        });
+        setAiTips(tipsResult);
+    } catch (error) {
+        console.error("Error getting tax saving tips:", error);
+    }
+
     setIsLoading(false);
   }
 
@@ -120,7 +135,7 @@ export function DetailedTaxCalculator() {
           Income Tax Calculator
         </CardTitle>
         <CardDescription>
-          Estimate your income tax liability for the financial year.
+          Estimate your income tax liability and get AI-powered tax-saving tips.
         </CardDescription>
       </CardHeader>
       <Form {...form}>
@@ -158,10 +173,10 @@ export function DetailedTaxCalculator() {
               {isLoading ? (
                 <>
                   <Loader2 className="mr-2 h-4 w-4 animate-spin" />
-                  Calculating...
+                  Calculating & Generating Tips...
                 </>
               ) : (
-                "Calculate Tax"
+                "Calculate & Get AI Tips"
               )}
             </Button>
           </CardContent>
@@ -177,51 +192,75 @@ export function DetailedTaxCalculator() {
                         <Skeleton className="h-8 w-1/2 mx-auto" />
                         <Skeleton className="h-12 w-1/3 mx-auto" />
                         <Skeleton className="h-40 w-full" />
+                         <Skeleton className="h-8 w-1/4 mt-6" />
+                        <Skeleton className="h-20 w-full" />
                     </div>
                 )}
                 {taxResult && (
-                    <div className="space-y-6">
-                        <div className="text-center">
-                            <p className="text-sm text-muted-foreground">Estimated Tax Liability</p>
-                            <p className="text-4xl font-bold tracking-tight">
-                                {taxResult.totalTax.toLocaleString('en-IN', { style: 'currency', currency: 'INR', maximumFractionDigits: 0 })}
-                            </p>
-                            <p className="text-sm text-muted-foreground mt-1">
-                                On a taxable income of {taxResult.taxableIncome.toLocaleString('en-IN', { style: 'currency', currency: 'INR', maximumFractionDigits: 0 })}
-                            </p>
-                        </div>
-                        <div>
-                            <h3 className="text-lg font-semibold mb-2">Tax Breakdown</h3>
-                            <Table>
-                                <TableHeader>
-                                    <TableRow>
-                                        <TableHead>Income Slab</TableHead>
-                                        <TableHead>Tax Rate</TableHead>
-                                        <TableHead className="text-right">Tax Amount</TableHead>
-                                    </TableRow>
-                                </TableHeader>
-                                <TableBody>
-                                    {taxResult.slabBreakdown.map(item => (
-                                        <TableRow key={item.slab}>
-                                            <TableCell>{item.slab}</TableCell>
-                                            <TableCell>{item.taxRate}</TableCell>
-                                            <TableCell className="text-right font-mono">
-                                                {item.taxAmount.toLocaleString('en-IN', { style: 'currency', currency: 'INR', maximumFractionDigits: 0 })}
-                                            </TableCell>
-                                        </TableRow>
+                    <div className="grid grid-cols-1 lg:grid-cols-5 gap-8">
+                      <div className="lg:col-span-3 space-y-6">
+                          <div className="text-center">
+                              <p className="text-sm text-muted-foreground">Estimated Tax Liability</p>
+                              <p className="text-4xl font-bold tracking-tight">
+                                  {taxResult.totalTax.toLocaleString('en-IN', { style: 'currency', currency: 'INR', maximumFractionDigits: 0 })}
+                              </p>
+                              <p className="text-sm text-muted-foreground mt-1">
+                                  On a taxable income of {taxResult.taxableIncome.toLocaleString('en-IN', { style: 'currency', currency: 'INR', maximumFractionDigits: 0 })}
+                              </p>
+                          </div>
+                          <div>
+                              <h3 className="text-lg font-semibold mb-2">Tax Breakdown</h3>
+                              <Table>
+                                  <TableHeader>
+                                      <TableRow>
+                                          <TableHead>Income Slab</TableHead>
+                                          <TableHead>Tax Rate</TableHead>
+                                          <TableHead className="text-right">Tax Amount</TableHead>
+                                      </TableRow>
+                                  </TableHeader>
+                                  <TableBody>
+                                      {taxResult.slabBreakdown.map(item => (
+                                          <TableRow key={item.slab}>
+                                              <TableCell>{item.slab}</TableCell>
+                                              <TableCell>{item.taxRate}</TableCell>
+                                              <TableCell className="text-right font-mono">
+                                                  {item.taxAmount.toLocaleString('en-IN', { style: 'currency', currency: 'INR', maximumFractionDigits: 0 })}
+                                              </TableCell>
+                                          </TableRow>
+                                      ))}
+                                  </TableBody>
+                                  <TableFooter>
+                                      <TableRow>
+                                          <TableHead colSpan={2}>Total Tax</TableHead>
+                                          <TableHead className="text-right font-bold font-mono">
+                                              {taxResult.totalTax.toLocaleString('en-IN', { style: 'currency', currency: 'INR', maximumFractionDigits: 0 })}
+                                          </TableHead>
+                                      </TableRow>
+                                  </TableFooter>
+                              </Table>
+                              <p className="text-xs text-muted-foreground mt-2">*This is an estimate based on the new tax regime. Please consult a tax professional for exact calculations.</p>
+                          </div>
+                      </div>
+                      <div className="lg:col-span-2">
+                        {aiTips && aiTips.tips.length > 0 && (
+                            <Card className="bg-secondary/50 h-full">
+                                <CardHeader>
+                                    <CardTitle className="flex items-center gap-2 text-lg">
+                                        <Bot className="h-5 w-5 text-primary"/>
+                                        AI Tax-Saving Tips
+                                    </CardTitle>
+                                </CardHeader>
+                                <CardContent className="space-y-3">
+                                    {aiTips.tips.map((tip, index) => (
+                                        <div key={index} className="flex items-start gap-3 p-3 rounded-lg bg-background/50">
+                                            <Lightbulb className="h-5 w-5 mt-0.5 text-primary flex-shrink-0"/>
+                                            <span className="text-sm text-muted-foreground">{tip}</span>
+                                        </div>
                                     ))}
-                                </TableBody>
-                                <TableFooter>
-                                    <TableRow>
-                                        <TableHead colSpan={2}>Total Tax</TableHead>
-                                        <TableHead className="text-right font-bold font-mono">
-                                            {taxResult.totalTax.toLocaleString('en-IN', { style: 'currency', currency: 'INR', maximumFractionDigits: 0 })}
-                                        </TableHead>
-                                    </TableRow>
-                                </TableFooter>
-                            </Table>
-                            <p className="text-xs text-muted-foreground mt-2">*This is an estimate based on the new tax regime. Please consult a tax professional for exact calculations.</p>
-                        </div>
+                                </CardContent>
+                            </Card>
+                        )}
+                      </div>
                     </div>
                 )}
             </CardContent>
