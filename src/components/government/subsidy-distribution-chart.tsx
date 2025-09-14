@@ -20,9 +20,9 @@ import { subsidyDistributionData } from "@/lib/placeholder-data";
 const chartConfig = {
   value: { label: "Crores (INR)" },
   Food: { label: "Food", color: "hsl(var(--chart-1))" },
-  Fertilizer: { label: "Fertilizer", color: "hsl(var(--chart-2))" },
-  Fuel: { label: "Fuel", color: "hsl(var(--chart-3))" },
-  Healthcare: { label: "Healthcare", color: "hsl(var(--chart-4))" },
+  Fertiliser: { label: "Fertiliser", color: "hsl(var(--chart-2))" },
+  Petroleum: { label: "Petroleum", color: "hsl(var(--chart-3))" },
+  Interest: { label: "Interest", color: "hsl(var(--chart-4))" },
   Other: { label: "Other", color: "hsl(var(--chart-5))" },
 };
 

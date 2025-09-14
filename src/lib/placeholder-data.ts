@@ -96,11 +96,11 @@ export const revenueData = [
 ];
 
 export const subsidyDistributionData = [
-    { name: 'Food', value: 206800, fill: 'var(--color-chart-1)' },
-    { name: 'Fertilizer', value: 164000, fill: 'var(--color-chart-2)' },
-    { name: 'Fuel', value: 11920, fill: 'var(--color-chart-3)' },
-    { name: 'Healthcare', value: 90658, fill: 'var(--color-chart-4)' },
-    { name: 'Other', value: 30000, fill: 'var(--color-chart-5)' },
+    { name: 'Food', value: 203420, fill: 'var(--color-chart-1)' },
+    { name: 'Fertiliser', value: 167887, fill: 'var(--color-chart-2)' },
+    { name: 'Petroleum', value: 12100, fill: 'var(--color-chart-3)' },
+    { name: 'Interest', value: 27840, fill: 'var(--color-chart-4)' },
+    { name: 'Other', value: 14969, fill: 'var(--color-chart-5)' },
 ];
 
 export const donationData = [
