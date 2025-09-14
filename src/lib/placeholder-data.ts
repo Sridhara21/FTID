@@ -73,7 +73,7 @@ export const subsidies = [
   { id: "sub_1", name: "Food Subsidy (NFSA)", status: "Active", amount: 600, icon: Utensils },
   { id: "sub_2", name: "Health Insurance (PM-JAY)", status: "Active", amount: 416, icon: HeartPulse },
   { id: "sub_3", name: "LPG Subsidy (Ujjwala)", status: "Active", amount: 200, icon: Fuel },
-  { id: "sub_4", name: "Housing Subsidy (PMAY)", status: "Active", amount: 22000, icon: Building },
+  { id: "sub_4", name: "Housing Subsidy (PMAY)", status: "Inactive", amount: 0, icon: Building },
   { id: "sub_5", name: "Fertilizer Subsidy (PM-PRANAM)", status: "Active", amount: 1200, icon: Wheat },
 ];
 
@@ -271,20 +271,20 @@ export const economicIndicatorsData = [
 
 export const statePerformanceData = {
     indicators: [
-        { state: "Maharashtra", gstFy: 359854.70, gstJun: 30553, perCapita: 215233 },
-        { state: "Karnataka", gstFy: 159563.80, gstJun: 13409, perCapita: 265623 },
-        { state: "Gujarat", gstFy: 136748.21, gstJun: 11404, perCapita: null },
-        { state: "Tamil Nadu", gstFy: 131115.43, gstJun: 10676, perCapita: 242253 },
-        { state: "Haryana", gstFy: 119362.24, gstJun: 9959, perCapita: 264835 },
-        { state: "Uttar Pradesh", gstFy: 112212.23, gstJun: 9248, perCapita: null },
-        { state: "Delhi", gstFy: 77002.34, gstJun: 5610, perCapita: 389529 },
-        { state: "West Bengal", gstFy: 66892.28, gstJun: 5551, perCapita: null },
-        { state: "Telangana", gstFy: 62986.63, gstJun: 5111, perCapita: 270839 },
-        { state: "Odisha", gstFy: 60928.44, gstJun: 5079, perCapita: 182548 },
-        { state: "Goa", gstFy: null, gstJun: null, perCapita: 472070 },
-        { state: "Sikkim", gstFy: null, gstJun: null, perCapita: 463509 },
-        { state: "Chandigarh", gstFy: null, gstJun: null, perCapita: 333932 },
-        { state: "Bihar", gstFy: null, gstJun: null, perCapita: 60337 },
+        { state: "Maharashtra", gstJun: 30553, gstFy: 359854.70, perCapita: 176678, gsdpGrowth: 7.96 },
+        { state: "Karnataka", gstJun: 13409, gstFy: 159563.80, perCapita: 204605, gsdpGrowth: 7.50 },
+        { state: "Gujarat", gstJun: 11404, gstFy: 136748.21, perCapita: 272450, gsdpGrowth: 8.94 },
+        { state: "Tamil Nadu", gstJun: 10676, gstFy: 131115.43, perCapita: 196309, gsdpGrowth: 9.69 },
+        { state: "Haryana", gstJun: 9959, gstFy: 119362.24, perCapita: 194285, gsdpGrowth: 7.55 },
+        { state: "Uttar Pradesh", gstJun: 9248, gstFy: 112212.23, perCapita: 93510, gsdpGrowth: 8.51 },
+        { state: "Delhi", gstJun: 5610, gstFy: 77002.34, perCapita: 461910, gsdpGrowth: null },
+        { state: "West Bengal", gstJun: 5551, gstFy: 66892.28, perCapita: 154120, gsdpGrowth: null },
+        { state: "Telangana", gstJun: 5111, gstFy: 62986.63, perCapita: 187912, gsdpGrowth: null },
+        { state: "Odisha", gstJun: 5079, gstFy: 60928.44, perCapita: 182548, gsdpGrowth: 10.03 },
+        { state: "Goa", gstFy: null, gstJun: null, perCapita: 472070, gsdpGrowth: null },
+        { state: "Sikkim", gstFy: null, gstJun: null, perCapita: 463509, gsdpGrowth: null },
+        { state: "Chandigarh", gstFy: null, gstJun: null, perCapita: 333932, gsdpGrowth: null },
+        { state: "Bihar", gstFy: null, gstJun: null, perCapita: 60337, gsdpGrowth: null },
     ],
     efficiency: [
         { state: "Maharashtra", metric: "Energy Efficiency", value: "80.5%", rank: "Top" },

@@ -62,6 +62,7 @@ export default function StatePerformancePage() {
                                 <TableHead className="text-right">GST Collection FY 2024-25 (₹ Cr)</TableHead>
                                 <TableHead className="text-right">GST Collection June 2025 (₹ Cr)</TableHead>
                                 <TableHead className="text-right">Per Capita Income (₹)</TableHead>
+                                <TableHead className="text-right">GSDP Growth FY24 (%)</TableHead>
                             </TableRow>
                         </TableHeader>
                         <TableBody>
@@ -76,6 +77,9 @@ export default function StatePerformancePage() {
                                     </TableCell>
                                     <TableCell className="text-right font-mono">
                                         {item.perCapita?.toLocaleString('en-IN') ?? 'N/A'}
+                                    </TableCell>
+                                    <TableCell className="text-right font-mono">
+                                        {item.gsdpGrowth?.toLocaleString('en-IN') ?? 'N/A'}
                                     </TableCell>
                                 </TableRow>
                             ))}
