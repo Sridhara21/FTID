@@ -1,4 +1,4 @@
-import { CreditCard, Landmark, PiggyBank, Receipt, HandCoins, ShieldCheck, Fuel, Utensils, Wheat, HeartPulse, Building, TrendingUp, TrendingDown, Minus, Rocket, GraduationCap, Factory, Leaf, Magnet, UserRound, Bot, BookOpen, Train, Banknote } from "lucide-react";
+import { CreditCard, Landmark, PiggyBank, Receipt, HandCoins, ShieldCheck, Fuel, Utensils, Wheat, HeartPulse, Building, TrendingUp, TrendingDown, Minus, Rocket, GraduationCap, Factory, Leaf, Magnet, UserRound, Bot, BookOpen, Train, Banknote, Globe, LineChart, Users, Target, ArrowRightLeft, Briefcase, BarChart, Scale } from "lucide-react";
 
 export const transactions = [
   {
@@ -251,3 +251,19 @@ export const dummyFtidData = JSON.stringify([
   {"transaction_id":"e5f6g7h8","timestamp":"2023-10-26T12:30:00Z","amount":2100.00,"currency":"INR","merchant_name":"Chai Point","merchant_category":"Food & Drink","location":{"latitude":19.0765,"longitude":72.8780}},
   {"transaction_id":"i9j0k1l2","timestamp":"2023-10-26T15:45:00Z","amount":41500.00,"currency":"INR","merchant_name":"Digital World","merchant_category":"Electronics","location":{"latitude":19.0780,"longitude":72.8800}}
 ], null, 2);
+
+
+export const economicIndicatorsData = [
+    { label: "GDP (Nominal)", value: "₹324 lakh crore", change: "~$3.9 trillion", icon: Globe },
+    { label: "GNP (Nominal)", value: "₹319 lakh crore", change: "~$3.8 trillion", icon: BarChart },
+    { label: "Real GDP Growth", value: "6.5%", change: "vs last year", icon: TrendingUp, color: "text-green-400" },
+    { label: "Per Capita Income", value: "₹2.45 lakh", change: "~$2,950", icon: Users },
+    { label: "Total Tax Revenue", value: "₹26.5 lakh crore", change: "Net", icon: Receipt },
+    { label: "Fiscal Deficit", value: "5.1% of GDP", change: "₹17.35 lakh crore", icon: TrendingDown, color: "text-red-400" },
+    { label: "Revenue Deficit", value: "2.9% of GDP", change: "₹9.5 lakh crore", icon: TrendingDown, color: "text-red-400" },
+    { label: "Capital Expenditure", value: "₹11.1 lakh crore", change: "+11% from last year", icon: Rocket },
+    { label: "Inflation (CPI)", value: "4.5%", change: "Projected", icon: Target },
+    { label: "Forex Reserves", value: "$640 billion", change: "Updated weekly", icon: Landmark },
+    { label: "Current Account Deficit", value: "1.5% of GDP", change: "vs 2.1% last year", icon: ArrowRightLeft },
+    { label: "Unemployment Rate", value: "6.2%", change: "Estimated", icon: Briefcase },
+];
