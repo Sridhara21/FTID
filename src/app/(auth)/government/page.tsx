@@ -5,6 +5,7 @@ import { SubsidyOptimizationCard } from "@/components/government/subsidy-optimiz
 import { DonationTrackerCard } from "@/components/government/donation-tracker-card";
 import { LatestSchemesCard } from "@/components/government/latest-schemes-card";
 import { EconomicIndicatorsCard } from "@/components/government/economic-indicators-card";
+import { StatePerformanceSnapshotCard } from "@/components/government/state-performance-snapshot-card";
 
 export default function GovernmentDashboard() {
   return (
@@ -20,6 +21,7 @@ export default function GovernmentDashboard() {
             <GdpChartCard />
             <RevenueChartCard />
         </div>
+        <StatePerformanceSnapshotCard />
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 lg:gap-8">
             <SubsidyDistributionChart />
             <SubsidyOptimizationCard />
