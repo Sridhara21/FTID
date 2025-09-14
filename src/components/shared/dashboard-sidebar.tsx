@@ -33,6 +33,7 @@ import { Button } from "@/components/ui/button";
 
 const citizenNav = [
   { href: "/citizen", icon: LayoutGrid, label: "Dashboard" },
+  { href: "/citizen/profile", icon: User, label: "Profile" },
   { href: "/citizen/wallet", icon: Wallet, label: "Digital E-Rupee Wallet" },
   { href: "/citizen/ai-advisor", icon: Bot, label: "AI Financial Advisor" },
   { href: "/citizen/credit-score", icon: HeartPulse, label: "Financial Health Score" },

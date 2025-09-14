@@ -126,6 +126,15 @@ export const balanceSheetData = {
   ],
 };
 
+export const userProfileData = {
+    name: "John Doe",
+    email: "john.doe@email.com",
+    address: "123, Main Street, Anytown, 123456",
+    ftid: "IN-JD-19850101-XYZ123",
+    fallback: "JD"
+};
+
+
 export const dummyFtidData = JSON.stringify([
   {"transaction_id":"a1b2c3d4","timestamp":"2023-10-26T10:00:00Z","amount":12500.50,"currency":"INR","merchant_name":"SuperBazaar","merchant_category":"Groceries","location":{"latitude":19.0760,"longitude":72.8777}},
   {"transaction_id":"e5f6g7h8","timestamp":"2023-10-26T12:30:00Z","amount":2100.00,"currency":"INR","merchant_name":"Chai Point","merchant_category":"Food & Drink","location":{"latitude":19.0765,"longitude":72.8780}},
