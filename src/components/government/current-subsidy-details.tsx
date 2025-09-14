@@ -1,0 +1,115 @@
+"use client";
+
+import {
+    Card,
+    CardContent,
+    CardDescription,
+    CardHeader,
+    CardTitle,
+} from "@/components/ui/card";
+import { subsidyDistributionData, subsidyDetailsData } from "@/lib/placeholder-data";
+import { PieChart, List } from "lucide-react";
+import {
+  ChartContainer,
+  ChartTooltip,
+  ChartTooltipContent,
+  ChartLegend,
+  ChartLegendContent
+} from "@/components/ui/chart";
+import { Pie, ResponsiveContainer, Cell } from "recharts";
+import {
+    Accordion,
+    AccordionContent,
+    AccordionItem,
+    AccordionTrigger,
+} from "@/components/ui/accordion"
+
+
+const chartConfig = {
+  value: { label: "Crores (INR)" },
+  Food: { label: "Food", color: "hsl(var(--chart-1))" },
+  Fertiliser: { label: "Fertiliser", color: "hsl(var(--chart-2))" },
+  Petroleum: { label: "Petroleum", color: "hsl(var(--chart-3))" },
+  Interest: { label: "Interest", color: "hsl(var(--chart-4))" },
+  Other: { label: "Other", color: "hsl(var(--chart-5))" },
+};
+
+export function CurrentSubsidyDetails() {
+  const totalSubsidies = subsidyDistributionData.reduce((acc, curr) => acc + curr.value, 0);
+
+  return (
+    <div className="grid grid-cols-1 lg:grid-cols-5 gap-8">
+        <Card className="lg:col-span-2 flex flex-col h-full">
+            <CardHeader>
+                <CardTitle className="flex items-center gap-2">
+                    <PieChart />
+                    Subsidy Distribution
+                </CardTitle>
+                <CardDescription>FY 2025-26 Allocation: {totalSubsidies.toLocaleString('en-IN', { style: 'currency', currency: 'INR' })} Cr</CardDescription>
+            </CardHeader>
+            <CardContent className="flex-1 pb-0">
+                <ChartContainer
+                config={chartConfig}
+                className="mx-auto aspect-square max-h-[300px]"
+                >
+                <ResponsiveContainer>
+                    <PieChart>
+                    <ChartTooltip
+                        cursor={false}
+                        content={<ChartTooltipContent hideLabel formatter={(value) => `₹${Number(value).toLocaleString()} Cr`} />}
+                    />
+                    <Pie
+                        data={subsidyDistributionData}
+                        dataKey="value"
+                        nameKey="name"
+                        innerRadius="60%"
+                        strokeWidth={5}
+                    >
+                        {subsidyDistributionData.map((entry) => (
+                        <Cell key={`cell-${entry.name}`} fill={entry.fill} name={entry.name} />
+                        ))}
+                    </Pie>
+                    <ChartLegend
+                        content={<ChartLegendContent nameKey="name" />}
+                        className="-translate-y-2 flex-wrap gap-2 [&>*]:basis-1/4 [&>*]:justify-center"
+                    />
+                    </PieChart>
+                </ResponsiveContainer>
+                </ChartContainer>
+            </CardContent>
+        </Card>
+
+        <Card className="lg:col-span-3">
+            <CardHeader>
+                 <CardTitle className="flex items-center gap-2">
+                    <List />
+                    Allocation Details
+                </CardTitle>
+                <CardDescription>Breakdown of subsidy categories for FY 2025-26.</CardDescription>
+            </CardHeader>
+            <CardContent>
+                <Accordion type="single" collapsible className="w-full">
+                    {subsidyDetailsData.map((item) => (
+                         <AccordionItem value={item.title} key={item.title}>
+                            <AccordionTrigger>
+                                <div className="flex items-center gap-4 w-full">
+                                    <div className="p-2 bg-muted rounded-md">
+                                        <item.icon className="h-5 w-5 text-muted-foreground" />
+                                    </div>
+                                    <div className="flex-1 text-left">
+                                        <p className="font-semibold">{item.title}</p>
+                                        <p className="text-sm text-primary font-mono">{item.amount} Cr</p>
+                                    </div>
+                                </div>
+                            </AccordionTrigger>
+                            <AccordionContent>
+                                <p className="text-sm text-muted-foreground pl-14">{item.description}</p>
+                            </AccordionContent>
+                        </AccordionItem>
+                    ))}
+                </Accordion>
+            </CardContent>
+        </Card>
+    </div>
+  );
+}

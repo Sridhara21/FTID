@@ -1,4 +1,4 @@
-import { CreditCard, Landmark, PiggyBank, Receipt, HandCoins, ShieldCheck, Fuel, Utensils, Wheat, HeartPulse, Building, TrendingUp, TrendingDown, Minus, Rocket, GraduationCap, Factory, Leaf, Magnet, UserRound, Bot, BookOpen, Train } from "lucide-react";
+import { CreditCard, Landmark, PiggyBank, Receipt, HandCoins, ShieldCheck, Fuel, Utensils, Wheat, HeartPulse, Building, TrendingUp, TrendingDown, Minus, Rocket, GraduationCap, Factory, Leaf, Magnet, UserRound, Bot, BookOpen, Train, Banknote } from "lucide-react";
 
 export const transactions = [
   {
@@ -101,6 +101,39 @@ export const subsidyDistributionData = [
     { name: 'Petroleum', value: 12100, fill: 'var(--color-chart-3)' },
     { name: 'Interest', value: 27840, fill: 'var(--color-chart-4)' },
     { name: 'Other', value: 14969, fill: 'var(--color-chart-5)' },
+];
+
+export const subsidyDetailsData = [
+    {
+        title: "Food Subsidy",
+        amount: "₹ 2,03,420",
+        description: "Implemented mainly through the National Food Security Act (NFSA), covering distribution of rice, wheat, and coarse grains to ~81 crore beneficiaries.",
+        icon: Utensils,
+    },
+    {
+        title: "Fertiliser Subsidy",
+        amount: "₹ 1,67,887",
+        description: "Covers both Urea subsidy and Nutrient-Based Subsidy (NBS) for phosphatic & potassic fertilisers, ensuring farmers get fertilisers at affordable prices.",
+        icon: Wheat,
+    },
+    {
+        title: "Petroleum Subsidy",
+        amount: "₹ 12,100",
+        description: "Includes LPG subsidy under the PAHAL Direct Benefit Transfer (DBT) scheme, providing subsidised cooking gas for low-income households.",
+        icon: Fuel,
+    },
+    {
+        title: "Interest Subsidy",
+        amount: "₹ 27,840",
+        description: "Support for sectors like education loans, MSMEs, export promotion, and housing through schemes like the Interest Subvention Scheme (ISS).",
+        icon: Banknote,
+    },
+    {
+        title: "Other Subsidies",
+        amount: "₹ 14,969",
+        description: "Includes Price Support Scheme (PSS), Market Intervention Scheme (MIS), and subsidies for jute, sugar, and other industrial incentives.",
+        icon: Landmark,
+    },
 ];
 
 export const donationData = [
