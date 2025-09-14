@@ -267,3 +267,28 @@ export const economicIndicatorsData = [
     { label: "Current Account Deficit", value: "1.5% of GDP", change: "vs 2.1% last year", icon: ArrowRightLeft },
     { label: "Unemployment Rate", value: "6.2%", change: "Estimated", icon: Briefcase },
 ];
+
+
+export const statePerformanceData = {
+    indicators: [
+        { state: "Maharashtra", gstFy: 359854.70, gstJun: 30553, perCapita: 215233 },
+        { state: "Karnataka", gstFy: 159563.80, gstJun: 13409, perCapita: 265623 },
+        { state: "Gujarat", gstFy: 136748.21, gstJun: 11404, perCapita: null },
+        { state: "Tamil Nadu", gstFy: 131115.43, gstJun: 10676, perCapita: 242253 },
+        { state: "Haryana", gstFy: 119362.24, gstJun: 9959, perCapita: 264835 },
+        { state: "Uttar Pradesh", gstFy: 112212.23, gstJun: 9248, perCapita: null },
+        { state: "Delhi", gstFy: 77002.34, gstJun: 5610, perCapita: 389529 },
+        { state: "West Bengal", gstFy: 66892.28, gstJun: 5551, perCapita: null },
+        { state: "Telangana", gstFy: 62986.63, gstJun: 5111, perCapita: 270839 },
+        { state: "Odisha", gstFy: 60928.44, gstJun: 5079, perCapita: 182548 },
+        { state: "Goa", gstFy: null, gstJun: null, perCapita: 472070 },
+        { state: "Sikkim", gstFy: null, gstJun: null, perCapita: 463509 },
+        { state: "Chandigarh", gstFy: null, gstJun: null, perCapita: 333932 },
+        { state: "Bihar", gstFy: null, gstJun: null, perCapita: 60337 },
+    ],
+    efficiency: [
+        { state: "Maharashtra", metric: "Energy Efficiency", value: "80.5%", rank: "Top" },
+        { state: "Andhra Pradesh", metric: "Energy Efficiency", value: "79.3%", rank: "Top" },
+        { state: "Telangana", metric: "Per Capita NSDP", value: "₹3.87 lakh", rank: "Top" },
+    ]
+};

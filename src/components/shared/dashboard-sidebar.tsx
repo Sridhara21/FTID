@@ -19,7 +19,8 @@ import {
   Vote,
   Wallet,
   LineChart,
-  Scale
+  Scale,
+  BarChart
 } from "lucide-react";
 import {
   SidebarHeader,
@@ -49,6 +50,7 @@ const governmentNav = [
   { href: "/government/subsidies", icon: ShieldCheck, label: "Subsidies" },
   { href: "/government/donations", icon: Vote, label: "Donations" },
   { href: "/government/balance-sheet", icon: Scale, label: "National Balance Sheet" },
+  { href: "/government/state-performance", icon: BarChart, label: "State Performance" },
 ];
 
 export function DashboardSidebar() {
