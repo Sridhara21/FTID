@@ -4,6 +4,7 @@ import { RevenueChartCard } from "@/components/government/revenue-chart-card";
 import { SubsidyDistributionChart } from "@/components/government/subsidy-distribution-chart";
 import { SubsidyOptimizationCard } from "@/components/government/subsidy-optimization-card";
 import { DonationTrackerCard } from "@/components/government/donation-tracker-card";
+import { LatestSchemesCard } from "@/components/government/latest-schemes-card";
 
 export default function GovernmentDashboard() {
   return (
@@ -26,6 +27,7 @@ export default function GovernmentDashboard() {
             <FraudHeatmapCard />
             <DonationTrackerCard />
         </div>
+         <LatestSchemesCard />
     </div>
   );
 }

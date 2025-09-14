@@ -1,4 +1,4 @@
-import { CreditCard, Landmark, PiggyBank, Receipt, HandCoins, ShieldCheck, Fuel, Utensils, Wheat, HeartPulse, Building, TrendingUp, TrendingDown, Minus } from "lucide-react";
+import { CreditCard, Landmark, PiggyBank, Receipt, HandCoins, ShieldCheck, Fuel, Utensils, Wheat, HeartPulse, Building, TrendingUp, TrendingDown, Minus, Rocket, GraduationCap, Factory, Leaf, Magnet, UserRound, Bot, BookOpen, Train } from "lucide-react";
 
 export const transactions = [
   {
@@ -144,6 +144,59 @@ export const governmentBalanceSheetData = {
     { name: "Salaries and Pensions", value: 8000000000000, isExpense: true },
   ],
 };
+
+export const schemes = [
+    {
+      icon: Building,
+      title: 'PMAY Urban Expansion',
+      description: '₹736 crore has been allocated for affordable housing in Uttar Pradesh under the Pradhan Mantri Awas Yojana.',
+    },
+    {
+      icon: ShieldCheck,
+      title: '₹20,000 Crore Infrastructure Guarantee Fund',
+      description: 'The government is establishing a ₹20,000 crore fund to support infrastructure investments by covering non-commercial risks.',
+    },
+    {
+      icon: Bot,
+      title: 'SUMAN SAKHI Chatbot',
+      description: 'Madhya Pradesh is launching an AI-based chatbot, providing 24/7 maternal and reproductive health information to women via WhatsApp.',
+    },
+    {
+      icon: Factory,
+      title: 'Kalamkari Garment Cluster',
+      description: 'Maharashtra is developing a Kalamkari garment cluster to train rural women in traditional garment-making, promoting self-employment.',
+    },
+    {
+      icon: Wheat,
+      title: 'Prime Minister Dhan-Dhaanya Krishi Yojana',
+      description: 'This scheme aims to support 1.7 crore farmers in 100 districts with low agricultural productivity through targeted measures.',
+    },
+    {
+      icon: Rocket,
+      title: 'Digital Agriculture Mission (DAM)',
+      description: 'The government is promoting the use of digital tools and technologies to enhance agricultural sustainability and productivity.',
+    },
+    {
+      icon: UserRound,
+      title: 'UIDAI Biometric Update',
+      description: 'Biometric updates for children aged 0-5 and 15-17 are being conducted to ensure accurate records for accessing educational and welfare services.',
+    },
+    {
+      icon: GraduationCap,
+      title: 'PM Internship Scheme',
+      description: 'The scheme offers 12-month internships in top companies across various sectors, aiming to provide 1 crore internships over the next five years.',
+    },
+    {
+      icon: Leaf,
+      title: 'Carbon Capture Incentives',
+      description: 'Financial support will be provided for carbon capture projects, aiming to reduce emissions while maintaining coal as a key energy source.',
+    },
+    {
+      icon: Magnet,
+      title: 'Rare Earth Magnet Manufacturing',
+      description: 'Fiscal incentives will be offered to encourage the local production of rare-earth magnets, which are essential for electric vehicles and renewable energy sectors.',
+    },
+  ];
 
 
 export const userProfileData = {
