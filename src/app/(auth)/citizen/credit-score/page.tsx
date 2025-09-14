@@ -29,6 +29,13 @@ const chartConfig = {
 };
 const maxScore = 900;
 
+const historyChartConfig = {
+  score: {
+    label: "Score",
+    color: "hsl(var(--primary))",
+  },
+};
+
 export default function CreditScorePage() {
     const score = chartData[0].value;
     const rating = creditScoreData.rating;
@@ -131,22 +138,24 @@ export default function CreditScorePage() {
                             <CardDescription>Your score trend over the last 6 months.</CardDescription>
                         </CardHeader>
                         <CardContent className="h-[300px]">
-                            <ResponsiveContainer width="100%" height="100%">
-                                <LineChart data={creditScoreData.history} margin={{ top: 5, right: 20, left: -10, bottom: 5 }}>
-                                     <CartesianGrid strokeDasharray="3 3" vertical={false} />
-                                    <XAxis dataKey="month" stroke="hsl(var(--muted-foreground))" tickLine={false} axisLine={false}/>
-                                    <YAxis domain={['dataMin - 10', 'dataMax + 10']} stroke="hsl(var(--muted-foreground))" tickLine={false} axisLine={false}/>
-                                    <Tooltip
-                                        content={<ChartTooltipContent indicator="dot" />}
-                                        cursor={{
-                                            stroke: "hsl(var(--muted-foreground))",
-                                            strokeWidth: 1,
-                                            strokeDasharray: "3 3",
-                                        }}
-                                    />
-                                    <Line type="monotone" dataKey="score" stroke={chartConfig.score.color} strokeWidth={2} dot={{r: 4, fill: chartConfig.score.color}} activeDot={{ r: 6 }}/>
-                                </LineChart>
-                            </ResponsiveContainer>
+                             <ChartContainer config={historyChartConfig} className="h-full w-full">
+                                <ResponsiveContainer width="100%" height="100%">
+                                    <LineChart data={creditScoreData.history} margin={{ top: 5, right: 20, left: -10, bottom: 5 }}>
+                                        <CartesianGrid strokeDasharray="3 3" vertical={false} />
+                                        <XAxis dataKey="month" stroke="hsl(var(--muted-foreground))" tickLine={false} axisLine={false}/>
+                                        <YAxis domain={['dataMin - 10', 'dataMax + 10']} stroke="hsl(var(--muted-foreground))" tickLine={false} axisLine={false}/>
+                                        <Tooltip
+                                            content={<ChartTooltipContent indicator="dot" />}
+                                            cursor={{
+                                                stroke: "hsl(var(--muted-foreground))",
+                                                strokeWidth: 1,
+                                                strokeDasharray: "3 3",
+                                            }}
+                                        />
+                                        <Line type="monotone" dataKey="score" stroke={historyChartConfig.score.color} strokeWidth={2} dot={{r: 4, fill: historyChartConfig.score.color}} activeDot={{ r: 6 }}/>
+                                    </LineChart>
+                                </ResponsiveContainer>
+                            </ChartContainer>
                         </CardContent>
                     </Card>
                 </div>
