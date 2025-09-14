@@ -22,51 +22,12 @@ import {
   CardContent,
 } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
-
-const citizenFeatures = [
-  {
-    href: "/citizen/wallet",
-    icon: Wallet,
-    label: "Digital E-Rupee Wallet",
-    description: "View your balance and transaction history.",
-  },
-  {
-    href: "/citizen/ai-advisor",
-    icon: Bot,
-    label: "AI Financial Advisor",
-    description: "Get personalized financial advice.",
-  },
-  {
-    href: "/citizen/credit-score",
-    icon: HeartPulse,
-    label: "Financial Health Score",
-    description: "Monitor and improve your financial health.",
-  },
-  {
-    href: "/citizen/tax",
-    icon: Receipt,
-    label: "Tax Calculator",
-    description: "Calculate your estimated taxes.",
-  },
-  {
-    href: "/citizen/subsidies",
-    icon: HandCoins,
-    label: "Subsidies",
-    description: "Track your government benefits.",
-  },
-  {
-    href: "#",
-    icon: LineChart,
-    label: "Financial Analysis",
-    description: "Analyze your spending patterns.",
-  },
-  {
-    href: "#",
-    icon: Scale,
-    label: "Personal Balance Sheet",
-    description: "View your assets and liabilities.",
-  },
-];
+import { WalletCard } from "@/components/citizen/wallet-card";
+import { AiAdvisorCard } from "@/components/citizen/ai-advisor-card";
+import { CreditScoreCard } from "@/components/citizen/credit-score-card";
+import { TaxCalculatorCard } from "@/components/citizen/tax-calculator-card";
+import { SubsidyTrackerCard } from "@/components/citizen/subsidy-tracker-card";
+import { IncomeExpenseChart } from "@/components/citizen/income-expense-chart";
 
 const summaryData = [
     {
@@ -134,26 +95,34 @@ export default function CitizenDashboard() {
         </CardContent>
       </Card>
 
-
-      <div className="grid grid-cols-1 gap-6 md:grid-cols-2 lg:grid-cols-3 lg:gap-8">
-        {citizenFeatures.map((feature) => (
-          <Link key={feature.href} href={feature.href} className="group">
-            <Card className="flex flex-col h-full hover:border-primary transition-colors">
-              <CardHeader>
-                <div className="flex items-center gap-4">
-                    <div className="p-3 bg-primary rounded-lg border border-primary/20 group-hover:bg-primary/90 transition-colors">
-                        <feature.icon className="h-6 w-6 text-primary-foreground transition-colors" />
-                    </div>
-                    <div>
-                        <CardTitle>{feature.label}</CardTitle>
-                        <CardDescription className="mt-1">{feature.description}</CardDescription>
-                    </div>
-                </div>
-              </CardHeader>
-            </Card>
-          </Link>
-        ))}
+      <div className="grid grid-cols-1 lg:grid-cols-3 gap-6 lg:gap-8">
+          <div className="lg:col-span-2 grid gap-6">
+              <IncomeExpenseChart />
+          </div>
+          <div className="lg:col-span-1">
+              <AiAdvisorCard />
+          </div>
       </div>
+      
+      <div className="grid grid-cols-1 lg:grid-cols-3 gap-6 lg:gap-8">
+          <WalletCard />
+          <CreditScoreCard />
+          <TaxCalculatorCard />
+      </div>
+
+      <SubsidyTrackerCard />
+
+      <Card>
+          <CardHeader>
+              <CardTitle className="flex items-center gap-2">
+                  <Scale /> Personal Balance Sheet
+              </CardTitle>
+              <CardDescription>A snapshot of your assets and liabilities.</CardDescription>
+          </CardHeader>
+          <CardContent>
+              <p className="text-muted-foreground">Coming soon...</p>
+          </CardContent>
+      </Card>
     </div>
   );
 }

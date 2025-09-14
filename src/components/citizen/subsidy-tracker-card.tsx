@@ -2,12 +2,13 @@ import { Card, CardContent, CardHeader, CardTitle, CardDescription } from "@/com
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table";
 import { Badge } from "@/components/ui/badge";
 import { subsidies } from "@/lib/placeholder-data";
+import { HandCoins } from "lucide-react";
 
 export function SubsidyTrackerCard() {
   return (
     <Card>
       <CardHeader>
-        <CardTitle>Insurance & Subsidy Tracker</CardTitle>
+        <CardTitle className="flex items-center gap-2"><HandCoins />Insurance & Subsidy Tracker</CardTitle>
         <CardDescription>
           Overview of your government-provided benefits.
         </CardDescription>

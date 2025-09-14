@@ -5,7 +5,7 @@ export function TaxCalculatorCard() {
   return (
     <Card>
       <CardHeader>
-        <CardTitle>Auto-Tax Calculator</CardTitle>
+        <CardTitle className="flex items-center gap-2"><Receipt />Auto-Tax Calculator</CardTitle>
         <CardDescription>Estimated tax based on YTD transactions.</CardDescription>
       </CardHeader>
       <CardContent className="flex flex-col items-center justify-center space-y-2">

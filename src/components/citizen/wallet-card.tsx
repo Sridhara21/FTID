@@ -1,6 +1,6 @@
 import { Card, CardContent, CardHeader, CardTitle, CardDescription } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
-import { ArrowUpRight, ArrowDownLeft } from "lucide-react";
+import { ArrowUpRight, ArrowDownLeft, Wallet } from "lucide-react";
 import { transactions } from "@/lib/placeholder-data";
 import { Separator } from "@/components/ui/separator";
 
@@ -8,7 +8,7 @@ export function WalletCard() {
   return (
     <Card className="flex flex-col">
       <CardHeader>
-        <CardTitle>FTID Wallet</CardTitle>
+        <CardTitle className="flex items-center gap-2"><Wallet />Digital E-Rupee Wallet</CardTitle>
         <CardDescription>Your current balance and recent activity.</CardDescription>
       </CardHeader>
       <CardContent className="flex flex-col flex-grow">

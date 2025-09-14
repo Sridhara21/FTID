@@ -13,15 +13,16 @@ import {
   ChartTooltipContent,
 } from "@/components/ui/chart";
 import { incomeExpenseData } from "@/lib/placeholder-data";
+import { LineChart } from "lucide-react";
 
 const chartConfig = {
   income: {
     label: "Income",
-    color: "hsl(var(--accent))",
+    color: "hsl(var(--chart-2))",
   },
   expense: {
     label: "Expense",
-    color: "hsl(var(--primary))",
+    color: "hsl(var(--chart-1))",
   },
 };
 
@@ -29,8 +30,8 @@ export function IncomeExpenseChart() {
   return (
     <Card>
       <CardHeader>
-        <CardTitle>Income vs. Expense</CardTitle>
-        <CardDescription>Last 6 months</CardDescription>
+        <CardTitle className="flex items-center gap-2"><LineChart />Financial Analysis</CardTitle>
+        <CardDescription>Income vs. Expense for the last 6 months.</CardDescription>
       </CardHeader>
       <CardContent>
         <ChartContainer config={chartConfig} className="h-[300px] w-full">
