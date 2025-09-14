@@ -1,3 +1,4 @@
+
 "use client";
 
 import {
@@ -27,20 +28,13 @@ import {
 
 const chartConfig = {
   value: { label: "Crores (INR)" },
-  'Food': { label: "Food", color: "var(--color-chart-1)" },
-  'Fertiliser': { label: "Fertiliser", color: "var(--color-chart-2)" },
-  'Petroleum': { label: "Petroleum", color: "var(--color-chart-3)" },
-  'Interest': { label: "Interest", color: "var(--color-chart-4)" },
-  'Other': { label: "Other", color: "var(--color-chart-5)" },
+  'Food': { label: "Food", color: "hsl(var(--chart-1))" },
+  'Fertiliser': { label: "Fertiliser", color: "hsl(var(--chart-2))" },
+  'Petroleum': { label: "Petroleum", color: "hsl(var(--chart-3))" },
+  'Interest': { label: "Interest", color: "hsl(var(--chart-4))" },
+  'Other': { label: "Other", color: "hsl(var(--chart-5))" },
 };
 
-const COLORS = [
-    "hsl(var(--chart-1))",
-    "hsl(var(--chart-2))",
-    "hsl(var(--chart-3))",
-    "hsl(var(--chart-4))",
-    "hsl(var(--chart-5))"
-];
 
 export function CurrentSubsidyDetails() {
   const totalSubsidies = subsidyDistributionData.reduce((acc, curr) => acc + curr.value, 0);
@@ -56,30 +50,34 @@ export function CurrentSubsidyDetails() {
                 <CardDescription>Total Allocation: ₹{totalSubsidies.toLocaleString('en-IN')} Cr</CardDescription>
             </CardHeader>
             <CardContent>
-                <div style={{ width: "100%", height: 400 }}>
+                <ChartContainer config={chartConfig} className="h-[400px] w-full">
                     <ResponsiveContainer>
                         <PieChart>
+                        <ChartTooltip
+                            cursor={false}
+                            content={<ChartTooltipContent hideLabel formatter={(value) => `₹${value.toLocaleString()}`} />}
+                        />
                         <Pie
                             data={subsidyDistributionData}
                             cx="50%"
                             cy="50%"
                             outerRadius={130}
-                            fill="#8884d8"
                             dataKey="value"
                             nameKey="name"
-                            label={({ name, value }) => `${name}: ₹${value.toLocaleString()}`}
+                            labelLine={false}
+                            label={({ name, percent }) => `${name} ${(percent * 100).toFixed(0)}%`}
                         >
-                            {subsidyDistributionData.map((entry, index) => (
-                            <Cell key={`cell-${index}`} fill={COLORS[index % COLORS.length]} />
+                            {subsidyDistributionData.map((entry) => (
+                                <Cell key={`cell-${entry.name}`} fill={entry.fill} />
                             ))}
                         </Pie>
-                        <Tooltip
-                            formatter={(value) => `₹${value.toLocaleString()}`}
-                        />
-                        <ChartLegend content={<ChartLegendContent nameKey="name" />} />
+                        <ChartLegend
+                            content={<ChartLegendContent nameKey="name" />}
+                            className="[&>*]:basis-1/5"
+                         />
                         </PieChart>
                     </ResponsiveContainer>
-                </div>
+                </ChartContainer>
             </CardContent>
         </Card>
 
