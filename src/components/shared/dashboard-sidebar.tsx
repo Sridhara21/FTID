@@ -50,6 +50,7 @@ const governmentNav = [
   { href: "/government/subsidies", icon: ShieldCheck, label: "Subsidies" },
   { href: "/government/donations", icon: Vote, label: "Donations" },
   { href: "/government/state-performance", icon: BarChart, label: "State Performance" },
+  { href: "/government/balance-sheet", icon: Scale, label: "National Balance Sheet" },
 ];
 
 export function DashboardSidebar() {
