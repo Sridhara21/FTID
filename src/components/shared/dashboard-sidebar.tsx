@@ -49,7 +49,6 @@ const governmentNav = [
   { href: "/government/revenue", icon: PieChart, label: "Revenue" },
   { href: "/government/subsidies", icon: ShieldCheck, label: "Subsidies" },
   { href: "/government/donations", icon: Vote, label: "Donations" },
-  { href: "/government/balance-sheet", icon: Scale, label: "National Balance Sheet" },
   { href: "/government/state-performance", icon: BarChart, label: "State Performance" },
 ];
 
