@@ -38,6 +38,7 @@ const citizenNav = [
   { href: "/citizen/credit-score", icon: HeartPulse, label: "Financial Health Score" },
   { href: "/citizen/tax", icon: Receipt, label: "Tax Calculator" },
   { href: "/citizen/subsidies", icon: HandCoins, label: "Subsidies" },
+  { href: "/citizen/balance-sheet", icon: Scale, label: "Personal Balance Sheet" },
 ];
 
 const governmentNav = [
