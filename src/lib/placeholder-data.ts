@@ -96,11 +96,11 @@ export const revenueData = [
 ];
 
 export const subsidyDistributionData = [
-    { name: 'Food', value: 203420, fill: 'var(--color-chart-1)' },
-    { name: 'Fertiliser', value: 167887, fill: 'var(--color-chart-2)' },
-    { name: 'Petroleum', value: 12100, fill: 'var(--color-chart-3)' },
-    { name: 'Interest', value: 27840, fill: 'var(--color-chart-4)' },
-    { name: 'Other', value: 14969, fill: 'var(--color-chart-5)' },
+    { name: 'Food', value: 203420, fill: 'hsl(var(--chart-1))' },
+    { name: 'Fertiliser', value: 167887, fill: 'hsl(var(--chart-2))' },
+    { name: 'Petroleum', value: 12100, fill: 'hsl(var(--chart-3))' },
+    { name: 'Interest', value: 27840, fill: 'hsl(var(--chart-4))' },
+    { name: 'Other', value: 14969, fill: 'hsl(var(--chart-5))' },
 ];
 
 export const subsidyDetailsData = [
