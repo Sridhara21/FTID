@@ -72,7 +72,7 @@ export const creditScoreData = {
 export const subsidies = [
   { id: "sub_1", name: "Food Subsidy (NFSA)", status: "Active", amount: 600, icon: Utensils },
   { id: "sub_2", name: "Health Insurance (PM-JAY)", status: "Active", amount: 416, icon: HeartPulse },
-  { id: "sub_3", name: "LPG Subsidy (Ujjwala)", status: "Expired", amount: 200, icon: Fuel },
+  { id: "sub_3", name: "LPG Subsidy (Ujjwala)", status: "Active", amount: 200, icon: Fuel },
   { id: "sub_4", name: "Housing Subsidy (PMAY)", status: "Active", amount: 22000, icon: Building },
   { id: "sub_5", name: "Fertilizer Subsidy (PM-PRANAM)", status: "Active", amount: 1200, icon: Wheat },
 ];
@@ -106,31 +106,31 @@ export const subsidyDistributionData = [
 export const subsidyDetailsData = [
     {
         title: "Food Subsidy",
-        amount: "₹ 2,03,420",
+        amount: "2,03,420",
         description: "Implemented mainly through the National Food Security Act (NFSA), covering distribution of rice, wheat, and coarse grains to ~81 crore beneficiaries.",
         icon: Utensils,
     },
     {
         title: "Fertiliser Subsidy",
-        amount: "₹ 1,67,887",
+        amount: "1,67,887",
         description: "Covers both Urea subsidy and Nutrient-Based Subsidy (NBS) for phosphatic & potassic fertilisers, ensuring farmers get fertilisers at affordable prices.",
         icon: Wheat,
     },
     {
         title: "Petroleum Subsidy",
-        amount: "₹ 12,100",
+        amount: "12,100",
         description: "Includes LPG subsidy under the PAHAL Direct Benefit Transfer (DBT) scheme, providing subsidised cooking gas for low-income households.",
         icon: Fuel,
     },
     {
         title: "Interest Subsidy",
-        amount: "₹ 27,840",
+        amount: "27,840",
         description: "Support for sectors like education loans, MSMEs, export promotion, and housing through schemes like the Interest Subvention Scheme (ISS).",
         icon: Banknote,
     },
     {
         title: "Other Subsidies",
-        amount: "₹ 14,969",
+        amount: "14,969",
         description: "Includes Price Support Scheme (PSS), Market Intervention Scheme (MIS), and subsidies for jute, sugar, and other industrial incentives.",
         icon: Landmark,
     },

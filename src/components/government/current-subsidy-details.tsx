@@ -8,7 +8,7 @@ import {
     CardTitle,
 } from "@/components/ui/card";
 import { subsidyDistributionData, subsidyDetailsData } from "@/lib/placeholder-data";
-import { PieChart, List } from "lucide-react";
+import { PieChart as PieChartIcon, List } from "lucide-react";
 import {
   ChartContainer,
   ChartTooltip,
@@ -16,7 +16,7 @@ import {
   ChartLegend,
   ChartLegendContent
 } from "@/components/ui/chart";
-import { Pie, ResponsiveContainer, Cell } from "recharts";
+import { PieChart, Pie, ResponsiveContainer, Cell } from "recharts";
 import {
     Accordion,
     AccordionContent,
@@ -42,10 +42,10 @@ export function CurrentSubsidyDetails() {
         <Card className="lg:col-span-2 flex flex-col h-full">
             <CardHeader>
                 <CardTitle className="flex items-center gap-2">
-                    <PieChart />
+                    <PieChartIcon />
                     Subsidy Distribution
                 </CardTitle>
-                <CardDescription>FY 2025-26 Allocation: {totalSubsidies.toLocaleString('en-IN', { style: 'currency', currency: 'INR' })} Cr</CardDescription>
+                <CardDescription>FY 2025-26 Allocation: ₹{totalSubsidies.toLocaleString('en-IN')} Cr</CardDescription>
             </CardHeader>
             <CardContent className="flex-1 pb-0">
                 <ChartContainer
@@ -98,7 +98,7 @@ export function CurrentSubsidyDetails() {
                                     </div>
                                     <div className="flex-1 text-left">
                                         <p className="font-semibold">{item.title}</p>
-                                        <p className="text-sm text-primary font-mono">{item.amount} Cr</p>
+                                        <p className="text-sm text-primary font-mono">₹{item.amount} Cr</p>
                                     </div>
                                 </div>
                             </AccordionTrigger>
