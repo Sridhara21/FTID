@@ -58,11 +58,12 @@ function calculateTax(income: number, deductions: number): TaxCalculationResult 
     const slabBreakdown: TaxCalculationResult['slabBreakdown'] = [];
 
     const taxSlabs = [
-        { limit: 300000, rate: 0 },
-        { limit: 700000, rate: 0.05 },
-        { limit: 1000000, rate: 0.10 },
-        { limit: 1200000, rate: 0.15 },
-        { limit: 1500000, rate: 0.20 },
+        { limit: 400000, rate: 0 },
+        { limit: 800000, rate: 0.05 },
+        { limit: 1200000, rate: 0.10 },
+        { limit: 1600000, rate: 0.15 },
+        { limit: 2000000, rate: 0.20 },
+        { limit: 2400000, rate: 0.25 },
         { limit: Infinity, rate: 0.30 },
     ];
 
@@ -76,7 +77,7 @@ function calculateTax(income: number, deductions: number): TaxCalculationResult 
         const taxableInSlab = Math.min(remainingIncome, slabRange);
         
         let taxInSlab = 0;
-        if(lowerBound >= 300000) {
+        if(lowerBound >= 400000) {
           taxInSlab = taxableInSlab * slab.rate;
           totalTax += taxInSlab;
         }
