@@ -1,3 +1,4 @@
+
 "use client";
 
 import { Bar, BarChart, CartesianGrid, XAxis, YAxis, ResponsiveContainer, Legend, Tooltip } from "recharts";
@@ -18,7 +19,7 @@ import { LineChart } from "lucide-react";
 const chartConfig = {
   income: {
     label: "Income",
-    color: "hsl(var(--chart-2))",
+    color: "hsl(142.1 76.2% 36.3%)",
   },
   expense: {
     label: "Expense",
