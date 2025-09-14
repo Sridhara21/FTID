@@ -33,6 +33,7 @@ import {
     TableRow,
     TableFooter
 } from "@/components/ui/table";
+import { Skeleton } from "@/components/ui/skeleton";
 
 const formSchema = z.object({
   annualIncome: z.coerce.number().positive("Annual income must be a positive number."),
