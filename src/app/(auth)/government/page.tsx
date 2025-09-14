@@ -1,25 +1,9 @@
-import Link from "next/link";
-import {
-  Landmark,
-  PieChart,
-  Map,
-  ShieldCheck,
-  Vote,
-} from "lucide-react";
-import {
-  Card,
-  CardHeader,
-  CardTitle,
-  CardDescription,
-} from "@/components/ui/card";
-
-const governmentFeatures = [
-    { href: "/government/gdp", icon: Landmark, label: "GDP Tracking", description: "Monitor real-time economic growth." },
-    { href: "/government/revenue", icon: PieChart, label: "Revenue", description: "Analyze national tax revenue sources." },
-    { href: "/government/fraud-heatmaps", icon: Map, label: "Fraud Heatmaps", description: "Identify potential financial fraud." },
-    { href: "/government/subsidies", icon: ShieldCheck, label: "Subsidies", description: "Oversee subsidy distribution." },
-    { href: "/government/donations", icon: Vote, label: "Donations", description: "Ensure election finance transparency." },
-];
+import { FraudHeatmapCard } from "@/components/government/fraud-heatmap-card";
+import { GdpChartCard } from "@/components/government/gdp-chart-card";
+import { RevenueChartCard } from "@/components/government/revenue-chart-card";
+import { SubsidyDistributionChart } from "@/components/government/subsidy-distribution-chart";
+import { SubsidyOptimizationCard } from "@/components/government/subsidy-optimization-card";
+import { DonationTrackerCard } from "@/components/government/donation-tracker-card";
 
 export default function GovernmentDashboard() {
   return (
@@ -30,25 +14,18 @@ export default function GovernmentDashboard() {
                 Oversee national finances and economic indicators.
             </p>
         </div>
-        <div className="grid grid-cols-1 gap-6 md:grid-cols-2 lg:grid-cols-3 lg:gap-8">
-        {governmentFeatures.map((feature) => (
-          <Link key={feature.href} href={feature.href} className="group">
-            <Card className="flex flex-col h-full hover:border-primary transition-colors">
-              <CardHeader>
-                 <div className="flex items-center gap-4">
-                    <div className="p-3 bg-primary/10 rounded-lg border border-primary/20 group-hover:bg-primary group-hover:text-primary-foreground transition-colors">
-                        <feature.icon className="h-6 w-6 text-primary group-hover:text-primary-foreground transition-colors" />
-                    </div>
-                    <div>
-                        <CardTitle>{feature.label}</CardTitle>
-                        <CardDescription className="mt-1">{feature.description}</CardDescription>
-                    </div>
-                </div>
-              </CardHeader>
-            </Card>
-          </Link>
-        ))}
-      </div>
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 lg:gap-8">
+            <GdpChartCard />
+            <RevenueChartCard />
+        </div>
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 lg:gap-8">
+            <SubsidyDistributionChart />
+            <SubsidyOptimizationCard />
+        </div>
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 lg:gap-8">
+            <FraudHeatmapCard />
+            <DonationTrackerCard />
+        </div>
     </div>
   );
 }
