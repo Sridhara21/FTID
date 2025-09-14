@@ -41,7 +41,7 @@ export function WalletCard() {
               </div>
               <div
                 className={`text-sm font-medium ${
-                  transaction.amount > 0 ? "text-green-400" : "text-foreground"
+                  transaction.amount > 0 ? "text-green-400" : "text-red-400"
                 }`}
               >
                 {transaction.amount > 0 ? `+` : ``}{transaction.amount.toLocaleString("en-IN", {

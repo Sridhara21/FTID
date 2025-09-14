@@ -148,7 +148,7 @@ export default function CitizenDashboard() {
                           {balanceSheetData.assets.map(asset => (
                               <TableRow key={asset.name}>
                                   <TableCell>{asset.name}</TableCell>
-                                  <TableCell className="text-right font-mono">
+                                  <TableCell className="text-right font-mono text-green-400">
                                     {asset.value.toLocaleString('en-IN', { style: 'currency', currency: 'INR', minimumFractionDigits: 0 })}
                                   </TableCell>
                               </TableRow>
@@ -157,7 +157,7 @@ export default function CitizenDashboard() {
                       <TableFooter>
                           <TableRow>
                               <TableHead>Total Assets</TableHead>
-                              <TableHead className="text-right font-mono font-bold">
+                              <TableHead className="text-right font-mono font-bold text-green-400">
                                 {totalAssets.toLocaleString('en-IN', { style: 'currency', currency: 'INR', minimumFractionDigits: 0 })}
                               </TableHead>
                           </TableRow>
@@ -177,7 +177,7 @@ export default function CitizenDashboard() {
                           {balanceSheetData.liabilities.map(liability => (
                               <TableRow key={liability.name}>
                                   <TableCell>{liability.name}</TableCell>
-                                  <TableCell className="text-right font-mono">
+                                  <TableCell className="text-right font-mono text-red-400">
                                     {liability.value.toLocaleString('en-IN', { style: 'currency', currency: 'INR', minimumFractionDigits: 0 })}
                                   </TableCell>
                               </TableRow>
@@ -186,7 +186,7 @@ export default function CitizenDashboard() {
                       <TableFooter>
                           <TableRow>
                               <TableHead>Total Liabilities</TableHead>
-                              <TableHead className="text-right font-mono font-bold">
+                              <TableHead className="text-right font-mono font-bold text-red-400">
                                 {totalLiabilities.toLocaleString('en-IN', { style: 'currency', currency: 'INR', minimumFractionDigits: 0 })}
                               </TableHead>
                           </TableRow>
@@ -196,7 +196,7 @@ export default function CitizenDashboard() {
                <div className="md:col-span-2 pt-4 border-t">
                   <div className="flex justify-between items-center text-xl font-bold">
                       <span>Net Worth</span>
-                      <span className="font-mono">
+                      <span className={`font-mono ${netWorth >= 0 ? 'text-green-400' : 'text-red-400'}`}>
                         {netWorth.toLocaleString('en-IN', { style: 'currency', currency: 'INR', minimumFractionDigits: 0 })}
                       </span>
                   </div>
