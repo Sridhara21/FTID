@@ -4,6 +4,12 @@ import { ArrowUpRight, ArrowDownLeft, Wallet } from "lucide-react";
 import { transactions } from "@/lib/placeholder-data";
 import { Separator } from "@/components/ui/separator";
 
+// Define a type for the transaction object to include the optional recipientFtid
+type Transaction = (typeof transactions)[0] & {
+  recipientFtid?: string;
+};
+
+
 export function WalletCard() {
   return (
     <Card className="flex flex-col">
@@ -30,14 +36,18 @@ export function WalletCard() {
         
         <div className="mt-4 flex-grow space-y-4 overflow-y-auto">
           <h3 className="text-sm font-medium text-muted-foreground">Recent Transactions</h3>
-          {transactions.map((transaction) => (
+          {(transactions as Transaction[]).map((transaction) => (
             <div key={transaction.id} className="flex items-center">
               <div className="p-2 bg-secondary rounded-md">
                 <transaction.icon className="h-5 w-5 text-secondary-foreground" />
               </div>
               <div className="ml-4 flex-1">
                 <p className="text-sm font-medium leading-none">{transaction.description}</p>
-                <p className="text-sm text-muted-foreground">{transaction.date}</p>
+                 {transaction.recipientFtid ? (
+                  <p className="text-xs text-muted-foreground font-mono">To: {transaction.recipientFtid}</p>
+                ) : (
+                  <p className="text-sm text-muted-foreground">{transaction.date}</p>
+                )}
               </div>
               <div
                 className={`text-sm font-medium ${
@@ -58,3 +68,5 @@ export function WalletCard() {
     </Card>
   );
 }
+
+    

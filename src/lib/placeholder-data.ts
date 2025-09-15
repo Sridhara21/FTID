@@ -28,6 +28,7 @@ export const transactions = [
     amount: -10000,
     date: "2024-07-17",
     icon: PiggyBank,
+    recipientFtid: "4589-1234-5678",
   },
 ];
 
@@ -292,5 +293,7 @@ export const statePerformanceData = {
         { state: "Telangana", metric: "Per Capita NSDP", value: "₹3.87 lakh", rank: "Top" },
     ]
 };
+
+    
 
     
