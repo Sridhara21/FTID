@@ -31,8 +31,8 @@ export function LoginForm() {
           </CardHeader>
           <CardContent className="space-y-4">
             <div className="space-y-2">
-              <Label htmlFor="citizen-email">Email</Label>
-              <Input id="citizen-email" type="email" placeholder="citizen@email.com" />
+              <Label htmlFor="citizen-ftid">FTID</Label>
+              <Input id="citizen-ftid" type="text" placeholder="xxxx-xxxx-xxxx-xxxx" />
             </div>
             <div className="space-y-2">
               <Label htmlFor="citizen-password">Password</Label>
@@ -54,8 +54,8 @@ export function LoginForm() {
           </CardHeader>
           <CardContent className="space-y-4">
             <div className="space-y-2">
-              <Label htmlFor="gov-email">Email</Label>
-              <Input id="gov-email" type="email" placeholder="official@gov.org" />
+              <Label htmlFor="gov-ftid">Official FTID</Label>
+              <Input id="gov-ftid" type="text" placeholder="xxxx-xxxx-xxxx-xxxx" />
             </div>
             <div className="space-y-2">
               <Label htmlFor="gov-password">Password</Label>
