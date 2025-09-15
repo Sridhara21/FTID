@@ -52,7 +52,6 @@ const governmentNav = [
   { href: "/government/donations", icon: Vote, label: "Donations" },
   { href: "/government/state-performance", icon: BarChart, label: "State Performance" },
   { href: "/government/balance-sheet", icon: Scale, label: "National Balance Sheet" },
-  { href: "/government/fraud-heatmaps", icon: AlertTriangle, label: "Fraud Heatmaps" },
 ];
 
 export function DashboardSidebar() {
