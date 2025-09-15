@@ -1,4 +1,5 @@
 
+
 "use client";
 
 import {
@@ -61,14 +62,22 @@ export function CurrentSubsidyDetails() {
                             data={subsidyDistributionData}
                             cx="50%"
                             cy="50%"
-                            outerRadius={130}
+                            outerRadius={120}
+                            innerRadius={80}
                             dataKey="value"
                             nameKey="name"
-                            labelLine={false}
-                            label={({ name, percent }) => {
-                                if (percent < 0.05) return null; // Don't render label for small slices
-                                return `${name} ${(percent * 100).toFixed(0)}%`
-                            }}
+                            labelLine={{ stroke: "hsl(var(--muted-foreground))", strokeWidth: 1 }}
+                            label={({ name, percent, x, y, textAnchor }) => (
+                                <text
+                                  x={x}
+                                  y={y}
+                                  textAnchor={textAnchor}
+                                  dominantBaseline="central"
+                                  className="text-xs fill-muted-foreground"
+                                >
+                                  {`${name} (${(percent * 100).toFixed(0)}%)`}
+                                </text>
+                              )}
                         >
                             {subsidyDistributionData.map((entry) => (
                                 <Cell key={`cell-${entry.name}`} fill={entry.fill} />
