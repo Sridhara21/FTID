@@ -7,6 +7,7 @@ export const transactions = [
     amount: -5000,
     date: "2024-07-20",
     icon: Receipt,
+    recipientFtid: "7890-2345-6789",
   },
   {
     id: "txn_2",
@@ -21,6 +22,7 @@ export const transactions = [
     amount: -8000,
     date: "2024-07-18",
     icon: CreditCard,
+    recipientFtid: "1122-3344-5566",
   },
   {
     id: "txn_4",
@@ -297,3 +299,4 @@ export const statePerformanceData = {
     
 
     
+
