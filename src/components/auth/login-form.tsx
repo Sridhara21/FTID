@@ -32,7 +32,7 @@ export function LoginForm() {
           <CardContent className="space-y-4">
             <div className="space-y-2">
               <Label htmlFor="citizen-ftid">FTID</Label>
-              <Input id="citizen-ftid" type="text" placeholder="xxxx-xxxx-xxxx-xxxx" />
+              <Input id="citizen-ftid" type="text" placeholder="2398-6501-4775" />
             </div>
             <div className="space-y-2">
               <Label htmlFor="citizen-password">Password</Label>
@@ -55,7 +55,7 @@ export function LoginForm() {
           <CardContent className="space-y-4">
             <div className="space-y-2">
               <Label htmlFor="gov-ftid">Official FTID</Label>
-              <Input id="gov-ftid" type="text" placeholder="xxxx-xxxx-xxxx-xxxx" />
+              <Input id="gov-ftid" type="text" placeholder="0011-2233-0000" />
             </div>
             <div className="space-y-2">
               <Label htmlFor="gov-password">Password</Label>
@@ -70,3 +70,5 @@ export function LoginForm() {
     </Tabs>
   );
 }
+
+    

@@ -238,11 +238,11 @@ export const schemes = [
 
 
 export const userProfileData = {
-    name: "Aarav Sharma",
-    email: "aarav.sharma@email.com",
+    name: "Ravi",
+    email: "ravi@email.com",
     address: "45, MG Road, Bangalore, 560001",
-    ftid: "2456-9467-7356-0923",
-    fallback: "AS"
+    ftid: "2398-6501-4775",
+    fallback: "R"
 };
 
 
@@ -292,3 +292,5 @@ export const statePerformanceData = {
         { state: "Telangana", metric: "Per Capita NSDP", value: "₹3.87 lakh", rank: "Top" },
     ]
 };
+
+    
