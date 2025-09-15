@@ -42,7 +42,7 @@ export function SubsidyDistributionChart() {
             <PieChart>
               <ChartTooltip
                 cursor={false}
-                content={<ChartTooltipContent hideLabel formatter={(value) => `₹${value.toLocaleString()}`} />}
+                content={<ChartTooltipContent hideLabel formatter={(value, name) => `${name}: ₹${Number(value).toLocaleString('en-IN')} Cr`} />}
               />
               <Pie
                 data={subsidyDistributionData}
@@ -51,7 +51,10 @@ export function SubsidyDistributionChart() {
                 innerRadius="60%"
                 strokeWidth={5}
                 labelLine={false}
-                label={({ percent, name }) => `${name} ${(percent * 100).toFixed(0)}%`}
+                label={({ percent, name }) => {
+                    if (percent < 0.05) return null;
+                    return `${name} (${(percent * 100).toFixed(0)}%)`
+                }}
               >
                 {subsidyDistributionData.map((entry) => (
                   <Cell key={`cell-${entry.name}`} fill={entry.fill} name={entry.name} />
