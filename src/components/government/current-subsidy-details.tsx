@@ -91,7 +91,7 @@ export function CurrentSubsidyDetails() {
                     Allocation Details
                 </CardTitle>
                 <CardDescription>Breakdown of subsidy categories for FY 2025-26.</CardDescription>
-            </Header>
+            </CardHeader>
             <CardContent>
                 <Accordion type="single" collapsible className="w-full">
                     {subsidyDetailsData.map((item) => (
