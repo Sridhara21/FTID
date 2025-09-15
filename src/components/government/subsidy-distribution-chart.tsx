@@ -62,7 +62,7 @@ export function SubsidyDistributionChart() {
               </Pie>
               <ChartLegend
                 content={<ChartLegendContent nameKey="name" />}
-                className="-translate-y-2 flex-wrap gap-2 [&>*]:basis-1/4 [&>*]:justify-center"
+                className="flex-wrap gap-x-4 gap-y-1"
               />
             </PieChart>
           </ResponsiveContainer>
