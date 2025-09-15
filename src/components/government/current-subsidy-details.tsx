@@ -65,7 +65,10 @@ export function CurrentSubsidyDetails() {
                             dataKey="value"
                             nameKey="name"
                             labelLine={false}
-                            label={({ name, percent }) => `${name} ${(percent * 100).toFixed(0)}%`}
+                            label={({ name, percent }) => {
+                                if (percent < 0.05) return null; // Don't render label for small slices
+                                return `${name} ${(percent * 100).toFixed(0)}%`
+                            }}
                         >
                             {subsidyDistributionData.map((entry) => (
                                 <Cell key={`cell-${entry.name}`} fill={entry.fill} />
@@ -88,7 +91,7 @@ export function CurrentSubsidyDetails() {
                     Allocation Details
                 </CardTitle>
                 <CardDescription>Breakdown of subsidy categories for FY 2025-26.</CardDescription>
-            </CardHeader>
+            </Header>
             <CardContent>
                 <Accordion type="single" collapsible className="w-full">
                     {subsidyDetailsData.map((item) => (
