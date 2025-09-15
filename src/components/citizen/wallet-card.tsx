@@ -7,6 +7,7 @@ import { Separator } from "@/components/ui/separator";
 // Define a type for the transaction object to include the optional recipientFtid
 type Transaction = (typeof transactions)[0] & {
   recipientFtid?: string;
+  senderFtid?: string;
 };
 
 
@@ -45,6 +46,8 @@ export function WalletCard() {
                 <p className="text-sm font-medium leading-none">{transaction.description}</p>
                  {transaction.recipientFtid ? (
                   <p className="text-xs text-muted-foreground font-mono">To: {transaction.recipientFtid}</p>
+                ) : transaction.senderFtid ? (
+                  <p className="text-xs text-muted-foreground font-mono">From: {transaction.senderFtid}</p>
                 ) : (
                   <p className="text-sm text-muted-foreground">{transaction.date}</p>
                 )}

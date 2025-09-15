@@ -15,6 +15,7 @@ export const transactions = [
     amount: 50000,
     date: "2024-07-19",
     icon: Landmark,
+    senderFtid: "9876-5432-1098"
   },
   {
     id: "txn_3",
@@ -299,4 +300,5 @@ export const statePerformanceData = {
     
 
     
+
 
