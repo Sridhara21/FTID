@@ -62,8 +62,8 @@ export function CurrentSubsidyDetails() {
                             data={subsidyDistributionData}
                             cx="50%"
                             cy="50%"
-                            outerRadius={120}
-                            innerRadius={80}
+                            outerRadius={150}
+                            innerRadius={100}
                             dataKey="value"
                             nameKey="name"
                             labelLine={{ stroke: "hsl(var(--muted-foreground))", strokeWidth: 1 }}
@@ -85,7 +85,7 @@ export function CurrentSubsidyDetails() {
                         </Pie>
                         <ChartLegend
                             content={<ChartLegendContent nameKey="name" />}
-                            className="[&>*]:basis-1/5"
+                            className="[&>*]:basis-1/5 mt-4"
                          />
                         </PieChart>
                     </ResponsiveContainer>
