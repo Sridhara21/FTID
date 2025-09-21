@@ -1,4 +1,4 @@
-import { CreditCard, Landmark, PiggyBank, Receipt, HandCoins, ShieldCheck, Fuel, Utensils, Wheat, HeartPulse, Building, TrendingUp, TrendingDown, Minus, Rocket, GraduationCap, Factory, Leaf, Magnet, UserRound, Bot, BookOpen, Train, Banknote, Globe, LineChart, Users, Target, ArrowRightLeft, Briefcase, BarChart, Scale } from "lucide-react";
+import { CreditCard, Landmark, PiggyBank, Receipt, HandCoins, ShieldCheck, Fuel, Utensils, Wheat, HeartPulse, Building, TrendingUp, TrendingDown, Minus, Rocket, GraduationCap, Factory, Leaf, Magnet, UserRound, Bot, BookOpen, Train, Banknote, Globe, LineChart, Users, Target, ArrowRightLeft, Briefcase, BarChart, Scale, CandlestickChart, Folders, Bitcoin } from "lucide-react";
 
 export const transactions = [
   {
@@ -297,8 +297,25 @@ export const statePerformanceData = {
     ]
 };
 
+export const portfolioData = {
+  stocks: [
+    { name: "Reliance Industries", symbol: "RELIANCE", quantity: 50, value: 145000, change: "+1.2%", changeValue: 1740 },
+    { name: "Tata Consultancy Services", symbol: "TCS", quantity: 100, value: 380000, change: "-0.5%", changeValue: -1900 },
+    { name: "HDFC Bank", symbol: "HDFCBANK", quantity: 200, value: 310000, change: "+2.1%", changeValue: 6510 },
+  ],
+  mutualFunds: [
+    { name: "Parag Parikh Flexi Cap Fund", nav: 72.5, units: 1379, value: 100000, change: "+0.8%", changeValue: 800 },
+    { name: "UTI Nifty 50 Index Fund", nav: 145.2, units: 1033, value: 150000, change: "+1.1%", changeValue: 1650 },
+  ],
+  crypto: [
+    { name: "Bitcoin", symbol: "BTC", quantity: 0.05, value: 250000, change: "+5.2%", changeValue: 13000 },
+    { name: "Ethereum", symbol: "ETH", quantity: 1.5, value: 300000, change: "+3.8%", changeValue: 11400 },
+  ],
+};
+
     
 
     
+
 
 

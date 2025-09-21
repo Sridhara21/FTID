@@ -21,7 +21,8 @@ import {
   LineChart,
   Scale,
   BarChart,
-  AlertTriangle
+  AlertTriangle,
+  Briefcase
 } from "lucide-react";
 import {
   SidebarHeader,
@@ -37,6 +38,7 @@ const citizenNav = [
   { href: "/citizen", icon: LayoutGrid, label: "Dashboard" },
   { href: "/citizen/profile", icon: User, label: "Profile" },
   { href: "/citizen/wallet", icon: Wallet, label: "Digital E-Rupee Wallet" },
+  { href: "/citizen/portfolio", icon: Briefcase, label: "Investment Portfolio" },
   { href: "/citizen/ai-advisor", icon: Bot, label: "AI Financial Advisor" },
   { href: "/citizen/credit-score", icon: HeartPulse, label: "Financial Health Score" },
   { href: "/citizen/tax", icon: Receipt, label: "Tax Calculator" },
