@@ -1,3 +1,4 @@
+
 import { CreditCard, Landmark, PiggyBank, Receipt, HandCoins, ShieldCheck, Fuel, Utensils, Wheat, HeartPulse, Building, TrendingUp, TrendingDown, Minus, Rocket, GraduationCap, Factory, Leaf, Magnet, UserRound, Bot, BookOpen, Train, Banknote, Globe, LineChart, Users, Target, ArrowRightLeft, Briefcase, BarChart, Scale, CandlestickChart, Folders, Bitcoin } from "lucide-react";
 
 export const transactions = [
@@ -311,11 +312,33 @@ export const portfolioData = {
     { name: "Bitcoin", symbol: "BTC", quantity: 0.05, value: 250000, change: "+5.2%", changeValue: 13000 },
     { name: "Ethereum", symbol: "ETH", quantity: 1.5, value: 300000, change: "+3.8%", changeValue: 11400 },
   ],
+  fixedDeposits: [
+    { bank: "HDFC Bank", value: 200000, interestRate: "7.1%", maturityDate: "2026-05-10" },
+    { bank: "State Bank of India", value: 150000, interestRate: "6.9%", maturityDate: "2025-11-20" },
+  ],
+  digitalGold: [
+    { grams: 50, value: 350000 },
+  ],
+  bonds: [
+    { name: "GOI 7.26% 2033", value: 100000 },
+    { name: "NHAI InvIT", value: 50000 },
+  ],
+  emergencyFund: [
+    { account: "Savings Account", value: 250000 },
+  ],
 };
 
-    
-
-    
-
-
-
+export const portfolioAiSuggestions = [
+    {
+        title: "Diversify Your Equity",
+        description: "Your portfolio is heavily weighted in large-cap stocks. Consider adding a mid-cap or small-cap mutual fund to capture growth in other market segments."
+    },
+    {
+        title: "Increase Emergency Fund",
+        description: "Your current emergency fund covers approximately 4 months of expenses. Financial advisors recommend having 6-12 months of expenses saved for unforeseen circumstances."
+    },
+    {
+        title: "Consider Sovereign Gold Bonds (SGBs)",
+        description: "Instead of only holding Digital Gold, look into SGBs. They offer an additional 2.5% annual interest on the issue price and are tax-efficient if held until maturity."
+    }
+]
