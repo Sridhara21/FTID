@@ -309,17 +309,17 @@ export const governmentBalanceSheetDataProjected = {
       name: 'Revenue Receipts',
       value: 3933471,
       subItems: [
-        { name: 'Tax Revenue (Net to Centre)', value: 3258520 },
+        { name: 'Tax Revenue (Net)', value: 3258520 },
         { name: 'Non-Tax Revenue', value: 600951 },
       ],
     },
     {
       name: 'Capital Receipts',
-      value: 1276000,
+      value: 1644936,
       subItems: [
         { name: 'Recovery of Loans', value: 29000 },
         { name: 'Other Receipts', value: 47000 },
-        { name: 'Borrowings and Other Liabilities', value: 1200000 },
+        { name: 'Borrowings & Other Liabilities', value: 1200000 },
       ],
     },
   ],
@@ -329,10 +329,14 @@ export const governmentBalanceSheetDataProjected = {
       value: 4000000,
       subItems: [
         { name: 'Interest Payments', value: 1200000 },
-        { name: 'Grants in Aid for Creation of Capital Assets', value: 450000 },
+        { name: 'Grants for Capital Assets', value: 450000 },
       ],
     },
-    { name: 'Capital Account Expenditure', value: 1400000, subItems: [] },
+    {
+      name: 'Capital Account Expenditure',
+      value: 1400000,
+      subItems: [],
+    },
   ],
 };
 
@@ -348,26 +352,31 @@ export const governmentBalanceSheetDataFy2526 = {
     },
     {
       name: 'Capital Receipts',
-      value: 1811345,
+      value: 1811000,
       subItems: [
         { name: 'Recovery of Loans', value: 29000 },
         { name: 'Other Receipts', value: 47000 },
-        { name: 'Borrowings & Other Liabilities', value: 1735345 },
+        { name: 'Borrowings & Other Liabilities', value: 1735000 },
       ],
     },
   ],
   liabilities: [
     {
       name: 'Revenue Account Expenditure',
-      value: 3944255,
+      value: 3998909,
       subItems: [
         { name: 'Interest Payments', value: 1276338 },
         { name: 'Grants for Capital Assets', value: 427192 },
       ],
     },
-    { name: 'Capital Account Expenditure', value: 1257500, subItems: [] },
+    {
+      name: 'Capital Account Expenditure',
+      value: 1232500,
+      subItems: [],
+    },
   ],
 };
+
 
 export const schemes = [
   {

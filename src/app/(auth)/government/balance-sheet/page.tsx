@@ -32,8 +32,8 @@ type BalanceSheetData = {
 export default function GovernmentBalanceSheetPage() {
     const totalAssetsFy2526 = governmentBalanceSheetDataFy2526.assets.reduce((sum, item) => sum + item.value, 0);
     const totalLiabilitiesFy2526 = governmentBalanceSheetDataFy2526.liabilities.reduce((sum, item) => sum + item.value, 0);
-    const netPositionFy2526 = totalAssetsFy2526 - totalLiabilitiesFy2526;
-    
+    const fiscalDeficitFy2526 = totalLiabilitiesFy2526 - (governmentBalanceSheetDataFy2526.assets[0].value + governmentBalanceSheetDataFy2526.assets[1].subItems!.slice(0, 2).reduce((sum, item) => sum + item.value, 0));
+
     const totalAssetsProjected = governmentBalanceSheetDataProjected.assets.reduce((sum, item) => sum + item.value, 0);
     const totalLiabilitiesProjected = governmentBalanceSheetDataProjected.liabilities.reduce((sum, item) => sum + item.value, 0);
     const netPositionProjected = totalAssetsProjected - totalLiabilitiesProjected;
@@ -78,13 +78,13 @@ export default function GovernmentBalanceSheetPage() {
                 <CardContent>
                      <div className="grid grid-cols-1 md:grid-cols-2 gap-8 text-center mb-8">
                         <div>
-                             <p className="text-muted-foreground">Fiscal Deficit / Surplus (FY25-26)</p>
-                             <p className={`text-2xl font-bold font-mono ${netPositionFy2526 >= 0 ? 'text-green-400' : 'text-red-400'}`}>
-                                {formatDeficit(netPositionFy2526)}
+                             <p className="text-muted-foreground">Fiscal Deficit (FY25-26)</p>
+                             <p className={`text-2xl font-bold font-mono ${fiscalDeficitFy2526 >= 0 ? 'text-green-400' : 'text-red-400'}`}>
+                                {formatDeficit(fiscalDeficitFy2526)}
                             </p>
                         </div>
                         <div>
-                             <p className="text-muted-foreground">Fiscal Deficit / Surplus (Projected)</p>
+                             <p className="text-muted-foreground">Net Position (Projected)</p>
                              <p className={`text-2xl font-bold font-mono ${netPositionProjected >= 0 ? 'text-green-400' : 'text-red-400'}`}>
                                 {formatValue(netPositionProjected)}
                             </p>
@@ -93,7 +93,7 @@ export default function GovernmentBalanceSheetPage() {
 
                     <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
                         <div>
-                            <h3 className="text-lg font-semibold mb-2 text-green-400">Assets & Incomes (FY25-26)</h3>
+                            <h3 className="text-lg font-semibold mb-2 text-green-400">Receipts (FY25-26)</h3>
                             <Table>
                                 <TableHeader>
                                     <TableRow>
@@ -115,7 +115,7 @@ export default function GovernmentBalanceSheetPage() {
                             </Table>
                         </div>
                         <div>
-                            <h3 className="text-lg font-semibold mb-2 text-green-400">Assets & Incomes (Projected)</h3>
+                            <h3 className="text-lg font-semibold mb-2 text-green-400">Receipts (Projected)</h3>
                             <Table>
                                 <TableHeader>
                                     <TableRow>
@@ -137,7 +137,7 @@ export default function GovernmentBalanceSheetPage() {
                             </Table>
                         </div>
                         <div>
-                            <h3 className="text-lg font-semibold mb-2 text-red-400">Liabilities & Expenses (FY25-26)</h3>
+                            <h3 className="text-lg font-semibold mb-2 text-red-400">Expenditure (FY25-26)</h3>
                             <Table>
                                 <TableHeader>
                                     <TableRow>
@@ -159,7 +159,7 @@ export default function GovernmentBalanceSheetPage() {
                             </Table>
                         </div>
                         <div>
-                            <h3 className="text-lg font-semibold mb-2 text-red-400">Liabilities & Expenses (Projected)</h3>
+                            <h3 className="text-lg font-semibold mb-2 text-red-400">Expenditure (Projected)</h3>
                             <Table>
                                 <TableHeader>
                                     <TableRow>
