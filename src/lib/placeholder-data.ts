@@ -170,19 +170,36 @@ export const balanceSheetData = {
   ],
 };
 
-export const governmentBalanceSheetData = {
+export const governmentBalanceSheetDataProjected = {
     assets: [
-        { name: 'Tax Revenue (Net)', value: 2837409 },
-        { name: 'Non-Tax Revenue', value: 583000 },
-        { name: 'Recovery of Loans', value: 29000 },
-        { name: 'Other Capital Receipts', value: 47000 },
-        { name: 'Borrowings & Other Liabilities', value: 1568936 },
+        { name: 'Tax Revenue (Net)', value: 2500000 },
+        { name: 'Non-Tax Revenue', value: 500000 },
+        { name: 'Recovery of Loans', value: 25000 },
+        { name: 'Other Capital Receipts', value: 40000 },
+        { name: 'Borrowings & Other Liabilities', value: 1500000 },
     ],
     liabilities: [
-        { name: 'On Revenue Account', value: 3944255 },
-        { name: 'On Capital Account', value: 1121090 },
+        { name: 'On Revenue Account', value: 3800000 },
+        { name: 'On Capital Account', value: 1000000 },
     ],
 };
+
+export const governmentBalanceSheetDataFy2526 = {
+    assets: [
+        { name: 'Tax Revenue (Net to Centre)', value: 2837409 },
+        { name: 'Non-Tax Revenue', value: 583000 },
+        { name: 'Recovery of Loans', value: 29000 },
+        { name: 'Other Receipts', value: 47000 },
+        { name: 'Borrowings and Other Liabilities', value: 1568936 },
+    ],
+    liabilities: [
+        { name: 'Interest Payments', value: 1276338 },
+        { name: 'Grants in Aid for Creation of Capital Assets', value: 427192 },
+        { name: 'Capital Account Expenditure', value: 1121090 },
+        { name: 'Revenue Account Expenditure (excl. interest & grants)', value: 2240725 },
+    ],
+};
+
 
 export const schemes = [
     {
@@ -259,14 +276,14 @@ export const economicIndicatorsData = [
     { label: "GNP (Nominal)", value: "₹319L Cr", change: "~$3.8T", icon: Globe },
     { label: "Real GDP Growth", value: "6.5%", change: "Annual", icon: LineChart },
     { label: "Per Capita Income", value: "₹2.45L", change: "~$2,950", icon: Users },
-    { label: "Tax Revenue (Net)", value: "₹26.5L Cr", change: "Total", icon: Banknote },
-    { label: "Fiscal Deficit", value: "5.1% of GDP", change: "₹17.35L Cr", icon: PieChartIcon },
-    { label: "Revenue Deficit", value: "2.9% of GDP", change: "₹9.5L Cr", icon: PieChartIcon },
+    { label: "Total Tax Revenue (Net)", value: "₹26.5L Cr", change: "Total", icon: Banknote },
+    { label: "Fiscal Deficit", value: "₹17.35L Cr", change: "5.1% of GDP", icon: PieChartIcon },
+    { label: "Revenue Deficit", value: "₹9.5L Cr", change: "2.9% of GDP", icon: PieChartIcon },
     { label: "Capital Expenditure", value: "₹11.1L Cr", change: "Infrastructure", icon: Building },
     { label: "Inflation (CPI)", value: "4.5%", change: "Projected", icon: TrendingUp, color: "text-red-400" },
     { label: "Forex Reserves", value: "$640B", change: "Current", icon: ShieldCheck },
     { label: "Current Account Deficit (CAD)", value: "1.5% of GDP", change: "Current Account Deficit", icon: ArrowRightLeft },
-    { label: "Unemployment", value: "6.2%", change: "Estimated", icon: Target },
+    { label: "Unemployment Rate", value: "6.2%", change: "Estimated", icon: Target },
 ];
 
 

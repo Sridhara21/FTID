@@ -22,13 +22,13 @@ import {
     TableRow,
     TableFooter
 } from "@/components/ui/table";
-import { governmentBalanceSheetData } from "@/lib/placeholder-data";
+import { governmentBalanceSheetDataFy2526 } from "@/lib/placeholder-data";
 import { Scale } from "lucide-react";
 
 
 export default function GovernmentDashboard() {
-  const totalAssets = governmentBalanceSheetData.assets.reduce((sum, item) => sum + item.value, 0);
-  const totalLiabilities = governmentBalanceSheetData.liabilities.reduce((sum, item) => sum + item.value, 0);
+  const totalAssets = governmentBalanceSheetDataFy2526.assets.reduce((sum, item) => sum + item.value, 0);
+  const totalLiabilities = governmentBalanceSheetDataFy2526.liabilities.reduce((sum, item) => sum + item.value, 0);
   const netPosition = totalAssets - totalLiabilities;
   return (
     <div className="grid gap-6 md:gap-8">
@@ -47,7 +47,7 @@ export default function GovernmentDashboard() {
         <Card>
             <CardHeader>
                 <CardTitle className="flex items-center gap-2">
-                    <Scale /> National Balance Sheet
+                    <Scale /> National Balance Sheet (FY25-26)
                 </CardTitle>
                 <CardDescription>A snapshot of the nation's assets and liabilities (in INR Crores).</CardDescription>
             </CardHeader>
@@ -62,7 +62,7 @@ export default function GovernmentDashboard() {
                             </TableRow>
                         </TableHeader>
                         <TableBody>
-                            {governmentBalanceSheetData.assets.map(asset => (
+                            {governmentBalanceSheetDataFy2526.assets.map(asset => (
                                 <TableRow key={asset.name}>
                                     <TableCell>{asset.name}</TableCell>
                                     <TableCell className="text-right font-mono text-green-400">
@@ -91,7 +91,7 @@ export default function GovernmentDashboard() {
                             </TableRow>
                         </TableHeader>
                         <TableBody>
-                            {governmentBalanceSheetData.liabilities.map(liability => (
+                            {governmentBalanceSheetDataFy2526.liabilities.map(liability => (
                                 <TableRow key={liability.name}>
                                     <TableCell>{liability.name}</TableCell>
                                     <TableCell className="text-right font-mono text-red-400">
