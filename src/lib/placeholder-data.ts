@@ -172,19 +172,16 @@ export const balanceSheetData = {
 
 export const governmentBalanceSheetData = {
   assets: [
-    { name: "Tax Revenue (YTD)", value: 49000000000000, isIncome: true },
-    { name: "Foreign Exchange Reserves", value: 54000000000000, isIncome: false },
-    { name: "Gold Reserves", value: 4500000000000, isIncome: false },
-    { name: "Public Sector Undertakings (PSU) Equity", value: 35000000000000, isIncome: false },
-    { name: "Infrastructure Assets", value: 150000000000000, isIncome: false },
+    { name: "Tax Revenue (Net)", value: 2837409 },
+    { name: "Non-Tax Revenue", value: 583000 },
+    { name: "Recovery of Loans", value: 29000 },
+    { name: "Other Capital Receipts", value: 47000 },
+    { name: "Borrowings & Other Liabilities", value: 1568936 },
   ],
   liabilities: [
-    { name: "Government Bonds & Securities", value: 120000000000000, isExpense: false },
-    { name: "External Debt", value: 50000000000000, isExpense: false },
-    { name: "Public Provident Fund (PPF) & Small Savings", value: 40000000000000, isExpense: false },
-    { name: "Subsidies (Annual Budget)", value: 5000000000000, isExpense: true },
-    { name: "Defense Expenditure (Annual Budget)", value: 6200000000000, isExpense: true },
-    { name: "Salaries and Pensions", value: 8000000000000, isExpense: true },
+    { name: "Interest Payments", value: 1276338 },
+    { name: "Revenue Account (Excl. Interest)", value: 2667917 },
+    { name: "Capital Account Expenditure", value: 1121090 },
   ],
 };
 
@@ -259,18 +256,14 @@ export const dummyFtidData = JSON.stringify([
 
 
 export const economicIndicatorsData = [
-    { label: "GDP (Nominal)", value: "₹324 lakh crore", change: "~$3.9 trillion", icon: Globe },
-    { label: "GNP (Nominal)", value: "₹319 lakh crore", change: "~$3.8 trillion", icon: BarChart },
-    { label: "Real GDP Growth", value: "6.5%", change: "vs last year", icon: TrendingUp, color: "text-green-400" },
-    { label: "Per Capita Income", value: "₹2.45 lakh", change: "~$2,950", icon: Users },
-    { label: "Total Tax Revenue", value: "₹26.5 lakh crore", change: "Net", icon: Receipt },
-    { label: "Fiscal Deficit", value: "5.1% of GDP", change: "₹17.35 lakh crore", icon: TrendingDown, color: "text-red-400" },
-    { label: "Revenue Deficit", value: "2.9% of GDP", change: "₹9.5 lakh crore", icon: TrendingDown, color: "text-red-400" },
-    { label: "Capital Expenditure", value: "₹11.1 lakh crore", change: "+11% from last year", icon: Rocket },
-    { label: "Inflation (CPI)", value: "4.5%", change: "Projected", icon: Target },
-    { label: "Forex Reserves", value: "$640 billion", change: "Updated weekly", icon: Landmark },
-    { label: "Current Account Deficit", value: "1.5% of GDP", change: "vs 2.1% last year", icon: ArrowRightLeft },
-    { label: "Unemployment Rate", value: "6.2%", change: "Estimated", icon: Briefcase },
+    { label: "Total Receipts", value: "₹50.65 lakh crore", change: "2025-26 BE", icon: Banknote },
+    { label: "Total Expenditure", value: "₹50.65 lakh crore", change: "2025-26 BE", icon: Receipt },
+    { label: "Tax Revenue (Net)", value: "₹28.37 lakh crore", change: "Net to Centre", icon: Globe },
+    { label: "Fiscal Deficit", value: "4.4% of GDP", change: "₹15.69 lakh crore", icon: TrendingDown, color: "text-red-400" },
+    { label: "Revenue Deficit", value: "1.5% of GDP", change: "₹5.24 lakh crore", icon: TrendingDown, color: "text-red-400" },
+    { label: "Primary Deficit", value: "0.8% of GDP", change: "₹2.93 lakh crore", icon: TrendingDown, color: "text-red-400" },
+    { label: "Capital Expenditure", value: "₹11.21 lakh crore", change: "On Capital Account", icon: Rocket },
+    { label: "Effective Capital Expenditure", value: "₹15.48 lakh crore", change: "Incl. Grants in Aid", icon: Rocket },
 ];
 
 
