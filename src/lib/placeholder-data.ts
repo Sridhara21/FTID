@@ -171,18 +171,17 @@ export const balanceSheetData = {
 };
 
 export const governmentBalanceSheetData = {
-  assets: [
-    { name: "Tax Revenue (Net)", value: 2837409 },
-    { name: "Non-Tax Revenue", value: 583000 },
-    { name: "Recovery of Loans", value: 29000 },
-    { name: "Other Capital Receipts", value: 47000 },
-    { name: "Borrowings & Other Liabilities", value: 1568936 },
-  ],
-  liabilities: [
-    { name: "Interest Payments", value: 1276338 },
-    { name: "Grants in Aid", value: 427192 },
-    { name: "Capital Account Expenditure", value: 1121090 },
-  ],
+    assets: [
+        { name: 'Tax Revenue (Net)', value: 2837409 },
+        { name: 'Non-Tax Revenue', value: 583000 },
+        { name: 'Recovery of Loans', value: 29000 },
+        { name: 'Other Capital Receipts', value: 47000 },
+        { name: 'Borrowings & Other Liabilities', value: 1568936 },
+    ],
+    liabilities: [
+        { name: 'On Revenue Account', value: 3944255 },
+        { name: 'On Capital Account', value: 1121090 },
+    ],
 };
 
 export const schemes = [
@@ -266,7 +265,7 @@ export const economicIndicatorsData = [
     { label: "Capital Expenditure", value: "₹11.1L Cr", change: "Infrastructure", icon: Building },
     { label: "Inflation (CPI)", value: "4.5%", change: "Projected", icon: TrendingUp, color: "text-red-400" },
     { label: "Forex Reserves", value: "$640B", change: "Current", icon: ShieldCheck },
-    { label: "CAD", value: "1.5% of GDP", change: "Current Account Deficit", icon: ArrowRightLeft },
+    { label: "Current Account Deficit (CAD)", value: "1.5% of GDP", change: "Current Account Deficit", icon: ArrowRightLeft },
     { label: "Unemployment", value: "6.2%", change: "Estimated", icon: Target },
 ];
 
@@ -343,4 +342,3 @@ export const portfolioAiSuggestions = [
     
 
     
-
