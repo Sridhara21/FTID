@@ -179,7 +179,7 @@ export const governmentBalanceSheetDataProjected = {
         { name: 'Borrowings & Other Liabilities', value: 1500000 },
     ],
     liabilities: [
-        { name: 'On Revenue Account', value: 3800000 },
+        { name: 'On Revenue Account', value: 3500000 },
         { name: 'On Capital Account', value: 1000000 },
     ],
 };
@@ -359,3 +359,4 @@ export const portfolioAiSuggestions = [
     
 
     
+
