@@ -1,5 +1,5 @@
 
-import { CreditCard, Landmark, PiggyBank, Receipt, HandCoins, ShieldCheck, Fuel, Utensils, Wheat, HeartPulse, Building, TrendingUp, TrendingDown, Minus, Rocket, GraduationCap, Factory, Leaf, Magnet, UserRound, Bot, BookOpen, Train, Banknote, Globe, LineChart, Users, Target, ArrowRightLeft, Briefcase, BarChart, Scale, CandlestickChart, Folders, Bitcoin, PieChart as PieChartIcon } from "lucide-react";
+import { CreditCard, Landmark, PiggyBank, Receipt, HandCoins, ShieldCheck, Fuel, Utensils, Wheat, HeartPulse, Building, TrendingUp, TrendingDown, Minus, Rocket, GraduationCap, Factory, Leaf, Magnet, UserRound, Bot, BookOpen, Train, Banknote, Globe, LineChart, Users, Target, ArrowRightLeft, Briefcase, BarChart, Scale, CandlestickChart, Folders, Gem, Shield } from "lucide-react";
 
 export const transactions = [
   {
@@ -179,8 +179,9 @@ export const governmentBalanceSheetDataProjected = {
         { name: 'Borrowings and Other Liabilities', value: 1200000 },
     ],
     liabilities: [
-        { name: 'On Revenue Account', value: 2800000 },
+        { name: 'On Revenue Account', value: 4000000 },
         { name: 'Interest Payments', value: 1200000 },
+        { name: 'Grants in Aid for Creation of Capital Assets', value: 450000 },
         { name: 'On Capital Account', value: 1400000 },
     ],
 };
@@ -364,5 +365,7 @@ export const portfolioAiSuggestions = [
     
 
 
+
+    
 
     
