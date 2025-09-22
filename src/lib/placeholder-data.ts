@@ -256,14 +256,12 @@ export const dummyFtidData = JSON.stringify([
 
 
 export const economicIndicatorsData = [
-    { label: "Total Receipts", value: "₹50.65 lakh crore", change: "2025-26 BE", icon: Banknote },
-    { label: "Total Expenditure", value: "₹50.65 lakh crore", change: "2025-26 BE", icon: Receipt },
-    { label: "Tax Revenue (Net)", value: "₹28.37 lakh crore", change: "Net to Centre", icon: Globe },
-    { label: "Fiscal Deficit", value: "4.4% of GDP", change: "₹15.69 lakh crore", icon: TrendingDown, color: "text-red-400" },
-    { label: "Revenue Deficit", value: "1.5% of GDP", change: "₹5.24 lakh crore", icon: TrendingDown, color: "text-red-400" },
-    { label: "Primary Deficit", value: "0.8% of GDP", change: "₹2.93 lakh crore", icon: TrendingDown, color: "text-red-400" },
-    { label: "Capital Expenditure", value: "₹11.21 lakh crore", change: "On Capital Account", icon: Rocket },
-    { label: "Effective Capital Expenditure", value: "₹15.48 lakh crore", change: "Incl. Grants in Aid", icon: Rocket },
+    { label: "GDP", value: "7.8%", change: "Q1 2025-26", icon: LineChart },
+    { label: "Inflation", value: "4.75%", change: "May 2025", icon: TrendingUp, color: "text-red-400" },
+    { label: "Unemployment", value: "6.7%", change: "May 2025", icon: Users },
+    { label: "FDI Inflow", value: "$45B", change: "FY 2024-25", icon: Target },
+    { label: "Forex Reserves", value: "$650B", change: "June 2025", icon: ShieldCheck },
+    { label: "Trade Balance", value: "-$15B", change: "May 2025", icon: ArrowRightLeft },
 ];
 
 
