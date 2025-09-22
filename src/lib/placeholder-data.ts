@@ -256,12 +256,18 @@ export const dummyFtidData = JSON.stringify([
 
 
 export const economicIndicatorsData = [
-    { label: "GDP Growth", value: "6.5%", change: "Real", icon: LineChart },
+    { label: "GDP (Nominal)", value: "₹324L Cr", change: "~$3.9T", icon: Landmark },
+    { label: "GNP (Nominal)", value: "₹319L Cr", change: "~$3.8T", icon: Globe },
+    { label: "Real GDP Growth", value: "6.5%", change: "Annual", icon: LineChart },
+    { label: "Per Capita Income", value: "₹2.45L", change: "~$2,950", icon: Users },
+    { label: "Tax Revenue (Net)", value: "₹26.5L Cr", change: "Total", icon: Banknote },
+    { label: "Fiscal Deficit", value: "5.1% of GDP", change: "₹17.35L Cr", icon: PieChartIcon },
+    { label: "Revenue Deficit", value: "2.9% of GDP", change: "₹9.5L Cr", icon: PieChartIcon },
+    { label: "Capital Expenditure", value: "₹11.1L Cr", change: "Infrastructure", icon: Building },
     { label: "Inflation (CPI)", value: "4.5%", change: "Projected", icon: TrendingUp, color: "text-red-400" },
-    { label: "Unemployment", value: "6.2%", change: "Estimated", icon: Users },
-    { label: "Fiscal Deficit", value: "5.1%", change: "of GDP", icon: PieChartIcon },
     { label: "Forex Reserves", value: "$640B", change: "Current", icon: ShieldCheck },
-    { label: "CAD", value: "1.5%", change: "of GDP", icon: ArrowRightLeft },
+    { label: "CAD", value: "1.5% of GDP", change: "Current Account", icon: ArrowRightLeft },
+    { label: "Unemployment", value: "6.2%", change: "Estimated", icon: Target },
 ];
 
 
