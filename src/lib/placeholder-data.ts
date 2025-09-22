@@ -1,4 +1,5 @@
 
+
 import { CreditCard, Landmark, PiggyBank, Receipt, HandCoins, ShieldCheck, Fuel, Utensils, Wheat, HeartPulse, Building, TrendingUp, TrendingDown, Minus, Rocket, GraduationCap, Factory, Leaf, Magnet, UserRound, Bot, BookOpen, Train, Banknote, Globe, LineChart, Users, Target, ArrowRightLeft, Briefcase, BarChart, Scale, CandlestickChart, Folders, Gem, Shield } from "lucide-react";
 
 export const transactions = [
@@ -172,33 +173,23 @@ export const balanceSheetData = {
 
 export const governmentBalanceSheetDataProjected = {
     assets: [
-        { name: 'Tax Revenue (Net to Centre)', value: 3258520 },
-        { name: 'Non-Tax Revenue', value: 600951 },
-        { name: 'Recovery of Loans', value: 29000 },
-        { name: 'Other Receipts', value: 47000 },
-        { name: 'Borrowings and Other Liabilities', value: 1200000 },
+        { name: 'Revenue Receipts', value: 3933471 },
+        { name: 'Capital Receipts', value: 1644936 },
     ],
     liabilities: [
         { name: 'On Revenue Account', value: 4000000 },
-        { name: 'Interest Payments', value: 1200000 },
-        { name: 'Grants in Aid for Creation of Capital Assets', value: 450000 },
         { name: 'On Capital Account', value: 1400000 },
     ],
 };
 
 export const governmentBalanceSheetDataFy2526 = {
     assets: [
-        { name: 'Tax Revenue (Net to Centre)', value: 2837409 },
-        { name: 'Non-Tax Revenue', value: 583000 },
-        { name: 'Recovery of Loans', value: 29000 },
-        { name: 'Other Receipts', value: 47000 },
-        { name: 'Borrowings and Other Liabilities', value: 1568936 },
+        { name: 'Revenue Receipts', value: 3420409 },
+        { name: 'Capital Receipts', value: 1644936 },
     ],
     liabilities: [
-        { name: 'Interest Payments', value: 1276338 },
-        { name: 'Grants in Aid for Creation of Capital Assets', value: 427192 },
-        { name: 'Capital Account Expenditure', value: 1121090 },
-        { name: 'Revenue Account Expenditure (excl. interest & grants)', value: 2240725 },
+        { name: 'On Revenue Account', value: 3944255 },
+        { name: 'On Capital Account', value: 1121090 },
     ],
 };
 
