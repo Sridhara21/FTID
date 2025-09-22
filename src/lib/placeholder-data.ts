@@ -1,6 +1,7 @@
 
 
-import { CreditCard, Landmark, PiggyBank, Receipt, HandCoins, ShieldCheck, Fuel, Utensils, Wheat, HeartPulse, Building, TrendingUp, TrendingDown, Minus, Rocket, GraduationCap, Factory, Leaf, Magnet, UserRound, Bot, BookOpen, Train, Banknote, Globe, LineChart, Users, Target, ArrowRightLeft, Briefcase, BarChart, Scale, CandlestickChart, Folders, Gem, Shield } from "lucide-react";
+
+import { CreditCard, Landmark, PiggyBank, Receipt, HandCoins, ShieldCheck, Fuel, Utensils, Wheat, HeartPulse, Building, TrendingUp, TrendingDown, Minus, Rocket, GraduationCap, Factory, Leaf, Magnet, UserRound, Bot, BookOpen, Train, Banknote, Globe, LineChart, Users, Target, ArrowRightLeft, Briefcase, BarChart, Scale, CandlestickChart, Folders, Gem, Shield, PieChart as PieChartIcon } from "lucide-react";
 
 export const transactions = [
   {
@@ -184,12 +185,16 @@ export const governmentBalanceSheetDataProjected = {
 
 export const governmentBalanceSheetDataFy2526 = {
     assets: [
-        { name: 'Revenue Receipts', value: 3420409 },
-        { name: 'Capital Receipts', value: 1644936 },
+        { name: 'Tax Revenue (Net)', value: 2837409 },
+        { name: 'Non-Tax Revenue', value: 583000 },
+        { name: 'Recovery of Loans', value: 29000 },
+        { name: 'Other Capital Receipts', value: 47000 },
     ],
     liabilities: [
-        { name: 'On Revenue Account', value: 3944255 },
-        { name: 'On Capital Account', value: 1121090 },
+        { name: 'Interest Payments', value: 1276338 },
+        { name: 'Grants for Capital Assets', value: 427192 },
+        { name: 'Capital Expenditure', value: 1121090 },
+        { name: 'Other Revenue Expenditure', value: 2240725 },
     ],
 };
 
@@ -259,7 +264,7 @@ export const userProfileData = {
 
 export const dummyFtidData = JSON.stringify([
   {"transaction_id":"a1b2c3d4","timestamp":"2023-10-26T10:00:00Z","amount":12500.50,"currency":"INR","merchant_name":"SuperBazaar","merchant_category":"Groceries","location":{"latitude":19.0760,"longitude":72.8777}},
-  {"transaction_id":"e5f6g7h8","timestamp":"20ल23-10-26T12:30:00Z","amount":2100.00,"currency":"INR","merchant_name":"Chai Point","merchant_category":"Food & Drink","location":{"latitude":19.0765,"longitude":72.8780}},
+  {"transaction_id":"e5f6g7h8","timestamp":"2023-10-26T12:30:00Z","amount":2100.00,"currency":"INR","merchant_name":"Chai Point","merchant_category":"Food & Drink","location":{"latitude":19.0765,"longitude":72.8780}},
   {"transaction_id":"i9j0k1l2","timestamp":"2023-10-26T15:45:00Z","amount":41500.00,"currency":"INR","merchant_name":"Digital World","merchant_category":"Electronics","location":{"latitude":19.0780,"longitude":72.8800}}
 ], null, 2);
 
@@ -360,3 +365,4 @@ export const portfolioAiSuggestions = [
     
 
     
+
