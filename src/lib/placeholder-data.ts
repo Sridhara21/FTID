@@ -1,5 +1,5 @@
 
-import { CreditCard, Landmark, PiggyBank, Receipt, HandCoins, ShieldCheck, Fuel, Utensils, Wheat, HeartPulse, Building, TrendingUp, TrendingDown, Minus, Rocket, GraduationCap, Factory, Leaf, Magnet, UserRound, Bot, BookOpen, Train, Banknote, Globe, LineChart, Users, Target, ArrowRightLeft, Briefcase, BarChart, Scale, CandlestickChart, Folders, Bitcoin } from "lucide-react";
+import { CreditCard, Landmark, PiggyBank, Receipt, HandCoins, ShieldCheck, Fuel, Utensils, Wheat, HeartPulse, Building, TrendingUp, TrendingDown, Minus, Rocket, GraduationCap, Factory, Leaf, Magnet, UserRound, Bot, BookOpen, Train, Banknote, Globe, LineChart, Users, Target, ArrowRightLeft, Briefcase, BarChart, Scale, CandlestickChart, Folders, Bitcoin, PieChart as PieChartIcon } from "lucide-react";
 
 export const transactions = [
   {
@@ -256,12 +256,12 @@ export const dummyFtidData = JSON.stringify([
 
 
 export const economicIndicatorsData = [
-    { label: "GDP", value: "7.8%", change: "Q1 2025-26", icon: LineChart },
-    { label: "Inflation", value: "4.75%", change: "May 2025", icon: TrendingUp, color: "text-red-400" },
-    { label: "Unemployment", value: "6.7%", change: "May 2025", icon: Users },
-    { label: "FDI Inflow", value: "$45B", change: "FY 2024-25", icon: Target },
-    { label: "Forex Reserves", value: "$650B", change: "June 2025", icon: ShieldCheck },
-    { label: "Trade Balance", value: "-$15B", change: "May 2025", icon: ArrowRightLeft },
+    { label: "GDP Growth", value: "6.5%", change: "Real", icon: LineChart },
+    { label: "Inflation (CPI)", value: "4.5%", change: "Projected", icon: TrendingUp, color: "text-red-400" },
+    { label: "Unemployment", value: "6.2%", change: "Estimated", icon: Users },
+    { label: "Fiscal Deficit", value: "5.1%", change: "of GDP", icon: PieChartIcon },
+    { label: "Forex Reserves", value: "$640B", change: "Current", icon: ShieldCheck },
+    { label: "CAD", value: "1.5%", change: "of GDP", icon: ArrowRightLeft },
 ];
 
 
@@ -333,5 +333,7 @@ export const portfolioAiSuggestions = [
         description: "Instead of only holding Digital Gold, look into SGBs. They offer an additional 2.5% annual interest on the issue price and are tax-efficient if held until maturity."
     }
 ]
+
+    
 
     
