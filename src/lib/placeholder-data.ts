@@ -180,7 +180,7 @@ export const governmentBalanceSheetData = {
   ],
   liabilities: [
     { name: "Interest Payments", value: 1276338 },
-    { name: "Revenue Account (Excl. Interest)", value: 2667917 },
+    { name: "Grants in Aid", value: 427192 },
     { name: "Capital Account Expenditure", value: 1121090 },
   ],
 };
@@ -335,3 +335,5 @@ export const portfolioAiSuggestions = [
         description: "Instead of only holding Digital Gold, look into SGBs. They offer an additional 2.5% annual interest on the issue price and are tax-efficient if held until maturity."
     }
 ]
+
+    
