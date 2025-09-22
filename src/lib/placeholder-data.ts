@@ -179,10 +179,9 @@ export const governmentBalanceSheetDataProjected = {
         { name: 'Borrowings and Other Liabilities', value: 1200000 },
     ],
     liabilities: [
+        { name: 'On Revenue Account (excl. Interest)', value: 2800000 },
         { name: 'Interest Payments', value: 1200000 },
-        { name: 'Grants in Aid for Creation of Capital Assets', value: 450000 },
-        { name: 'Capital Account Expenditure', value: 1400000 },
-        { name: 'Revenue Account Expenditure', value: 2400000 },
+        { name: 'On Capital Account', value: 1400000 },
     ],
 };
 
