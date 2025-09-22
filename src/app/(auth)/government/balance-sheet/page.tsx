@@ -41,6 +41,15 @@ export default function GovernmentBalanceSheetPage() {
     const formatValue = (value: number) => {
         return value.toLocaleString('en-IN', { style: 'currency', currency: 'INR', minimumFractionDigits: 0, notation: 'compact' })
     };
+
+     const formatDeficit = (value: number) => {
+        return new Intl.NumberFormat('en-IN', {
+            style: 'currency',
+            currency: 'INR',
+            minimumFractionDigits: 0,
+            maximumFractionDigits: 0,
+        }).format(value/100000) + 'L Cr';
+    };
     
     const renderTableRows = (items: BalanceSheetItem[]) => {
         return items.flatMap(item => [
@@ -71,7 +80,7 @@ export default function GovernmentBalanceSheetPage() {
                         <div>
                              <p className="text-muted-foreground">Fiscal Deficit / Surplus (FY25-26)</p>
                              <p className={`text-2xl font-bold font-mono ${netPositionFy2526 >= 0 ? 'text-green-400' : 'text-red-400'}`}>
-                                {formatValue(netPositionFy2526)}
+                                {formatDeficit(netPositionFy2526)}
                             </p>
                         </div>
                         <div>

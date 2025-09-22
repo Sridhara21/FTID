@@ -327,15 +327,12 @@ export const governmentBalanceSheetDataProjected = {
     {
       name: 'Revenue Account Expenditure',
       value: 4000000,
-      subItems: [{ name: 'Interest Payments', value: 1200000 }],
-    },
-    {
-      name: 'Capital Account Expenditure',
-      value: 1400000,
       subItems: [
+        { name: 'Interest Payments', value: 1200000 },
         { name: 'Grants in Aid for Creation of Capital Assets', value: 450000 },
       ],
     },
+    { name: 'Capital Account Expenditure', value: 1400000, subItems: [] },
   ],
 };
 
@@ -734,5 +731,3 @@ export const portfolioAiSuggestions = [
       'Instead of only holding Digital Gold, look into SGBs. They offer an additional 2.5% annual interest on the issue price and are tax-efficient if held until maturity.',
   },
 ];
-
-    
