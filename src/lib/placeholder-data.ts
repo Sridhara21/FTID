@@ -309,31 +309,31 @@ export const governmentBalanceSheetDataProjected = {
       name: 'Revenue Receipts',
       value: 3933471,
       subItems: [
-        { name: 'Tax Revenue (Net)', value: 3258520 },
+        { name: 'Tax Revenue (Net to Centre)', value: 3258520 },
         { name: 'Non-Tax Revenue', value: 600951 },
       ],
     },
     {
       name: 'Capital Receipts',
-      value: 1644936,
+      value: 1276000,
       subItems: [
         { name: 'Recovery of Loans', value: 29000 },
         { name: 'Other Receipts', value: 47000 },
-        { name: 'Borrowings & Other Liabilities', value: 1200000 },
+        { name: 'Borrowings and Other Liabilities', value: 1200000 },
       ],
     },
   ],
   liabilities: [
     {
-      name: 'On Revenue Account',
+      name: 'Revenue Account Expenditure',
       value: 4000000,
       subItems: [{ name: 'Interest Payments', value: 1200000 }],
     },
     {
-      name: 'On Capital Account',
+      name: 'Capital Account Expenditure',
       value: 1400000,
       subItems: [
-        { name: 'Grants for Capital Assets', value: 450000 },
+        { name: 'Grants in Aid for Creation of Capital Assets', value: 450000 },
       ],
     },
   ],
@@ -351,24 +351,24 @@ export const governmentBalanceSheetDataFy2526 = {
     },
     {
       name: 'Capital Receipts',
-      value: 1644936,
+      value: 1811345,
       subItems: [
         { name: 'Recovery of Loans', value: 29000 },
         { name: 'Other Receipts', value: 47000 },
-        { name: 'Borrowings & Other Liabilities', value: 1568936 },
+        { name: 'Borrowings & Other Liabilities', value: 1735345 },
       ],
     },
   ],
   liabilities: [
     {
-      name: 'On Revenue Account',
+      name: 'Revenue Account Expenditure',
       value: 3944255,
       subItems: [
         { name: 'Interest Payments', value: 1276338 },
         { name: 'Grants for Capital Assets', value: 427192 },
       ],
     },
-    { name: 'On Capital Account', value: 1121090, subItems: [] },
+    { name: 'Capital Account Expenditure', value: 1257500, subItems: [] },
   ],
 };
 
@@ -734,3 +734,5 @@ export const portfolioAiSuggestions = [
       'Instead of only holding Digital Gold, look into SGBs. They offer an additional 2.5% annual interest on the issue price and are tax-efficient if held until maturity.',
   },
 ];
+
+    
