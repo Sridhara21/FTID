@@ -172,15 +172,17 @@ export const balanceSheetData = {
 
 export const governmentBalanceSheetDataProjected = {
     assets: [
-        { name: 'Tax Revenue (Net)', value: 3258520 },
+        { name: 'Tax Revenue (Net to Centre)', value: 3258520 },
         { name: 'Non-Tax Revenue', value: 600951 },
         { name: 'Recovery of Loans', value: 29000 },
-        { name: 'Other Capital Receipts', value: 47000 },
-        { name: 'Borrowings & Other Liabilities', value: 1200000 },
+        { name: 'Other Receipts', value: 47000 },
+        { name: 'Borrowings and Other Liabilities', value: 1200000 },
     ],
     liabilities: [
-        { name: 'On Revenue Account', value: 4000000 },
-        { name: 'On Capital Account', value: 1400000 },
+        { name: 'Interest Payments', value: 1200000 },
+        { name: 'Grants in Aid for Creation of Capital Assets', value: 450000 },
+        { name: 'Capital Account Expenditure', value: 1400000 },
+        { name: 'Revenue Account Expenditure', value: 2400000 },
     ],
 };
 
@@ -359,5 +361,6 @@ export const portfolioAiSuggestions = [
     
 
     
+
 
 
