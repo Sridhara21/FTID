@@ -266,7 +266,7 @@ export const economicIndicatorsData = [
     { label: "Capital Expenditure", value: "₹11.1L Cr", change: "Infrastructure", icon: Building },
     { label: "Inflation (CPI)", value: "4.5%", change: "Projected", icon: TrendingUp, color: "text-red-400" },
     { label: "Forex Reserves", value: "$640B", change: "Current", icon: ShieldCheck },
-    { label: "CAD", value: "1.5% of GDP", change: "Current Account", icon: ArrowRightLeft },
+    { label: "CAD", value: "1.5% of GDP", change: "Current Account Deficit", icon: ArrowRightLeft },
     { label: "Unemployment", value: "6.2%", change: "Estimated", icon: Target },
 ];
 
@@ -343,3 +343,4 @@ export const portfolioAiSuggestions = [
     
 
     
+
