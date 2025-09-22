@@ -22,18 +22,16 @@ import { Separator } from "@/components/ui/separator";
 export default function PortfolioPage() {
     const totalStocks = portfolioData.stocks.reduce((sum, item) => sum + item.value, 0);
     const totalMutualFunds = portfolioData.mutualFunds.reduce((sum, item) => sum + item.value, 0);
-    const totalCrypto = portfolioData.crypto.reduce((sum, item) => sum + item.value, 0);
     const totalFixedDeposits = portfolioData.fixedDeposits.reduce((sum, item) => sum + item.value, 0);
     const totalDigitalGold = portfolioData.digitalGold.reduce((sum, item) => sum + item.value, 0);
     const totalBonds = portfolioData.bonds.reduce((sum, item) => sum + item.value, 0);
     const totalEmergencyFund = portfolioData.emergencyFund.reduce((sum, item) => sum + item.value, 0);
 
-    const totalPortfolioValue = totalStocks + totalMutualFunds + totalCrypto + totalFixedDeposits + totalDigitalGold + totalBonds + totalEmergencyFund;
+    const totalPortfolioValue = totalStocks + totalMutualFunds + totalFixedDeposits + totalDigitalGold + totalBonds + totalEmergencyFund;
 
     const totalDayGain = 
         portfolioData.stocks.reduce((sum, item) => sum + item.changeValue, 0) +
-        portfolioData.mutualFunds.reduce((sum, item) => sum + item.changeValue, 0) +
-        portfolioData.crypto.reduce((sum, item) => sum + item.changeValue, 0);
+        portfolioData.mutualFunds.reduce((sum, item) => sum + item.changeValue, 0);
     
     const dayGainPercentage = totalPortfolioValue > totalDayGain ? (totalDayGain / (totalPortfolioValue - totalDayGain)) * 100 : 0;
 
@@ -147,44 +145,6 @@ export default function PortfolioPage() {
                             </Table>
                         </div>
 
-                        <Separator />
-
-                        {/* Crypto Section */}
-                         <div>
-                            <h3 className="text-lg font-semibold mb-2 flex items-center gap-2"><Bitcoin className="text-primary"/> Cryptocurrency</h3>
-                            <Table>
-                                <TableHeader>
-                                    <TableRow>
-                                        <TableHead>Name</TableHead>
-                                        <TableHead>Quantity</TableHead>
-                                        <TableHead className="text-right">Current Value</TableHead>
-                                        <TableHead className="text-right">Day's Change</TableHead>
-                                    </TableRow>
-                                </TableHeader>
-                                <TableBody>
-                                    {portfolioData.crypto.map(c => (
-                                        <TableRow key={c.symbol}>
-                                            <TableCell>
-                                                <p className="font-medium">{c.name}</p>
-                                                <p className="text-xs text-muted-foreground">{c.symbol}</p>
-                                            </TableCell>
-                                            <TableCell>{c.quantity}</TableCell>
-                                            <TableCell className="text-right font-mono">{formatCurrency(c.value)}</TableCell>
-                                            <TableCell className={`text-right font-mono ${c.changeValue >= 0 ? "text-green-400" : "text-red-400"}`}>
-                                                {c.change}
-                                            </TableCell>
-                                        </TableRow>
-                                    ))}
-                                </TableBody>
-                                 <TableFooter>
-                                    <TableRow>
-                                        <TableHead colSpan={2}>Total Crypto Value</TableHead>
-                                        <TableHead className="text-right font-bold font-mono">{formatCurrency(totalCrypto)}</TableHead>
-                                        <TableHead />
-                                    </TableRow>
-                                </TableFooter>
-                            </Table>
-                        </div>
                         <Separator />
 
                         {/* Fixed Deposits Section */}
@@ -311,3 +271,5 @@ export default function PortfolioPage() {
         </div>
     );
 }
+
+    

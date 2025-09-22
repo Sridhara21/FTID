@@ -179,7 +179,7 @@ export const governmentBalanceSheetDataProjected = {
         { name: 'Borrowings and Other Liabilities', value: 1200000 },
     ],
     liabilities: [
-        { name: 'On Revenue Account (excl. Interest)', value: 2800000 },
+        { name: 'On Revenue Account', value: 2800000 },
         { name: 'Interest Payments', value: 1200000 },
         { name: 'On Capital Account', value: 1400000 },
     ],
@@ -322,10 +322,6 @@ export const portfolioData = {
     { name: "Parag Parikh Flexi Cap Fund", nav: 72.5, units: 1379, value: 100000, change: "+0.8%", changeValue: 800 },
     { name: "UTI Nifty 50 Index Fund", nav: 145.2, units: 1033, value: 150000, change: "+1.1%", changeValue: 1650 },
   ],
-  crypto: [
-    { name: "Bitcoin", symbol: "BTC", quantity: 0.05, value: 250000, change: "+5.2%", changeValue: 13000 },
-    { name: "Ethereum", symbol: "ETH", quantity: 1.5, value: 300000, change: "+3.8%", changeValue: 11400 },
-  ],
   fixedDeposits: [
     { bank: "HDFC Bank", value: 200000, interestRate: "7.1%", maturityDate: "2026-05-10" },
     { bank: "State Bank of India", value: 150000, interestRate: "6.9%", maturityDate: "2025-11-20" },
@@ -367,3 +363,6 @@ export const portfolioAiSuggestions = [
 
     
 
+
+
+    
