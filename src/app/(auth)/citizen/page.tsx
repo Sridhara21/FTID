@@ -37,34 +37,42 @@ import {
   TableRow,
   TableFooter
 } from "@/components/ui/table";
-import { balanceSheetData } from "@/lib/placeholder-data";
+import { balanceSheetData, portfolioData } from "@/lib/placeholder-data";
 import { Separator } from "@/components/ui/separator";
-
-const summaryData = [
-    {
-        label: "Total Income",
-        value: "₹8,40,000",
-        icon: ArrowUpRight,
-        color: "text-green-400"
-    },
-    {
-        label: "Total Expenses",
-        value: "₹5,60,000",
-        icon: ArrowDownLeft,
-        color: "text-red-400"
-    },
-    {
-        label: "Total Investments",
-        value: "₹1,20,000",
-        icon: PiggyBank,
-        color: "text-blue-400"
-    }
-]
 
 export default function CitizenDashboard() {
   const totalAssets = balanceSheetData.assets.reduce((sum, item) => sum + item.value, 0);
   const totalLiabilities = balanceSheetData.liabilities.reduce((sum, item) => sum + item.value, 0);
   const netWorth = totalAssets - totalLiabilities;
+
+  const totalStocks = portfolioData.stocks.reduce((sum, item) => sum + item.value, 0);
+  const totalMutualFunds = portfolioData.mutualFunds.reduce((sum, item) => sum + item.value, 0);
+  const totalFixedDeposits = portfolioData.fixedDeposits.reduce((sum, item) => sum + item.value, 0);
+  const totalDigitalGold = portfolioData.digitalGold.reduce((sum, item) => sum + item.value, 0);
+  const totalBonds = portfolioData.bonds.reduce((sum, item) => sum + item.value, 0);
+  const totalEmergencyFund = portfolioData.emergencyFund.reduce((sum, item) => sum + item.value, 0);
+  const totalPortfolioValue = totalStocks + totalMutualFunds + totalFixedDeposits + totalDigitalGold + totalBonds + totalEmergencyFund;
+
+  const summaryData = [
+      {
+          label: "Total Income",
+          value: "₹8,40,000",
+          icon: ArrowUpRight,
+          color: "text-green-400"
+      },
+      {
+          label: "Total Expenses",
+          value: "₹5,60,000",
+          icon: ArrowDownLeft,
+          color: "text-red-400"
+      },
+      {
+          label: "Total Investments",
+          value: totalPortfolioValue.toLocaleString('en-IN', { style: 'currency', currency: 'INR', minimumFractionDigits: 0 }),
+          icon: PiggyBank,
+          color: "text-blue-400"
+      }
+  ]
 
   return (
     <div className="grid gap-6 md:gap-8">
