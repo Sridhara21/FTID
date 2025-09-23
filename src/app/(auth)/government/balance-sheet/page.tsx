@@ -44,7 +44,7 @@ export default function GovernmentBalanceSheetPage() {
     };
 
      const formatDeficit = (value: number) => {
-        const isNegative = value < 0;
+        const isNegative = value > 0;
         const formattedValue = new Intl.NumberFormat('en-IN', {
             style: 'currency',
             currency: 'INR',
@@ -81,9 +81,9 @@ export default function GovernmentBalanceSheetPage() {
                 <CardContent>
                      <div className="grid grid-cols-1 md:grid-cols-2 gap-8 text-center mb-8">
                         <div>
-                             <p className="text-muted-foreground">Fiscal Deficit / Surplus (FY25-26)</p>
+                             <p className="text-muted-foreground">Fiscal Deficit (FY25-26)</p>
                              <p className={`text-2xl font-bold font-mono text-red-400`}>
-                                {formatDeficit(fiscalDeficitFy2526 * -1)}
+                                {formatDeficit(fiscalDeficitFy2526)}
                             </p>
                         </div>
                         <div>
