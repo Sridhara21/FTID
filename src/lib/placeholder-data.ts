@@ -310,15 +310,15 @@ export const governmentBalanceSheetDataProjected = {
       value: 3933471,
       subItems: [
         { name: 'Tax Revenue (Net)', value: 3258520 },
-        { name: 'Non-Tax Revenue', value: 600951 },
+        { name: 'Non-Tax Revenue', value: 674951 },
       ],
     },
     {
       name: 'Capital Receipts',
-      value: 1644936,
+      value: 1305000,
       subItems: [
         { name: 'Recovery of Loans', value: 29000 },
-        { name: 'Other Receipts', value: 47000 },
+        { name: 'Other Receipts', value: 76000 },
         { name: 'Borrowings & Other Liabilities', value: 1200000 },
       ],
     },
@@ -334,11 +334,12 @@ export const governmentBalanceSheetDataProjected = {
     },
     {
       name: 'Capital Account Expenditure',
-      value: 1400000,
+      value: 818471,
       subItems: [],
     },
   ],
 };
+
 
 export const governmentBalanceSheetDataFy2526 = {
   assets: [

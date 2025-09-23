@@ -30,9 +30,10 @@ type BalanceSheetData = {
 
 
 export default function GovernmentBalanceSheetPage() {
-    const totalAssetsFy2526 = governmentBalanceSheetDataFy2526.assets.reduce((sum, item) => sum + item.value, 0);
-    const totalLiabilitiesFy2526 = governmentBalanceSheetDataFy2526.liabilities.reduce((sum, item) => sum + item.value, 0);
-    const fiscalDeficitFy2526 = totalLiabilitiesFy2526 - (governmentBalanceSheetDataFy2526.assets[0].value + governmentBalanceSheetDataFy2526.assets[1].subItems!.slice(0, 2).reduce((sum, item) => sum + item.value, 0));
+    const totalReceiptsFy2526 = governmentBalanceSheetDataFy2526.assets.reduce((sum, item) => sum + item.value, 0);
+    const totalExpenditureFy2526 = governmentBalanceSheetDataFy2526.liabilities.reduce((sum, item) => sum + item.value, 0);
+    const borrowingsFy2526 = governmentBalanceSheetDataFy2526.assets.find(item => item.name === 'Capital Receipts')?.subItems?.find(sub => sub.name === 'Borrowings & Other Liabilities')?.value ?? 0;
+    const fiscalDeficitFy2526 = totalExpenditureFy2526 - (totalReceiptsFy2526 - borrowingsFy2526);
 
     const totalAssetsProjected = governmentBalanceSheetDataProjected.assets.reduce((sum, item) => sum + item.value, 0);
     const totalLiabilitiesProjected = governmentBalanceSheetDataProjected.liabilities.reduce((sum, item) => sum + item.value, 0);
@@ -43,12 +44,14 @@ export default function GovernmentBalanceSheetPage() {
     };
 
      const formatDeficit = (value: number) => {
-        return new Intl.NumberFormat('en-IN', {
+        const isNegative = value < 0;
+        const formattedValue = new Intl.NumberFormat('en-IN', {
             style: 'currency',
             currency: 'INR',
-            minimumFractionDigits: 0,
-            maximumFractionDigits: 0,
-        }).format(value/100000) + 'L Cr';
+            minimumFractionDigits: 2,
+            maximumFractionDigits: 2,
+        }).format(Math.abs(value)/100000);
+        return `${isNegative ? '-' : ''}${formattedValue}L Cr`;
     };
     
     const renderTableRows = (items: BalanceSheetItem[]) => {
@@ -78,13 +81,13 @@ export default function GovernmentBalanceSheetPage() {
                 <CardContent>
                      <div className="grid grid-cols-1 md:grid-cols-2 gap-8 text-center mb-8">
                         <div>
-                             <p className="text-muted-foreground">Fiscal Deficit (FY25-26)</p>
-                             <p className={`text-2xl font-bold font-mono ${fiscalDeficitFy2526 >= 0 ? 'text-green-400' : 'text-red-400'}`}>
-                                {formatDeficit(fiscalDeficitFy2526)}
+                             <p className="text-muted-foreground">Fiscal Deficit / Surplus (FY25-26)</p>
+                             <p className={`text-2xl font-bold font-mono text-red-400`}>
+                                {formatDeficit(fiscalDeficitFy2526 * -1)}
                             </p>
                         </div>
                         <div>
-                             <p className="text-muted-foreground">Net Position (Projected)</p>
+                             <p className="text-muted-foreground">Net Projected Surplus</p>
                              <p className={`text-2xl font-bold font-mono ${netPositionProjected >= 0 ? 'text-green-400' : 'text-red-400'}`}>
                                 {formatValue(netPositionProjected)}
                             </p>
@@ -108,7 +111,7 @@ export default function GovernmentBalanceSheetPage() {
                                     <TableRow>
                                         <TableHead>Total Receipts</TableHead>
                                         <TableHead className="text-right font-mono font-bold text-green-400">
-                                          {formatValue(totalAssetsFy2526)}
+                                          {formatValue(totalReceiptsFy2526)}
                                         </TableHead>
                                     </TableRow>
                                 </TableFooter>
@@ -152,7 +155,7 @@ export default function GovernmentBalanceSheetPage() {
                                     <TableRow>
                                         <TableHead>Total Expenditure</TableHead>
                                         <TableHead className="text-right font-mono font-bold text-red-400">
-                                          {formatValue(totalLiabilitiesFy2526)}
+                                          {formatValue(totalExpenditureFy2526)}
                                         </TableHead>
                                     </TableRow>
                                 </TableFooter>
