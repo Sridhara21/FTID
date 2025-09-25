@@ -94,8 +94,7 @@ export default function GovernmentBalanceSheetPage() {
                                     currency: 'INR',
                                     minimumFractionDigits: 2,
                                     maximumFractionDigits: 2,
-                                    notation: 'compact'
-                                }).format(netPositionProjected)}
+                                }).format(netPositionProjected/100000)}L Cr
                             </p>
                         </div>
                     </div>
