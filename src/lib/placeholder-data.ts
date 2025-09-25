@@ -315,11 +315,11 @@ export const governmentBalanceSheetDataProjected = {
     },
     {
       name: 'Capital Receipts',
-      value: 1305000,
+      value: 1644936,
       subItems: [
         { name: 'Recovery of Loans', value: 29000 },
-        { name: 'Other Receipts', value: 76000 },
-        { name: 'Borrowings & Other Liabilities', value: 1200000 },
+        { name: 'Other Receipts', value: 47000 },
+        { name: 'Borrowings & Other Liabilities', value: 1158407 },
       ],
     },
   ],
@@ -334,7 +334,7 @@ export const governmentBalanceSheetDataProjected = {
     },
     {
       name: 'Capital Account Expenditure',
-      value: 818471,
+      value: 1158407,
       subItems: [],
     },
   ],

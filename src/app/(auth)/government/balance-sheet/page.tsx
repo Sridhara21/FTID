@@ -89,7 +89,13 @@ export default function GovernmentBalanceSheetPage() {
                         <div>
                              <p className="text-muted-foreground">Net Projected Surplus</p>
                              <p className={`text-2xl font-bold font-mono ${netPositionProjected >= 0 ? 'text-green-400' : 'text-red-400'}`}>
-                                {formatValue(netPositionProjected)}
+                                {new Intl.NumberFormat('en-IN', {
+                                    style: 'currency',
+                                    currency: 'INR',
+                                    minimumFractionDigits: 2,
+                                    maximumFractionDigits: 2,
+                                    notation: 'compact'
+                                }).format(netPositionProjected)}
                             </p>
                         </div>
                     </div>
