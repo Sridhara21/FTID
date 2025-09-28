@@ -32,11 +32,11 @@ export function LoginForm() {
           <CardContent className="space-y-4">
             <div className="space-y-2">
               <Label htmlFor="citizen-ftid">FTID</Label>
-              <Input id="citizen-ftid" type="text" />
+              <Input id="citizen-ftid" type="text" defaultValue="2398-6501-4775"/>
             </div>
             <div className="space-y-2">
               <Label htmlFor="citizen-password">Password</Label>
-              <Input id="citizen-password" type="password" />
+              <Input id="citizen-password" type="password" defaultValue="password123" />
             </div>
             <Button asChild className="w-full bg-primary hover:bg-primary/90 text-primary-foreground">
               <Link href="/citizen">Sign In as Citizen</Link>
@@ -55,11 +55,11 @@ export function LoginForm() {
           <CardContent className="space-y-4">
             <div className="space-y-2">
               <Label htmlFor="gov-ftid">Official FTID</Label>
-              <Input id="gov-ftid" type="text" />
+              <Input id="gov-ftid" type="text" defaultValue="GOV-IN-MHA-007" />
             </div>
             <div className="space-y-2">
               <Label htmlFor="gov-password">Password</Label>
-              <Input id="gov-password" type="password" />
+              <Input id="gov-password" type="password" defaultValue="admin123" />
             </div>
             <Button asChild className="w-full bg-primary hover:bg-primary/90 text-primary-foreground">
               <Link href="/government">Sign In as Official</Link>
