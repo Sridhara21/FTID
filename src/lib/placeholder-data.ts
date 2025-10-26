@@ -183,11 +183,11 @@ export const gdpData = [
 ];
 
 export const revenueData = [
-  { name: 'Income Tax', value: 22, fill: 'var(--color-income)' },
-  { name: 'Corporate Tax', value: 13, fill: 'var(--color-corporate)' },
-  { name: 'GST', value: 20, fill: 'var(--color-gst)' },
-  { name: 'Customs', value: 5, fill: 'var(--color-customs)' },
-  { name: 'Other', value: 4, fill: 'var(--color-other)' },
+  { name: 'Income Tax', value: 22, fill: 'hsl(var(--chart-1))' },
+  { name: 'Corporate Tax', value: 13, fill: 'hsl(var(--chart-2))' },
+  { name: 'GST', value: 20, fill: 'hsl(var(--chart-3))' },
+  { name: 'Customs', value: 5, fill: 'hsl(var(--chart-4))' },
+  { name: 'Other', value: 4, fill: 'hsl(var(--chart-5))' },
 ];
 
 export const subsidyDistributionData = [
