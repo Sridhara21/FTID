@@ -1,6 +1,7 @@
 
 "use client";
 
+import { useEffect, useState } from "react";
 import { Card, CardContent, CardHeader, CardTitle, CardDescription } from "@/components/ui/card";
 import {
   ChartContainer,
@@ -8,7 +9,8 @@ import {
   ChartTooltipContent,
 } from "@/components/ui/chart";
 import { creditScoreData } from "@/lib/placeholder-data";
-import { Lightbulb, HeartPulse, TrendingUp } from "lucide-react";
+import { getCreditScoreTips, CreditScoreTipsOutput } from "@/ai/flows/credit-score-tips-flow";
+import { Lightbulb, HeartPulse, TrendingUp, Loader2 } from "lucide-react";
 import { Label, Pie, PieChart, Cell, LineChart, Line, XAxis, YAxis, Tooltip, ResponsiveContainer, CartesianGrid } from "recharts";
 import {
     Table,
@@ -19,6 +21,7 @@ import {
     TableRow,
 } from "@/components/ui/table";
 import { Badge } from "@/components/ui/badge";
+import { Skeleton } from "@/components/ui/skeleton";
 
 const chartData = [{ value: creditScoreData.score }];
 const chartConfig = {
@@ -39,6 +42,25 @@ const historyChartConfig = {
 export default function CreditScorePage() {
     const score = chartData[0].value;
     const rating = creditScoreData.rating;
+    const [tips, setTips] = useState<CreditScoreTipsOutput | null>(null);
+    const [isLoading, setIsLoading] = useState(true);
+
+    useEffect(() => {
+        async function fetchTips() {
+            setIsLoading(true);
+            try {
+                const result = await getCreditScoreTips({
+                    score: creditScoreData.score,
+                    factors: creditScoreData.factors.map(({icon, color, ...rest}) => rest)
+                });
+                setTips(result);
+            } catch (error) {
+                console.error("Error fetching credit score tips:", error);
+            }
+            setIsLoading(false);
+        }
+        fetchTips();
+    }, []);
 
     return (
         <div className="grid gap-6 md:gap-8">
@@ -199,16 +221,28 @@ export default function CreditScorePage() {
                 </Card>
                  <Card>
                     <CardHeader>
-                        <CardTitle>Improvement Tips</CardTitle>
+                        <CardTitle>AI Improvement Tips</CardTitle>
                         <CardDescription>Actionable tips to improve your score.</CardDescription>
                     </CardHeader>
                     <CardContent className="space-y-3">
-                        {creditScoreData.tips.map((tip, index) => (
+                        {isLoading && (
+                            <div className="space-y-4">
+                                <Skeleton className="h-10 w-full" />
+                                <Skeleton className="h-10 w-full" />
+                                <Skeleton className="h-10 w-full" />
+                            </div>
+                        )}
+                        {!isLoading && tips && tips.tips.map((tip, index) => (
                             <div key={index} className="flex items-start gap-3 p-3 rounded-lg bg-secondary/50">
                                 <Lightbulb className="h-5 w-5 mt-0.5 text-primary flex-shrink-0"/>
                                 <span className="text-sm">{tip}</span>
                             </div>
                         ))}
+                         {!isLoading && !tips && (
+                            <div className="flex items-center justify-center h-24 text-muted-foreground">
+                                <p>Could not load AI tips.</p>
+                            </div>
+                        )}
                     </CardContent>
                 </Card>
             </div>

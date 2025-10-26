@@ -87,14 +87,6 @@ export const creditScoreData = {
   rating: 'Excellent',
   summary:
     'Your score is strong! Keep up the great work on timely payments and low credit utilization.',
-  tips: [
-    'Pay your bills on time, every time.',
-    'Keep your credit utilization ratio below 30%.',
-    'Avoid opening multiple new credit accounts at once.',
-    'Regularly check your credit report for errors and dispute any inaccuracies.',
-    'A mix of credit types (credit cards, loans) can positively impact your score.',
-    'Limit requests for new credit to avoid numerous hard inquiries.',
-  ],
   factors: [
     {
       name: 'Payment History',
@@ -315,11 +307,11 @@ export const governmentBalanceSheetDataProjected = {
     },
     {
       name: 'Capital Receipts',
-      value: 1644936,
+      value: 1224936,
       subItems: [
         { name: 'Recovery of Loans', value: 29000 },
         { name: 'Other Receipts', value: 47000 },
-        { name: 'Borrowings & Other Liabilities', value: 1158407 },
+        { name: 'Borrowings & Other Liabilities', value: 1148936 },
       ],
     },
   ],
@@ -334,7 +326,7 @@ export const governmentBalanceSheetDataProjected = {
     },
     {
       name: 'Capital Account Expenditure',
-      value: 1158407,
+      value: 738407,
       subItems: [],
     },
   ],
@@ -723,21 +715,3 @@ export const portfolioData = {
   ],
   emergencyFund: [{ account: 'Savings Account', value: 250000 }],
 };
-
-export const portfolioAiSuggestions = [
-  {
-    title: 'Diversify Your Equity',
-    description:
-      'Your portfolio is heavily weighted in large-cap stocks. Consider adding a mid-cap or small-cap mutual fund to capture growth in other market segments.',
-  },
-  {
-    title: 'Increase Emergency Fund',
-    description:
-      'Your current emergency fund covers approximately 4 months of expenses. Financial advisors recommend having 6-12 months of expenses saved for unforeseen circumstances.',
-  },
-  {
-    title: 'Consider Sovereign Gold Bonds (SGBs)',
-    description:
-      'Instead of only holding Digital Gold, look into SGBs. They offer an additional 2.5% annual interest on the issue price and are tax-efficient if held until maturity.',
-  },
-];

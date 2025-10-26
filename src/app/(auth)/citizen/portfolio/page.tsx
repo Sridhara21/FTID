@@ -1,4 +1,7 @@
 
+'use client';
+
+import { useState, useEffect } from "react";
 import {
     Card,
     CardHeader,
@@ -15,11 +18,17 @@ import {
     TableRow,
     TableFooter,
 } from "@/components/ui/table";
-import { portfolioData, portfolioAiSuggestions } from "@/lib/placeholder-data";
+import { portfolioData } from "@/lib/placeholder-data";
+import { getPortfolioSuggestions, PortfolioOutput } from "@/ai/flows/portfolio-suggestions-flow";
 import { Briefcase, CandlestickChart, Folders, Bitcoin, TrendingUp, TrendingDown, Shield, Gem, PiggyBank, Landmark, Bot, Lightbulb } from "lucide-react";
 import { Separator } from "@/components/ui/separator";
+import { Skeleton } from "@/components/ui/skeleton";
+
 
 export default function PortfolioPage() {
+    const [suggestions, setSuggestions] = useState<PortfolioOutput | null>(null);
+    const [isLoading, setIsLoading] = useState(true);
+
     const totalStocks = portfolioData.stocks.reduce((sum, item) => sum + item.value, 0);
     const totalMutualFunds = portfolioData.mutualFunds.reduce((sum, item) => sum + item.value, 0);
     const totalFixedDeposits = portfolioData.fixedDeposits.reduce((sum, item) => sum + item.value, 0);
@@ -28,6 +37,32 @@ export default function PortfolioPage() {
     const totalEmergencyFund = portfolioData.emergencyFund.reduce((sum, item) => sum + item.value, 0);
 
     const totalPortfolioValue = totalStocks + totalMutualFunds + totalFixedDeposits + totalDigitalGold + totalBonds + totalEmergencyFund;
+
+    useEffect(() => {
+        async function fetchSuggestions() {
+            setIsLoading(true);
+            try {
+                const portfolioSnapshot = {
+                    stocks: portfolioData.stocks,
+                    mutualFunds: portfolioData.mutualFunds,
+                    fixedDeposits: portfolioData.fixedDeposits,
+                    digitalGold: portfolioData.digitalGold,
+                    bonds: portfolioData.bonds,
+                    emergencyFund: portfolioData.emergencyFund
+                };
+                const result = await getPortfolioSuggestions({
+                    portfolio: JSON.stringify(portfolioSnapshot),
+                    totalValue: totalPortfolioValue
+                });
+                setSuggestions(result);
+            } catch (error) {
+                console.error("Error fetching portfolio suggestions:", error);
+            }
+            setIsLoading(false);
+        }
+        fetchSuggestions();
+    }, [totalPortfolioValue]);
+
 
     const totalDayGain = 
         portfolioData.stocks.reduce((sum, item) => sum + item.changeValue, 0) +
@@ -255,7 +290,14 @@ export default function PortfolioPage() {
                     </CardDescription>
                 </CardHeader>
                 <CardContent className="space-y-4">
-                    {portfolioAiSuggestions.map((suggestion, index) => (
+                    {isLoading && (
+                         <div className="space-y-4">
+                            <Skeleton className="h-16 w-full" />
+                            <Skeleton className="h-16 w-full" />
+                            <Skeleton className="h-16 w-full" />
+                        </div>
+                    )}
+                    {!isLoading && suggestions && suggestions.suggestions.map((suggestion, index) => (
                         <div key={index} className="flex items-start gap-3 p-3 rounded-lg bg-secondary/50">
                             <div className="pt-1">
                                 <Lightbulb className="h-5 w-5 text-primary flex-shrink-0"/>
@@ -266,10 +308,13 @@ export default function PortfolioPage() {
                             </div>
                         </div>
                     ))}
+                    {!isLoading && !suggestions && (
+                        <div className="flex items-center justify-center h-24 text-muted-foreground">
+                            <p>Could not load AI suggestions.</p>
+                        </div>
+                    )}
                 </CardContent>
             </Card>
         </div>
     );
 }
-
-    
