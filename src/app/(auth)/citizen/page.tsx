@@ -103,17 +103,17 @@ export default function CitizenDashboard() {
           <CardTitle>Quick Actions</CardTitle>
         </CardHeader>
         <CardContent className="grid grid-cols-2 md:grid-cols-4 gap-4">
-          <Button>
-            <Send className="mr-2" /> Send Money
+          <Button asChild>
+            <Link href="/citizen/wallet"><Send className="mr-2" /> Send Money</Link>
           </Button>
-          <Button variant="secondary">
-            <FileText className="mr-2" /> Pay Bills
+          <Button variant="secondary" asChild>
+            <Link href="/citizen/wallet"><FileText className="mr-2" /> Pay Bills</Link>
           </Button>
-          <Button variant="secondary">
-            <ArrowDownLeft className="mr-2" /> Request Money
+          <Button variant="secondary" asChild>
+            <Link href="/citizen/wallet"><ArrowDownLeft className="mr-2" /> Request Money</Link>
           </Button>
-          <Button variant="secondary">
-            <PiggyBank className="mr-2" /> Invest
+          <Button variant="secondary" asChild>
+            <Link href="/citizen/portfolio"><PiggyBank className="mr-2" /> Invest</Link>
           </Button>
         </CardContent>
       </Card>
