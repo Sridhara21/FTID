@@ -40,6 +40,21 @@ import {
 import { balanceSheetData, portfolioData } from "@/lib/placeholder-data";
 import { Separator } from "@/components/ui/separator";
 
+const QuickAction = ({ href, icon: Icon, title, description }: { href: string; icon: React.ElementType; title: string; description: string }) => (
+  <Link href={href} className="block group">
+    <div className="p-4 bg-secondary/50 rounded-lg h-full transition-all duration-200 group-hover:bg-secondary group-hover:scale-105 group-hover:shadow-lg">
+      <div className="flex items-center gap-3">
+        <div className="p-2 bg-background rounded-md">
+          <Icon className="h-5 w-5 text-primary" />
+        </div>
+        <p className="font-semibold">{title}</p>
+      </div>
+      <p className="text-xs text-muted-foreground mt-2">{description}</p>
+    </div>
+  </Link>
+);
+
+
 export default function CitizenDashboard() {
   const totalAssets = balanceSheetData.assets.reduce((sum, item) => sum + item.value, 0);
   const totalLiabilities = balanceSheetData.liabilities.reduce((sum, item) => sum + item.value, 0);
@@ -74,6 +89,13 @@ export default function CitizenDashboard() {
       }
   ]
 
+  const quickActions = [
+    { href: "/citizen/wallet", icon: Send, title: "Send Money", description: "Transfer funds via UFIN." },
+    { href: "/citizen/wallet", icon: FileText, title: "Pay Bills", description: "Settle your utility bills." },
+    { href: "/citizen/wallet", icon: ArrowDownLeft, title: "Request Money", description: "Request funds from a contact." },
+    { href: "/citizen/portfolio", icon: PiggyBank, title: "Make Investment", description: "Grow your wealth." },
+  ];
+
   return (
     <div className="grid gap-6 md:gap-8">
        <div className="flex flex-col gap-2">
@@ -101,20 +123,10 @@ export default function CitizenDashboard() {
       <Card>
         <CardHeader>
           <CardTitle>Quick Actions</CardTitle>
+          <CardDescription>Your most frequent actions, just a click away.</CardDescription>
         </CardHeader>
         <CardContent className="grid grid-cols-2 md:grid-cols-4 gap-4">
-          <Button asChild>
-            <Link href="/citizen/wallet"><Send className="mr-2" /> Send Money</Link>
-          </Button>
-          <Button variant="secondary" asChild>
-            <Link href="/citizen/wallet"><FileText className="mr-2" /> Pay Bills</Link>
-          </Button>
-          <Button variant="secondary" asChild>
-            <Link href="/citizen/wallet"><ArrowDownLeft className="mr-2" /> Request Money</Link>
-          </Button>
-          <Button variant="secondary" asChild>
-            <Link href="/citizen/portfolio"><PiggyBank className="mr-2" /> Invest</Link>
-          </Button>
+          {quickActions.map(action => <QuickAction key={action.title} {...action} />)}
         </CardContent>
       </Card>
 
