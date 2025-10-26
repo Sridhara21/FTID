@@ -3,44 +3,46 @@
 @tailwind utilities;
 
 body {
-  font-family: Arial, Helvetica, sans-serif;
+  font-family: 'Inter', sans-serif;
 }
 
 @layer base {
   :root {
-    --background: 220 40% 8%;
-    --foreground: 0 0% 98%;
-    --card: 220 40% 12%;
-    --card-foreground: 0 0% 98%;
-    --popover: 220 40% 8%;
-    --popover-foreground: 0 0% 98%;
-    --primary: 217 91% 60%;
-    --primary-foreground: 210 40% 98%;
-    --secondary: 220 40% 16%;
-    --secondary-foreground: 0 0% 98%;
-    --muted: 220 40% 16%;
-    --muted-foreground: 240 5% 65%;
-    --accent: 217 91% 60%;
-    --accent-foreground: 0 0% 98%;
-    --destructive: 0 63% 31%;
-    --destructive-foreground: 0 0% 98%;
-    --border: 220 40% 16%;
-    --input: 220 40% 16%;
-    --ring: 217 91% 60%;
-    --chart-1: 221 83% 53%;
-    --chart-2: 262 84% 59%;
-    --chart-3: 30 80% 55%;
-    --chart-4: 280 65% 60%;
-    --chart-5: 340 75% 55%;
+    --background: 210 25% 96%;
+    --foreground: 224 71% 4%;
+    --card: 0 0% 100%;
+    --card-foreground: 224 71% 4%;
+    --popover: 0 0% 100%;
+    --popover-foreground: 224 71% 4%;
+    --primary: 206 100% 70%;
+    --primary-foreground: 224 71% 4%;
+    --secondary: 210 40% 98%;
+    --secondary-foreground: 222.2 47.4% 11.2%;
+    --muted: 210 40% 96.1%;
+    --muted-foreground: 215.4 16.3% 46.9%;
+    --accent: 142 47% 53%;
+    --accent-foreground: 210 40% 98%;
+    --destructive: 0 84.2% 60.2%;
+    --destructive-foreground: 210 40% 98%;
+    --border: 214.3 31.8% 91.4%;
+    --input: 214.3 31.8% 91.4%;
+    --ring: 222.2 84% 4.9%;
+    --radius: 0.5rem;
+
+    --chart-1: 206 100% 70%;
+    --chart-2: 142 47% 53%;
+    --chart-3: 262 84% 59%;
+    --chart-4: 30 80% 55%;
+    --chart-5: 280 65% 60%;
+
     --sidebar-background: 220 40% 8%;
     --sidebar-foreground: 0 0% 98%;
-    --sidebar-primary: 217 91% 60%;
-    --sidebar-primary-foreground: 210 40% 98%;
+    --sidebar-primary: 206 100% 70%;
+    --sidebar-primary-foreground: 224 71% 4%;
     --sidebar-accent: 220 40% 16%;
     --sidebar-accent-foreground: 0 0% 98%;
     --sidebar-border: 220 40% 16%;
-    --sidebar-ring: 217 91% 60%;
-    --radius: 0.5rem;
+    --sidebar-ring: 206 100% 70%;
   }
 }
 

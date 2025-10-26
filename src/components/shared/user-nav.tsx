@@ -26,12 +26,13 @@ export function UserNav() {
         <Button variant="ghost" className="relative h-10 w-10 rounded-full">
           <Avatar className="h-10 w-10">
             {userAvatar && (
-              <AvatarImage
+              <Image
                 src={userAvatar.imageUrl}
                 alt="User Avatar"
-                width={100}
-                height={100}
+                width={40}
+                height={40}
                 data-ai-hint={userAvatar.imageHint}
+                className="rounded-full"
               />
             )}
             <AvatarFallback>{userProfileData.fallback}</AvatarFallback>
