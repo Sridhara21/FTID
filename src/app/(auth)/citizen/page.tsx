@@ -1,3 +1,4 @@
+
 import Link from "next/link";
 import {
   Wallet,
@@ -45,7 +46,7 @@ const QuickAction = ({ href, icon: Icon, title, description }: { href: string; i
     <div className="p-4 bg-secondary/50 rounded-lg h-full transition-all duration-200 group-hover:bg-secondary group-hover:scale-105 group-hover:shadow-lg">
       <div className="flex items-center gap-3">
         <div className="p-2 bg-background rounded-md">
-          <Icon className="h-5 w-5 text-primary" />
+          <Icon className="h-5 w-5 text-muted-foreground transition-colors group-hover:text-primary" />
         </div>
         <p className="font-semibold">{title}</p>
       </div>
@@ -93,7 +94,7 @@ export default function CitizenDashboard() {
     { href: "/citizen/wallet", icon: Send, title: "Send Money", description: "Transfer funds via UFIN." },
     { href: "/citizen/wallet", icon: FileText, title: "Pay Bills", description: "Settle your utility bills." },
     { href: "/citizen/wallet", icon: ArrowDownLeft, title: "Request Money", description: "Request funds from a contact." },
-    { href: "/citizen/portfolio", icon: PiggyBank, title: "Make Investment", description: "Grow your wealth." },
+    { href: "/citizen/portfolio", icon: PiggyBank, title: "Invest", description: "Grow your wealth." },
   ];
 
   return (
