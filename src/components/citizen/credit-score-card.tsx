@@ -101,14 +101,6 @@ export function CreditScoreCard() {
         <div className="mt-4 text-center w-full">
             <p className="text-sm text-muted-foreground">{creditScoreData.summary}</p>
         </div>
-         <div className="w-full mt-4 space-y-2 text-sm">
-            {creditScoreData.tips.slice(0, 2).map((tip, index) => (
-                <div key={index} className="flex items-start gap-2 p-2 rounded-lg bg-secondary/50">
-                    <Lightbulb className="h-4 w-4 mt-0.5 text-primary flex-shrink-0"/>
-                    <span>{tip}</span>
-                </div>
-            ))}
-        </div>
       </CardContent>
     </Card>
   );
