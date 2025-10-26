@@ -43,7 +43,7 @@ import { Separator } from "@/components/ui/separator";
 
 const QuickAction = ({ href, icon: Icon, title, description }: { href: string; icon: React.ElementType; title: string; description: string }) => (
   <Link href={href} className="block group">
-    <div className="p-4 bg-secondary/50 rounded-lg h-full transition-all duration-200 group-hover:bg-secondary group-hover:scale-105 group-hover:shadow-lg">
+    <div className="p-4 bg-secondary/50 rounded-lg h-full transition-all duration-200 group-hover:bg-primary/10 group-hover:scale-105 group-hover:shadow-lg">
       <div className="flex items-center gap-3">
         <div className="p-2 bg-background rounded-md">
           <Icon className="h-5 w-5 text-muted-foreground transition-colors group-hover:text-primary" />
