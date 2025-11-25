@@ -1,7 +1,9 @@
+
 "use client";
 
 import Link from "next/link";
 import Image from "next/image";
+import { usePathname } from 'next/navigation';
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { Button } from "@/components/ui/button";
 import {
@@ -18,7 +20,15 @@ import { CreditCard, LogOut, Settings, User } from "lucide-react";
 import { userProfileData } from "@/lib/placeholder-data";
 
 export function UserNav() {
-  const userAvatar = PlaceHolderImages.find((img) => img.id === "user-avatar");
+  const pathname = usePathname();
+  const isGovernment = pathname.startsWith('/government');
+
+  const userAvatarId = isGovernment ? "gov-avatar" : "user-avatar";
+  const userAvatar = PlaceHolderImages.find((img) => img.id === userAvatarId);
+  const fallback = isGovernment ? "GOV" : userProfileData.fallback;
+  const name = isGovernment ? "Government Official" : userProfileData.name;
+  const email = isGovernment ? "official@gov.in" : userProfileData.email;
+  const profileLink = isGovernment ? "/government" : "/citizen/profile";
 
   return (
     <DropdownMenu>
@@ -32,26 +42,26 @@ export function UserNav() {
                 width={40}
                 height={40}
                 data-ai-hint={userAvatar.imageHint}
-                className="rounded-full"
+                className="rounded-full object-cover"
               />
             )}
-            <AvatarFallback>{userProfileData.fallback}</AvatarFallback>
+            <AvatarFallback>{fallback}</AvatarFallback>
           </Avatar>
         </Button>
       </DropdownMenuTrigger>
       <DropdownMenuContent className="w-56" align="end" forceMount>
         <DropdownMenuLabel className="font-normal">
           <div className="flex flex-col space-y-1">
-            <p className="text-sm font-medium leading-none">{userProfileData.name}</p>
+            <p className="text-sm font-medium leading-none">{name}</p>
             <p className="text-xs leading-none text-muted-foreground">
-              {userProfileData.email}
+              {email}
             </p>
           </div>
         </DropdownMenuLabel>
         <DropdownMenuSeparator />
         <DropdownMenuGroup>
           <DropdownMenuItem asChild>
-             <Link href="/citizen/profile">
+             <Link href={profileLink}>
                 <User className="mr-2 h-4 w-4" />
                 <span>Profile</span>
             </Link>
