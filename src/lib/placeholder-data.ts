@@ -677,3 +677,12 @@ export const portfolioData = {
   ],
   emergencyFund: [{ account: 'Savings Account', value: 250000 }],
 };
+
+export const donationData = [
+  { id: 1, election: 'Lok Sabha 2024', donor: 'ABC Corp', party: 'Party A', amount: 1000000 },
+  { id: 2, election: 'Lok Sabha 2024', donor: 'XYZ Inc', party: 'Party B', amount: 500000 },
+  { id: 3, election: 'Vidhan Sabha 2025 (MH)', donor: 'Sunshine Trust', party: 'Party C', amount: 750000 },
+  { id: 4, election: 'Vidhan Sabha 2025 (MH)', donor: 'Starlight Foundation', party: 'Party A', amount: 250000 },
+];
+
+    

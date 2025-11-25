@@ -9,8 +9,8 @@
     {
       "id": "gov-avatar",
       "description": "Placeholder for government user avatar",
-      "imageUrl": "https://images.unsplash.com/photo-1676970124919-ea078b50e99a?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHwxfHxnb3Zlcm5tZW50JTIwbG9nb3xlbnwwfHx8fDE3NjQwNDc1ODl8MA&ixlib=rb-4.1.0&q=80&w=1080",
-      "imageHint": "government logo"
+      "imageUrl": "https://images.unsplash.com/photo-1629472118742-9fee67110c3d?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHwxfHxBc2hva2ElMjBDaGFrcmF8ZW58MHx8fHwxNzY0MDQ3OTg4fDA&ixlib=rb-4.1.0&q=80&w=1080",
+      "imageHint": "Indian government"
     }
   ]
 }
