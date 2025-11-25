@@ -1,3 +1,4 @@
+
 import {
   CreditCard,
   Landmark,
@@ -261,34 +262,34 @@ export const governmentBalanceSheetDataProjected = {
   assets: [
     {
       name: 'Revenue Receipts',
-      value: 3933471,
+      value: 3821000,
       subItems: [
-        { name: 'Tax Revenue (Net)', value: 3258520 },
-        { name: 'Non-Tax Revenue', value: 674951 },
+        { name: 'Tax Revenue (Net)', value: 3361000 },
+        { name: 'Non-Tax Revenue', value: 460000 },
       ],
     },
     {
       name: 'Capital Receipts',
-      value: 1224936,
+      value: 1787000,
       subItems: [
-        { name: 'Recovery of Loans', value: 29000 },
-        { name: 'Other Receipts', value: 47000 },
-        { name: 'Borrowings & Other Liabilities', value: 1148936 },
+        { name: 'Recovery of Loans', value: 30000 },
+        { name: 'Other Receipts', value: 51000 },
+        { name: 'Borrowings & Other Liabilities', value: 1706000 },
       ],
     },
   ],
   liabilities: [
     {
       name: 'Revenue Account Expenditure',
-      value: 4000000,
+      value: 4108000,
       subItems: [
-        { name: 'Interest Payments', value: 1200000 },
-        { name: 'Grants for Capital Assets', value: 450000 },
+        { name: 'Interest Payments', value: 1190000 },
+        { name: 'Grants for Capital Assets', value: 499000 },
       ],
     },
     {
       name: 'Capital Account Expenditure',
-      value: 1158407,
+      value: 1500000,
       subItems: [],
     },
   ],
@@ -299,34 +300,34 @@ export const governmentBalanceSheetDataFy2526 = {
   assets: [
     {
       name: 'Revenue Receipts',
-      value: 3420409,
+      value: 3502000,
       subItems: [
-        { name: 'Tax Revenue (Net)', value: 2837409 },
-        { name: 'Non-Tax Revenue', value: 583000 },
+        { name: 'Tax Revenue (Net)', value: 3043000 },
+        { name: 'Non-Tax Revenue', value: 459000 },
       ],
     },
     {
       name: 'Capital Receipts',
-      value: 1811000,
+      value: 1870000,
       subItems: [
-        { name: 'Recovery of Loans', value: 29000 },
-        { name: 'Other Receipts', value: 47000 },
-        { name: 'Borrowings & Other Liabilities', value: 1735000 },
+        { name: 'Recovery of Loans', value: 25000 },
+        { name: 'Other Receipts', value: 65000 },
+        { name: 'Borrowings & Other Liabilities', value: 1780000 },
       ],
     },
   ],
   liabilities: [
     {
       name: 'Revenue Account Expenditure',
-      value: 3998909,
+      value: 3945000,
       subItems: [
-        { name: 'Interest Payments', value: 1276338 },
-        { name: 'Grants for Capital Assets', value: 427192 },
+        { name: 'Interest Payments', value: 1123000 },
+        { name: 'Grants for Capital Assets', value: 439000 },
       ],
     },
     {
       name: 'Capital Account Expenditure',
-      value: 1232500,
+      value: 1427000,
       subItems: [],
     },
   ],
@@ -679,8 +680,8 @@ export const portfolioData = {
 };
 
 export const donationData = [
-  { id: 1, election: 'Lok Sabha 2024', donor: 'ABC Corp', party: 'Party A', amount: 1000000 },
-  { id: 2, election: 'Lok Sabha 2024', donor: 'XYZ Inc', party: 'Party B', amount: 500000 },
-  { id: 3, election: 'Vidhan Sabha 2025 (MH)', donor: 'Sunshine Trust', party: 'Party C', amount: 750000 },
-  { id: 4, election: 'Vidhan Sabha 2025 (MH)', donor: 'Starlight Foundation', party: 'Party A', amount: 250000 },
+  { id: 1, election: 'Lok Sabha 2024', donor: 'Future Gaming and Hotel Services', party: 'DMK', amount: 5090000000 },
+  { id: 2, election: 'Lok Sabha 2024', donor: 'Megha Engineering and Infrastructures Ltd', party: 'BJP', amount: 5840000000 },
+  { id: 3, election: 'Vidhan Sabha 2025 (MH)', donor: 'Qwik Supply Chain Pvt Ltd', party: 'Shiv Sena', amount: 2250000000 },
+  { id: 4, election: 'Vidhan Sabha 2025 (MH)', donor: 'Haldia Energy Ltd', party: 'AITC', amount: 2810000000 },
 ];
