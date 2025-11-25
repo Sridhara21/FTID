@@ -29,7 +29,7 @@ type BalanceSheetItem = {
 };
 
 const formatValue = (value: number) => {
-    return value.toLocaleString('en-IN', { style: 'currency', currency: 'INR', minimumFractionDigits: 0, notation: 'compact' });
+    return `₹${value.toLocaleString('en-IN')} Cr`;
 };
 
 const CollapsibleRow = ({ itemFy2526, itemProjected }: { itemFy2526: BalanceSheetItem, itemProjected: BalanceSheetItem }) => {
@@ -100,7 +100,7 @@ export default function GovernmentBalanceSheetPage() {
                     <CardTitle className="flex items-center gap-2">
                         <Scale /> National Balance Sheet
                     </CardTitle>
-                    <CardDescription>A comparative snapshot of the nation's finances (values in INR Crores).</CardDescription>
+                    <CardDescription>A comparative snapshot of the nation's finances.</CardDescription>
                 </CardHeader>
                 <CardContent className="space-y-8">
                     <div>
