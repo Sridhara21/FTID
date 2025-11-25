@@ -1,3 +1,6 @@
+
+"use client";
+
 import {
     Card,
     CardHeader,
@@ -15,7 +18,9 @@ import {
     TableFooter
 } from "@/components/ui/table";
 import { governmentBalanceSheetDataFy2526, governmentBalanceSheetDataProjected } from "@/lib/placeholder-data";
-import { Scale } from "lucide-react";
+import { Scale, ChevronDown, ChevronRight, TrendingUp, TrendingDown } from "lucide-react";
+import { useState } from "react";
+import { cn } from "@/lib/utils";
 
 type BalanceSheetItem = {
     name: string;
@@ -28,46 +33,75 @@ type BalanceSheetData = {
     liabilities: BalanceSheetItem[];
 };
 
+const formatValue = (value: number) => {
+    return value.toLocaleString('en-IN', { style: 'currency', currency: 'INR', minimumFractionDigits: 0, notation: 'compact' });
+};
+
+const formatCurrency = (value: number) => {
+    return value.toLocaleString('en-IN', { style: 'currency', currency: 'INR', minimumFractionDigits: 0 });
+};
+
+const CollapsibleRow = ({ itemFy2526, itemProjected }: { itemFy2526: BalanceSheetItem, itemProjected: BalanceSheetItem }) => {
+    const [isOpen, setIsOpen] = useState(false);
+    const change = itemProjected.value - itemFy2526.value;
+    const hasSubItems = itemFy2526.subItems && itemFy2526.subItems.length > 0;
+
+    return (
+        <>
+            <TableRow 
+                className={cn("font-semibold bg-secondary/30", hasSubItems && "cursor-pointer hover:bg-secondary/50")}
+                onClick={() => hasSubItems && setIsOpen(!isOpen)}
+            >
+                <TableCell className="flex items-center gap-2">
+                    {hasSubItems && (
+                        isOpen ? <ChevronDown className="h-4 w-4" /> : <ChevronRight className="h-4 w-4" />
+                    )}
+                    {itemFy2526.name}
+                </TableCell>
+                <TableCell className="text-right font-mono">{formatValue(itemFy2526.value)}</TableCell>
+                <TableCell className="text-right font-mono">{formatValue(itemProjected.value)}</TableCell>
+                <TableCell className={cn(
+                    "text-right font-mono flex items-center justify-end gap-1",
+                    change > 0 && "text-green-400",
+                    change < 0 && "text-red-400"
+                )}>
+                    {change !== 0 && (change > 0 ? <TrendingUp className="h-4 w-4" /> : <TrendingDown className="h-4 w-4" />)}
+                    {formatValue(change)}
+                </TableCell>
+            </TableRow>
+            {isOpen && hasSubItems && itemFy2526.subItems?.map(subItemFy2526 => {
+                const subItemProjected = itemProjected.subItems?.find(si => si.name === subItemFy2526.name);
+                const subChange = (subItemProjected?.value ?? 0) - subItemFy2526.value;
+
+                return (
+                    <TableRow key={subItemFy2526.name}>
+                        <TableCell className="pl-12 text-muted-foreground">{subItemFy2526.name}</TableCell>
+                        <TableCell className="text-right font-mono">{formatValue(subItemFy2526.value)}</TableCell>
+                        <TableCell className="text-right font-mono">{formatValue(subItemProjected?.value ?? 0)}</TableCell>
+                        <TableCell className={cn(
+                            "text-right font-mono flex items-center justify-end gap-1",
+                            subChange > 0 && "text-green-400",
+                            subChange < 0 && "text-red-400"
+                        )}>
+                            {subChange !== 0 && (subChange > 0 ? <TrendingUp className="h-4 w-4" /> : <TrendingDown className="h-4 w-4" />)}
+                            {formatValue(subChange)}
+                        </TableCell>
+                    </TableRow>
+                );
+            })}
+        </>
+    );
+};
 
 export default function GovernmentBalanceSheetPage() {
     const totalReceiptsFy2526 = governmentBalanceSheetDataFy2526.assets.reduce((sum, item) => sum + item.value, 0);
     const totalExpenditureFy2526 = governmentBalanceSheetDataFy2526.liabilities.reduce((sum, item) => sum + item.value, 0);
-    const borrowingsFy2526 = governmentBalanceSheetDataFy2526.assets.find(item => item.name === 'Capital Receipts')?.subItems?.find(sub => sub.name === 'Borrowings & Other Liabilities')?.value ?? 0;
-    const fiscalDeficitFy2526 = totalExpenditureFy2526 - (totalReceiptsFy2526 - borrowingsFy2526);
 
-    const totalAssetsProjected = governmentBalanceSheetDataProjected.assets.reduce((sum, item) => sum + item.value, 0);
-    const totalLiabilitiesProjected = governmentBalanceSheetDataProjected.liabilities.reduce((sum, item) => sum + item.value, 0);
-    const netPositionProjected = totalAssetsProjected - totalLiabilitiesProjected;
-    
-    const formatValue = (value: number) => {
-        return value.toLocaleString('en-IN', { style: 'currency', currency: 'INR', minimumFractionDigits: 0, notation: 'compact' })
-    };
+    const totalReceiptsProjected = governmentBalanceSheetDataProjected.assets.reduce((sum, item) => sum + item.value, 0);
+    const totalExpenditureProjected = governmentBalanceSheetDataProjected.liabilities.reduce((sum, item) => sum + item.value, 0);
 
-     const formatDeficit = (value: number) => {
-        const isNegative = value > 0;
-        const formattedValue = new Intl.NumberFormat('en-IN', {
-            style: 'currency',
-            currency: 'INR',
-            minimumFractionDigits: 2,
-            maximumFractionDigits: 2,
-        }).format(Math.abs(value)/100000);
-        return `${isNegative ? '-' : ''}${formattedValue}L Cr`;
-    };
-    
-    const renderTableRows = (items: BalanceSheetItem[]) => {
-        return items.flatMap(item => [
-            <TableRow key={item.name} className="font-bold bg-secondary/50">
-                <TableCell>{item.name}</TableCell>
-                <TableCell className="text-right font-mono">{formatValue(item.value)}</TableCell>
-            </TableRow>,
-            ...(item.subItems ?? []).map(subItem => (
-                <TableRow key={subItem.name}>
-                    <TableCell className="pl-8 text-muted-foreground">{subItem.name}</TableCell>
-                    <TableCell className="text-right font-mono">{formatValue(subItem.value)}</TableCell>
-                </TableRow>
-            ))
-        ]);
-    };
+    const receiptsChange = totalReceiptsProjected - totalReceiptsFy2526;
+    const expenditureChange = totalExpenditureProjected - totalExpenditureFy2526;
 
     return (
         <div className="grid gap-8">
@@ -76,118 +110,79 @@ export default function GovernmentBalanceSheetPage() {
                     <CardTitle className="flex items-center gap-2">
                         <Scale /> National Balance Sheet
                     </CardTitle>
-                    <CardDescription>A comparative snapshot of the nation's assets and liabilities (in INR Crores).</CardDescription>
+                    <CardDescription>A comparative snapshot of the nation's finances (values in INR Crores).</CardDescription>
                 </CardHeader>
-                <CardContent>
-                     <div className="grid grid-cols-1 md:grid-cols-2 gap-8 text-center mb-8">
-                        <div>
-                             <p className="text-muted-foreground">Fiscal Deficit (FY25-26)</p>
-                             <p className={`text-2xl font-bold font-mono text-red-400`}>
-                                {formatDeficit(fiscalDeficitFy2526)}
-                            </p>
-                        </div>
-                        <div>
-                             <p className="text-muted-foreground">Net Projected Surplus</p>
-                             <p className={`text-2xl font-bold font-mono ${netPositionProjected >= 0 ? 'text-green-400' : 'text-red-400'}`}>
-                                {new Intl.NumberFormat('en-IN', {
-                                    style: 'currency',
-                                    currency: 'INR',
-                                    minimumFractionDigits: 2,
-                                    maximumFractionDigits: 2,
-                                }).format(netPositionProjected/100000)}L Cr
-                            </p>
-                        </div>
+                <CardContent className="space-y-8">
+                    <div>
+                        <h3 className="text-xl font-semibold mb-3 text-primary">Receipts</h3>
+                        <Table>
+                            <TableHeader>
+                                <TableRow>
+                                    <TableHead>Item</TableHead>
+                                    <TableHead className="text-right">FY25-26</TableHead>
+                                    <TableHead className="text-right">Projected</TableHead>
+                                    <TableHead className="text-right">Change</TableHead>
+                                </TableRow>
+                            </TableHeader>
+                            <TableBody>
+                                {governmentBalanceSheetDataFy2526.assets.map(item => {
+                                    const projectedItem = governmentBalanceSheetDataProjected.assets.find(p => p.name === item.name);
+                                    if (!projectedItem) return null;
+                                    return <CollapsibleRow key={item.name} itemFy2526={item} itemProjected={projectedItem} />;
+                                })}
+                            </TableBody>
+                            <TableFooter>
+                                <TableRow className="text-base">
+                                    <TableHead>Total Receipts</TableHead>
+                                    <TableHead className="text-right font-mono font-bold">{formatValue(totalReceiptsFy2526)}</TableHead>
+                                    <TableHead className="text-right font-mono font-bold">{formatValue(totalReceiptsProjected)}</TableHead>
+                                    <TableHead className={cn(
+                                        "text-right font-mono font-bold flex items-center justify-end gap-1",
+                                        receiptsChange > 0 && "text-green-400",
+                                        receiptsChange < 0 && "text-red-400"
+                                    )}>
+                                        {receiptsChange > 0 ? <TrendingUp /> : <TrendingDown />}
+                                        {formatValue(receiptsChange)}
+                                    </TableHead>
+                                </TableRow>
+                            </TableFooter>
+                        </Table>
                     </div>
 
-                    <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
-                        <div>
-                            <h3 className="text-lg font-semibold mb-2 text-green-400">Receipts (FY25-26)</h3>
-                            <Table>
-                                <TableHeader>
-                                    <TableRow>
-                                        <TableHead>Item</TableHead>
-                                        <TableHead className="text-right">Value (Cr)</TableHead>
-                                    </TableRow>
-                                </TableHeader>
-                                <TableBody>
-                                    {renderTableRows(governmentBalanceSheetDataFy2526.assets)}
-                                </TableBody>
-                                <TableFooter>
-                                    <TableRow>
-                                        <TableHead>Total Receipts</TableHead>
-                                        <TableHead className="text-right font-mono font-bold text-green-400">
-                                          {formatValue(totalReceiptsFy2526)}
-                                        </TableHead>
-                                    </TableRow>
-                                </TableFooter>
-                            </Table>
-                        </div>
-                        <div>
-                            <h3 className="text-lg font-semibold mb-2 text-green-400">Receipts (Projected)</h3>
-                            <Table>
-                                <TableHeader>
-                                    <TableRow>
-                                        <TableHead>Item</TableHead>
-                                        <TableHead className="text-right">Value (Cr)</TableHead>
-                                    </TableRow>
-                                </TableHeader>
-                                <TableBody>
-                                    {renderTableRows(governmentBalanceSheetDataProjected.assets)}
-                                </TableBody>
-                                <TableFooter>
-                                    <TableRow>
-                                        <TableHead>Total Receipts</TableHead>
-                                        <TableHead className="text-right font-mono font-bold text-green-400">
-                                          {formatValue(totalAssetsProjected)}
-                                        </TableHead>
-                                    </TableRow>
-                                </TableFooter>
-                            </Table>
-                        </div>
-                        <div>
-                            <h3 className="text-lg font-semibold mb-2 text-red-400">Expenditure (FY25-26)</h3>
-                            <Table>
-                                <TableHeader>
-                                    <TableRow>
-                                        <TableHead>Item</TableHead>
-                                        <TableHead className="text-right">Amount (Cr)</TableHead>
-                                    </TableRow>
-                                </TableHeader>
-                                <TableBody>
-                                    {renderTableRows(governmentBalanceSheetDataFy2526.liabilities)}
-                                </TableBody>
-                                <TableFooter>
-                                    <TableRow>
-                                        <TableHead>Total Expenditure</TableHead>
-                                        <TableHead className="text-right font-mono font-bold text-red-400">
-                                          {formatValue(totalExpenditureFy2526)}
-                                        </TableHead>
-                                    </TableRow>
-                                </TableFooter>
-                            </Table>
-                        </div>
-                        <div>
-                            <h3 className="text-lg font-semibold mb-2 text-red-400">Expenditure (Projected)</h3>
-                            <Table>
-                                <TableHeader>
-                                    <TableRow>
-                                        <TableHead>Item</TableHead>
-                                        <TableHead className="text-right">Amount (Cr)</TableHead>
-                                    </TableRow>
-                                </TableHeader>
-                                <TableBody>
-                                    {renderTableRows(governmentBalanceSheetDataProjected.liabilities)}
-                                </TableBody>
-                                <TableFooter>
-                                    <TableRow>
-                                        <TableHead>Total Expenditure</TableHead>
-                                        <TableHead className="text-right font-mono font-bold text-red-400">
-                                          {formatValue(totalLiabilitiesProjected)}
-                                        </TableHead>
-                                    </TableRow>
-                                </TableFooter>
-                            </Table>
-                        </div>
+                    <div>
+                        <h3 className="text-xl font-semibold mb-3 text-primary">Expenditure</h3>
+                        <Table>
+                            <TableHeader>
+                                <TableRow>
+                                    <TableHead>Item</TableHead>
+                                    <TableHead className="text-right">FY25-26</TableHead>
+                                    <TableHead className="text-right">Projected</TableHead>
+                                    <TableHead className="text-right">Change</TableHead>
+                                </TableRow>
+                            </TableHeader>
+                            <TableBody>
+                                 {governmentBalanceSheetDataFy2526.liabilities.map(item => {
+                                    const projectedItem = governmentBalanceSheetDataProjected.liabilities.find(p => p.name === item.name);
+                                    if (!projectedItem) return null;
+                                    return <CollapsibleRow key={item.name} itemFy2526={item} itemProjected={projectedItem} />;
+                                })}
+                            </TableBody>
+                            <TableFooter>
+                                <TableRow className="text-base">
+                                    <TableHead>Total Expenditure</TableHead>
+                                    <TableHead className="text-right font-mono font-bold">{formatValue(totalExpenditureFy2526)}</TableHead>
+                                    <TableHead className="text-right font-mono font-bold">{formatValue(totalExpenditureProjected)}</TableHead>
+                                    <TableHead className={cn(
+                                        "text-right font-mono font-bold flex items-center justify-end gap-1",
+                                        expenditureChange > 0 && "text-red-400", // More expense is "bad"
+                                        expenditureChange < 0 && "text-green-400"
+                                    )}>
+                                        {expenditureChange > 0 ? <TrendingUp /> : <TrendingDown />}
+                                        {formatValue(expenditureChange)}
+                                    </TableHead>
+                                </TableRow>
+                            </TableFooter>
+                        </Table>
                     </div>
                 </CardContent>
             </Card>
