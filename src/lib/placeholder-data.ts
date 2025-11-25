@@ -684,5 +684,3 @@ export const donationData = [
   { id: 3, election: 'Vidhan Sabha 2025 (MH)', donor: 'Sunshine Trust', party: 'Party C', amount: 750000 },
   { id: 4, election: 'Vidhan Sabha 2025 (MH)', donor: 'Starlight Foundation', party: 'Party A', amount: 250000 },
 ];
-
-    
