@@ -28,17 +28,8 @@ type BalanceSheetItem = {
     subItems?: { name: string; value: number }[];
 };
 
-type BalanceSheetData = {
-    assets: BalanceSheetItem[];
-    liabilities: BalanceSheetItem[];
-};
-
 const formatValue = (value: number) => {
     return value.toLocaleString('en-IN', { style: 'currency', currency: 'INR', minimumFractionDigits: 0, notation: 'compact' });
-};
-
-const formatCurrency = (value: number) => {
-    return value.toLocaleString('en-IN', { style: 'currency', currency: 'INR', minimumFractionDigits: 0 });
 };
 
 const CollapsibleRow = ({ itemFy2526, itemProjected }: { itemFy2526: BalanceSheetItem, itemProjected: BalanceSheetItem }) => {
@@ -62,29 +53,28 @@ const CollapsibleRow = ({ itemFy2526, itemProjected }: { itemFy2526: BalanceShee
                 <TableCell className="text-right font-mono">{formatValue(itemProjected.value)}</TableCell>
                 <TableCell className={cn(
                     "text-right font-mono flex items-center justify-end gap-1",
-                    change > 0 && "text-green-400",
-                    change < 0 && "text-red-400"
+                    change >= 0 ? "text-green-400" : "text-red-400"
                 )}>
                     {change !== 0 && (change > 0 ? <TrendingUp className="h-4 w-4" /> : <TrendingDown className="h-4 w-4" />)}
-                    {formatValue(change)}
+                    {formatValue(Math.abs(change))}
                 </TableCell>
             </TableRow>
-            {isOpen && hasSubItems && itemFy2526.subItems?.map(subItemFy2526 => {
-                const subItemProjected = itemProjected.subItems?.find(si => si.name === subItemFy2526.name);
-                const subChange = (subItemProjected?.value ?? 0) - subItemFy2526.value;
+            {isOpen && hasSubItems && itemFy2526.subItems?.map((subItemFy2526, index) => {
+                const subItemProjected = itemProjected.subItems?.[index];
+                if (!subItemProjected) return null;
+                const subChange = subItemProjected.value - subItemFy2526.value;
 
                 return (
                     <TableRow key={subItemFy2526.name}>
                         <TableCell className="pl-12 text-muted-foreground">{subItemFy2526.name}</TableCell>
                         <TableCell className="text-right font-mono">{formatValue(subItemFy2526.value)}</TableCell>
-                        <TableCell className="text-right font-mono">{formatValue(subItemProjected?.value ?? 0)}</TableCell>
+                        <TableCell className="text-right font-mono">{formatValue(subItemProjected.value)}</TableCell>
                         <TableCell className={cn(
                             "text-right font-mono flex items-center justify-end gap-1",
-                            subChange > 0 && "text-green-400",
-                            subChange < 0 && "text-red-400"
+                            subChange >= 0 ? "text-green-400" : "text-red-400"
                         )}>
                             {subChange !== 0 && (subChange > 0 ? <TrendingUp className="h-4 w-4" /> : <TrendingDown className="h-4 w-4" />)}
-                            {formatValue(subChange)}
+                            {formatValue(Math.abs(subChange))}
                         </TableCell>
                     </TableRow>
                 );
@@ -125,8 +115,8 @@ export default function GovernmentBalanceSheetPage() {
                                 </TableRow>
                             </TableHeader>
                             <TableBody>
-                                {governmentBalanceSheetDataFy2526.assets.map(item => {
-                                    const projectedItem = governmentBalanceSheetDataProjected.assets.find(p => p.name === item.name);
+                                {governmentBalanceSheetDataFy2526.assets.map((item, index) => {
+                                    const projectedItem = governmentBalanceSheetDataProjected.assets[index];
                                     if (!projectedItem) return null;
                                     return <CollapsibleRow key={item.name} itemFy2526={item} itemProjected={projectedItem} />;
                                 })}
@@ -138,11 +128,10 @@ export default function GovernmentBalanceSheetPage() {
                                     <TableHead className="text-right font-mono font-bold">{formatValue(totalReceiptsProjected)}</TableHead>
                                     <TableHead className={cn(
                                         "text-right font-mono font-bold flex items-center justify-end gap-1",
-                                        receiptsChange > 0 && "text-green-400",
-                                        receiptsChange < 0 && "text-red-400"
+                                        receiptsChange >= 0 ? "text-green-400" : "text-red-400"
                                     )}>
-                                        {receiptsChange > 0 ? <TrendingUp /> : <TrendingDown />}
-                                        {formatValue(receiptsChange)}
+                                        {receiptsChange !== 0 && (receiptsChange > 0 ? <TrendingUp /> : <TrendingDown />)}
+                                        {formatValue(Math.abs(receiptsChange))}
                                     </TableHead>
                                 </TableRow>
                             </TableFooter>
@@ -161,8 +150,8 @@ export default function GovernmentBalanceSheetPage() {
                                 </TableRow>
                             </TableHeader>
                             <TableBody>
-                                 {governmentBalanceSheetDataFy2526.liabilities.map(item => {
-                                    const projectedItem = governmentBalanceSheetDataProjected.liabilities.find(p => p.name === item.name);
+                                 {governmentBalanceSheetDataFy2526.liabilities.map((item, index) => {
+                                    const projectedItem = governmentBalanceSheetDataProjected.liabilities[index];
                                     if (!projectedItem) return null;
                                     return <CollapsibleRow key={item.name} itemFy2526={item} itemProjected={projectedItem} />;
                                 })}
@@ -174,11 +163,10 @@ export default function GovernmentBalanceSheetPage() {
                                     <TableHead className="text-right font-mono font-bold">{formatValue(totalExpenditureProjected)}</TableHead>
                                     <TableHead className={cn(
                                         "text-right font-mono font-bold flex items-center justify-end gap-1",
-                                        expenditureChange > 0 && "text-red-400", // More expense is "bad"
-                                        expenditureChange < 0 && "text-green-400"
+                                        expenditureChange > 0 ? "text-red-400" : "text-green-400" // More expense is "bad"
                                     )}>
-                                        {expenditureChange > 0 ? <TrendingUp /> : <TrendingDown />}
-                                        {formatValue(expenditureChange)}
+                                        {expenditureChange !== 0 && (expenditureChange > 0 ? <TrendingUp /> : <TrendingDown />)}
+                                        {formatValue(Math.abs(expenditureChange))}
                                     </TableHead>
                                 </TableRow>
                             </TableFooter>

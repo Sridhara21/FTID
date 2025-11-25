@@ -241,44 +241,6 @@ export const subsidyDetailsData = [
   },
 ];
 
-export const donationData = [
-  {
-    id: 'don_1',
-    election: 'Lok Sabha 2024',
-    donor: 'MegaCorp Industries',
-    amount: 12500000,
-    party: 'National Party',
-  },
-  {
-    id: 'don_2',
-    election: 'State Assembly 2024',
-    donor: 'Global Tech Solutions',
-    amount: 6200000,
-    party: 'Regional Party',
-  },
-  {
-    id: 'don_3',
-    election: 'Lok Sabha 2024',
-    donor: 'Innovate India LLC',
-    amount: 20000000,
-    party: 'Regional Party',
-  },
-  {
-    id: 'don_4',
-    election: 'Municipal Elections',
-    donor: 'Local Business Group',
-    amount: 400000,
-    party: 'Independent',
-  },
-  {
-    id: 'don_5',
-    election: 'Lok Sabha 2024',
-    donor: 'Public Crowdfunding',
-    amount: 41000000,
-    party: 'National Party',
-  },
-];
-
 export const balanceSheetData = {
   assets: [
     { name: 'E-Rupee Wallet', value: 85250 },
@@ -326,7 +288,7 @@ export const governmentBalanceSheetDataProjected = {
     },
     {
       name: 'Capital Account Expenditure',
-      value: 738407,
+      value: 1158407,
       subItems: [],
     },
   ],
