@@ -1,3 +1,4 @@
+
 "use client";
 
 import Link from "next/link";
@@ -55,7 +56,7 @@ export function LoginForm() {
           <CardContent className="space-y-4">
             <div className="space-y-2">
               <Label htmlFor="gov-ftid">Official FTID</Label>
-              <Input id="gov-ftid" type="text" defaultValue="GOV-IN-MHA-007" />
+              <Input id="gov-ftid" type="text" defaultValue="0011-2233-4455" />
             </div>
             <div className="space-y-2">
               <Label htmlFor="gov-password">Password</Label>
