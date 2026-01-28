@@ -46,7 +46,14 @@ export function UserProfileCard() {
                             <p className="text-muted-foreground font-mono">{userProfileData.pan}</p>
                         </div>
                     </div>
-                    <div className="flex items-start gap-3 p-3 rounded-lg bg-muted/50 md:col-span-2">
+                    <div className="flex items-start gap-3 p-3 rounded-lg bg-muted/50">
+                        <CreditCard className="h-5 w-5 mt-0.5 text-primary flex-shrink-0"/>
+                        <div>
+                            <p className="font-medium">FTID Number</p>
+                            <p className="text-muted-foreground font-mono">{userProfileData.ftid}</p>
+                        </div>
+                    </div>
+                    <div className="flex items-start gap-3 p-3 rounded-lg bg-muted/50">
                         <Home className="h-5 w-5 mt-0.5 text-primary flex-shrink-0"/>
                         <div>
                             <p className="font-medium">Address</p>
