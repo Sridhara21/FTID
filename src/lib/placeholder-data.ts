@@ -61,7 +61,7 @@ export const transactions = [
     description: 'Utility Bill',
     amount: -8000,
     date: '2024-07-18',
-    icon: CreditCard,
+    icon: Receipt,
     recipientFtid: '1122-3344-5566',
   },
   {
