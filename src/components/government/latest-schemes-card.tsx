@@ -23,11 +23,11 @@ import { Separator } from "@/components/ui/separator";
 import { Megaphone, ArrowRight } from "lucide-react";
 
 export function LatestSchemesCard() {
-  const previewSchemes = schemes.slice(0, 3);
+  const previewSchemes = schemes.slice(0, 4);
 
   return (
     <Dialog>
-      <Card>
+      <Card className="flex flex-col h-full">
         <CardHeader>
           <CardTitle className="flex items-center gap-2">
             <Megaphone />
@@ -37,7 +37,7 @@ export function LatestSchemesCard() {
             New initiatives and programs launched by the government.
           </CardDescription>
         </CardHeader>
-        <CardContent>
+        <CardContent className="flex-1">
           <div className="space-y-4">
             {previewSchemes.map((scheme, index) => (
               <div key={scheme.title}>
