@@ -5,7 +5,7 @@ import { Card, CardContent, CardHeader, CardTitle, CardDescription } from "@/com
 import { Avatar, AvatarImage, AvatarFallback } from "@/components/ui/avatar";
 import { userProfileData } from "@/lib/placeholder-data";
 import { PlaceHolderImages } from "@/lib/placeholder-images";
-import { User, Home, Hash, CreditCard } from "lucide-react";
+import { User, Home, CreditCard } from "lucide-react";
 import Image from "next/image";
 
 export function UserProfileCard() {
@@ -27,7 +27,7 @@ export function UserProfileCard() {
                     </Avatar>
                     <div>
                         <h2 className="text-2xl font-bold">{userProfileData.name}</h2>
-                        <p className="text-muted-foreground">{userProfileData.email}</p>
+                        <p className="text-muted-foreground font-mono">{userProfileData.ftid}</p>
                     </div>
                 </div>
 
@@ -46,14 +46,7 @@ export function UserProfileCard() {
                             <p className="text-muted-foreground font-mono">{userProfileData.pan}</p>
                         </div>
                     </div>
-                     <div className="flex items-start gap-3 p-3 rounded-lg bg-muted/50">
-                        <Hash className="h-5 w-5 mt-0.5 text-primary flex-shrink-0"/>
-                        <div>
-                            <p className="font-medium">FTID Number</p>
-                            <p className="text-muted-foreground font-mono">{userProfileData.ftid}</p>
-                        </div>
-                    </div>
-                    <div className="flex items-start gap-3 p-3 rounded-lg bg-muted/50">
+                    <div className="flex items-start gap-3 p-3 rounded-lg bg-muted/50 md:col-span-2">
                         <Home className="h-5 w-5 mt-0.5 text-primary flex-shrink-0"/>
                         <div>
                             <p className="font-medium">Address</p>
@@ -65,5 +58,3 @@ export function UserProfileCard() {
         </Card>
     );
 }
-
-    
