@@ -1,10 +1,11 @@
+
 "use client";
 
 import { Card, CardContent, CardHeader, CardTitle, CardDescription } from "@/components/ui/card";
 import { Avatar, AvatarImage, AvatarFallback } from "@/components/ui/avatar";
 import { userProfileData } from "@/lib/placeholder-data";
 import { PlaceHolderImages } from "@/lib/placeholder-images";
-import { User, Home, Hash, Mail } from "lucide-react";
+import { User, Home, Hash, CreditCard } from "lucide-react";
 import Image from "next/image";
 
 export function UserProfileCard() {
@@ -39,10 +40,10 @@ export function UserProfileCard() {
                         </div>
                     </div>
                     <div className="flex items-start gap-3 p-3 rounded-lg bg-muted/50">
-                        <Mail className="h-5 w-5 mt-0.5 text-primary flex-shrink-0"/>
+                        <CreditCard className="h-5 w-5 mt-0.5 text-primary flex-shrink-0"/>
                         <div>
-                            <p className="font-medium">Email</p>
-                            <p className="text-muted-foreground">{userProfileData.email}</p>
+                            <p className="font-medium">PAN Number</p>
+                            <p className="text-muted-foreground font-mono">{userProfileData.pan}</p>
                         </div>
                     </div>
                      <div className="flex items-start gap-3 p-3 rounded-lg bg-muted/50">
@@ -64,3 +65,5 @@ export function UserProfileCard() {
         </Card>
     );
 }
+
+    

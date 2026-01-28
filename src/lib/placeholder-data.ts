@@ -400,6 +400,7 @@ export const schemes = [
 export const userProfileData = {
   name: 'Ravi',
   email: 'ravi@email.com',
+  pan: 'ABCDE1234F',
   address: '45, MG Road, Bangalore, 560001',
   ftid: '2398-6501-4775',
   fallback: 'R',
@@ -685,3 +686,5 @@ export const donationData = [
   { id: 3, election: 'Vidhan Sabha 2025 (MH)', donor: 'Qwik Supply Chain Pvt Ltd', party: 'Shiv Sena', amount: 2250000000 },
   { id: 4, election: 'Vidhan Sabha 2025 (MH)', donor: 'Haldia Energy Ltd', party: 'AITC', amount: 2810000000 },
 ];
+
+    
