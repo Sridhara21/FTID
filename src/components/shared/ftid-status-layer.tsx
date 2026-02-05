@@ -1,7 +1,7 @@
 
 "use client";
 
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { ftidSystemStatus } from "@/lib/placeholder-data";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
@@ -20,7 +20,18 @@ import { cn } from '@/lib/utils';
 
 export function FtidStatusLayer() {
     const [isOpen, setIsOpen] = useState(false);
-    const lastSyncTime = new Date(ftidSystemStatus.lastSync);
+    const [lastSyncTime, setLastSyncTime] = useState(new Date());
+    const [, setNow] = useState(new Date());
+
+    useEffect(() => {
+        const rerenderInterval = setInterval(() => setNow(new Date()), 30 * 1000); // Re-render every 30s
+        const syncInterval = setInterval(() => setLastSyncTime(new Date()), 15 * 60 * 1000); // Reset sync time every 15m
+
+        return () => {
+            clearInterval(rerenderInterval);
+            clearInterval(syncInterval);
+        };
+    }, []);
 
     const getStatusColor = (status: string) => {
         switch (status) {

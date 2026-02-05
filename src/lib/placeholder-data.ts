@@ -57,7 +57,6 @@ export const ftidSystemStatus = {
     { name: 'Aadhaar', status: 'Verified', icon: CheckCircle },
     { name: 'Bank KYC', status: 'Partially Verified', icon: Info },
   ],
-  lastSync: '2025-12-29T13:30:00Z',
   complianceHealth: 'Healthy',
 };
 
@@ -93,13 +92,13 @@ export const consentData = [
 export const transactions = [
   {
     id: 'txn_1',
-    description: 'E-commerce Purchase',
+    description: 'Grocery Store Purchase',
     amount: -5000,
     date: '2024-07-20',
     icon: Receipt,
     classification: 'Discretionary Spending',
     originInstitution: 'Self (HDFC Bank)',
-    destinationInstitution: 'Masked Merchant (Flipkart)',
+    destinationInstitution: 'Masked Merchant (Reliance Fresh)',
   },
   {
     id: 'txn_2',
