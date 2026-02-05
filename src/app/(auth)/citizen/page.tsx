@@ -21,7 +21,8 @@ import {
   Info,
   CheckCircle,
   Lock,
-  Badge,
+  Link as LinkIcon,
+  ArrowRightLeft,
 } from "lucide-react";
 import {
   Card,
@@ -85,7 +86,7 @@ const InstitutionConnectivityCard = () => (
     <Card>
         <CardHeader>
             <CardTitle className="flex items-center gap-2">
-                <Link />
+                <LinkIcon />
                 Institution Connectivity
             </CardTitle>
             <CardDescription>Status of financial institutions linked to your FTID.</CardDescription>
