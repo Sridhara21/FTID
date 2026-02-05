@@ -18,11 +18,13 @@ import {
     TableRow,
     TableFooter,
 } from "@/components/ui/table";
+import { Badge } from "@/components/ui/badge";
 import { portfolioData } from "@/lib/placeholder-data";
 import { getPortfolioSuggestions, PortfolioOutput } from "@/ai/flows/portfolio-suggestions-flow";
-import { Briefcase, CandlestickChart, Folders, Bitcoin, TrendingUp, TrendingDown, Shield, Gem, PiggyBank, Landmark, Bot, Lightbulb } from "lucide-react";
+import { Briefcase, CandlestickChart, Folders, Bitcoin, TrendingUp, TrendingDown, Shield, Gem, PiggyBank, Landmark, Bot, Lightbulb, CheckCircle, HelpCircle } from "lucide-react";
 import { Separator } from "@/components/ui/separator";
 import { Skeleton } from "@/components/ui/skeleton";
+import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from "@/components/ui/tooltip";
 
 
 export default function PortfolioPage() {
@@ -78,10 +80,27 @@ export default function PortfolioPage() {
         <div className="grid grid-cols-1 gap-8">
             <Card>
                 <CardHeader>
-                    <CardTitle className="flex items-center gap-2">
-                        <Briefcase /> Investment Portfolio
-                    </CardTitle>
-                    <CardDescription>A consolidated view of all your investments.</CardDescription>
+                    <div className="flex justify-between items-start">
+                        <div>
+                            <CardTitle className="flex items-center gap-2">
+                                <Briefcase /> Investment Portfolio
+                            </CardTitle>
+                            <CardDescription>A consolidated view of all your investments with compliance intelligence.</CardDescription>
+                        </div>
+                         <TooltipProvider>
+                            <Tooltip>
+                                <TooltipTrigger asChild>
+                                    <Badge variant="outline" className="flex items-center gap-1.5 bg-green-500/20 text-green-400 border-green-500/20 cursor-help">
+                                        <CheckCircle className="h-3 w-3" />
+                                        Auto-Reporting Active
+                                    </Badge>
+                                </TooltipTrigger>
+                                <TooltipContent>
+                                    <p>Capital gains data is automatically reported to tax authorities via FTID.</p>
+                                </TooltipContent>
+                            </Tooltip>
+                        </TooltipProvider>
+                    </div>
                 </CardHeader>
                 <CardContent>
                     <div className="grid grid-cols-1 md:grid-cols-3 gap-4 mb-8 text-center">
@@ -104,7 +123,6 @@ export default function PortfolioPage() {
                     </div>
                     
                     <div className="space-y-8">
-                        {/* Stocks Section */}
                         <div>
                             <h3 className="text-lg font-semibold mb-2 flex items-center gap-2"><CandlestickChart className="text-primary"/> Stocks</h3>
                             <Table>
@@ -112,6 +130,7 @@ export default function PortfolioPage() {
                                     <TableRow>
                                         <TableHead>Name</TableHead>
                                         <TableHead>Qty</TableHead>
+                                        <TableHead>Tax Classification</TableHead>
                                         <TableHead className="text-right">Current Value</TableHead>
                                         <TableHead className="text-right">Day's Change</TableHead>
                                     </TableRow>
@@ -124,6 +143,9 @@ export default function PortfolioPage() {
                                                 <p className="text-xs text-muted-foreground">{stock.symbol}</p>
                                             </TableCell>
                                             <TableCell>{stock.quantity}</TableCell>
+                                            <TableCell>
+                                                <Badge variant="outline">{stock.taxClassification}</Badge>
+                                            </TableCell>
                                             <TableCell className="text-right font-mono">{formatCurrency(stock.value)}</TableCell>
                                             <TableCell className={`text-right font-mono ${stock.changeValue >= 0 ? "text-green-400" : "text-red-400"}`}>
                                                 {stock.change}
@@ -131,19 +153,11 @@ export default function PortfolioPage() {
                                         </TableRow>
                                     ))}
                                 </TableBody>
-                                <TableFooter>
-                                    <TableRow>
-                                        <TableHead colSpan={2}>Total Stock Value</TableHead>
-                                        <TableHead className="text-right font-bold font-mono">{formatCurrency(totalStocks)}</TableHead>
-                                        <TableHead />
-                                    </TableRow>
-                                </TableFooter>
                             </Table>
                         </div>
 
                         <Separator />
 
-                        {/* Mutual Funds Section */}
                         <div>
                             <h3 className="text-lg font-semibold mb-2 flex items-center gap-2"><Folders className="text-primary"/> Mutual Funds</h3>
                             <Table>
@@ -151,6 +165,7 @@ export default function PortfolioPage() {
                                     <TableRow>
                                         <TableHead>Fund Name</TableHead>
                                         <TableHead>Units</TableHead>
+                                        <TableHead>Tax Classification</TableHead>
                                         <TableHead className="text-right">Current Value</TableHead>
                                         <TableHead className="text-right">Day's Change</TableHead>
                                     </TableRow>
@@ -163,6 +178,9 @@ export default function PortfolioPage() {
                                                 <p className="text-xs text-muted-foreground">NAV: {formatCurrency(mf.nav)}</p>
                                             </TableCell>
                                             <TableCell>{mf.units.toFixed(2)}</TableCell>
+                                            <TableCell>
+                                                <Badge variant="outline">{mf.taxClassification}</Badge>
+                                            </TableCell>
                                             <TableCell className="text-right font-mono">{formatCurrency(mf.value)}</TableCell>
                                             <TableCell className={`text-right font-mono ${mf.changeValue >= 0 ? "text-green-400" : "text-red-400"}`}>
                                                 {mf.change}
@@ -170,112 +188,8 @@ export default function PortfolioPage() {
                                         </TableRow>
                                     ))}
                                 </TableBody>
-                                 <TableFooter>
-                                    <TableRow>
-                                        <TableHead colSpan={2}>Total Mutual Fund Value</TableHead>
-                                        <TableHead className="text-right font-bold font-mono">{formatCurrency(totalMutualFunds)}</TableHead>
-                                        <TableHead />
-                                    </TableRow>
-                                </TableFooter>
                             </Table>
                         </div>
-
-                        <Separator />
-
-                        {/* Fixed Deposits Section */}
-                        <div>
-                            <h3 className="text-lg font-semibold mb-2 flex items-center gap-2"><PiggyBank className="text-primary"/> Fixed Deposits</h3>
-                            <Table>
-                                <TableHeader>
-                                    <TableRow>
-                                        <TableHead>Bank</TableHead>
-                                        <TableHead className="text-right">Value</TableHead>
-                                        <TableHead className="text-right">Interest Rate</TableHead>
-                                        <TableHead className="text-right">Maturity Date</TableHead>
-                                    </TableRow>
-                                </TableHeader>
-                                <TableBody>
-                                    {portfolioData.fixedDeposits.map(fd => (
-                                        <TableRow key={fd.bank}>
-                                            <TableCell>{fd.bank}</TableCell>
-                                            <TableCell className="text-right font-mono">{formatCurrency(fd.value)}</TableCell>
-                                            <TableCell className="text-right">{fd.interestRate}</TableCell>
-                                            <TableCell className="text-right">{fd.maturityDate}</TableCell>
-                                        </TableRow>
-                                    ))}
-                                </TableBody>
-                                <TableFooter>
-                                    <TableRow>
-                                        <TableHead colSpan={1}>Total Fixed Deposit Value</TableHead>
-                                        <TableHead className="text-right font-bold font-mono">{formatCurrency(totalFixedDeposits)}</TableHead>
-                                        <TableHead colSpan={2} />
-                                    </TableRow>
-                                </TableFooter>
-                            </Table>
-                        </div>
-                        <Separator />
-
-                        {/* Digital Gold, Bonds, Emergency Fund Section */}
-                        <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-                            <div>
-                                <h3 className="text-lg font-semibold mb-2 flex items-center gap-2"><Gem className="text-primary"/> Digital Gold</h3>
-                                <Table>
-                                    <TableHeader>
-                                        <TableRow>
-                                            <TableHead>Grams</TableHead>
-                                            <TableHead className="text-right">Value</TableHead>
-                                        </TableRow>
-                                    </TableHeader>
-                                    <TableBody>
-                                        {portfolioData.digitalGold.map((gold, index) => (
-                                            <TableRow key={index}>
-                                                <TableCell>{gold.grams}g</TableCell>
-                                                <TableCell className="text-right font-mono">{formatCurrency(gold.value)}</TableCell>
-                                            </TableRow>
-                                        ))}
-                                    </TableBody>
-                                </Table>
-                            </div>
-                            <div>
-                                <h3 className="text-lg font-semibold mb-2 flex items-center gap-2"><Landmark className="text-primary"/> Bonds</h3>
-                                <Table>
-                                    <TableHeader>
-                                        <TableRow>
-                                            <TableHead>Name</TableHead>
-                                            <TableHead className="text-right">Value</TableHead>
-                                        </TableRow>
-                                    </TableHeader>
-                                    <TableBody>
-                                        {portfolioData.bonds.map(bond => (
-                                            <TableRow key={bond.name}>
-                                                <TableCell>{bond.name}</TableCell>
-                                                <TableCell className="text-right font-mono">{formatCurrency(bond.value)}</TableCell>
-                                            </TableRow>
-                                        ))}
-                                    </TableBody>
-                                </Table>
-                            </div>
-                            <div>
-                                <h3 className="text-lg font-semibold mb-2 flex items-center gap-2"><Shield className="text-primary"/> Emergency Fund</h3>
-                                 <Table>
-                                    <TableHeader>
-                                        <TableRow>
-                                            <TableHead>Account</TableHead>
-                                            <TableHead className="text-right">Value</TableHead>
-                                        </TableRow>
-                                    </TableHeader>
-                                    <TableBody>
-                                        {portfolioData.emergencyFund.map(fund => (
-                                            <TableRow key={fund.account}>
-                                                <TableCell>{fund.account}</TableCell>
-                                                <TableCell className="text-right font-mono">{formatCurrency(fund.value)}</TableCell>
-                                            </TableRow>
-                                        ))}
-                                    </TableBody>
-                                </Table>
-                            </div>
-                        </div>
-
                     </div>
                 </CardContent>
             </Card>

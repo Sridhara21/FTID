@@ -1,3 +1,4 @@
+
 "use client";
 
 import Link from "next/link";
@@ -22,7 +23,9 @@ import {
   Scale,
   BarChart,
   AlertTriangle,
-  Briefcase
+  Briefcase,
+  Lock,
+  FileText
 } from "lucide-react";
 import {
   SidebarHeader,
@@ -35,14 +38,14 @@ import {
 import { Button } from "@/components/ui/button";
 
 const citizenNav = [
-  { href: "/citizen", icon: LayoutGrid, label: "Dashboard" },
-  { href: "/citizen/profile", icon: User, label: "Profile" },
-  { href: "/citizen/wallet", icon: Wallet, label: "Digital E-Rupee Wallet" },
-  { href: "/citizen/portfolio", icon: Briefcase, label: "Investment Portfolio" },
-  { href: "/citizen/ai-advisor", icon: Bot, label: "AI Financial Advisor" },
-  { href: "/citizen/credit-score", icon: HeartPulse, label: "Financial Health Score" },
-  { href: "/citizen/tax", icon: Receipt, label: "Tax Calculator" },
-  { href: "/citizen/subsidies", icon: HandCoins, label: "Subsidies" },
+  { href: "/citizen", icon: LayoutGrid, label: "Control Center" },
+  { href: "/citizen/profile", icon: User, label: "Identity Hub" },
+  { href: "/citizen/consent", icon: Lock, label: "Consent Management" },
+  { href: "/citizen/wallet", icon: Wallet, label: "CBDC Wallet" },
+  { href: "/citizen/portfolio", icon: Briefcase, label: "Investments" },
+  { href: "/citizen/credit-score", icon: HeartPulse, label: "Financial Health" },
+  { href: "/citizen/tax", icon: FileText, label: "Tax & Compliance" },
+  { href: "/citizen/subsidies", icon: HandCoins, label: "Subsidies & Welfare" },
   { href: "/citizen/balance-sheet", icon: Scale, label: "Personal Balance Sheet" },
 ];
 
@@ -54,6 +57,7 @@ const governmentNav = [
   { href: "/government/donations", icon: Vote, label: "Donations" },
   { href: "/government/state-performance", icon: BarChart, label: "State Performance" },
   { href: "/government/balance-sheet", icon: Scale, label: "National Balance Sheet" },
+  { href: "/government/fraud-heatmaps", icon: AlertTriangle, label: "Fraud Heatmaps" },
 ];
 
 export function DashboardSidebar() {
@@ -98,7 +102,7 @@ export function DashboardSidebar() {
               {isGovernment ? <Building className="h-8 w-8" /> : <User className="h-8 w-8" />}
               <div>
                 <p className="text-sm font-medium">{userRole} Portal</p>
-                <p className="text-xs">Beta Version</p>
+                <p className="text-xs">FTID System Prototype</p>
               </div>
             </div>
           </div>

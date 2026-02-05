@@ -43,10 +43,10 @@ export function UserProfileCard() {
                         <CreditCard className="h-5 w-5 mt-0.5 text-primary flex-shrink-0"/>
                         <div>
                             <p className="font-medium">PAN Number</p>
-                            <p className="text-muted-foreground font-mono">{userProfileData.pan}</p>
+                            <p className="text-muted-foreground font-mono">{userProfileData.pan.number}</p>
                         </div>
                     </div>
-                    <div className="flex items-start gap-3 p-3 rounded-lg bg-muted/50">
+                     <div className="flex items-start gap-3 p-3 rounded-lg bg-muted/50">
                         <CreditCard className="h-5 w-5 mt-0.5 text-primary flex-shrink-0"/>
                         <div>
                             <p className="font-medium">FTID Number</p>

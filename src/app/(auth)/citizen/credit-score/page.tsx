@@ -1,16 +1,15 @@
 
+
 "use client";
 
-import { useEffect, useState } from "react";
 import { Card, CardContent, CardHeader, CardTitle, CardDescription } from "@/components/ui/card";
 import {
   ChartContainer,
   ChartTooltip,
   ChartTooltipContent,
 } from "@/components/ui/chart";
-import { creditScoreData } from "@/lib/placeholder-data";
-import { getCreditScoreTips, CreditScoreTipsOutput } from "@/ai/flows/credit-score-tips-flow";
-import { Lightbulb, HeartPulse, TrendingUp, Loader2 } from "lucide-react";
+import { flowScoreData } from "@/lib/placeholder-data";
+import { Lightbulb, HeartPulse, TrendingUp, CheckCircle, HelpCircle } from "lucide-react";
 import { Label, Pie, PieChart, Cell, LineChart, Line, XAxis, YAxis, Tooltip, ResponsiveContainer, CartesianGrid } from "recharts";
 import {
     Table,
@@ -21,9 +20,14 @@ import {
     TableRow,
 } from "@/components/ui/table";
 import { Badge } from "@/components/ui/badge";
-import { Skeleton } from "@/components/ui/skeleton";
+import {
+  Tooltip as ShadTooltip,
+  TooltipContent,
+  TooltipProvider,
+  TooltipTrigger,
+} from "@/components/ui/tooltip"
 
-const chartData = [{ value: creditScoreData.score }];
+const chartData = [{ value: flowScoreData.score }];
 const chartConfig = {
   score: {
     label: "Score",
@@ -41,33 +45,26 @@ const historyChartConfig = {
 
 export default function CreditScorePage() {
     const score = chartData[0].value;
-    const rating = creditScoreData.rating;
-    const [tips, setTips] = useState<CreditScoreTipsOutput | null>(null);
-    const [isLoading, setIsLoading] = useState(true);
-
-    useEffect(() => {
-        async function fetchTips() {
-            setIsLoading(true);
-            try {
-                const result = await getCreditScoreTips({
-                    score: creditScoreData.score,
-                    factors: creditScoreData.factors.map(({icon, color, ...rest}) => rest)
-                });
-                setTips(result);
-            } catch (error) {
-                console.error("Error fetching credit score tips:", error);
-            }
-            setIsLoading(false);
-        }
-        fetchTips();
-    }, []);
+    const rating = flowScoreData.rating;
 
     return (
         <div className="grid gap-6 md:gap-8">
             <div className="flex flex-col gap-2">
-                <h1 className="text-3xl font-bold tracking-tight">Financial Health Score</h1>
+                 <div className="flex items-center gap-2">
+                    <h1 className="text-3xl font-bold tracking-tight">FTID Flow Score</h1>
+                     <TooltipProvider>
+                        <ShadTooltip>
+                            <TooltipTrigger>
+                                <HelpCircle className="h-5 w-5 text-muted-foreground" />
+                            </TooltipTrigger>
+                            <TooltipContent>
+                                <p className="max-w-xs">The FTID Flow Score is a dynamic measure of financial reliability based on real-time cash flow analysis, not just past credit history. It enables more accurate and fair underwriting.</p>
+                            </TooltipContent>
+                        </ShadTooltip>
+                    </TooltipProvider>
+                </div>
                 <p className="text-muted-foreground">
-                    A detailed analysis of your financial well-being.
+                    A dynamic analysis of your financial reliability based on transaction flows.
                 </p>
             </div>
             <div className="grid grid-cols-1 lg:grid-cols-3 gap-6 lg:gap-8">
@@ -76,7 +73,7 @@ export default function CreditScorePage() {
                         <CardHeader>
                             <CardTitle className="flex items-center gap-2">
                                 <HeartPulse className="h-6 w-6 text-primary" />
-                                Current Score
+                                Current Flow Score
                             </CardTitle>
                         </CardHeader>
                         <CardContent className="flex-1 flex flex-col items-center justify-center">
@@ -145,7 +142,7 @@ export default function CreditScorePage() {
                             </PieChart>
                             </ChartContainer>
                             <div className="mt-4 text-center w-full">
-                                <p className="text-sm text-muted-foreground">{creditScoreData.summary}</p>
+                                <p className="text-sm text-muted-foreground">{flowScoreData.summary}</p>
                             </div>
                         </CardContent>
                     </Card>
@@ -162,7 +159,7 @@ export default function CreditScorePage() {
                         <CardContent className="h-[300px]">
                              <ChartContainer config={historyChartConfig} className="h-full w-full">
                                 <ResponsiveContainer width="100%" height="100%">
-                                    <LineChart data={creditScoreData.history} margin={{ top: 5, right: 20, left: -10, bottom: 5 }}>
+                                    <LineChart data={flowScoreData.history} margin={{ top: 5, right: 20, left: -10, bottom: 5 }}>
                                         <CartesianGrid strokeDasharray="3 3" vertical={false} />
                                         <XAxis dataKey="month" stroke="hsl(var(--muted-foreground))" tickLine={false} axisLine={false}/>
                                         <YAxis domain={['dataMin - 10', 'dataMax + 10']} stroke="hsl(var(--muted-foreground))" tickLine={false} axisLine={false}/>
@@ -186,8 +183,8 @@ export default function CreditScorePage() {
             <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 lg:gap-8">
                  <Card>
                     <CardHeader>
-                        <CardTitle>Score Factors</CardTitle>
-                        <CardDescription>What's affecting your financial health score.</CardDescription>
+                        <CardTitle>Flow Score Factors</CardTitle>
+                        <CardDescription>What's affecting your financial reliability score.</CardDescription>
                     </CardHeader>
                     <CardContent>
                         <Table>
@@ -199,7 +196,7 @@ export default function CreditScorePage() {
                                 </TableRow>
                             </TableHeader>
                             <TableBody>
-                                {creditScoreData.factors.map((factor) => (
+                                {flowScoreData.factors.map((factor) => (
                                 <TableRow key={factor.name}>
                                     <TableCell className="font-medium flex items-center gap-2">
                                         <factor.icon className={`h-4 w-4 ${factor.color}`} />
@@ -221,28 +218,19 @@ export default function CreditScorePage() {
                 </Card>
                  <Card>
                     <CardHeader>
-                        <CardTitle>AI Improvement Tips</CardTitle>
-                        <CardDescription>Actionable tips to improve your score.</CardDescription>
+                        <CardTitle>Data Sources</CardTitle>
+                        <CardDescription>Data streams used for Flow Score calculation.</CardDescription>
                     </CardHeader>
                     <CardContent className="space-y-3">
-                        {isLoading && (
-                            <div className="space-y-4">
-                                <Skeleton className="h-10 w-full" />
-                                <Skeleton className="h-10 w-full" />
-                                <Skeleton className="h-10 w-full" />
-                            </div>
-                        )}
-                        {!isLoading && tips && tips.tips.map((tip, index) => (
-                            <div key={index} className="flex items-start gap-3 p-3 rounded-lg bg-secondary/50">
-                                <Lightbulb className="h-5 w-5 mt-0.5 text-primary flex-shrink-0"/>
-                                <span className="text-sm">{tip}</span>
+                        {flowScoreData.dataSources.map((source, index) => (
+                            <div key={index} className="flex items-center justify-between p-3 rounded-lg bg-secondary/50">
+                                <span className="text-sm font-medium">{source.name}</span>
+                                <div className="flex items-center gap-2 text-sm text-green-400">
+                                    <CheckCircle className="h-4 w-4" />
+                                    Verified
+                                </div>
                             </div>
                         ))}
-                         {!isLoading && !tips && (
-                            <div className="flex items-center justify-center h-24 text-muted-foreground">
-                                <p>Could not load AI tips.</p>
-                            </div>
-                        )}
                     </CardContent>
                 </Card>
             </div>

@@ -1,3 +1,4 @@
+
 "use client";
 
 import { useState } from "react";
@@ -30,18 +31,28 @@ import { Badge } from "@/components/ui/badge";
 export function FraudHeatmapCard() {
   const [result, setResult] = useState<FraudAnalysisOutput | null>(null);
   const [isLoading, setIsLoading] = useState(false);
-  const [region, setRegion] = useState("California");
+  const [region, setRegion] = useState("Mumbai Metropolitan Region");
   const [ftidData, setFtidData] = useState(dummyFtidData);
 
   async function handleGenerate() {
     setIsLoading(true);
     setResult(null);
     try {
-      const res = await analyzeFraudData({
-        region,
-        ftidTransactionData: ftidData,
-      });
-      setResult(res);
+      // In a real scenario, this would be a long-running analysis.
+      // We are mocking the AI flow call.
+      await new Promise(resolve => setTimeout(resolve, 1500));
+      const mockResult: FraudAnalysisOutput = {
+        region: region,
+        totalTransactionsAnalyzed: 1850392,
+        suspiciousTransactionCount: 4892,
+        hotspots: [
+            { location: 'Dharavi, Mumbai', riskLevel: 'High', reason: 'Anomalous high-velocity cash-out patterns.' },
+            { location: 'Thane West', riskLevel: 'Medium', reason: 'Unusual concentration of new FTID activations with immediate high-value transfers.' },
+            { location: 'Panvel', riskLevel: 'Low', reason: 'Slight increase in cross-border transaction failures.' },
+        ],
+        summary: 'Potential circular trading and mule account activity detected in the Dharavi cluster. Recommend flagging accounts with more than 5 transactions per hour for manual review. Thane activity seems coordinated, suggesting a potential organized fraud attempt. Panvel is likely benign but warrants monitoring.'
+      };
+      setResult(mockResult);
     } catch (error) {
       console.error("Error generating analysis:", error);
     }
@@ -63,7 +74,7 @@ export function FraudHeatmapCard() {
         <CardHeader>
           <CardTitle>Analysis Controls</CardTitle>
           <CardDescription>
-            Input your data and region to generate a fraud analysis.
+            Input a data stream and region to generate a fraud analysis.
           </CardDescription>
         </CardHeader>
         <CardContent className="space-y-4">
@@ -78,7 +89,7 @@ export function FraudHeatmapCard() {
             />
           </div>
           <div className="space-y-2">
-            <Label htmlFor="ftidData">FTID Transaction Data (JSON)</Label>
+            <Label htmlFor="ftidData">FTID Transaction Data Stream (JSON)</Label>
             <Textarea
               id="ftidData"
               value={ftidData}
@@ -101,7 +112,7 @@ export function FraudHeatmapCard() {
             Fraud Analysis Result
           </CardTitle>
           <CardDescription>
-            Generated analysis and AI-powered summary.
+            Generated analysis and AI-powered summary for regulatory review.
           </CardDescription>
         </CardHeader>
         <CardContent className="flex flex-col flex-1 space-y-4">
@@ -127,11 +138,11 @@ export function FraudHeatmapCard() {
                     </div>
                     <div>
                         <p className="text-sm text-muted-foreground">Transactions Analyzed</p>
-                        <p className="text-lg font-bold">{result.totalTransactionsAnalyzed}</p>
+                        <p className="text-lg font-bold">{result.totalTransactionsAnalyzed.toLocaleString()}</p>
                     </div>
                      <div>
                         <p className="text-sm text-muted-foreground">Suspicious</p>
-                        <p className="text-lg font-bold text-destructive">{result.suspiciousTransactionCount}</p>
+                        <p className="text-lg font-bold text-destructive">{result.suspiciousTransactionCount.toLocaleString()}</p>
                     </div>
                 </div>
 

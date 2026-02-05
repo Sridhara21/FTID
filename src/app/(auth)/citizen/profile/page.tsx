@@ -1,5 +1,6 @@
-import { UserProfileCard } from "@/components/citizen/user-profile-card";
+
+import { UserProfile } from "@/components/citizen/user-profile";
 
 export default function ProfilePage() {
-    return <UserProfileCard />;
+    return <UserProfile />;
 }
