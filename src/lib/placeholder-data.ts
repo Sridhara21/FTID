@@ -1,3 +1,4 @@
+
 import {
   CreditCard,
   Landmark,
@@ -260,21 +261,21 @@ export const subsidies = [
 
 
 export const gdpData = [
-  { year: '2020', gdp: 250 },
-  { year: '2021', gdp: 275 },
-  { year: '2022', gdp: 305 },
-  { year: '2023', gdp: 340 },
-  { year: '2024', gdp: 375 },
-  { year: '2025', gdp: 410 },
-  { year: '2026', gdp: 450 },
+  { year: '2020', gdp: 250, range: [245, 255] },
+  { year: '2021', gdp: 275, range: [270, 280] },
+  { year: '2022', gdp: 305, range: [300, 310] },
+  { year: '2023', gdp: 340, range: [335, 345] },
+  { year: '2024', gdp: 375, range: [370, 380] },
+  { year: '2025', gdp: 410, range: [400, 420] },
+  { year: '2026', gdp: 450, range: [440, 460] },
 ];
 
 export const revenueData = [
-  { name: 'Income Tax', value: 22, fill: 'hsl(var(--chart-1))' },
-  { name: 'Corporate Tax', value: 13, fill: 'hsl(var(--chart-2))' },
-  { name: 'GST', value: 20, fill: 'hsl(var(--chart-3))' },
-  { name: 'Customs', value: 5, fill: 'hsl(var(--chart-4))' },
-  { name: 'Other', value: 4, fill: 'hsl(var(--chart-5))' },
+  { name: 'Income Tax', value: 22, fill: 'hsl(var(--chart-1))', growth: '+9.5%', volatility: 'Low', risk: 'Low' },
+  { name: 'Corporate Tax', value: 13, fill: 'hsl(var(--chart-2))', growth: '+7.2%', volatility: 'Medium', risk: 'Medium' },
+  { name: 'GST', value: 20, fill: 'hsl(var(--chart-3))', growth: '+11.1%', volatility: 'Low', risk: 'Low' },
+  { name: 'Customs', value: 5, fill: 'hsl(var(--chart-4))', growth: '-2.5%', volatility: 'High', risk: 'High' },
+  { name: 'Other', value: 4, fill: 'hsl(var(--chart-5))', growth: '+5.0%', volatility: 'Medium', risk: 'Low' },
 ];
 
 export const subsidyDistributionData = [
@@ -323,16 +324,42 @@ export const subsidyDetailsData = [
     }
 ];
 
+export const portfolioData = {
+    stocks: [
+        { name: 'Reliance Industries', symbol: 'RELIANCE', quantity: 50, value: 145000, change: "+1.2%", changeValue: 1740, taxClassification: 'LTCG' },
+        { name: 'Tata Consultancy Services', symbol: 'TCS', quantity: 100, value: 380000, change: "-0.5%", changeValue: -1900, taxClassification: 'STCG' },
+        { name: 'HDFC Bank', symbol: 'HDFCBANK', quantity: 200, value: 310000, change: "+2.1%", changeValue: 6510, taxClassification: 'LTCG' }
+    ],
+    mutualFunds: [
+        { name: 'Parag Parikh Flexi Cap Fund', nav: 72.50, units: 1379, value: 100000, change: "+0.8%", changeValue: 800, taxClassification: 'LTCG (Debt)' },
+        { name: 'UTI Nifty 50 Index Fund', nav: 145.20, units: 1033, value: 150000, change: "+1.1%", changeValue: 1650, taxClassification: 'STCG (Equity)' }
+    ],
+    fixedDeposits: [
+        { bank: 'HDFC Bank', value: 200000, interestRate: '7.1%', maturityDate: '2026-05-10' },
+        { bank: 'State Bank of India', value: 150000, interestRate: '6.9%', maturityDate: '2025-11-20' }
+    ],
+    digitalGold: [
+        { grams: 50, value: 350000 }
+    ],
+    bonds: [
+        { name: 'GOI 7.26% 2033', value: 100000 },
+        { name: 'NHAI InvIT', value: 50000 }
+    ],
+    emergencyFund: [
+        { account: 'Savings Account', value: 250000 }
+    ]
+};
+
 export const balanceSheetData = {
     assets: [
       { name: 'E-Rupee Wallet', value: 85250 },
-      { name: 'Bank Deposits', value: 500000 },
-      { name: 'Stocks', value: 835000 },
-      { name: 'Mutual Funds', value: 250000 },
-      { name: 'Fixed Deposits', value: 350000 },
-      { name: 'Bonds', value: 150000 },
-      { name: 'Digital Gold', value: 350000 },
-      { name: 'Real Estate', value: 1200000 },
+      { name: 'Bank Deposits (Emergency Fund)', value: portfolioData.emergencyFund.reduce((sum, item) => sum + item.value, 0) },
+      { name: 'Stocks', value: portfolioData.stocks.reduce((sum, item) => sum + item.value, 0) },
+      { name: 'Mutual Funds', value: portfolioData.mutualFunds.reduce((sum, item) => sum + item.value, 0) },
+      { name: 'Fixed Deposits', value: portfolioData.fixedDeposits.reduce((sum, item) => sum + item.value, 0) },
+      { name: 'Bonds', value: portfolioData.bonds.reduce((sum, item) => sum + item.value, 0) },
+      { name: 'Digital Gold', value: portfolioData.digitalGold.reduce((sum, item) => sum + item.value, 0) },
+      { name: 'Real Estate (Self-Declared)', value: 1200000 },
     ],
     liabilities: [
       { name: 'Credit Card Debt', value: 25000 },
@@ -541,6 +568,7 @@ export const economicIndicatorsData = [
     change: '~$3.9T',
     icon: Landmark,
     trend: 'up',
+    color: 'text-foreground',
     definition: 'The total market value of all final goods and services produced in a country in a given period.',
     source: 'Aggregated FTID transaction flows, corporate revenue data.',
     relevance: 'Primary measure of economic size and health.',
@@ -552,6 +580,7 @@ export const economicIndicatorsData = [
     change: '~$3.8T',
     icon: Globe,
     trend: 'up',
+    color: 'text-foreground',
     definition: 'GDP plus net factor income from abroad.',
     source: 'FTID flows and international transaction data.',
     relevance: 'Measures economic output generated by a country\'s citizens.',
@@ -563,6 +592,7 @@ export const economicIndicatorsData = [
     change: 'Annual YoY',
     icon: LineChartIcon,
     trend: 'stable',
+    color: 'text-foreground',
     definition: 'The inflation-adjusted growth rate of GDP.',
     source: 'Calculated from FTID-derived nominal GDP and CPI data.',
     relevance: 'Shows the actual growth of the economy, stripped of price changes.',
@@ -574,6 +604,7 @@ export const economicIndicatorsData = [
     change: '~$2,950',
     icon: Users,
     trend: 'up',
+    color: 'text-foreground',
     definition: 'The average income earned per person in a given area.',
     source: 'Derived from FTID-based national income and population data.',
     relevance: 'Indicates the standard of living.',
@@ -585,10 +616,23 @@ export const economicIndicatorsData = [
     change: 'Net of refunds',
     icon: Banknote,
     trend: 'up',
+    color: 'text-foreground',
     definition: 'The total tax receipts collected by the government.',
     source: 'Directly aggregated from FTID tax payment flows.',
     relevance: 'Core funding source for all government activities.',
     limitations: 'Reflects compliance, not necessarily economic activity.',
+  },
+   {
+    label: 'Capital Expenditure',
+    value: '₹11.1L Cr',
+    change: 'Asset-creating',
+    icon: Building,
+    trend: 'up',
+    color: 'text-green-400',
+    definition: 'Government spending on acquiring or maintaining fixed assets.',
+    source: 'Aggregated from FTID project payment and procurement flows.',
+    relevance: 'Drives long-term economic growth.',
+    limitations: 'Does not measure the quality or efficiency of the expenditure.',
   },
   {
     label: 'Fiscal Deficit',
@@ -596,6 +640,7 @@ export const economicIndicatorsData = [
     change: 'of GDP',
     icon: PieChartIcon,
     trend: 'down',
+    color: 'text-green-400',
     definition: 'The shortfall in a government\'s income compared with its spending.',
     source: 'Calculated from FTID-tracked revenue and expenditure.',
     relevance: 'Key indicator of government financial health.',
@@ -607,21 +652,11 @@ export const economicIndicatorsData = [
     change: 'of GDP',
     icon: PieChartIcon,
     trend: 'down',
+    color: 'text-green-400',
     definition: 'Occurs when realized net income is less than the projected net income.',
     source: 'Calculated from FTID-tracked revenue and expenditure.',
     relevance: 'Indicates the government is borrowing to finance current consumption.',
     limitations: 'A non-zero value is not always negative in a developing economy.',
-  },
-  {
-    label: 'Capital Expenditure',
-    value: '₹11.1L Cr',
-    change: 'Asset-creating',
-    icon: Building,
-    trend: 'up',
-    definition: 'Government spending on acquiring or maintaining fixed assets.',
-    source: 'Aggregated from FTID project payment and procurement flows.',
-    relevance: 'Drives long-term economic growth.',
-    limitations: 'Does not measure the quality or efficiency of the expenditure.',
   },
   {
     label: 'Inflation (CPI)',
@@ -641,6 +676,7 @@ export const economicIndicatorsData = [
     change: 'Current',
     icon: ShieldCheck,
     trend: 'stable',
+    color: 'text-foreground',
     definition: 'Assets held on reserve by a central bank in foreign currencies.',
     source: 'RBI data feed, cross-verified with FTID international flows.',
     relevance: 'Cushions against external shocks and maintains currency stability.',
@@ -652,6 +688,7 @@ export const economicIndicatorsData = [
     change: 'of GDP',
     icon: ArrowRightLeft,
     trend: 'down',
+    color: 'text-green-400',
     definition: 'When a country\'s total imports are greater than its total exports.',
     source: 'Estimated from FTID-tracked trade and remittance flows.',
     relevance: 'Indicates reliance on foreign capital.',
@@ -663,6 +700,7 @@ export const economicIndicatorsData = [
     change: 'Estimated',
     icon: Target,
     trend: 'down',
+    color: 'text-green-400',
     definition: 'The percentage of the labor force that is jobless.',
     source: 'Estimated from payroll data, PF/ESI flows, and subsidy applications.',
     relevance: 'Key measure of labor market health.',
@@ -691,32 +729,6 @@ export const statePerformanceData = {
         { state: 'Maharashtra', metric: 'Energy Efficiency', value: '80.5%', rank: 'Top' },
         { state: 'Andhra Pradesh', metric: 'Energy Efficiency', value: '79.3%', rank: 'Top' },
         { state: 'Telangana', metric: 'Per Capita NSDP', value: '₹3.87 lakh', rank: 'Top' }
-    ]
-};
-
-export const portfolioData = {
-    stocks: [
-        { name: 'Reliance Industries', symbol: 'RELIANCE', quantity: 50, value: 145000, change: "+1.2%", changeValue: 1740, taxClassification: 'LTCG' },
-        { name: 'Tata Consultancy Services', symbol: 'TCS', quantity: 100, value: 380000, change: "-0.5%", changeValue: -1900, taxClassification: 'STCG' },
-        { name: 'HDFC Bank', symbol: 'HDFCBANK', quantity: 200, value: 310000, change: "+2.1%", changeValue: 6510, taxClassification: 'LTCG' }
-    ],
-    mutualFunds: [
-        { name: 'Parag Parikh Flexi Cap Fund', nav: 72.50, units: 1379, value: 100000, change: "+0.8%", changeValue: 800, taxClassification: 'LTCG (Debt)' },
-        { name: 'UTI Nifty 50 Index Fund', nav: 145.20, units: 1033, value: 150000, change: "+1.1%", changeValue: 1650, taxClassification: 'STCG (Equity)' }
-    ],
-    fixedDeposits: [
-        { bank: 'HDFC Bank', value: 200000, interestRate: '7.1%', maturityDate: '2026-05-10' },
-        { bank: 'State Bank of India', value: 150000, interestRate: '6.9%', maturityDate: '2025-11-20' }
-    ],
-    digitalGold: [
-        { grams: 50, value: 350000 }
-    ],
-    bonds: [
-        { name: 'GOI 7.26% 2033', value: 100000 },
-        { name: 'NHAI InvIT', value: 50000 }
-    ],
-    emergencyFund: [
-        { account: 'Savings Account', value: 250000 }
     ]
 };
 
@@ -783,3 +795,5 @@ export const institutionConnectivity = [
     { id: 5, name: 'Zerodha', status: 'Active', type: 'Broker', icon: Briefcase },
     { id: 6, name: 'Axis Bank', status: 'Inactive', type: 'Bank', icon: Landmark },
 ]
+
+    

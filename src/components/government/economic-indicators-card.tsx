@@ -1,3 +1,4 @@
+
 import {
     Card,
     CardContent,
@@ -21,7 +22,7 @@ export function EconomicIndicatorsCard() {
         <Card>
             <CardHeader>
                 <CardTitle>Key Economic Indicators</CardTitle>
-                <CardDescription>A high-level overview of the nation's economic health, derived from FTID transaction flows.</CardDescription>
+                <CardDescription>Indicative metrics derived from anonymized FTID transaction aggregates. Not a substitute for official statistics.</CardDescription>
             </CardHeader>
             <CardContent>
                 <TooltipProvider>
@@ -62,3 +63,5 @@ export function EconomicIndicatorsCard() {
         </Card>
     );
 }
+
+    

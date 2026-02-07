@@ -1,6 +1,7 @@
+
 "use client";
 
-import { Area, AreaChart, CartesianGrid, XAxis, YAxis, ResponsiveContainer, Tooltip } from "recharts";
+import { Area, AreaChart, CartesianGrid, XAxis, YAxis, ResponsiveContainer, Tooltip, ComposedChart, Line } from "recharts";
 import {
   Card,
   CardContent,
@@ -22,6 +23,10 @@ const chartConfig = {
     label: "GDP (Trillions INR)",
     color: "hsl(var(--primary))",
   },
+  range: {
+    label: "Confidence Range",
+    color: "hsla(var(--primary), 0.2)",
+  }
 };
 
 export function GdpChartCard() {
@@ -40,7 +45,7 @@ export function GdpChartCard() {
       <CardContent>
         <ChartContainer config={chartConfig} className="h-[250px] w-full">
           <ResponsiveContainer>
-            <AreaChart
+            <ComposedChart
               data={gdpData}
               margin={{ top: 5, right: 20, left: 10, bottom: 0 }}
             >
@@ -70,13 +75,20 @@ export function GdpChartCard() {
                 content={<ChartTooltipContent indicator="dot" formatter={(value) => `₹${value}T`}/>}
               />
               <Area
+                dataKey="range"
+                type="natural"
+                fill={chartConfig.range.color}
+                stroke=""
+                strokeWidth={0}
+              />
+               <Line
                 dataKey="gdp"
                 type="natural"
-                fill="url(#colorGdp)"
                 stroke={chartConfig.gdp.color}
-                stackId="a"
+                strokeWidth={2}
+                dot={false}
               />
-            </AreaChart>
+            </ComposedChart>
           </ResponsiveContainer>
         </ChartContainer>
       </CardContent>
@@ -93,3 +105,5 @@ export function GdpChartCard() {
     </Card>
   );
 }
+
+    

@@ -1,13 +1,18 @@
+
 import { Card, CardContent, CardHeader, CardTitle, CardDescription } from "@/components/ui/card";
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table";
 import { donationData } from "@/lib/placeholder-data";
 import { Badge } from "@/components/ui/badge";
+import { Vote } from "lucide-react";
 
 export function DonationTrackerCard() {
   return (
     <Card>
       <CardHeader>
-        <CardTitle>Election & Donation Transparency</CardTitle>
+        <CardTitle className="flex items-center gap-2">
+          <Vote />
+          Election & Donation Transparency
+        </CardTitle>
         <CardDescription>
           Source-tagged tracking of political contributions, compliant with EC guidelines. Data is for public accountability.
         </CardDescription>
@@ -46,3 +51,5 @@ export function DonationTrackerCard() {
     </Card>
   );
 }
+
+    

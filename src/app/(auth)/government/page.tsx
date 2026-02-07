@@ -1,3 +1,4 @@
+
 import { GdpChartCard } from "@/components/government/gdp-chart-card";
 import { RevenueChartCard } from "@/components/government/revenue-chart-card";
 import { SubsidyDistributionChart } from "@/components/government/subsidy-distribution-chart";
@@ -27,9 +28,9 @@ import { Scale } from "lucide-react";
 
 
 export default function GovernmentDashboard() {
-  const totalAssets = governmentBalanceSheetDataFy2526.assets.reduce((sum, item) => sum + item.value, 0);
-  const totalLiabilities = governmentBalanceSheetDataFy2526.liabilities.reduce((sum, item) => sum + item.value, 0);
-  const netPosition = totalAssets - totalLiabilities;
+  const totalReceipts = governmentBalanceSheetDataFy2526.assets.reduce((sum, item) => sum + item.value, 0);
+  const totalExpenditure = governmentBalanceSheetDataFy2526.liabilities.reduce((sum, item) => sum + item.value, 0);
+  const netPosition = totalReceipts - totalExpenditure;
   return (
     <div className="grid gap-6 md:gap-8">
         <div className="flex flex-col gap-2">
@@ -75,7 +76,7 @@ export default function GovernmentDashboard() {
                             <TableRow>
                                 <TableHead>Total Receipts</TableHead>
                                 <TableHead className="text-right font-mono font-bold text-green-400">
-                                  {totalAssets.toLocaleString('en-IN', { style: 'currency', currency: 'INR', minimumFractionDigits: 0, notation: 'compact' })}
+                                  {totalReceipts.toLocaleString('en-IN', { style: 'currency', currency: 'INR', minimumFractionDigits: 0, notation: 'compact' })}
                                 </TableHead>
                             </TableRow>
                         </TableFooter>
@@ -104,7 +105,7 @@ export default function GovernmentDashboard() {
                             <TableRow>
                                 <TableHead>Total Expenditure</TableHead>
                                 <TableHead className="text-right font-mono font-bold text-red-400">
-                                  {totalLiabilities.toLocaleString('en-IN', { style: 'currency', currency: 'INR', minimumFractionDigits: 0, notation: 'compact' })}
+                                  {totalExpenditure.toLocaleString('en-IN', { style: 'currency', currency: 'INR', minimumFractionDigits: 0, notation: 'compact' })}
                                 </TableHead>
                             </TableRow>
                         </TableFooter>
@@ -131,3 +132,5 @@ export default function GovernmentDashboard() {
     </div>
   );
 }
+
+    
