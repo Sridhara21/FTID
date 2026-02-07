@@ -67,7 +67,7 @@ export default function GovernmentDashboard() {
                                 <TableRow key={asset.name}>
                                     <TableCell>{asset.name}</TableCell>
                                     <TableCell className="text-right font-mono text-green-400">
-                                      {asset.value.toLocaleString('en-IN', { style: 'currency', currency: 'INR', minimumFractionDigits: 0, notation: 'compact' })}
+                                      {`₹${asset.value.toLocaleString('en-IN')} Cr`}
                                     </TableCell>
                                 </TableRow>
                             ))}
@@ -76,7 +76,7 @@ export default function GovernmentDashboard() {
                             <TableRow>
                                 <TableHead>Total Receipts</TableHead>
                                 <TableHead className="text-right font-mono font-bold text-green-400">
-                                  {totalReceipts.toLocaleString('en-IN', { style: 'currency', currency: 'INR', minimumFractionDigits: 0, notation: 'compact' })}
+                                  {`₹${totalReceipts.toLocaleString('en-IN')} Cr`}
                                 </TableHead>
                             </TableRow>
                         </TableFooter>
@@ -96,7 +96,7 @@ export default function GovernmentDashboard() {
                                 <TableRow key={liability.name}>
                                     <TableCell>{liability.name}</TableCell>
                                     <TableCell className="text-right font-mono text-red-400">
-                                      {liability.value.toLocaleString('en-IN', { style: 'currency', currency: 'INR', minimumFractionDigits: 0, notation: 'compact' })}
+                                      {`₹${liability.value.toLocaleString('en-IN')} Cr`}
                                     </TableCell>
                                 </TableRow>
                             ))}
@@ -105,7 +105,7 @@ export default function GovernmentDashboard() {
                             <TableRow>
                                 <TableHead>Total Expenditure</TableHead>
                                 <TableHead className="text-right font-mono font-bold text-red-400">
-                                  {totalExpenditure.toLocaleString('en-IN', { style: 'currency', currency: 'INR', minimumFractionDigits: 0, notation: 'compact' })}
+                                  {`₹${totalExpenditure.toLocaleString('en-IN')} Cr`}
                                 </TableHead>
                             </TableRow>
                         </TableFooter>
@@ -115,7 +115,7 @@ export default function GovernmentDashboard() {
                     <div className="flex justify-between items-center text-xl font-bold">
                         <span>Net Position</span>
                         <span className={`font-mono ${netPosition >= 0 ? 'text-green-400' : 'text-red-400'}`}>
-                          {netPosition.toLocaleString('en-IN', { style: 'currency', currency: 'INR', minimumFractionDigits: 0, notation: 'compact' })}
+                          {`₹${netPosition.toLocaleString('en-IN')} Cr`}
                         </span>
                     </div>
                 </div>

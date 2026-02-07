@@ -199,7 +199,7 @@ export function SubsidyOptimizationCard() {
                             {optimizedData.map((item) => (
                                 <TableRow key={item.name}>
                                     <TableCell>{item.name}</TableCell>
-                                    <TableCell className="text-right font-mono">{item.value.toLocaleString()}</TableCell>
+                                    <TableCell className="text-right font-mono">₹{item.value.toLocaleString('en-IN')} Cr</TableCell>
                                 </TableRow>
                             ))}
                         </TableBody>

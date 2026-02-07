@@ -70,16 +70,16 @@ export default function StatePerformancePage() {
                                 <TableRow key={item.state}>
                                     <TableCell className="font-medium">{item.state}</TableCell>
                                     <TableCell className="text-right font-mono">
-                                        {item.gstFy?.toLocaleString('en-IN') ?? 'N/A'}
+                                        {item.gstFy ? `₹${item.gstFy.toLocaleString('en-IN')} Cr` : 'N/A'}
                                     </TableCell>
                                     <TableCell className="text-right font-mono">
-                                        {item.gstJun?.toLocaleString('en-IN') ?? 'N/A'}
+                                        {item.gstJun ? `₹${item.gstJun.toLocaleString('en-IN')} Cr` : 'N/A'}
                                     </TableCell>
                                     <TableCell className="text-right font-mono">
-                                        {item.perCapita?.toLocaleString('en-IN') ?? 'N/A'}
+                                        {item.perCapita ? `₹${item.perCapita.toLocaleString('en-IN')}` : 'N/A'}
                                     </TableCell>
                                     <TableCell className="text-right font-mono">
-                                        {item.gsdpGrowth?.toLocaleString('en-IN') ?? 'N/A'}
+                                        {item.gsdpGrowth ? `${item.gsdpGrowth.toLocaleString('en-IN')}%` : 'N/A'}
                                     </TableCell>
                                 </TableRow>
                             ))}
@@ -117,7 +117,7 @@ export default function StatePerformancePage() {
                                     axisLine={false} 
                                     tickMargin={10} 
                                     stroke="hsl(var(--muted-foreground))"
-                                    valueFormatter={(value) => (value / 1000).toFixed(0) + 'k'}
+                                    valueFormatter={(value) => `${value.toLocaleString('en-IN')}`}
                                 />
                                 <Tooltip
                                     cursor={{ fill: 'hsl(var(--muted))' }}

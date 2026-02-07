@@ -114,7 +114,7 @@ export function CurrentSubsidyDetails() {
                                         <div className="w-1.5 h-10 rounded-full" style={{ backgroundColor: item.color }}/>
                                         <div>
                                             <p className="font-semibold">{item.title}</p>
-                                            <p className="text-sm text-primary font-mono">₹{item.amount} Cr</p>
+                                            <p className="text-sm text-primary font-mono">₹{item.amount.toLocaleString('en-IN')} Cr</p>
                                         </div>
                                     </div>
                                 </div>
