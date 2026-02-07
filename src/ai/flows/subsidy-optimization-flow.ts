@@ -39,6 +39,9 @@ const SubsidyOptimizationOutputSchema = z.object({
     .describe(
       'A summary explaining the reasoning behind the recommended changes.'
     ),
+    expectedGdpImpact: z.string().describe('The estimated impact on GDP growth (e.g., "+0.2%").'),
+    expectedEmploymentImpact: z.string().describe('The estimated impact on employment (e.g., "+150,000 jobs").'),
+    leakageReductionEstimate: z.string().describe('The estimated reduction in subsidy leakage (e.g., "5-7%").'),
 });
 export type SubsidyOptimizationOutput = z.infer<
   typeof SubsidyOptimizationOutputSchema
@@ -67,7 +70,9 @@ Economic Goals:
 Total Budget Constraints:
 ₹{{{budgetConstraints}}} Crores
 
-Provide an 'optimizedDistribution' in JSON format as an array of objects, where each object has 'name' (string) and 'value' (number, in Crores). The sum of 'value' in the 'optimizedDistribution' must exactly match the 'budgetConstraints'. Also provide a 'recommendationSummary' explaining your reasoning in detail.
+Provide an 'optimizedDistribution' in JSON format as an array of objects, where each object has 'name' (string) and 'value' (number, in Crores). The sum of 'value' in the 'optimizedDistribution' must exactly match the 'budgetConstraints'. 
+Also provide a 'recommendationSummary' explaining your reasoning in detail.
+Finally, provide realistic estimates for 'expectedGdpImpact', 'expectedEmploymentImpact', and 'leakageReductionEstimate' based on your recommended changes.
 `,
 });
 

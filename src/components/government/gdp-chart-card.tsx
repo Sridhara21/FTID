@@ -27,10 +27,10 @@ const chartConfig = {
 export function GdpChartCard() {
   return (
     <Card>
-      <CardHeader className="flex flex-row items-center justify-between">
+      <CardHeader className="flex flex-row items-start justify-between">
         <div>
             <CardTitle>Real-Time GDP Tracking</CardTitle>
-            <CardDescription>Aggregated from FTID transaction data.</CardDescription>
+            <CardDescription className="max-w-md mt-1">Indicative GDP estimation using anonymized FTID transaction flows. Not an official statistic.</CardDescription>
         </div>
         <Button variant="outline" size="sm">
             <Download className="mr-2 h-4 w-4" />

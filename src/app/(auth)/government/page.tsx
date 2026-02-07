@@ -35,7 +35,7 @@ export default function GovernmentDashboard() {
         <div className="flex flex-col gap-2">
             <h1 className="text-3xl font-bold tracking-tight">Government Dashboard</h1>
             <p className="text-muted-foreground">
-                Oversee national finances and economic indicators.
+                A real-time macro snapshot of the nation’s economic health using FTID-aggregated data.
             </p>
         </div>
         <EconomicIndicatorsCard />
@@ -49,11 +49,11 @@ export default function GovernmentDashboard() {
                 <CardTitle className="flex items-center gap-2">
                     <Scale /> National Balance Sheet (FY25-26)
                 </CardTitle>
-                <CardDescription>A snapshot of the nation's assets and liabilities (in INR Crores).</CardDescription>
+                <CardDescription>A snapshot of the nation's receipts and expenditure (in INR Crores).</CardDescription>
             </CardHeader>
             <CardContent className="grid grid-cols-1 md:grid-cols-2 gap-8">
                 <div>
-                    <h3 className="text-lg font-semibold mb-2 text-green-400">Assets & Incomes</h3>
+                    <h3 className="text-lg font-semibold mb-2 text-green-400">Receipts</h3>
                     <Table>
                         <TableHeader>
                             <TableRow>
@@ -73,7 +73,7 @@ export default function GovernmentDashboard() {
                         </TableBody>
                         <TableFooter>
                             <TableRow>
-                                <TableHead>Total Assets</TableHead>
+                                <TableHead>Total Receipts</TableHead>
                                 <TableHead className="text-right font-mono font-bold text-green-400">
                                   {totalAssets.toLocaleString('en-IN', { style: 'currency', currency: 'INR', minimumFractionDigits: 0, notation: 'compact' })}
                                 </TableHead>
@@ -82,7 +82,7 @@ export default function GovernmentDashboard() {
                     </Table>
                 </div>
                 <div>
-                    <h3 className="text-lg font-semibold mb-2 text-red-400">Liabilities & Expenses</h3>
+                    <h3 className="text-lg font-semibold mb-2 text-red-400">Expenditure</h3>
                     <Table>
                          <TableHeader>
                             <TableRow>
@@ -102,7 +102,7 @@ export default function GovernmentDashboard() {
                         </TableBody>
                         <TableFooter>
                             <TableRow>
-                                <TableHead>Total Liabilities</TableHead>
+                                <TableHead>Total Expenditure</TableHead>
                                 <TableHead className="text-right font-mono font-bold text-red-400">
                                   {totalLiabilities.toLocaleString('en-IN', { style: 'currency', currency: 'INR', minimumFractionDigits: 0, notation: 'compact' })}
                                 </TableHead>

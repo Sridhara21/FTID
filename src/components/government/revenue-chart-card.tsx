@@ -37,7 +37,7 @@ export function RevenueChartCard() {
             <Banknote />
             Revenue & Tax Dashboard
         </CardTitle>
-        <CardDescription>Breakdown of revenue sources for FY 2025-26 (in Trillions of INR).</CardDescription>
+        <CardDescription>Breakdown of revenue sources for FY 2025-26. This view helps analyze tax base stability and dependency risks.</CardDescription>
       </CardHeader>
       <CardContent className="flex-1 pb-0">
          <ChartContainer

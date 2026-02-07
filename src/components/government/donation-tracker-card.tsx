@@ -9,7 +9,7 @@ export function DonationTrackerCard() {
       <CardHeader>
         <CardTitle>Election & Donation Transparency</CardTitle>
         <CardDescription>
-          Tracking of political contributions for major elections.
+          Source-tagged tracking of political contributions, compliant with EC guidelines. Data is for public accountability.
         </CardDescription>
       </CardHeader>
       <CardContent>

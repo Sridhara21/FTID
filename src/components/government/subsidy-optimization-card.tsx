@@ -28,7 +28,7 @@ import {
   optimizeSubsidies,
   SubsidyOptimizationOutput,
 } from "@/ai/flows/subsidy-optimization-flow";
-import { Bot, Loader2, WandSparkles } from "lucide-react";
+import { Bot, Loader2, WandSparkles, TrendingUp, Briefcase, Droplets } from "lucide-react";
 import { subsidyDistributionData } from "@/lib/placeholder-data";
 import { Skeleton } from "@/components/ui/skeleton";
 import {
@@ -39,6 +39,7 @@ import {
   TableHeader,
   TableRow,
 } from "@/components/ui/table";
+import { Separator } from "@/components/ui/separator";
 
 const formSchema = z.object({
   economicGoals: z
@@ -98,8 +99,7 @@ export function SubsidyOptimizationCard() {
           AI Subsidy Optimizer
         </CardTitle>
         <CardDescription>
-          Get AI-driven recommendations to reallocate subsidies based on your
-          economic goals.
+          Generate data-driven recommendations to reallocate subsidies and maximize policy impact based on your stated economic goals.
         </CardDescription>
       </CardHeader>
       <Form {...form}>
@@ -110,7 +110,7 @@ export function SubsidyOptimizationCard() {
               name="economicGoals"
               render={({ field }) => (
                 <FormItem>
-                  <FormLabel>Economic Goals</FormLabel>
+                  <FormLabel>Primary Economic Goals</FormLabel>
                   <FormControl>
                     <Textarea
                       placeholder="e.g., Boost agriculture and support renewable energy."
@@ -126,7 +126,7 @@ export function SubsidyOptimizationCard() {
               name="budgetConstraints"
               render={({ field }) => (
                 <FormItem>
-                  <FormLabel>Total Budget (in Crores)</FormLabel>
+                  <FormLabel>Total Subsidy Budget (in Crores)</FormLabel>
                   <FormControl>
                     <Input type="number" {...field} />
                   </FormControl>
@@ -143,27 +143,46 @@ export function SubsidyOptimizationCard() {
                   Optimizing...
                 </>
               ) : (
-                "Optimize Subsidies"
+                "Generate Recommendations"
               )}
             </Button>
+            
+            {(isLoading || result) && <Separator />}
+
             {isLoading && (
               <div className="w-full space-y-2">
                 <Skeleton className="h-8 w-full" />
-                <Skeleton className="h-8 w-full" />
-                <Skeleton className="h-8 w-full" />
+                <Skeleton className="h-20 w-full" />
+                <Skeleton className="h-24 w-full" />
               </div>
             )}
             {result && optimizedData && (
-              <div className="w-full space-y-4">
+              <div className="w-full space-y-6">
                 <div>
                     <h3 className="font-semibold text-sm flex items-center gap-2 mb-2">
-                        <Bot className="h-4 w-4" />
+                        <Bot className="h-4 w-4 text-primary" />
                         AI Recommendation Summary
                     </h3>
                     <p className="text-sm text-muted-foreground">
                         {result.recommendationSummary}
                     </p>
                 </div>
+
+                <div className="grid grid-cols-3 gap-4 text-center">
+                    <div className="p-3 bg-secondary rounded-lg">
+                        <p className="text-xs text-muted-foreground flex items-center justify-center gap-1"><TrendingUp className="h-3 w-3" /> GDP Impact</p>
+                        <p className="text-lg font-bold text-green-400">{result.expectedGdpImpact}</p>
+                    </div>
+                     <div className="p-3 bg-secondary rounded-lg">
+                        <p className="text-xs text-muted-foreground flex items-center justify-center gap-1"><Briefcase className="h-3 w-3" /> Employment</p>
+                        <p className="text-lg font-bold">{result.expectedEmploymentImpact}</p>
+                    </div>
+                     <div className="p-3 bg-secondary rounded-lg">
+                        <p className="text-xs text-muted-foreground flex items-center justify-center gap-1"><Droplets className="h-3 w-3" /> Leakage</p>
+                        <p className="text-lg font-bold text-red-400">{result.leakageReductionEstimate}</p>
+                    </div>
+                </div>
+
                 <div>
                      <h3 className="font-semibold text-sm mb-2">
                         Optimized Distribution
