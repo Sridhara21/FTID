@@ -770,4 +770,23 @@ export const institutionConnectivity = [
     { id: 6, name: 'Axis Bank', status: 'Inactive', type: 'Bank', icon: Landmark },
 ]
 
+export const statePerformanceData = {
+    indicators: [
+      { state: 'Maharashtra', gstFy: 245000, gstJun: 22000, perCapita: 215000, gsdpGrowth: 6.8 },
+      { state: 'Karnataka', gstFy: 130000, gstJun: 11500, perCapita: 236000, gsdpGrowth: 7.2 },
+      { state: 'Gujarat', gstFy: 110000, gstJun: 9800, perCapita: 241000, gsdpGrowth: 8.5 },
+      { state: 'Tamil Nadu', gstFy: 120000, gstJun: 10500, perCapita: 220000, gsdpGrowth: 7.1 },
+      { state: 'Uttar Pradesh', gstFy: 95000, gstJun: 8500, perCapita: 78000, gsdpGrowth: 6.5 },
+      { state: 'Delhi', gstFy: 60000, gstJun: 5500, perCapita: 444000, gsdpGrowth: 7.8 },
+      { state: 'Haryana', gstFy: 45000, gstJun: 4100, perCapita: 296000, gsdpGrowth: 7.5 },
+      { state: 'West Bengal', gstFy: 55000, gstJun: 4800, perCapita: 121000, gsdpGrowth: 6.2 },
+    ],
+    efficiency: [
+      { state: 'Gujarat', metric: 'Ease of Doing Business', value: 'Rank 1', rank: 'Top' },
+      { state: 'Karnataka', metric: 'Startup Ecosystem', value: 'Best Performer', rank: 'Top' },
+      { state: 'Tamil Nadu', metric: 'Manufacturing Output', value: 'Rank 2', rank: 'High' },
+      { state: 'Maharashtra', metric: 'Infrastructure Dev.', value: 'High', rank: 'High' },
+      { state: 'Uttar Pradesh', metric: 'MSME Growth', value: '14.2% YoY', rank: 'Top' },
+    ]
+  };
     
