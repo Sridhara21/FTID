@@ -32,15 +32,15 @@ export default function GovernmentDashboard() {
   const totalExpenditure = governmentBalanceSheetDataFy2526.liabilities.reduce((sum, item) => sum + item.value, 0);
   const netPosition = totalReceipts - totalExpenditure;
   return (
-    <div className="grid gap-6 md:gap-8">
-        <div className="flex flex-col gap-2">
-            <h1 className="text-3xl font-bold tracking-tight">Government Dashboard</h1>
-            <p className="text-muted-foreground">
-                A real-time macro snapshot of the nation’s economic health using FTID-aggregated data.
+    <div className="grid gap-6">
+        <div className="flex flex-col gap-1">
+            <h1 className="text-2xl font-semibold tracking-tight">FTID — Government Oversight System</h1>
+            <p className="text-muted-foreground text-sm">
+                National Financial Infrastructure Dashboard
             </p>
         </div>
         <EconomicIndicatorsCard />
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 lg:gap-8">
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
             <GdpChartCard />
             <RevenueChartCard />
         </div>
@@ -121,11 +121,11 @@ export default function GovernmentDashboard() {
                 </div>
             </CardContent>
         </Card>
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 lg:gap-8">
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
             <SubsidyDistributionChart />
             <SubsidyOptimizationCard />
         </div>
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 lg:gap-8">
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
             <DonationTrackerCard />
             <LatestSchemesCard />
         </div>

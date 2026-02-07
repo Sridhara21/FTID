@@ -166,11 +166,11 @@ export default function CitizenDashboard() {
   ];
 
   return (
-    <div className="grid gap-6 md:gap-8">
-       <div className="flex flex-col gap-2">
-        <h1 className="text-3xl font-bold tracking-tight">FTID Control Center</h1>
-        <p className="text-muted-foreground">
-          Your central hub for overseeing financial data flows and system integrity.
+    <div className="grid gap-6">
+       <div className="flex flex-col gap-1">
+        <h1 className="text-2xl font-semibold tracking-tight">FTID — Citizen Financial Dashboard</h1>
+        <p className="text-muted-foreground text-sm">
+          Personal Unified Financial View
         </p>
       </div>
       
@@ -184,7 +184,7 @@ export default function CitizenDashboard() {
         </CardContent>
       </Card>
 
-      <div className="grid grid-cols-1 lg:grid-cols-3 gap-6 lg:gap-8">
+      <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
           <div className="lg:col-span-2 grid gap-6">
               <IncomeExpenseChart />
               <InstitutionConnectivityCard />

@@ -30,12 +30,12 @@ export function DonationTrackerCard() {
           <TableBody>
             {donationData.map((donation) => (
               <TableRow key={donation.id}>
-                <TableCell className="font-medium">{donation.election}</TableCell>
-                <TableCell>{donation.donor}</TableCell>
-                <TableCell>
+                <TableCell className="font-medium py-2">{donation.election}</TableCell>
+                <TableCell className="py-2">{donation.donor}</TableCell>
+                <TableCell className="py-2">
                   <Badge variant="outline">{donation.party}</Badge>
                 </TableCell>
-                <TableCell className="text-right font-mono">
+                <TableCell className="text-right font-mono py-2">
                   {donation.amount.toLocaleString("en-IN", {
                     style: "currency",
                     currency: "INR",

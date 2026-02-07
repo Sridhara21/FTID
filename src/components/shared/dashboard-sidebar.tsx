@@ -79,6 +79,11 @@ export function DashboardSidebar() {
         </div>
       </SidebarHeader>
       <SidebarContent className="p-2">
+        <div className="px-2 pb-1">
+            <p className="text-xs font-semibold tracking-wider text-sidebar-foreground/60 group-data-[collapsible=icon]:hidden">
+                {userRole} Portal
+            </p>
+        </div>
         <SidebarMenu>
           {navItems.map((item) => (
             <SidebarMenuItem key={item.label}>
@@ -87,7 +92,7 @@ export function DashboardSidebar() {
                   isActive={pathname === item.href}
                   className="justify-start"
                 >
-                  <item.icon className="h-5 w-5" />
+                  <item.icon className="h-4 w-4" />
                   <span>{item.label}</span>
                 </SidebarMenuButton>
               </Link>

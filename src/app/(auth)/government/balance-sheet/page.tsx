@@ -94,7 +94,7 @@ export default function GovernmentBalanceSheetPage() {
     const expenditureChange = totalExpenditureProjected - totalExpenditureFy2526;
 
     return (
-        <div className="grid gap-8">
+        <div className="grid gap-6">
             <Card>
                 <CardHeader>
                     <CardTitle className="flex items-center gap-2">
@@ -102,7 +102,7 @@ export default function GovernmentBalanceSheetPage() {
                     </CardTitle>
                     <CardDescription>A comparative snapshot of the nation's finances.</CardDescription>
                 </CardHeader>
-                <CardContent className="space-y-8">
+                <CardContent className="space-y-6">
                     <div>
                         <h3 className="text-xl font-semibold mb-3 text-primary">Receipts</h3>
                         <Table>
@@ -122,7 +122,7 @@ export default function GovernmentBalanceSheetPage() {
                                 })}
                             </TableBody>
                             <TableFooter>
-                                <TableRow className="text-base">
+                                <TableRow className="text-lg">
                                     <TableHead>Total Receipts</TableHead>
                                     <TableHead className="text-right font-mono font-bold">{formatValue(totalReceiptsFy2526)}</TableHead>
                                     <TableHead className="text-right font-mono font-bold">{formatValue(totalReceiptsProjected)}</TableHead>
@@ -157,7 +157,7 @@ export default function GovernmentBalanceSheetPage() {
                                 })}
                             </TableBody>
                             <TableFooter>
-                                <TableRow className="text-base">
+                                <TableRow className="text-lg">
                                     <TableHead>Total Expenditure</TableHead>
                                     <TableHead className="text-right font-mono font-bold">{formatValue(totalExpenditureFy2526)}</TableHead>
                                     <TableHead className="text-right font-mono font-bold">{formatValue(totalExpenditureProjected)}</TableHead>
