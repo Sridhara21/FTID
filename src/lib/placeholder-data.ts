@@ -271,11 +271,11 @@ export const gdpData = [
 ];
 
 export const revenueData = [
-  { name: 'Income Tax', value: 22, fill: 'hsl(var(--chart-1))', growth: '+9.5%', volatility: 'Low', risk: 'Low' },
-  { name: 'Corporate Tax', value: 13, fill: 'hsl(var(--chart-2))', growth: '+7.2%', volatility: 'Medium', risk: 'Medium' },
-  { name: 'GST', value: 20, fill: 'hsl(var(--chart-3))', growth: '+11.1%', volatility: 'Low', risk: 'Low' },
-  { name: 'Customs', value: 5, fill: 'hsl(var(--chart-4))', growth: '-2.5%', volatility: 'High', risk: 'High' },
-  { name: 'Other', value: 4, fill: 'hsl(var(--chart-5))', growth: '+5.0%', volatility: 'Medium', risk: 'Low' },
+  { name: 'Income Tax', value: 22.4, fill: 'hsl(var(--chart-1))', growth: '+9.5%', volatility: 'Low', risk: 'Low' },
+  { name: 'Corporate Tax', value: 13.1, fill: 'hsl(var(--chart-2))', growth: '+7.2%', volatility: 'Medium', risk: 'Medium' },
+  { name: 'GST', value: 20.8, fill: 'hsl(var(--chart-3))', growth: '+11.1%', volatility: 'Low', risk: 'Low' },
+  { name: 'Customs', value: 5.2, fill: 'hsl(var(--chart-4))', growth: '-2.5%', volatility: 'High', risk: 'High' },
+  { name: 'Other', value: 4.5, fill: 'hsl(var(--chart-5))', growth: '+5.0%', volatility: 'Medium', risk: 'Low' },
 ];
 
 export const subsidyDistributionData = [
@@ -353,12 +353,12 @@ export const portfolioData = {
 export const balanceSheetData = {
     assets: [
       { name: 'E-Rupee Wallet', value: 85250 },
-      { name: 'Bank Deposits (Emergency Fund)', value: portfolioData.emergencyFund.reduce((sum, item) => sum + item.value, 0) },
-      { name: 'Stocks', value: portfolioData.stocks.reduce((sum, item) => sum + item.value, 0) },
-      { name: 'Mutual Funds', value: portfolioData.mutualFunds.reduce((sum, item) => sum + item.value, 0) },
-      { name: 'Fixed Deposits', value: portfolioData.fixedDeposits.reduce((sum, item) => sum + item.value, 0) },
-      { name: 'Bonds', value: portfolioData.bonds.reduce((sum, item) => sum + item.value, 0) },
-      { name: 'Digital Gold', value: portfolioData.digitalGold.reduce((sum, item) => sum + item.value, 0) },
+      { name: 'Bank Deposits (Emergency Fund)', value: 250000 },
+      { name: 'Stocks', value: 835000 },
+      { name: 'Mutual Funds', value: 250000 },
+      { name: 'Fixed Deposits', value: 350000 },
+      { name: 'Bonds', value: 150000 },
+      { name: 'Digital Gold', value: 350000 },
       { name: 'Real Estate (Self-Declared)', value: 1200000 },
     ],
     liabilities: [
