@@ -215,7 +215,7 @@ export const subsidies = [
     id: 'sub_2',
     name: 'Health Insurance (PM-JAY)',
     status: 'Active',
-    amount: 416, // (5L / 12) ~416, but this is not how it works. It's a coverage amount.
+    amount: 416, 
     icon: HeartPulse,
     sourceMinistry: 'National Health Authority',
     timeline: 'Coverage Active',
@@ -499,7 +499,7 @@ export const schemes = [
 
 export const userProfileData = {
   name: 'Ravi',
-  email: 'ravi@email.com', // Retained for UserNav, but not displayed on profile
+  email: 'ravi@email.com', 
   ftid: '2398-6501-4775',
   fallback: 'R',
   pan: { number: 'ABCDE1234F', status: 'Verified' },
@@ -562,7 +562,6 @@ export const dummyFtidData = JSON.stringify(
 );
 
 export const economicIndicatorsData = [
-  // Group: Growth
   {
     label: 'GDP (Nominal)',
     value: '₹324L Cr',
@@ -615,7 +614,6 @@ export const economicIndicatorsData = [
     relevance: 'Indicates the standard of living.',
     limitations: 'Average value; masks income inequality.',
   },
-  // Group: Fiscal Health
   {
     label: 'Total Tax Revenue',
     value: '₹26.5L Cr',
@@ -668,7 +666,6 @@ export const economicIndicatorsData = [
     relevance: 'Indicates the government is borrowing to finance current consumption.',
     limitations: 'A non-zero value is not always negative in a developing economy.',
   },
-  // Group: External Stability
   {
     label: 'Inflation (CPI)',
     value: '4.5%',
@@ -722,7 +719,6 @@ export const economicIndicatorsData = [
     limitations: 'Does not capture underemployment or informal sector employment.',
   },
 ];
-
 
 export const donationData = [
   {
@@ -788,5 +784,18 @@ export const statePerformanceData = {
       { state: 'Maharashtra', metric: 'Infrastructure Dev.', value: 'High', rank: 'High' },
       { state: 'Uttar Pradesh', metric: 'MSME Growth', value: '14.2% YoY', rank: 'Top' },
     ]
-  };
-    
+};
+
+export const autoCapturedIncome = {
+    sources: [
+        { source: 'Employment (Infosys)', amount: 600000, verified: true },
+        { source: 'Bank Interest (HDFC)', amount: 12500, verified: true },
+        { source: 'Dividends', amount: 8400, verified: false },
+        { source: 'Capital Gains (STCG)', amount: 45000, verified: true },
+    ],
+    deductions: [
+        { section: '80C (PPF/LIC)', amount: 150000, verified: true },
+        { section: '80D (Health Insurance)', amount: 25000, verified: true },
+        { section: 'Standard Deduction', amount: 50000, verified: true },
+    ]
+};
