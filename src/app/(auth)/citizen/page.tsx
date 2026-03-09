@@ -41,40 +41,40 @@ import {
 } from "@/components/ui/table";
 import { Button } from "@/components/ui/button";
 import { IncomeExpenseChart } from "@/components/citizen/income-expense-chart";
-import { regulatoryAlerts, institutionConnectivity, consentData } from "@/lib/placeholder-data";
+import { regulatoryAlerts, institutionConnectivity, consentData, userProfileData } from "@/lib/placeholder-data";
 import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from "@/components/ui/tooltip";
 
 
 const QuickAction = ({ href, icon: Icon, title, description }: { href: string; icon: React.ElementType; title: string; description: string }) => (
   <Link href={href} className="block group">
-    <div className="p-4 bg-secondary/50 rounded-lg h-full transition-all duration-200 group-hover:bg-primary/10 group-hover:scale-105 group-hover:shadow-lg">
+    <div className="p-4 bg-secondary/30 border border-border/50 rounded-lg h-full transition-all duration-200 hover:bg-primary/10 hover:border-primary/30 group-hover:scale-[1.02]">
       <div className="flex items-center gap-3">
-        <div className="p-2 bg-background rounded-md">
-          <Icon className="h-5 w-5 text-muted-foreground transition-colors group-hover:text-primary" />
+        <div className="p-2 bg-background rounded-md border border-border/50 shadow-sm">
+          <Icon className="h-4 w-4 text-muted-foreground transition-colors group-hover:text-primary" />
         </div>
-        <p className="font-semibold">{title}</p>
+        <p className="font-bold text-sm">{title}</p>
       </div>
-      <p className="text-xs text-muted-foreground mt-2">{description}</p>
+      <p className="text-[10px] text-muted-foreground mt-2 font-medium uppercase tracking-wider">{description}</p>
     </div>
   </Link>
 );
 
 const RegulatoryAlertsCard = () => (
-    <Card>
-        <CardHeader>
-            <CardTitle className="flex items-center gap-2">
-                <AlertTriangle className="text-yellow-400" />
+    <Card className="h-full">
+        <CardHeader className="pb-2">
+            <CardTitle className="flex items-center gap-2 text-base">
+                <AlertTriangle className="h-4 w-4 text-yellow-400" />
                 Regulatory Alert Feed
             </CardTitle>
-            <CardDescription>Important updates and required actions from regulatory bodies.</CardDescription>
+            <CardDescription className="text-xs">Compliance updates & required actions.</CardDescription>
         </CardHeader>
-        <CardContent className="space-y-3">
+        <CardContent className="space-y-3 pt-4">
             {regulatoryAlerts.map(alert => (
-                <div key={alert.id} className="flex items-start gap-3">
-                    <alert.icon className={`h-4 w-4 mt-1 flex-shrink-0 ${alert.severity === 'High' ? 'text-red-400' : alert.severity === 'Medium' ? 'text-yellow-400' : 'text-blue-400'}`} />
-                    <div>
-                        <p className="text-sm font-medium">{alert.title}</p>
-                        <p className="text-xs text-muted-foreground">{new Date(alert.date).toLocaleDateString()}</p>
+                <div key={alert.id} className="flex items-start gap-3 p-2 rounded-md bg-secondary/20 border border-border/30">
+                    <alert.icon className={`h-3.5 w-3.5 mt-0.5 flex-shrink-0 ${alert.severity === 'High' ? 'text-red-400' : alert.severity === 'Medium' ? 'text-yellow-400' : 'text-blue-400'}`} />
+                    <div className="flex-1 overflow-hidden">
+                        <p className="text-xs font-bold leading-tight truncate">{alert.title}</p>
+                        <p className="text-[10px] text-muted-foreground font-mono mt-0.5 uppercase tracking-tighter">Issue Date: {new Date(alert.date).toLocaleDateString()}</p>
                     </div>
                 </div>
             ))}
@@ -84,33 +84,33 @@ const RegulatoryAlertsCard = () => (
 
 const InstitutionConnectivityCard = () => (
     <Card>
-        <CardHeader>
-            <CardTitle className="flex items-center gap-2">
-                <LinkIcon />
+        <CardHeader className="pb-2">
+            <CardTitle className="flex items-center gap-2 text-base">
+                <LinkIcon className="h-4 w-4 text-primary" />
                 Institution Connectivity
             </CardTitle>
-            <CardDescription>Status of financial institutions linked to your FTID.</CardDescription>
+            <CardDescription className="text-xs">Linked financial entities status.</CardDescription>
         </CardHeader>
-        <CardContent>
+        <CardContent className="pt-4">
             <Table>
-                <TableHeader>
-                    <TableRow>
-                        <TableHead>Institution</TableHead>
-                        <TableHead>Type</TableHead>
-                        <TableHead className="text-right">Status</TableHead>
+                <TableHeader className="bg-secondary/20">
+                    <TableRow className="h-8 hover:bg-transparent">
+                        <TableHead className="text-[10px] uppercase font-bold">Institution</TableHead>
+                        <TableHead className="text-[10px] uppercase font-bold">System Type</TableHead>
+                        <TableHead className="text-right text-[10px] uppercase font-bold">Status</TableHead>
                     </TableRow>
                 </TableHeader>
                 <TableBody>
                     {institutionConnectivity.map(item => (
-                        <TableRow key={item.id}>
-                            <TableCell className="font-medium flex items-center gap-2">
-                                <item.icon className="h-4 w-4 text-muted-foreground" />
+                        <TableRow key={item.id} className="h-10 hover:bg-secondary/10 border-b last:border-0">
+                            <TableCell className="py-2 text-xs font-bold flex items-center gap-2">
+                                <item.icon className="h-3.5 w-3.5 text-muted-foreground/60" />
                                 {item.name}
                             </TableCell>
-                            <TableCell>{item.type}</TableCell>
-                            <TableCell className="text-right">
-                                <span className={`flex items-center justify-end gap-1.5 text-sm ${item.status === 'Active' ? 'text-green-400' : 'text-red-400'}`}>
-                                    <span className={`h-2 w-2 rounded-full ${item.status === 'Active' ? 'bg-green-400' : 'bg-red-400'}`}></span>
+                            <TableCell className="py-2 text-xs text-muted-foreground uppercase tracking-wider">{item.type}</TableCell>
+                            <TableCell className="py-2 text-right">
+                                <span className={`flex items-center justify-end gap-1.5 text-[10px] font-bold uppercase tracking-widest ${item.status === 'Active' ? 'text-green-400' : 'text-red-400'}`}>
+                                    <span className={`h-1.5 w-1.5 rounded-full ${item.status === 'Active' ? 'bg-green-400 animate-pulse' : 'bg-red-400'}`}></span>
                                     {item.status}
                                 </span>
                             </TableCell>
@@ -125,32 +125,35 @@ const InstitutionConnectivityCard = () => (
 const ActiveConsentSummaryCard = () => {
     const activeConsents = consentData.flatMap(cat => cat.consents).filter(c => c.given);
     return (
-        <Card>
-            <CardHeader>
-                <CardTitle className="flex items-center gap-2">
-                    <Lock />
+        <Card className="h-full">
+            <CardHeader className="pb-2">
+                <CardTitle className="flex items-center gap-2 text-base">
+                    <Lock className="h-4 w-4 text-primary" />
                     Active Consent Summary
                 </CardTitle>
-                <CardDescription>A quick look at which institutions have access to your data.</CardDescription>
+                <CardDescription className="text-xs">Entities with authorized data access.</CardDescription>
             </CardHeader>
-            <CardContent className="space-y-2">
+            <CardContent className="space-y-2 pt-4">
                  <TooltipProvider>
                     {activeConsents.slice(0, 4).map(consent => (
                         <Tooltip key={consent.id}>
                             <TooltipTrigger className="w-full">
-                                <div className="flex items-center justify-between p-2 rounded-md bg-secondary/50 w-full text-left">
-                                    <span className="text-sm font-medium">{consent.name}</span>
-                                    <CheckCircle className="h-4 w-4 text-green-400" />
+                                <div className="flex items-center justify-between p-2.5 rounded-md bg-secondary/40 border border-border/30 w-full text-left transition-colors hover:bg-secondary/60">
+                                    <span className="text-xs font-bold">{consent.name}</span>
+                                    <div className="flex items-center gap-1.5">
+                                        <span className="text-[9px] uppercase tracking-widest text-muted-foreground font-mono">{consent.type}</span>
+                                        <CheckCircle className="h-3.5 w-3.5 text-green-400" />
+                                    </div>
                                 </div>
                             </TooltipTrigger>
                             <TooltipContent>
-                                <p>Purpose: {consent.purpose} | Type: {consent.type}</p>
+                                <p className="text-xs">Purpose: {consent.purpose} | Expires: {consent.expiry}</p>
                             </TooltipContent>
                         </Tooltip>
                     ))}
                 </TooltipProvider>
-                <Button variant="outline" className="w-full mt-2" asChild>
-                    <Link href="/citizen/consent">Manage All Consents <ArrowRightLeft className="ml-2 h-4 w-4" /></Link>
+                <Button variant="outline" size="sm" className="w-full mt-2 h-8 text-[10px] uppercase font-bold tracking-widest bg-secondary/20" asChild>
+                    <Link href="/citizen/consent">Manage All Consents <ArrowRightLeft className="ml-2 h-3.5 w-3.5" /></Link>
                 </Button>
             </CardContent>
         </Card>
@@ -159,37 +162,45 @@ const ActiveConsentSummaryCard = () => {
 
 export default function CitizenDashboard() {
   const quickActions = [
-    { href: "/citizen/wallet", icon: Send, title: "CBDC Transfer", description: "Route funds via FTID." },
-    { href: "/citizen/tax", icon: FileText, title: "View Tax Statement", description: "Review pre-filled data." },
-    { href: "/citizen/consent", icon: Lock, title: "Manage Consents", description: "Control data access." },
-    { href: "/citizen/portfolio", icon: PiggyBank, title: "Analyze Investments", description: "Check compliance." },
+    { href: "/citizen/wallet", icon: Send, title: "CBDC Transfer", description: "Route via FTID Flow" },
+    { href: "/citizen/tax", icon: FileText, title: "Tax Statement", description: "Review Pre-filled Data" },
+    { href: "/citizen/consent", icon: Lock, title: "Consent Hub", description: "Authorize Access" },
+    { href: "/citizen/portfolio", icon: Briefcase, title: "Investments", description: "Analyze Risk/Tax" },
   ];
 
   return (
     <div className="grid gap-6">
        <div className="flex flex-col gap-1">
         <h1 className="text-2xl font-semibold tracking-tight">FTID — Citizen Financial Dashboard</h1>
-        <p className="text-muted-foreground text-sm">
-          Personal Unified Financial View
+        <p className="text-muted-foreground text-sm font-medium tracking-wide">
+          Unified Financial Control & Flow Transparency
         </p>
       </div>
-      
-      <Card>
-        <CardHeader>
-          <CardTitle>Quick Actions</CardTitle>
-          <CardDescription>Core FTID system interactions.</CardDescription>
-        </CardHeader>
-        <CardContent className="grid grid-cols-2 md:grid-cols-4 gap-4">
-          {quickActions.map(action => <QuickAction key={action.title} {...action} />)}
-        </CardContent>
-      </Card>
+
+      <div className="grid grid-cols-1 lg:grid-cols-4 gap-4">
+          <Card className="lg:col-span-1 bg-primary/5 border-primary/20">
+              <CardContent className="pt-6">
+                  <div className="flex flex-col items-center text-center">
+                    <div className="p-3 bg-primary/10 rounded-full border border-primary/30 mb-4">
+                        <HeartPulse className="h-8 w-8 text-primary" />
+                    </div>
+                    <p className="text-[10px] font-bold uppercase tracking-widest text-muted-foreground mb-1">Flow Score</p>
+                    <p className="text-4xl font-black font-mono tracking-tighter tabular-nums">820</p>
+                    <p className="text-xs font-bold text-green-400 mt-1 uppercase">Very Strong</p>
+                  </div>
+              </CardContent>
+          </Card>
+          <div className="lg:col-span-3 grid grid-cols-2 md:grid-cols-4 gap-4">
+            {quickActions.map(action => <QuickAction key={action.title} {...action} />)}
+          </div>
+      </div>
 
       <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
-          <div className="lg:col-span-2 grid gap-6">
+          <div className="lg:col-span-2 flex flex-col gap-6">
               <IncomeExpenseChart />
               <InstitutionConnectivityCard />
           </div>
-          <div className="lg:col-span-1 grid gap-6">
+          <div className="lg:col-span-1 flex flex-col gap-6">
               <RegulatoryAlertsCard />
               <ActiveConsentSummaryCard />
           </div>

@@ -1,11 +1,11 @@
 
+import { EconomicIndicatorsCard } from "@/components/government/economic-indicators-card";
 import { GdpChartCard } from "@/components/government/gdp-chart-card";
 import { RevenueChartCard } from "@/components/government/revenue-chart-card";
 import { SubsidyDistributionChart } from "@/components/government/subsidy-distribution-chart";
 import { SubsidyOptimizationCard } from "@/components/government/subsidy-optimization-card";
 import { DonationTrackerCard } from "@/components/government/donation-tracker-card";
 import { LatestSchemesCard } from "@/components/government/latest-schemes-card";
-import { EconomicIndicatorsCard } from "@/components/government/economic-indicators-card";
 import { StatePerformanceSnapshotCard } from "@/components/government/state-performance-snapshot-card";
 import {
     Card,
@@ -31,6 +31,9 @@ export default function GovernmentDashboard() {
   const totalReceipts = governmentBalanceSheetDataFy2526.assets.reduce((sum, item) => sum + item.value, 0);
   const totalExpenditure = governmentBalanceSheetDataFy2526.liabilities.reduce((sum, item) => sum + item.value, 0);
   const netPosition = totalReceipts - totalExpenditure;
+
+  const formatCr = (val: number) => `₹${val.toLocaleString('en-IN')} Cr`;
+
   return (
     <div className="grid gap-6">
         <div className="flex flex-col gap-1">
@@ -39,92 +42,98 @@ export default function GovernmentDashboard() {
                 National Financial Infrastructure Dashboard
             </p>
         </div>
+        
         <EconomicIndicatorsCard />
+        
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
             <GdpChartCard />
             <RevenueChartCard />
         </div>
+
         <StatePerformanceSnapshotCard />
+
         <Card>
-            <CardHeader>
-                <CardTitle className="flex items-center gap-2">
-                    <Scale /> National Balance Sheet (FY25-26)
+            <CardHeader className="pb-2">
+                <CardTitle className="flex items-center gap-2 text-lg">
+                    <Scale className="h-5 w-5 text-primary" /> National Balance Sheet (Summary)
                 </CardTitle>
-                <CardDescription>A snapshot of the nation's receipts and expenditure (in INR Crores).</CardDescription>
+                <CardDescription>Consolidated view of receipts and expenditure (FY 2025-26 Estimates).</CardDescription>
             </CardHeader>
-            <CardContent className="grid grid-cols-1 md:grid-cols-2 gap-8">
-                <div>
-                    <h3 className="text-lg font-semibold mb-2 text-green-400">Receipts</h3>
+            <CardContent className="grid grid-cols-1 md:grid-cols-2 gap-8 pt-4">
+                <div className="space-y-4">
+                    <h3 className="text-sm font-bold uppercase tracking-wider text-green-400/80 border-b border-green-400/20 pb-1">Receipts</h3>
                     <Table>
-                        <TableHeader>
-                            <TableRow>
-                                <TableHead>Item</TableHead>
-                                <TableHead className="text-right">Value (Cr)</TableHead>
+                        <TableHeader className="bg-secondary/20">
+                            <TableRow className="hover:bg-transparent h-8">
+                                <TableHead className="text-[10px] uppercase font-bold">Source Item</TableHead>
+                                <TableHead className="text-right text-[10px] uppercase font-bold">Value (Cr)</TableHead>
                             </TableRow>
                         </TableHeader>
                         <TableBody>
                             {governmentBalanceSheetDataFy2526.assets.map(asset => (
-                                <TableRow key={asset.name}>
-                                    <TableCell>{asset.name}</TableCell>
-                                    <TableCell className="text-right font-mono text-green-400">
-                                      {`₹${asset.value.toLocaleString('en-IN')} Cr`}
+                                <TableRow key={asset.name} className="h-9 hover:bg-secondary/10 border-b last:border-0">
+                                    <TableCell className="py-2 text-xs font-medium">{asset.name}</TableCell>
+                                    <TableCell className="py-2 text-right font-mono text-xs text-green-400 tabular-nums">
+                                      {formatCr(asset.value)}
                                     </TableCell>
                                 </TableRow>
                             ))}
                         </TableBody>
-                        <TableFooter>
-                            <TableRow>
-                                <TableHead>Total Receipts</TableHead>
-                                <TableHead className="text-right font-mono font-bold text-green-400">
-                                  {`₹${totalReceipts.toLocaleString('en-IN')} Cr`}
+                        <TableFooter className="bg-transparent border-t-2 border-green-400/30">
+                            <TableRow className="h-10 hover:bg-transparent">
+                                <TableHead className="text-xs font-bold text-foreground">Total Receipts</TableHead>
+                                <TableHead className="text-right font-mono font-bold text-green-400 tabular-nums">
+                                  {formatCr(totalReceipts)}
                                 </TableHead>
                             </TableRow>
                         </TableFooter>
                     </Table>
                 </div>
-                <div>
-                    <h3 className="text-lg font-semibold mb-2 text-red-400">Expenditure</h3>
+                <div className="space-y-4">
+                    <h3 className="text-sm font-bold uppercase tracking-wider text-red-400/80 border-b border-red-400/20 pb-1">Expenditure</h3>
                     <Table>
-                         <TableHeader>
-                            <TableRow>
-                                <TableHead>Item</TableHead>
-                                <TableHead className="text-right">Amount (Cr)</TableHead>
+                         <TableHeader className="bg-secondary/20">
+                            <TableRow className="hover:bg-transparent h-8">
+                                <TableHead className="text-[10px] uppercase font-bold">Expenditure Item</TableHead>
+                                <TableHead className="text-right text-[10px] uppercase font-bold">Amount (Cr)</TableHead>
                             </TableRow>
                         </TableHeader>
                         <TableBody>
                             {governmentBalanceSheetDataFy2526.liabilities.map(liability => (
-                                <TableRow key={liability.name}>
-                                    <TableCell>{liability.name}</TableCell>
-                                    <TableCell className="text-right font-mono text-red-400">
-                                      {`₹${liability.value.toLocaleString('en-IN')} Cr`}
+                                <TableRow key={liability.name} className="h-9 hover:bg-secondary/10 border-b last:border-0">
+                                    <TableCell className="py-2 text-xs font-medium">{liability.name}</TableCell>
+                                    <TableCell className="py-2 text-right font-mono text-xs text-red-400 tabular-nums">
+                                      {formatCr(liability.value)}
                                     </TableCell>
                                 </TableRow>
                             ))}
                         </TableBody>
-                        <TableFooter>
-                            <TableRow>
-                                <TableHead>Total Expenditure</TableHead>
-                                <TableHead className="text-right font-mono font-bold text-red-400">
-                                  {`₹${totalExpenditure.toLocaleString('en-IN')} Cr`}
+                        <TableFooter className="bg-transparent border-t-2 border-red-400/30">
+                            <TableRow className="h-10 hover:bg-transparent">
+                                <TableHead className="text-xs font-bold text-foreground">Total Expenditure</TableHead>
+                                <TableHead className="text-right font-mono font-bold text-red-400 tabular-nums">
+                                  {formatCr(totalExpenditure)}
                                 </TableHead>
                             </TableRow>
                         </TableFooter>
                     </Table>
                 </div>
-                 <div className="md:col-span-2 pt-4 border-t">
-                    <div className="flex justify-between items-center text-xl font-bold">
-                        <span>Net Position</span>
-                        <span className={`font-mono ${netPosition >= 0 ? 'text-green-400' : 'text-red-400'}`}>
-                          {`₹${netPosition.toLocaleString('en-IN')} Cr`}
+                 <div className="md:col-span-2 pt-4 border-t-4 border-double border-border/50">
+                    <div className="flex justify-between items-center bg-secondary/20 p-4 rounded-md">
+                        <span className="text-sm font-bold uppercase tracking-widest text-muted-foreground">National Net Position (Fiscal Balance)</span>
+                        <span className={`text-xl font-bold font-mono tabular-nums ${netPosition >= 0 ? 'text-green-400' : 'text-red-400'}`}>
+                          {formatCr(netPosition)}
                         </span>
                     </div>
                 </div>
             </CardContent>
         </Card>
+        
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
             <SubsidyDistributionChart />
             <SubsidyOptimizationCard />
         </div>
+        
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
             <DonationTrackerCard />
             <LatestSchemesCard />
@@ -132,5 +141,3 @@ export default function GovernmentDashboard() {
     </div>
   );
 }
-
-    

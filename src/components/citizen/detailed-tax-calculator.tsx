@@ -10,7 +10,7 @@ import {
   CardTitle,
 } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
-import { FileText, Eye, CheckCircle, AlertTriangle } from "lucide-react";
+import { FileText, Eye, CheckCircle, AlertTriangle, ShieldCheck, Landmark, ArrowRight } from "lucide-react";
 import { Separator } from "@/components/ui/separator";
 import {
     Table,
@@ -32,140 +32,167 @@ export function DetailedTaxCalculator() {
   const totalIncome = autoCapturedIncome.sources.reduce((sum, item) => sum + item.amount, 0);
   const totalDeductions = autoCapturedIncome.deductions.reduce((sum, item) => sum + item.amount, 0);
   const taxableIncome = totalIncome - totalDeductions;
-  // Simplified tax calculation for demo
   const estimatedTax = taxableIncome * 0.15 - 25000; 
 
   const formatCurrency = (value: number) => value.toLocaleString('en-IN', { style: 'currency', currency: 'INR', minimumFractionDigits: 0 });
 
   return (
-    <Card>
-      <CardHeader>
-        <div className="flex justify-between items-start">
-            <div>
-                <CardTitle className="flex items-center gap-2">
+    <Card className="border-primary/20">
+      <CardHeader className="pb-4">
+        <div className="flex flex-col md:flex-row justify-between items-start gap-4">
+            <div className="flex-1">
+                <CardTitle className="flex items-center gap-2 text-xl">
                 <FileText className="h-6 w-6 text-primary" />
-                Pre-compiled Tax Statement
+                Pre-Compiled Sovereign Tax Statement
                 </CardTitle>
-                <CardDescription>
-                FTID enables flow-based taxation, not form-based filing. This is a preview of your auto-compiled tax data.
+                <CardDescription className="max-w-2xl mt-1 text-xs">
+                FTID leverages direct flow intelligence to automate tax obligations. This statement is pre-compiled using verified transaction streams. 
+                <span className="block mt-1 font-bold text-primary italic uppercase tracking-widest text-[10px]">Flow-based Taxation, not Form-based Filing.</span>
                 </CardDescription>
             </div>
             <TooltipProvider>
                 <Tooltip>
                     <TooltipTrigger asChild>
-                        <Button variant="outline" onClick={() => setShowGovView(!showGovView)}>
-                            <Eye className="mr-2 h-4 w-4" />
-                            {showGovView ? "Exit Government View" : "Simulate Government View"}
+                        <Button variant="outline" size="sm" className="h-8 font-bold text-[10px] uppercase tracking-widest bg-secondary/20" onClick={() => setShowGovView(!showGovView)}>
+                            <Eye className="mr-2 h-3.5 w-3.5" />
+                            {showGovView ? "EXIT GOV VIEW" : "SIMULATE GOV VIEW"}
                         </Button>
                     </TooltipTrigger>
                     <TooltipContent>
-                        <p>This is a read-only simulation of what a tax officer sees.</p>
+                        <p className="text-[10px]">Read-only simulation of a Revenue Officer's view.</p>
                     </TooltipContent>
                 </Tooltip>
             </TooltipProvider>
         </div>
       </CardHeader>
       
-      <CardContent>
+      <CardContent className="pt-0">
         {showGovView && (
-            <div className="mb-4 p-3 rounded-lg bg-yellow-500/10 border border-yellow-500/20 text-yellow-300 text-sm flex items-center gap-2">
-                <AlertTriangle className="h-4 w-4" />
-                You are now in read-only Government View simulation. No actions can be taken.
+            <div className="mb-6 p-3 rounded-md bg-yellow-500/10 border border-yellow-500/30 text-yellow-300 text-[10px] font-bold uppercase tracking-widest flex items-center gap-3">
+                <div className="p-1 bg-yellow-500/20 rounded-full">
+                    <AlertTriangle className="h-4 w-4" />
+                </div>
+                <span>RESTRICTED ACCESS: Government Read-Only Simulation Active & Logged</span>
             </div>
         )}
 
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
-            <div className="space-y-6">
+        <div className="grid grid-cols-1 lg:grid-cols-12 gap-8">
+            <div className="lg:col-span-7 space-y-8">
                 <div>
-                    <h3 className="text-lg font-semibold mb-2">Auto-Captured Income Sources</h3>
+                    <h3 className="text-xs font-bold uppercase tracking-widest text-muted-foreground mb-3 flex items-center gap-2">
+                        <Landmark className="h-3.5 w-3.5" /> Auto-Captured Income Streams
+                    </h3>
                     <Table>
-                        <TableHeader>
-                            <TableRow>
-                                <TableHead>Source</TableHead>
-                                <TableHead>Verification</TableHead>
-                                <TableHead className="text-right">Amount</TableHead>
+                        <TableHeader className="bg-secondary/20">
+                            <TableRow className="h-8 hover:bg-transparent">
+                                <TableHead className="text-[10px] uppercase font-bold">Income Source</TableHead>
+                                <TableHead className="text-[10px] uppercase font-bold text-center">Audit Status</TableHead>
+                                <TableHead className="text-right text-[10px] uppercase font-bold">Amount (INR)</TableHead>
                             </TableRow>
                         </TableHeader>
                         <TableBody>
                             {autoCapturedIncome.sources.map(item => (
-                                <TableRow key={item.source}>
-                                    <TableCell>{item.source}</TableCell>
-                                    <TableCell>
-                                        {item.verified ? <CheckCircle className="h-4 w-4 text-green-400" /> : <AlertTriangle className="h-4 w-4 text-yellow-400" />}
+                                <TableRow key={item.source} className="h-10 hover:bg-secondary/10 border-b last:border-0">
+                                    <TableCell className="py-2 text-xs font-bold">{item.source}</TableCell>
+                                    <TableCell className="py-2 text-center">
+                                        <div className="flex justify-center">
+                                            {item.verified ? (
+                                                <Badge className="bg-green-500/10 text-green-400 border-green-500/20 h-5 px-1.5 text-[9px] uppercase font-bold">
+                                                    <CheckCircle className="h-2.5 w-2.5 mr-1" /> Verified
+                                                </Badge>
+                                            ) : (
+                                                <Badge variant="outline" className="text-yellow-400 border-yellow-500/30 h-5 px-1.5 text-[9px] uppercase font-bold">
+                                                    <AlertTriangle className="h-2.5 w-2.5 mr-1" /> Pending
+                                                </Badge>
+                                            )}
+                                        </div>
                                     </TableCell>
-                                    <TableCell className="text-right font-mono">{formatCurrency(item.amount)}</TableCell>
+                                    <TableCell className="py-2 text-right font-mono text-xs font-bold tabular-nums">{formatCurrency(item.amount)}</TableCell>
                                 </TableRow>
                             ))}
                         </TableBody>
-                        <TableFooter>
-                            <TableRow>
-                                <TableHead colSpan={2}>Total Gross Income</TableHead>
-                                <TableHead className="text-right font-bold font-mono">{formatCurrency(totalIncome)}</TableHead>
+                        <TableFooter className="bg-transparent border-t-2 border-border/50">
+                            <TableRow className="h-10 hover:bg-transparent">
+                                <TableHead colSpan={2} className="text-[10px] uppercase font-bold text-muted-foreground">Aggregate Gross Income</TableHead>
+                                <TableHead className="text-right font-black font-mono text-xs tabular-nums text-foreground">{formatCurrency(totalIncome)}</TableHead>
                             </TableRow>
                         </TableFooter>
                     </Table>
                 </div>
                  <div>
-                    <h3 className="text-lg font-semibold mb-2">Auto-Captured Deductions</h3>
+                    <h3 className="text-xs font-bold uppercase tracking-widest text-muted-foreground mb-3 flex items-center gap-2">
+                        <ShieldCheck className="h-3.5 w-3.5" /> Direct Flow Deductions
+                    </h3>
                     <Table>
-                        <TableHeader>
-                            <TableRow>
-                                <TableHead>Section</TableHead>
-                                 <TableHead>Verification</TableHead>
-                                <TableHead className="text-right">Amount</TableHead>
+                        <TableHeader className="bg-secondary/20">
+                            <TableRow className="h-8 hover:bg-transparent">
+                                <TableHead className="text-[10px] uppercase font-bold">Deduction Code</TableHead>
+                                <TableHead className="text-[10px] uppercase font-bold text-center">Proof</TableHead>
+                                <TableHead className="text-right text-[10px] uppercase font-bold">Amount (INR)</TableHead>
                             </TableRow>
                         </TableHeader>
                         <TableBody>
                             {autoCapturedIncome.deductions.map(item => (
-                                <TableRow key={item.section}>
-                                    <TableCell>{item.section}</TableCell>
-                                    <TableCell>
-                                        {item.verified ? <CheckCircle className="h-4 w-4 text-green-400" /> : <AlertTriangle className="h-4 w-4 text-yellow-400" />}
+                                <TableRow key={item.section} className="h-10 hover:bg-secondary/10 border-b last:border-0">
+                                    <TableCell className="py-2 text-xs font-bold">{item.section}</TableCell>
+                                    <TableCell className="py-2 text-center">
+                                        <div className="flex justify-center">
+                                            <Badge className="bg-primary/10 text-primary border-primary/20 h-5 px-1.5 text-[9px] uppercase font-bold">Auto-Routed</Badge>
+                                        </div>
                                     </TableCell>
-                                    <TableCell className="text-right font-mono">{formatCurrency(item.amount)}</TableCell>
+                                    <TableCell className="py-2 text-right font-mono text-xs font-bold tabular-nums text-red-400">-{formatCurrency(item.amount)}</TableCell>
                                 </TableRow>
                             ))}
                         </TableBody>
-                         <TableFooter>
-                            <TableRow>
-                                <TableHead colSpan={2}>Total Deductions</TableHead>
-                                <TableHead className="text-right font-bold font-mono">{formatCurrency(totalDeductions)}</TableHead>
+                         <TableFooter className="bg-transparent border-t-2 border-border/50">
+                            <TableRow className="h-10 hover:bg-transparent">
+                                <TableHead colSpan={2} className="text-[10px] uppercase font-bold text-muted-foreground">Total Claimable Deductions</TableHead>
+                                <TableHead className="text-right font-black font-mono text-xs tabular-nums text-foreground">{formatCurrency(totalDeductions)}</TableHead>
                             </TableRow>
                         </TableFooter>
                     </Table>
                 </div>
             </div>
-            <div className="space-y-6">
-                <Card className="bg-secondary/50">
-                    <CardHeader>
-                        <CardTitle>Tax Summary</CardTitle>
-                        <div className="flex items-center justify-between">
-                         <CardDescription>Based on data captured by FTID.</CardDescription>
-                         <Badge variant="default" className="bg-green-500/20 text-green-400 border-green-500/20">
-                            <CheckCircle className="mr-1 h-3 w-3"/>
-                            Compliant
-                         </Badge>
+            <div className="lg:col-span-5">
+                <Card className="bg-secondary/20 border-border/50 h-full">
+                    <CardHeader className="pb-4">
+                        <div className="flex items-center justify-between mb-2">
+                            <CardTitle className="text-base font-bold">Compliance Summary</CardTitle>
+                            <Badge className="bg-green-500/10 text-green-400 border-green-500/30 h-6 px-2 text-[10px] uppercase font-bold tracking-widest">
+                                <CheckCircle className="mr-1.5 h-3.5 w-3.5"/> Fully Compliant
+                            </Badge>
                         </div>
+                        <CardDescription className="text-[10px] uppercase tracking-wider font-medium">Aggregated assessment based on AY 2025-26 rules.</CardDescription>
                     </CardHeader>
                     <CardContent className="space-y-4">
-                        <div className="flex justify-between items-center py-2 border-b">
-                            <p className="text-muted-foreground">Total Gross Income</p>
-                            <p className="font-mono font-semibold">{formatCurrency(totalIncome)}</p>
+                        <div className="space-y-3 bg-background/40 p-4 rounded-md border border-border/30">
+                            <div className="flex justify-between items-center text-xs">
+                                <span className="text-muted-foreground">Total Gross Revenue</span>
+                                <span className="font-mono font-bold tabular-nums">{formatCurrency(totalIncome)}</span>
+                            </div>
+                             <div className="flex justify-between items-center text-xs">
+                                <span className="text-muted-foreground">Authorized Deductions</span>
+                                <span className="font-mono font-bold tabular-nums text-red-400">-{formatCurrency(totalDeductions)}</span>
+                            </div>
+                             <Separator />
+                             <div className="flex justify-between items-center font-bold">
+                                <span className="text-xs uppercase tracking-widest text-muted-foreground">Taxable Income</span>
+                                <span className="font-mono text-sm tabular-nums">{formatCurrency(taxableIncome)}</span>
+                            </div>
                         </div>
-                         <div className="flex justify-between items-center py-2 border-b">
-                            <p className="text-muted-foreground">Total Deductions</p>
-                            <p className="font-mono font-semibold">- {formatCurrency(totalDeductions)}</p>
+
+                        <div className="p-5 rounded-lg bg-primary/10 border-2 border-primary/30 flex flex-col items-center text-center">
+                            <p className="text-[10px] font-bold uppercase tracking-[0.2em] text-primary mb-2">Estimated Liability</p>
+                            <p className="text-4xl font-black font-mono tracking-tighter tabular-nums text-primary">{formatCurrency(estimatedTax)}</p>
+                            <p className="text-[9px] text-muted-foreground mt-4 leading-relaxed font-medium uppercase tracking-wider italic">
+                                Institutional assessment complete. <br/>
+                                No manual filing required for this period.
+                            </p>
                         </div>
-                         <div className="flex justify-between items-center py-2">
-                            <p className="text-muted-foreground">Net Taxable Income</p>
-                            <p className="font-mono font-semibold">{formatCurrency(taxableIncome)}</p>
-                        </div>
-                        <Separator />
-                         <div className="flex justify-between items-center text-lg pt-2">
-                            <p className="font-semibold">Estimated Tax Liability</p>
-                            <p className="font-mono font-bold text-primary">{formatCurrency(estimatedTax)}</p>
-                        </div>
-                         <p className="text-xs text-muted-foreground pt-4">*This is a pre-compiled estimate for AY 2025-26. No filing is required if all data sources are verified.</p>
+                        
+                        <Button className="w-full h-10 font-bold uppercase tracking-widest text-[11px] mt-2 group">
+                            Authorize Final Settlement <ArrowRight className="ml-2 h-4 w-4 transition-transform group-hover:translate-x-1" />
+                        </Button>
                     </CardContent>
                 </Card>
             </div>
