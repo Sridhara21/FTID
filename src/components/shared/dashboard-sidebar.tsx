@@ -1,7 +1,8 @@
+
 "use client";
 
 import Link from "next/link";
-import { usePathname } from "next/navigation";
+import { usePathname, useRouter } from "next/navigation";
 import { cn } from "@/lib/utils";
 import {
   Bot,
@@ -20,7 +21,8 @@ import {
   Briefcase,
   Lock,
   FileText,
-  HandCoins
+  HandCoins,
+  ArrowRightLeft
 } from "lucide-react";
 import {
   SidebarHeader,
@@ -30,6 +32,7 @@ import {
   SidebarMenuButton,
   SidebarFooter,
 } from "@/components/ui/sidebar";
+import { Button } from "@/components/ui/button";
 
 const citizenNav = [
   { href: "/citizen", icon: LayoutGrid, label: "Control Center" },
@@ -56,24 +59,44 @@ const governmentNav = [
 
 export function DashboardSidebar() {
   const pathname = usePathname();
+  const router = useRouter();
   const isGovernment = pathname.startsWith("/government");
   const navItems = isGovernment ? governmentNav : citizenNav;
   const userRole = isGovernment ? "Government" : "Citizen";
 
+  const togglePortal = () => {
+    const target = isGovernment ? "/citizen" : "/government";
+    router.push(target);
+  };
+
   return (
     <>
       <SidebarHeader className="border-b border-sidebar-border/50 pb-4 mb-2">
-        <div className="flex items-center gap-2.5 px-2">
-          <div className="p-1.5 bg-primary/10 rounded border border-primary/20">
-            <Bot className="h-5 w-5 text-primary" />
+        <div className="flex flex-col gap-4">
+          <div className="flex items-center gap-2.5 px-2">
+            <div className="p-1.5 bg-primary/10 rounded border border-primary/20">
+              <Bot className="h-5 w-5 text-primary" />
+            </div>
+            <div className="flex flex-col">
+              <h2 className="text-sm font-bold tracking-tight text-sidebar-foreground">
+                FTID VISION
+              </h2>
+              <span className="text-[10px] font-medium text-muted-foreground uppercase tracking-widest leading-none">
+                System Core
+              </span>
+            </div>
           </div>
-          <div className="flex flex-col">
-            <h2 className="text-sm font-bold tracking-tight text-sidebar-foreground">
-              FTID VISION
-            </h2>
-            <span className="text-[10px] font-medium text-muted-foreground uppercase tracking-widest leading-none">
-              System Core
-            </span>
+          
+          <div className="px-2">
+            <Button 
+              variant="outline" 
+              size="sm" 
+              onClick={togglePortal}
+              className="w-full justify-start gap-2 h-8 text-[10px] font-bold uppercase tracking-wider bg-primary/5 hover:bg-primary/10 border-primary/20 text-primary transition-all active:scale-95"
+            >
+              <ArrowRightLeft className="h-3 w-3" />
+              Switch to {isGovernment ? "Citizen" : "Government"}
+            </Button>
           </div>
         </div>
       </SidebarHeader>
