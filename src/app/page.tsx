@@ -9,7 +9,7 @@ export default function Home() {
           <Bot className="h-10 w-10 text-primary-foreground" />
         </div>
         <h1 className="text-4xl md:text-5xl font-bold tracking-tighter text-foreground">
-          FTID Vision
+          FTID
         </h1>
         <p className="max-w-xl text-lg text-muted-foreground">
           A new era of financial transparency and empowerment for citizens and governments.

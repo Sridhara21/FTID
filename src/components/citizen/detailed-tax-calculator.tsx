@@ -32,7 +32,31 @@ export function DetailedTaxCalculator() {
   const totalIncome = autoCapturedIncome.sources.reduce((sum, item) => sum + item.amount, 0);
   const totalDeductions = autoCapturedIncome.deductions.reduce((sum, item) => sum + item.amount, 0);
   const taxableIncome = totalIncome - totalDeductions;
-  const estimatedTax = taxableIncome * 0.15 - 25000; 
+
+  // FY 2026-27 (AY 2027-28) New Tax Regime Slabs
+  const calculateTax = (income: number) => {
+    let tax = 0;
+    // New Tax Regime Slabs for FY26-27 (Projected/Updated Benchmarks)
+    // 0 - 3L: 0%
+    // 3L - 7L: 5%
+    // 7L - 10L: 10%
+    // 10L - 12L: 15%
+    // 12L - 15L: 20%
+    // Above 15L: 30%
+    
+    if (income <= 700000) return 0; // Tax rebate for income up to 7L (New Regime)
+
+    if (income > 300000) tax += Math.min(income - 300000, 400000) * 0.05;
+    if (income > 700000) tax += Math.min(income - 700000, 300000) * 0.10;
+    if (income > 1000000) tax += Math.min(income - 1000000, 200000) * 0.15;
+    if (income > 1200000) tax += Math.min(income - 1200000, 300000) * 0.20;
+    if (income > 1500000) tax += (income - 1500000) * 0.30;
+    
+    // Add 4% Health & Education Cess
+    return tax * 1.04;
+  };
+
+  const estimatedTax = calculateTax(taxableIncome);
 
   const formatCurrency = (value: number) => value.toLocaleString('en-IN', { style: 'currency', currency: 'INR', minimumFractionDigits: 0 });
 
@@ -43,10 +67,10 @@ export function DetailedTaxCalculator() {
             <div className="flex-1">
                 <CardTitle className="flex items-center gap-2 text-xl">
                 <FileText className="h-6 w-6 text-primary" />
-                Pre-Compiled Sovereign Tax Statement
+                Pre-Compiled Sovereign Tax Statement (FY 2026-27)
                 </CardTitle>
                 <CardDescription className="max-w-2xl mt-1 text-xs">
-                FTID leverages direct flow intelligence to automate tax obligations. This statement is pre-compiled using verified transaction streams. 
+                FTID leverages direct flow intelligence to automate tax obligations. This statement is pre-compiled using verified transaction streams for AY 2027-28.
                 <span className="block mt-1 font-bold text-primary italic uppercase tracking-widest text-[10px]">Flow-based Taxation, not Form-based Filing.</span>
                 </CardDescription>
             </div>
@@ -162,7 +186,7 @@ export function DetailedTaxCalculator() {
                                 <CheckCircle className="mr-1.5 h-3.5 w-3.5"/> Fully Compliant
                             </Badge>
                         </div>
-                        <CardDescription className="text-[10px] uppercase tracking-wider font-medium">Aggregated assessment based on AY 2025-26 rules.</CardDescription>
+                        <CardDescription className="text-[10px] uppercase tracking-wider font-medium">Aggregated assessment based on AY 2027-28 rules.</CardDescription>
                     </CardHeader>
                     <CardContent className="space-y-4">
                         <div className="space-y-3 bg-background/40 p-4 rounded-md border border-border/30">
@@ -182,7 +206,7 @@ export function DetailedTaxCalculator() {
                         </div>
 
                         <div className="p-5 rounded-lg bg-primary/10 border-2 border-primary/30 flex flex-col items-center text-center">
-                            <p className="text-[10px] font-bold uppercase tracking-[0.2em] text-primary mb-2">Estimated Liability</p>
+                            <p className="text-[10px] font-bold uppercase tracking-[0.2em] text-primary mb-2">Estimated Liability (FY26-27)</p>
                             <p className="text-4xl font-black font-mono tracking-tighter tabular-nums text-primary">{formatCurrency(estimatedTax)}</p>
                             <p className="text-[9px] text-muted-foreground mt-4 leading-relaxed font-medium uppercase tracking-wider italic">
                                 Institutional assessment complete. <br/>

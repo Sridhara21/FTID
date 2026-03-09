@@ -79,7 +79,7 @@ export function DashboardSidebar() {
             </div>
             <div className="flex flex-col">
               <h2 className="text-sm font-bold tracking-tight text-sidebar-foreground">
-                FTID VISION
+                FTID
               </h2>
               <span className="text-[10px] font-medium text-muted-foreground uppercase tracking-widest leading-none">
                 System Core

@@ -6,7 +6,7 @@ import { Inter } from 'next/font/google';
 const inter = Inter({ subsets: ['latin'], variable: '--font-inter' });
 
 export const metadata: Metadata = {
-  title: 'FTID Vision',
+  title: 'FTID',
   description: 'A revolutionary platform for citizens and governments.',
 };
 

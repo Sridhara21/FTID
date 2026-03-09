@@ -796,6 +796,6 @@ export const autoCapturedIncome = {
     deductions: [
         { section: '80C (PPF/LIC)', amount: 150000, verified: true },
         { section: '80D (Health Insurance)', amount: 25000, verified: true },
-        { section: 'Standard Deduction', amount: 50000, verified: true },
+        { section: 'Standard Deduction', amount: 75000, verified: true },
     ]
 };
