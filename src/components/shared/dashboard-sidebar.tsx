@@ -1,4 +1,3 @@
-
 "use client";
 
 import Link from "next/link";
@@ -7,25 +6,21 @@ import { cn } from "@/lib/utils";
 import {
   Bot,
   Building,
-  CircleGauge,
-  HandCoins,
+  LayoutGrid,
   HeartPulse,
   Landmark,
-  LayoutGrid,
-  Map,
   PieChart,
-  Receipt,
   ShieldCheck,
   User,
   Vote,
   Wallet,
-  LineChart,
   Scale,
   BarChart,
   AlertTriangle,
   Briefcase,
   Lock,
-  FileText
+  FileText,
+  HandCoins
 } from "lucide-react";
 import {
   SidebarHeader,
@@ -35,7 +30,6 @@ import {
   SidebarMenuButton,
   SidebarFooter,
 } from "@/components/ui/sidebar";
-import { Button } from "@/components/ui/button";
 
 const citizenNav = [
   { href: "/citizen", icon: LayoutGrid, label: "Control Center" },
@@ -68,47 +62,59 @@ export function DashboardSidebar() {
 
   return (
     <>
-      <SidebarHeader>
-        <div className="flex items-center gap-2">
-          <div className="p-1.5 bg-sidebar-primary rounded-lg">
-            <Bot className="h-6 w-6 text-sidebar-primary-foreground" />
+      <SidebarHeader className="border-b border-sidebar-border/50 pb-4 mb-2">
+        <div className="flex items-center gap-2.5 px-2">
+          <div className="p-1.5 bg-primary/10 rounded border border-primary/20">
+            <Bot className="h-5 w-5 text-primary" />
           </div>
-          <h2 className="text-xl font-semibold tracking-tight text-sidebar-foreground">
-            FTID Vision
-          </h2>
+          <div className="flex flex-col">
+            <h2 className="text-sm font-bold tracking-tight text-sidebar-foreground">
+              FTID VISION
+            </h2>
+            <span className="text-[10px] font-medium text-muted-foreground uppercase tracking-widest leading-none">
+              System Core
+            </span>
+          </div>
         </div>
       </SidebarHeader>
-      <SidebarContent className="p-2">
-        <div className="px-2 pb-1">
-            <p className="text-xs font-semibold tracking-wider text-sidebar-foreground/60 group-data-[collapsible=icon]:hidden">
-                {userRole} Portal
-            </p>
+      <SidebarContent className="px-3">
+        <div className="px-2 mb-3">
+          <p className="text-[10px] font-bold uppercase tracking-widest text-muted-foreground/60">
+            {userRole} Portal
+          </p>
         </div>
-        <SidebarMenu>
+        <SidebarMenu className="gap-0.5">
           {navItems.map((item) => (
             <SidebarMenuItem key={item.label}>
               <Link href={item.href} passHref>
                 <SidebarMenuButton
                   isActive={pathname === item.href}
-                  className="justify-start"
+                  className={cn(
+                    "justify-start h-9 transition-all duration-200 px-3",
+                    pathname === item.href 
+                      ? "bg-primary/10 text-primary border-r-2 border-primary rounded-none" 
+                      : "hover:bg-secondary/50"
+                  )}
                 >
-                  <item.icon className="h-4 w-4" />
-                  <span>{item.label}</span>
+                  <item.icon className={cn("h-4 w-4 shrink-0", pathname === item.href ? "text-primary" : "text-muted-foreground")} />
+                  <span className="text-sm font-medium">{item.label}</span>
                 </SidebarMenuButton>
               </Link>
             </SidebarMenuItem>
           ))}
         </SidebarMenu>
       </SidebarContent>
-      <SidebarFooter>
-        <div className="p-2">
-          <div className="rounded-lg border bg-sidebar-accent border-sidebar-border p-4 text-sidebar-accent-foreground">
-             <div className="flex items-center gap-3">
-              {isGovernment ? <Building className="h-8 w-8" /> : <User className="h-8 w-8" />}
-              <div>
-                <p className="text-sm font-medium">{userRole} Portal</p>
-                <p className="text-xs">FTID System Prototype</p>
-              </div>
+      <SidebarFooter className="border-t border-sidebar-border/50 p-4">
+        <div className="rounded-md border bg-secondary/30 border-border/50 p-3">
+          <div className="flex items-center gap-3">
+            {isGovernment ? (
+              <Building className="h-5 w-5 text-muted-foreground" />
+            ) : (
+              <User className="h-5 w-5 text-muted-foreground" />
+            )}
+            <div className="flex flex-col">
+              <p className="text-xs font-bold leading-none">{userRole} User</p>
+              <p className="text-[10px] text-muted-foreground mt-1">Authorized Access</p>
             </div>
           </div>
         </div>

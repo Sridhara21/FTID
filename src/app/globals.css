@@ -8,63 +8,50 @@ body {
 
 @layer base {
   :root {
-    --background: 220 40% 9%;
+    /* Deep Institutional Dark Theme */
+    --background: 224 71% 4%;
     --foreground: 210 40% 98%;
-    --card: 220 40% 12%;
+    
+    --card: 224 71% 7%;
     --card-foreground: 210 40% 98%;
-    --popover: 220 40% 9%;
+    
+    --popover: 224 71% 5%;
     --popover-foreground: 210 40% 98%;
+    
     --primary: 206 100% 70%;
     --primary-foreground: 224 71% 4%;
-    --secondary: 220 40% 16%;
+    
+    --secondary: 224 71% 10%;
     --secondary-foreground: 210 40% 98%;
-    --muted: 220 40% 16%;
-    --muted-foreground: 215.4 16.3% 56.9%;
-    --accent: 142 47% 53%;
+    
+    --muted: 224 71% 10%;
+    --muted-foreground: 215.4 16.3% 60%;
+    
+    --accent: 142 71% 45%;
     --accent-foreground: 210 40% 98%;
+    
     --destructive: 0 62.8% 30.6%;
     --destructive-foreground: 210 40% 98%;
-    --border: 220 40% 16%;
-    --input: 220 40% 16%;
+    
+    --border: 224 71% 12%;
+    --input: 224 71% 12%;
     --ring: 206 100% 70%;
-    --radius: 0.5rem;
+    --radius: 0.375rem;
 
     --chart-1: 206 100% 70%;
-    --chart-2: 142 47% 53%;
+    --chart-2: 142 71% 45%;
     --chart-3: 262 84% 59%;
     --chart-4: 30 80% 55%;
     --chart-5: 280 65% 60%;
 
-    --sidebar-background: 220 40% 8%;
+    --sidebar-background: 224 71% 3%;
     --sidebar-foreground: 0 0% 98%;
     --sidebar-primary: 206 100% 70%;
     --sidebar-primary-foreground: 224 71% 4%;
-    --sidebar-accent: 220 40% 16%;
+    --sidebar-accent: 224 71% 10%;
     --sidebar-accent-foreground: 0 0% 98%;
-    --sidebar-border: 220 40% 16%;
+    --sidebar-border: 224 71% 10%;
     --sidebar-ring: 206 100% 70%;
-  }
-
-  .dark {
-    --background: 220 40% 9%;
-    --foreground: 210 40% 98%;
-    --card: 220 40% 12%;
-    --card-foreground: 210 40% 98%;
-    --popover: 220 40% 9%;
-    --popover-foreground: 210 40% 98%;
-    --primary: 206 100% 70%;
-    --primary-foreground: 224 71% 4%;
-    --secondary: 220 40% 16%;
-    --secondary-foreground: 210 40% 98%;
-    --muted: 220 40% 16%;
-    --muted-foreground: 215.4 16.3% 56.9%;
-    --accent: 142 47% 53%;
-    --accent-foreground: 210 40% 98%;
-    --destructive: 0 62.8% 30.6%;
-    --destructive-foreground: 210 40% 98%;
-    --border: 220 40% 16%;
-    --input: 220 40% 16%;
-    --ring: 206 100% 70%;
   }
 }
 
@@ -74,5 +61,9 @@ body {
   }
   body {
     @apply bg-background text-foreground;
+  }
+  /* Enforce Tabular Numerals for all data-heavy text */
+  .font-mono, .tabular-nums {
+    font-variant-numeric: tabular-nums;
   }
 }
