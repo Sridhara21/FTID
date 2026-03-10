@@ -1,28 +1,19 @@
-
 import Link from "next/link";
 import {
   Wallet,
   Bot,
-  CircleGauge,
   Receipt,
-  HandCoins,
   ArrowUpRight,
   ArrowDownLeft,
   PiggyBank,
   HeartPulse,
   Send,
   FileText,
-  LineChart,
-  Scale,
-  Landmark,
-  Building,
-  Briefcase,
-  AlertTriangle,
-  Info,
-  CheckCircle,
   Lock,
   Link as LinkIcon,
   ArrowRightLeft,
+  AlertTriangle,
+  CheckCircle,
 } from "lucide-react";
 import {
   Card,
@@ -43,7 +34,6 @@ import { Button } from "@/components/ui/button";
 import { IncomeExpenseChart } from "@/components/citizen/income-expense-chart";
 import { regulatoryAlerts, institutionConnectivity, consentData, userProfileData } from "@/lib/placeholder-data";
 import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from "@/components/ui/tooltip";
-
 
 const QuickAction = ({ href, icon: Icon, title, description }: { href: string; icon: React.ElementType; title: string; description: string }) => (
   <Link href={href} className="block group">

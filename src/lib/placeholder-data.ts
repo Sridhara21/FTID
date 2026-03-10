@@ -1,4 +1,3 @@
-
 import {
   CreditCard,
   Landmark,
@@ -12,7 +11,6 @@ import {
   HeartPulse,
   Building,
   TrendingUp,
-  TrendingDown,
   Minus,
   Rocket,
   GraduationCap,
@@ -21,7 +19,6 @@ import {
   Magnet,
   UserRound,
   Bot,
-  BookOpen,
   Train,
   Banknote,
   Globe,
@@ -30,19 +27,7 @@ import {
   Target,
   ArrowRightLeft,
   Briefcase,
-  BarChart,
   Scale,
-  CandlestickChart,
-  Folders,
-  Gem,
-  Shield,
-  PieChart as PieChartIcon,
-  AlertTriangle,
-  Link,
-  Wallet,
-  FileText,
-  Lock,
-  History,
   CheckCircle,
   XCircle,
   Info,
@@ -762,13 +747,7 @@ export const donationData = [
     party: 'Shiv Sena',
     amount: 2250000000,
   },
-  {
-    id: 4,
-    election: 'Vidhan Sabha 2025 (MH)',
-    donor: 'Haldia Energy Ltd',
-    party: 'AITC',
-    amount: 2810000000,
-  },
+  { id: 4, election: 'Vidhan Sabha 2025 (MH)', donor: 'Haldia Energy Ltd', party: 'AITC', amount: 2810000000 },
 ];
 
 export const regulatoryAlerts = [
@@ -799,3 +778,4 @@ export const autoCapturedIncome = {
         { section: 'Standard Deduction', amount: 75000, verified: true },
     ]
 };
+import { AlertTriangle } from 'lucide-react';
