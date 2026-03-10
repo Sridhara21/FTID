@@ -7,7 +7,7 @@ const inter = Inter({ subsets: ['latin'], variable: '--font-inter' });
 
 export const metadata: Metadata = {
   title: 'FTID',
-  description: 'A revolutionary platform for citizens and governments.',
+  description: 'Sovereign Financial Infrastructure Platform',
 };
 
 export default function RootLayout({
