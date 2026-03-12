@@ -1,12 +1,6 @@
+
 import Link from "next/link";
 import {
-  Wallet,
-  Bot,
-  Receipt,
-  ArrowUpRight,
-  ArrowDownLeft,
-  PiggyBank,
-  HeartPulse,
   Send,
   FileText,
   Lock,
@@ -14,6 +8,8 @@ import {
   ArrowRightLeft,
   AlertTriangle,
   CheckCircle,
+  Briefcase,
+  HeartPulse,
 } from "lucide-react";
 import {
   Card,
@@ -32,7 +28,7 @@ import {
 } from "@/components/ui/table";
 import { Button } from "@/components/ui/button";
 import { IncomeExpenseChart } from "@/components/citizen/income-expense-chart";
-import { regulatoryAlerts, institutionConnectivity, consentData, userProfileData } from "@/lib/placeholder-data";
+import { regulatoryAlerts, institutionConnectivity, consentData } from "@/lib/placeholder-data";
 import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from "@/components/ui/tooltip";
 
 const QuickAction = ({ href, icon: Icon, title, description }: { href: string; icon: React.ElementType; title: string; description: string }) => (
@@ -175,7 +171,7 @@ export default function CitizenDashboard() {
                         <HeartPulse className="h-8 w-8 text-primary" />
                     </div>
                     <p className="text-[10px] font-bold uppercase tracking-widest text-muted-foreground mb-1">Flow Score</p>
-                    <p className="text-4xl font-black font-mono tracking-tighter tabular-nums">820</p>
+                    <p className="text-4xl font-black font-mono tracking-tighter tabular-nums text-foreground">820</p>
                     <p className="text-xs font-bold text-green-400 mt-1 uppercase">Very Strong</p>
                   </div>
               </CardContent>

@@ -1,38 +1,12 @@
+
 import {
-  CreditCard,
   Landmark,
-  PiggyBank,
   Receipt,
-  ShieldCheck,
-  Fuel,
   Utensils,
-  Wheat,
   HeartPulse,
-  Building,
   TrendingUp,
-  Minus,
-  Rocket,
-  GraduationCap,
-  Factory,
-  Leaf,
-  Magnet,
-  UserRound,
-  Bot,
-  Banknote,
-  Globe,
-  LineChart as LineChartIcon,
-  Users,
-  Target,
-  ArrowRightLeft,
-  Briefcase,
-  Scale,
   CheckCircle,
-  XCircle,
-  Info,
-  Smartphone,
-  Server,
   AlertTriangle,
-  Vote
 } from 'lucide-react';
 
 export const consentData = [
@@ -134,6 +108,15 @@ export const governmentBalanceSheetDataFy2526 = {
   liabilities: [{ name: 'Revenue Expenditure', value: 3945000, subItems: [{ name: 'Interest', value: 1123000 }] }],
 };
 
+export const creditScoreData = {
+  score: 750,
+  rating: 'Good',
+  summary: 'Your financial health is stable.',
+  history: [{ month: 'Jan', score: 740 }, { month: 'Jun', score: 750 }],
+  factors: [{ name: 'Payment History', status: 'Excellent', impact: 'High', icon: CheckCircle, color: 'text-green-400' }],
+  tips: ['Pay bills on time.']
+};
+
 export const userProfileData = {
   name: 'Ravi',
   email: 'ravi@email.com', 
@@ -168,6 +151,6 @@ export const economicIndicatorsData = [
   { label: 'GDP (Nominal)', value: '₹324L Cr', change: '~$3.9T', icon: Landmark, trend: 'up', color: 'text-foreground', group: 'Growth', definition: 'Total market value.', source: 'FTID flows.', relevance: 'Primary measure.', limitations: 'Average value.' }
 ];
 
-export const schemes = [{ icon: Building, title: "PMAY Urban Expansion", description: "Allocation for housing." }];
+export const schemes = [{ icon: Landmark, title: "PMAY Urban Expansion", description: "Allocation for housing." }];
 export const subsidyDetailsData = [{ title: 'Food Subsidy', amount: 203420, description: 'NFSA implementation.', icon: Utensils, color: "hsl(var(--chart-1))" }];
 export const governmentBalanceSheetDataProjected = { assets: [], liabilities: [] };
