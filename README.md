@@ -28,3 +28,4 @@ Use this prompt to replicate the FTID design system in another workspace:
 - **Backend**: Firebase Firestore & Authentication.
 # FTID-Vision
 # FTID-Vision
+# FTID
