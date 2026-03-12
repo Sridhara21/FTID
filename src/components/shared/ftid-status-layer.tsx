@@ -5,24 +5,24 @@ import { usePathname } from 'next/navigation';
 import { userProfileData } from "@/lib/placeholder-data";
 import { ShieldCheck, Timer, User, Building, Globe } from "lucide-react";
 import { formatDistanceToNow } from 'date-fns';
-import { cn } from '@/lib/utils';
 
 export function FtidStatusLayer() {
     const pathname = usePathname();
     const isGovernment = pathname.startsWith('/government');
 
-    const [lastSyncTime, setLastSyncTime] = useState(new Date());
-    const [, setNow] = useState(new Date());
+    const [mounted, setMounted] = useState(false);
+    const [lastSyncTime] = useState(new Date());
+    const [syncText, setSyncText] = useState('Syncing...');
 
     useEffect(() => {
-        const rerenderInterval = setInterval(() => setNow(new Date()), 30 * 1000);
-        const syncInterval = setInterval(() => setLastSyncTime(new Date()), 15 * 60 * 1000);
-
-        return () => {
-            clearInterval(rerenderInterval);
-            clearInterval(syncInterval);
+        setMounted(true);
+        const updateText = () => {
+            setSyncText(formatDistanceToNow(lastSyncTime, { addSuffix: true }));
         };
-    }, []);
+        updateText();
+        const interval = setInterval(updateText, 30000);
+        return () => clearInterval(interval);
+    }, [lastSyncTime]);
 
     const statusItemClass = "flex items-center gap-2 px-3 py-1 bg-secondary/40 border border-border/50 rounded-md transition-colors hover:bg-secondary/60";
 
@@ -57,7 +57,7 @@ export function FtidStatusLayer() {
             </div>
             <div className={statusItemClass}>
                 <Timer className="h-3.5 w-3.5 text-primary/70" />
-                <span className="tabular-nums">SYNC: {formatDistanceToNow(lastSyncTime, { addSuffix: true })}</span>
+                <span className="tabular-nums uppercase">SYNC: {mounted ? syncText : 'Initialising'}</span>
             </div>
         </div>
     );
