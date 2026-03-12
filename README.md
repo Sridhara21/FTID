@@ -26,3 +26,4 @@ Use this prompt to replicate the FTID design system in another workspace:
 - **UI Components**: Shadcn UI, Lucide Icons, Recharts.
 - **AI**: Genkit with Google Gemini 2.0 Flash.
 - **Backend**: Firebase Firestore & Authentication.
+# FTID-Vision
