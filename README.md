@@ -29,3 +29,4 @@ Use this prompt to replicate the FTID design system in another workspace:
 # FTID-Vision
 # FTID-Vision
 # FTID
+# FTID
