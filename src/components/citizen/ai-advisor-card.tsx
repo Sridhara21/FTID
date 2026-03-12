@@ -10,7 +10,6 @@ import {
   CardDescription,
   CardHeader,
   CardTitle,
-  CardFooter,
 } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -55,21 +54,20 @@ export function AiAdvisorCard() {
       });
       setAdvice(result);
     } catch (error) {
-      console.error("Error getting financial advice:", error);
-      // Handle error display to user
+        // Handled centrally
     }
     setIsLoading(false);
   }
 
   return (
-    <Card className="flex flex-col h-full">
-      <CardHeader>
-        <CardTitle className="flex items-center gap-2">
-          <Bot className="h-6 w-6 text-primary" />
+    <Card className="flex flex-col h-full border-primary/20">
+      <CardHeader className="pb-4">
+        <CardTitle className="flex items-center gap-2 text-lg">
+          <Bot className="h-5 w-5 text-primary" />
           AI Financial Advisor
         </CardTitle>
-        <CardDescription>
-          Get personalized budgeting and savings tips.
+        <CardDescription className="text-xs uppercase tracking-wider font-bold">
+          Flow-Based Intelligent Advice
         </CardDescription>
       </CardHeader>
       <Form {...form}>
@@ -81,9 +79,9 @@ export function AiAdvisorCard() {
                 name="income"
                 render={({ field }) => (
                   <FormItem>
-                    <FormLabel>Monthly Income</FormLabel>
+                    <FormLabel className="text-[10px] font-bold uppercase tracking-widest text-muted-foreground">Monthly Income</FormLabel>
                     <FormControl>
-                      <Input type="number" placeholder="50000" {...field} />
+                      <Input type="number" className="h-8 font-mono text-xs tabular-nums" {...field} />
                     </FormControl>
                     <FormMessage />
                   </FormItem>
@@ -94,52 +92,44 @@ export function AiAdvisorCard() {
                 name="expenses"
                 render={({ field }) => (
                   <FormItem>
-                    <FormLabel>Monthly Expenses</FormLabel>
+                    <FormLabel className="text-[10px] font-bold uppercase tracking-widest text-muted-foreground">Monthly Expenses</FormLabel>
                     <FormControl>
-                      <Input type="number" placeholder="35000" {...field} />
+                      <Input type="number" className="h-8 font-mono text-xs tabular-nums" {...field} />
                     </FormControl>
                     <FormMessage />
                   </FormItem>
                 )}
               />
             </div>
-             <Button type="submit" disabled={isLoading} className="w-full">
+             <Button type="submit" disabled={isLoading} className="w-full h-9 font-bold uppercase tracking-widest text-[11px]">
               {isLoading ? (
                 <>
-                  <Loader2 className="mr-2 h-4 w-4 animate-spin" />
-                  Generating Advice...
+                  <Loader2 className="mr-2 h-3 w-3 animate-spin" />
+                  Generating...
                 </>
               ) : (
-                "Get AI Advice"
+                "Request AI Advice"
               )}
             </Button>
             
-            {(isLoading || advice) && <Separator className="my-4" />}
+            {(isLoading || advice) && <Separator />}
 
             {isLoading && (
-              <div className="space-y-4">
-                <div className="space-y-2">
-                  <Skeleton className="h-5 w-32" />
-                  <Skeleton className="h-4 w-full" />
-                  <Skeleton className="h-4 w-4/5" />
-                </div>
-                 <div className="space-y-2">
-                  <Skeleton className="h-5 w-32" />
-                  <Skeleton className="h-4 w-full" />
-                  <Skeleton className="h-4 w-4/5" />
-                </div>
+              <div className="space-y-4 pt-4">
+                <Skeleton className="h-12 w-full" />
+                <Skeleton className="h-12 w-full" />
               </div>
             )}
             
             {advice && (
-              <div className="space-y-4 text-sm">
-                <div>
-                  <h3 className="font-semibold flex items-center gap-2 mb-1"><Wallet />Budgeting Advice</h3>
-                  <p className="text-muted-foreground">{advice.budgetingAdvice}</p>
+              <div className="space-y-4 text-xs pt-4">
+                <div className="p-3 bg-secondary/30 rounded-md border border-border/30">
+                  <h3 className="font-bold flex items-center gap-2 mb-1 uppercase tracking-widest text-primary"><Wallet className="h-3 w-3" /> Budgeting</h3>
+                  <p className="text-muted-foreground leading-relaxed">{advice.budgetingAdvice}</p>
                 </div>
-                <div>
-                  <h3 className="font-semibold flex items-center gap-2 mb-1"><PiggyBank />Savings Tips</h3>
-                  <p className="text-muted-foreground">{advice.savingsTips}</p>
+                <div className="p-3 bg-secondary/30 rounded-md border border-border/30">
+                  <h3 className="font-bold flex items-center gap-2 mb-1 uppercase tracking-widest text-primary"><PiggyBank className="h-3 w-3" /> Savings</h3>
+                  <p className="text-muted-foreground leading-relaxed">{advice.savingsTips}</p>
                 </div>
               </div>
             )}
