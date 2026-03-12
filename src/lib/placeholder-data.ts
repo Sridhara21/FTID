@@ -1,4 +1,3 @@
-
 import {
   Landmark,
   Receipt,
@@ -7,48 +6,95 @@ import {
   TrendingUp,
   CheckCircle,
   AlertTriangle,
+  Briefcase,
+  Wallet,
+  ShieldCheck,
+  Zap,
+  Activity,
+  ArrowUpRight,
+  ArrowDownLeft,
+  Users,
+  BarChart3,
+  Scale
 } from 'lucide-react';
 
+// CONSENT DATA - Essential for Citizen Hub
 export const consentData = [
-    {
-        category: 'Banks & Financial Institutions',
-        description: "For providing financial services, loans, and credit assessment.",
-        consents: [
-            { id: 'c1', name: 'HDFC Bank', purpose: 'Account Aggregation', type: 'Read-only', expiry: '2026-12-31', given: true },
-            { id: 'c2', name: 'ICICI Bank', purpose: 'Credit Underwriting', type: 'Verification', expiry: '2025-08-15', given: true },
-            { id: 'c3', name: 'Bajaj Finserv', purpose: 'Loan Application', type: 'Analytics', expiry: 'N/A', given: false },
-        ]
-    },
-    {
-        category: 'Government Departments',
-        description: "For subsidy disbursement, tax compliance, and regulatory oversight.",
-        consents: [
-            { id: 'c4', name: 'Income Tax Department', purpose: 'Tax Pre-fill', type: 'Read-only', expiry: 'Perpetual', given: true },
-            { id: 'c5', name: 'Ministry of Agriculture', purpose: 'Subsidy Verification', type: 'Verification', expiry: 'Perpetual', given: true },
-            { id: 'c6', name: 'UIDAI', purpose: 'Aadhaar e-KYC', type: 'Verification', expiry: '2030-01-01', given: true },
-        ]
-    }
+  {
+    category: 'Banks & Financial Institutions',
+    description: "For providing financial services, loans, and credit assessment.",
+    consents: [
+      { id: 'c1', name: 'HDFC Bank', purpose: 'Account Aggregation', type: 'Read-only', expiry: '2026-12-31', given: true },
+      { id: 'c2', name: 'ICICI Bank', purpose: 'Credit Underwriting', type: 'Verification', expiry: '2025-08-15', given: true },
+      { id: 'c3', name: 'Bajaj Finserv', purpose: 'Loan Application', type: 'Analytics', expiry: 'N/A', given: false },
+    ]
+  },
+  {
+    category: 'Government Departments',
+    description: "For subsidy disbursement, tax compliance, and regulatory oversight.",
+    consents: [
+      { id: 'c4', name: 'Income Tax Department', purpose: 'Tax Pre-fill', type: 'Read-only', expiry: 'Perpetual', given: true },
+      { id: 'c5', name: 'Ministry of Agriculture', purpose: 'Subsidy Verification', type: 'Verification', expiry: 'Perpetual', given: true },
+      { id: 'c6', name: 'UIDAI', purpose: 'Aadhaar e-KYC', type: 'Verification', expiry: '2030-01-01', given: true },
+    ]
+  }
 ];
 
+export const userProfileData = {
+  name: 'Ravi Kumar',
+  email: 'ravi.kumar@ftid.in',
+  ftid: '2398-6501-4775',
+  fallback: 'RK',
+  pan: { number: 'ABCDE1234F', status: 'Verified' },
+  aadhaar: { number: 'XXXX-XXXX-8901', status: 'Verified' },
+  address: 'HSR Layout, Sector 2, Bangalore, KA 560102',
+  bankKyc: [
+    { bank: 'HDFC Bank', status: 'Verified', icon: CheckCircle, color: 'text-green-400' },
+    { bank: 'SBI', status: 'Verified', icon: CheckCircle, color: 'text-green-400' }
+  ],
+  security: {
+    devices: [{ id: 1, type: 'Mobile', name: 'OnePlus 12', location: 'Bangalore, IN', lastLogin: '2025-12-29T10:00:00Z' }],
+    loginHistory: [{ id: 1, date: '2025-12-29', action: 'Login', platform: 'Mobile App', ip: '103.48.197.10', status: 'Success' }]
+  },
+  consentHistory: [
+    { id: 1, date: '2025-12-01', entity: 'Income Tax Dept.', action: 'Consent Granted', details: 'Read-only access' },
+    { id: 2, date: '2025-11-15', entity: 'HDFC Bank', action: 'Renewed', details: 'Full flow verification' }
+  ]
+};
+
 export const transactions = [
-  { id: 'txn_1', description: 'Grocery Store Purchase', amount: -5000, date: '2024-07-20', icon: Receipt, classification: 'Discretionary Spending', originInstitution: 'Self (HDFC Bank)', destinationInstitution: 'Masked Merchant (Reliance Fresh)' },
-  { id: 'txn_2', description: 'Salary Credit', amount: 50000, date: '2024-07-19', icon: Landmark, classification: 'Primary Income', originInstitution: 'Masked Employer (Infosys)', destinationInstitution: 'Self (HDFC Bank)' },
-  { id: 'txn_3', description: 'Utility Bill Payment', amount: -8000, date: '2024-07-18', icon: Receipt, classification: 'Essential Spending', originInstitution: 'Self (HDFC Bank)', destinationInstitution: 'Masked Utility (BESCOM)' },
+  { id: 'txn_1', description: 'Grocery Store Purchase', amount: -5240.50, date: '2024-07-20', icon: Receipt, classification: 'Discretionary Spending', originInstitution: 'Self (HDFC Bank)', destinationInstitution: 'Masked Merchant (Reliance Fresh)' },
+  { id: 'txn_2', description: 'Salary Credit', amount: 85000.00, date: '2024-07-19', icon: Landmark, classification: 'Primary Income', originInstitution: 'Masked Employer (Infosys)', destinationInstitution: 'Self (HDFC Bank)' },
+  { id: 'txn_3', description: 'Utility Bill Payment', amount: -8200.00, date: '2024-07-18', icon: Receipt, classification: 'Essential Spending', originInstitution: 'Self (HDFC Bank)', destinationInstitution: 'Masked Utility (BESCOM)' },
 ];
 
 export const incomeExpenseData = [
-  { name: 'Jan', income: 50000, expense: 30000 },
-  { name: 'Feb', income: 52000, expense: 32000 },
-  { name: 'Mar', income: 55000, expense: 35000 },
-  { name: 'Apr', income: 53000, expense: 38000 },
-  { name: 'May', income: 58000, expense: 34000 },
-  { name: 'Jun', income: 60000, expense: 40000 },
+  { name: 'Jan', income: 75000, expense: 42000 },
+  { name: 'Feb', income: 78000, expense: 45000 },
+  { name: 'Mar', income: 82000, expense: 48000 },
+  { name: 'Apr', income: 80000, expense: 52000 },
+  { name: 'May', income: 85000, expense: 46000 },
+  { name: 'Jun', income: 88000, expense: 50000 },
 ];
+
+export const autoCapturedIncome = {
+  sources: [
+    { source: 'Employment (TDS Form 16)', amount: 1245000, verified: true },
+    { source: 'Dividend Income', amount: 12500, verified: true },
+    { source: 'Bank Interest (Sec 194A)', amount: 8400, verified: true },
+    { source: 'Consulting (Form 26AS)', amount: 45000, verified: false }
+  ],
+  deductions: [
+    { section: 'Standard Deduction', amount: 75000, verified: true },
+    { section: '80C (EPF/LIC)', amount: 150000, verified: true },
+    { section: '80D (Medical)', amount: 25000, verified: true }
+  ]
+};
 
 export const flowScoreData = {
   score: 820,
   rating: 'Very Strong',
-  summary: 'Your FTID Flow Score indicates high financial stability based on consistent cash flows.',
+  summary: 'High financial stability based on consistent cash flows and verified identity.',
   factors: [
     { name: 'Income Stability', status: 'Excellent', impact: 'High', icon: TrendingUp, color: 'text-green-400' },
     { name: 'Repayment Consistency', status: 'Excellent', impact: 'High', icon: CheckCircle, color: 'text-green-400' },
@@ -58,17 +104,75 @@ export const flowScoreData = {
     { month: 'Jun', score: 820 },
   ],
   dataSources: [
-      { name: 'HDFC Bank (Account Data)', verified: true },
-      { name: 'Income Tax Dept (ITR Data)', verified: true }
+    { name: 'HDFC Bank (Account Data)', verified: true },
+    { name: 'Income Tax Dept (ITR Data)', verified: true }
   ]
 };
 
-export const subsidies = [
-  { id: 'sub_1', name: 'Food Subsidy (NFSA)', status: 'Active', amount: 600, icon: Utensils, sourceMinistry: 'Dept. of Food', timeline: 'Monthly on 5th', eligibility: 'BPL Card Holder', ftidVerified: true },
-  { id: 'sub_2', name: 'Health Insurance (PM-JAY)', status: 'Active', amount: 416, icon: HeartPulse, sourceMinistry: 'NHA', timeline: 'Coverage Active', eligibility: 'SECC 2011', ftidVerified: true },
-];
+export const bankDashboardData = {
+  kpis: [
+    { label: 'Total FTID Customers', value: '1.24M', change: '+12%', trend: 'up' },
+    { label: 'Daily Transactions', value: '852,401', change: '+5%', trend: 'up' },
+    { label: 'Avg Success Rate', value: '99.85%', change: 'Stable', trend: 'neutral' },
+    { label: 'Risk Flagged (24h)', value: '1,042', change: '-8%', trend: 'down' },
+    { label: 'Liquidity Coverage', value: '142%', change: '+2%', trend: 'up' },
+    { label: 'Gross NPA', value: '2.41%', change: '-0.1%', trend: 'down' }
+  ],
+  liquidity: {
+    cdRatio: '78.5%',
+    lcr: '142.4%',
+    crr: '4.5%'
+  },
+  risk: {
+    grossNpa: '2.41%',
+    netNpa: '0.85%',
+    slippageRatio: '1.2%'
+  }
+};
+
+export const businessDashboardData = {
+  score: 78,
+  kpis: [
+    { label: 'Monthly Revenue', value: '₹4.82Cr', change: '+14%', trend: 'up' },
+    { label: 'Net Profit Margin', value: '18.4%', change: '+2%', trend: 'up' },
+    { label: 'Cash Runway', value: '14 Months', change: 'Stable', trend: 'neutral' },
+    { label: 'A/R Outstanding', value: '₹1.2Cr', change: '-5%', trend: 'down' },
+    { label: 'DSO (Days)', value: '38 Days', change: '-2d', trend: 'down' },
+    { label: 'Burn Rate', value: '₹32L/mo', change: '-4%', trend: 'down' }
+  ],
+  cashFlow: {
+    operating: 8500000,
+    investing: -4200000,
+    financing: 2000000
+  }
+};
+
+export const balanceSheetData = {
+  assets: [
+    { name: 'E-Rupee Wallet', value: 85250 },
+    { name: 'Stocks', value: 835000 },
+    { name: 'Fixed Deposits', value: 200000 },
+    { name: 'Digital Gold', value: 350000 }
+  ],
+  liabilities: [
+    { name: 'Credit Card Debt', value: 25000 },
+    { name: 'Vehicle Loan', value: 450000 }
+  ],
+};
+
+export const governmentBalanceSheetDataFy2526 = {
+  assets: [
+    { name: 'Revenue Receipts', value: 3502000, subItems: [{ name: 'Tax Revenue', value: 3043000 }] },
+    { name: 'Capital Receipts', value: 1250000, subItems: [{ name: 'Borrowings', value: 1045000 }] }
+  ],
+  liabilities: [
+    { name: 'Revenue Expenditure', value: 3945000, subItems: [{ name: 'Interest', value: 1123000 }] },
+    { name: 'Capital Expenditure', value: 807000, subItems: [{ name: 'Infrastructure', value: 650000 }] }
+  ],
+};
 
 export const gdpData = [
+  { year: '2023', gdp: 345, range: [340, 350] },
   { year: '2024', gdp: 375, range: [370, 380] },
   { year: '2025', gdp: 410, range: [400, 420] },
 ];
@@ -79,72 +183,38 @@ export const revenueData = [
   { name: 'GST', value: 20.8, fill: 'hsl(var(--chart-3))', growth: '+11.1%', risk: 'Low' },
 ];
 
-export const subsidyDistributionData = [
-  { name: 'Food', value: 203420, fill: 'hsl(var(--chart-1))' },
-  { name: 'Fertiliser', value: 167887, fill: 'hsl(var(--chart-2))' },
+export const regulatoryAlerts = [
+  { id: 1, date: '2025-12-28', title: 'New Aadhaar-PAN linking deadline extended to FY27.', severity: 'Medium', icon: AlertTriangle },
+  { id: 2, date: '2025-12-15', title: 'Institutional compliance audit required for Business FTID.', severity: 'High', icon: ShieldCheck }
 ];
 
-export const portfolioData = {
-    stocks: [{ name: 'Reliance Industries', symbol: 'RELIANCE', quantity: 50, value: 145000, change: "+1.2%", changeValue: 1740, taxClassification: 'LTCG' }],
-    mutualFunds: [{ name: 'Parag Parikh Flexi Cap', nav: 72.50, units: 1379, value: 100000, change: "+0.8%", changeValue: 800, taxClassification: 'LTCG' }],
-    fixedDeposits: [{ bank: 'HDFC Bank', value: 200000, interestRate: '7.1%', maturityDate: '2026-05-10' }],
-    digitalGold: [{ grams: 50, value: 350000 }],
-    bonds: [{ name: 'GOI 7.26% 2033', value: 100000 }],
-    emergencyFund: [{ account: 'Savings Account', value: 250000 }]
-};
-
-export const balanceSheetData = {
-    assets: [
-      { name: 'E-Rupee Wallet', value: 85250 },
-      { name: 'Stocks', value: 835000 },
-    ],
-    liabilities: [
-      { name: 'Credit Card Debt', value: 25000 },
-    ],
-};
-
-export const governmentBalanceSheetDataFy2526 = {
-  assets: [{ name: 'Revenue Receipts', value: 3502000, subItems: [{ name: 'Tax Revenue', value: 3043000 }] }],
-  liabilities: [{ name: 'Revenue Expenditure', value: 3945000, subItems: [{ name: 'Interest', value: 1123000 }] }],
-};
-
-export const creditScoreData = {
-  score: 750,
-  rating: 'Good',
-  summary: 'Your financial health is stable.',
-  history: [{ month: 'Jan', score: 740 }, { month: 'Jun', score: 750 }],
-  factors: [{ name: 'Payment History', status: 'Excellent', impact: 'High', icon: CheckCircle, color: 'text-green-400' }],
-  tips: ['Pay bills on time.']
-};
-
-export const userProfileData = {
-  name: 'Ravi',
-  email: 'ravi@email.com', 
-  ftid: '2398-6501-4775',
-  fallback: 'R',
-  pan: { number: 'ABCDE1234F', status: 'Verified' },
-  aadhaar: { number: 'XXXX-XXXX-8901', status: 'Verified' },
-  bankKyc: [{ bank: 'HDFC Bank', status: 'Verified', icon: CheckCircle, color: 'text-green-400' }],
-  security: {
-      devices: [{ id: 1, type: 'Mobile', name: 'OnePlus 12', location: 'Bangalore, IN', lastLogin: '2025-12-29T10:00:00Z' }],
-      loginHistory: [{ id: 1, date: '2025-12-29', action: 'Login', platform: 'Mobile App', ip: '103.48.197.10', status: 'Success' }]
-  },
-  consentHistory: [{ id: 1, date: '2025-12-01', entity: 'Income Tax Dept.', action: 'Consent Granted', details: 'Read-only access' }]
-};
-
-export const autoCapturedIncome = {
-    sources: [{ source: 'Employment', amount: 600000, verified: true }],
-    deductions: [{ section: 'Standard Deduction', amount: 75000, verified: true }]
-};
+export const institutionConnectivity = [
+  { id: 1, name: 'HDFC Bank', status: 'Active', type: 'Bank', icon: Landmark },
+  { id: 2, name: 'ICICI Bank', status: 'Active', type: 'Bank', icon: Landmark },
+  { id: 3, name: 'Income Tax Dept.', status: 'Active', type: 'Regulator', icon: ShieldCheck }
+];
 
 export const statePerformanceData = {
-    indicators: [{ state: 'Maharashtra', gstFy: 245000, gstJun: 22000, perCapita: 215000, gsdpGrowth: 6.8 }],
-    efficiency: [{ state: 'Gujarat', metric: 'Ease of Biz', value: 'Rank 1', rank: 'Top' }]
+  indicators: [
+    { state: 'Maharashtra', gstFy: 245000, gstJun: 22000, perCapita: 215000, gsdpGrowth: 6.8 },
+    { state: 'Karnataka', gstFy: 185000, gstJun: 16500, perCapita: 240000, gsdpGrowth: 7.2 },
+    { state: 'Gujarat', gstFy: 155000, gstJun: 14200, perCapita: 205000, gsdpGrowth: 8.1 }
+  ],
+  efficiency: [
+    { state: 'Gujarat', metric: 'Ease of Biz', value: 'Rank 1', rank: 'Top' },
+    { state: 'Karnataka', metric: 'Innovation Index', value: 'Rank 1', rank: 'Top' }
+  ]
 };
 
-export const donationData = [{ id: 1, election: 'Lok Sabha 2024', donor: 'Future Gaming', party: 'DMK', amount: 5090000000 }];
-export const regulatoryAlerts = [{ id: 1, date: '2025-12-28', title: 'New Aadhaar deadline.', severity: 'Medium', icon: AlertTriangle }];
-export const institutionConnectivity = [{ id: 1, name: 'HDFC Bank', status: 'Active', type: 'Bank', icon: Landmark }];
+export const portfolioData = {
+  stocks: [{ name: 'Reliance Industries', symbol: 'RELIANCE', quantity: 50, value: 145000, change: "+1.2%", changeValue: 1740, taxClassification: 'LTCG' }],
+  mutualFunds: [{ name: 'Parag Parikh Flexi Cap', nav: 72.50, units: 1379, value: 100000, change: "+0.8%", changeValue: 800, taxClassification: 'LTCG' }],
+  fixedDeposits: [{ bank: 'HDFC Bank', value: 200000, interestRate: '7.1%', maturityDate: '2026-05-10' }],
+  digitalGold: [{ grams: 50, value: 350000 }],
+  bonds: [{ name: 'GOI 7.26% 2033', value: 100000 }],
+  emergencyFund: [{ account: 'Savings Account', value: 250000 }]
+};
+
 export const dummyFtidData = JSON.stringify([{ "transaction_id": "a1b2", "amount": 12500.50, "location": { "latitude": 19.07, "longitude": 72.87 } }]);
 
 export const economicIndicatorsData = [
@@ -154,3 +224,8 @@ export const economicIndicatorsData = [
 export const schemes = [{ icon: Landmark, title: "PMAY Urban Expansion", description: "Allocation for housing." }];
 export const subsidyDetailsData = [{ title: 'Food Subsidy', amount: 203420, description: 'NFSA implementation.', icon: Utensils, color: "hsl(var(--chart-1))" }];
 export const governmentBalanceSheetDataProjected = { assets: [], liabilities: [] };
+export const subsidies = [
+  { id: 'sub_1', name: 'Food Subsidy (NFSA)', status: 'Active', amount: 600, icon: Utensils, sourceMinistry: 'Dept. of Food', timeline: 'Monthly on 5th', eligibility: 'BPL Card Holder', ftidVerified: true },
+  { id: 'sub_2', name: 'Health Insurance (PM-JAY)', status: 'Active', amount: 416, icon: HeartPulse, sourceMinistry: 'NHA', timeline: 'Coverage Active', eligibility: 'SECC 2011', ftidVerified: true },
+];
+export const donationData = [{ id: 1, election: 'Lok Sabha 2024', donor: 'Future Gaming', party: 'DMK', amount: 5090000000 }];
