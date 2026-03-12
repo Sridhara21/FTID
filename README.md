@@ -1,20 +1,21 @@
 # FTID — Sovereign Financial Infrastructure
 
-FTID is a revolutionary "Financial DNS" platform designed for citizens, businesses, and governments.
+FTID is a "Financial DNS" platform designed for unified financial control and institutional-grade transparency.
+
+## GitHub Repository
+[Add repository link here]
 
 ## UI REPLICATION PROMPT
-Use the following blueprint to replicate this specific theme and visual language in another workspace.
-
----
+Use the following blueprint to replicate this visual language.
 
 ### **INSTITUTIONAL DATA-DENSITY UI BLUEPRINT**
 
 **1. Core Identity & Tone**
-- **Tone:** Authority, precision, trust, and institutional seriousness.
-- **Layout Philosophy:** High-density analytical interface. Minimize vertical whitespace by 20-30%.
-- **Elevation:** No CSS box-shadows. Use 1px borders (`var(--border)`).
+- **Tone:** Authority, precision, trust.
+- **Layout:** High-density analytical interface (20-30% less vertical whitespace).
+- **Elevation:** 1px borders (`var(--border)`), no shadows.
 
-**2. HSL Color Palette (Refined Dark Mode)**
+**2. HSL Color Palette (Dark Mode)**
 - `background`: 224 71% 4%
 - `foreground`: 210 40% 98%
 - `card`: 224 71% 5%
@@ -25,12 +26,12 @@ Use the following blueprint to replicate this specific theme and visual language
 - `muted-foreground`: 215 20% 65%
 
 **3. Visual Hierarchy & Typography**
-- **Numeric Font:** Use `font-variant-numeric: tabular-nums;` for all digits.
-- **Data Alignment:** Right-align all numeric data in tables/lists.
+- **Numeric Font:** `tabular-nums` for all digits.
+- **Data Alignment:** Right-align all numeric data.
 - **Metadata Labels:** `uppercase`, `text-[10px]`, `font-bold`, `tracking-widest`.
-- **Primary Metrics:** Dominant size (e.g., `text-2xl`), monochromatic.
+- **Primary Metrics:** Dominant monochromatic size (e.g., `text-2xl`).
 
 **4. Component Styling**
-- **Cards:** Sharp corners (`rounded-md`), subtle borders, no shadows.
-- **Tables:** High density (`py-2` cells), background highlights for totals (`bg-muted/50`).
-- **Sidebar:** Slim profile, clear active states via primary-colored borders.
+- **Cards:** Sharp corners (`rounded-md`), subtle borders.
+- **Tables:** High density (`py-2` cells), `bg-muted/50` for totals.
+- **Sidebar:** Slim profile, primary-colored border active states.
