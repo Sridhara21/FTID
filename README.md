@@ -2,6 +2,19 @@
 
 FTID is a "Financial DNS" platform providing dual-party financial transparency and compliance for citizens and governments.
 
+## Deployment to GitHub
+
+To push this project to your repository, run the following commands in your terminal:
+
+```bash
+git init
+git add .
+git commit -m "Initial commit: FTID Sovereign Infrastructure"
+git branch -M main
+git remote add origin git@github.com:Sridhara21/FTID.git
+git push -u origin main
+```
+
 ## Core Features
 - **Citizen FTID Wallet**: Secure digital wallet for managing CBDC (e-Rupee) transactions.
 - **Dual-Party Logging**: Verified transaction flows between citizens and government entities.
@@ -17,8 +30,6 @@ FTID is a "Financial DNS" platform providing dual-party financial transparency a
 - **Contextual Security**: Integrated status layer showing FTID authorization and sync status.
 
 ## UI Replication Prompt (Neutral)
-Use this prompt to replicate the FTID design system in another workspace:
-
 > "Apply a high-density institutional financial UI theme using HSL tokens. Primary: Sky Blue (206 100% 70%), Background: Deep Navy (224 71% 4%), Accent: Sea Green (142 71% 45%). Layout density must be tight (p-4 for cards, py-2.5 for table cells). All numeric data MUST use 'font-variant-numeric: tabular-nums' for perfect vertical alignment. Metadata labels must be uppercase, bold, text-xs (10px), and tracked wider. Use 1px subtle borders instead of shadows for elevation."
 
 ## Tech Stack
@@ -26,10 +37,3 @@ Use this prompt to replicate the FTID design system in another workspace:
 - **UI Components**: Shadcn UI, Lucide Icons, Recharts.
 - **AI**: Genkit with Google Gemini 2.0 Flash.
 - **Backend**: Firebase Firestore & Authentication.
-# FTID-Vision
-# FTID-Vision
-# FTID
-# FTID
-# FTID
-# FTID
-# FTID
