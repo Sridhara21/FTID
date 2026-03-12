@@ -11,7 +11,7 @@ git init
 git add .
 git commit -m "Initial commit: FTID Sovereign Infrastructure"
 git branch -M main
-git remote add origin git@github.com:Sridhara21/FTID.git
+git remote add origin git@github.com:Sridhara21/II2026-FTID.git
 git push -u origin main
 ```
 

@@ -191,3 +191,27 @@ export const subsidies = [
   { id: 'sub_2', name: 'Health Insurance (PM-JAY)', status: 'Active', amount: 416, icon: HeartPulse, sourceMinistry: 'NHA', timeline: 'Coverage Active', eligibility: 'SECC 2011', ftidVerified: true },
 ];
 export const donationData = [{ id: 1, election: 'Lok Sabha 2024', donor: 'Future Gaming', party: 'DMK', amount: 5090000000 }];
+
+export const creditScoreData = {
+  score: 742,
+  rating: 'Good',
+  summary: 'Your financial health is stable. Improving repayment history could boost your score further.',
+  history: [
+    { month: 'Jan', score: 710 },
+    { month: 'Feb', score: 715 },
+    { month: 'Mar', score: 725 },
+    { month: 'Apr', score: 730 },
+    { month: 'May', score: 738 },
+    { month: 'Jun', score: 742 },
+  ],
+  factors: [
+    { name: 'Payment History', status: 'Good', impact: 'High', icon: CheckCircle, color: 'text-green-400' },
+    { name: 'Credit Utilization', status: 'Excellent', impact: 'Medium', icon: TrendingUp, color: 'text-green-400' },
+    { name: 'Credit Age', status: 'Fair', impact: 'Low', icon: History, color: 'text-yellow-400' }
+  ],
+  tips: [
+    "Keep credit card utilization below 30%.",
+    "Ensure all utility bills are paid through FTID-linked accounts for auto-verification.",
+    "Avoid applying for multiple new loans in a short period."
+  ]
+};
