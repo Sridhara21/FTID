@@ -6,16 +6,7 @@ import {
   TrendingUp,
   CheckCircle,
   AlertTriangle,
-  Briefcase,
-  Wallet,
   ShieldCheck,
-  Zap,
-  Activity,
-  ArrowUpRight,
-  ArrowDownLeft,
-  Users,
-  BarChart3,
-  Scale
 } from 'lucide-react';
 
 // CONSENT DATA - Essential for Citizen Hub
@@ -109,44 +100,6 @@ export const flowScoreData = {
   ]
 };
 
-export const bankDashboardData = {
-  kpis: [
-    { label: 'Total FTID Customers', value: '1.24M', change: '+12%', trend: 'up' },
-    { label: 'Daily Transactions', value: '852,401', change: '+5%', trend: 'up' },
-    { label: 'Avg Success Rate', value: '99.85%', change: 'Stable', trend: 'neutral' },
-    { label: 'Risk Flagged (24h)', value: '1,042', change: '-8%', trend: 'down' },
-    { label: 'Liquidity Coverage', value: '142%', change: '+2%', trend: 'up' },
-    { label: 'Gross NPA', value: '2.41%', change: '-0.1%', trend: 'down' }
-  ],
-  liquidity: {
-    cdRatio: '78.5%',
-    lcr: '142.4%',
-    crr: '4.5%'
-  },
-  risk: {
-    grossNpa: '2.41%',
-    netNpa: '0.85%',
-    slippageRatio: '1.2%'
-  }
-};
-
-export const businessDashboardData = {
-  score: 78,
-  kpis: [
-    { label: 'Monthly Revenue', value: '₹4.82Cr', change: '+14%', trend: 'up' },
-    { label: 'Net Profit Margin', value: '18.4%', change: '+2%', trend: 'up' },
-    { label: 'Cash Runway', value: '14 Months', change: 'Stable', trend: 'neutral' },
-    { label: 'A/R Outstanding', value: '₹1.2Cr', change: '-5%', trend: 'down' },
-    { label: 'DSO (Days)', value: '38 Days', change: '-2d', trend: 'down' },
-    { label: 'Burn Rate', value: '₹32L/mo', change: '-4%', trend: 'down' }
-  ],
-  cashFlow: {
-    operating: 8500000,
-    investing: -4200000,
-    financing: 2000000
-  }
-};
-
 export const balanceSheetData = {
   assets: [
     { name: 'E-Rupee Wallet', value: 85250 },
@@ -185,7 +138,7 @@ export const revenueData = [
 
 export const regulatoryAlerts = [
   { id: 1, date: '2025-12-28', title: 'New Aadhaar-PAN linking deadline extended to FY27.', severity: 'Medium', icon: AlertTriangle },
-  { id: 2, date: '2025-12-15', title: 'Institutional compliance audit required for Business FTID.', severity: 'High', icon: ShieldCheck }
+  { id: 2, date: '2025-12-15', title: 'Institutional compliance audit required.', severity: 'High', icon: ShieldCheck }
 ];
 
 export const institutionConnectivity = [
