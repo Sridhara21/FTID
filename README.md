@@ -27,3 +27,4 @@ Use this prompt to replicate the FTID design system in another workspace:
 - **AI**: Genkit with Google Gemini 2.0 Flash.
 - **Backend**: Firebase Firestore & Authentication.
 # FTID-Vision
+# FTID-Vision
