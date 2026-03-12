@@ -7,6 +7,15 @@ import {
   CheckCircle,
   AlertTriangle,
   ShieldCheck,
+  Briefcase,
+  User,
+  CreditCard,
+  History,
+  Lock,
+  Smartphone,
+  Server,
+  Terminal,
+  FileCheck
 } from 'lucide-react';
 
 export const consentData = [
