@@ -15,7 +15,8 @@ import {
   Smartphone,
   Server,
   Terminal,
-  FileCheck
+  FileCheck,
+  Vote
 } from 'lucide-react';
 
 export const consentData = [

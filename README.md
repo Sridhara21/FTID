@@ -37,5 +37,3 @@ git push -u origin main
 - **UI Components**: Shadcn UI, Lucide Icons, Recharts.
 - **AI**: Genkit with Google Gemini 2.0 Flash.
 - **Backend**: Firebase Firestore & Authentication.
-# FTID
-# II2026-FTID
