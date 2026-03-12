@@ -6,8 +6,8 @@ import { Inter } from 'next/font/google';
 const inter = Inter({ subsets: ['latin'], variable: '--font-inter' });
 
 export const metadata: Metadata = {
-  title: 'FTID',
-  description: 'Sovereign Financial Infrastructure Platform',
+  title: 'FTID — Sovereign Financial Infrastructure',
+  description: 'Sovereign Financial Infrastructure Platform for Citizens and Governments.',
 };
 
 export default function RootLayout({

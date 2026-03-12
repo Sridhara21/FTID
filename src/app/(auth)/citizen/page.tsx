@@ -27,7 +27,7 @@ import {
 } from "@/components/ui/table";
 import { Button } from "@/components/ui/button";
 import { IncomeExpenseChart } from "@/components/citizen/income-expense-chart";
-import { regulatoryAlerts, institutionConnectivity, consentData } from "@/lib/placeholder-data";
+import { regulatoryAlerts, institutionConnectivity, consentData, userProfileData } from "@/lib/placeholder-data";
 import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from "@/components/ui/tooltip";
 
 const QuickAction = ({ href, icon: Icon, title, description }: { href: string; icon: React.ElementType; title: string; description: string }) => (

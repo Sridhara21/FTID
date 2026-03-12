@@ -16,6 +16,11 @@ FTID is a "Financial DNS" platform providing dual-party financial transparency a
 - **Data Precision**: Tabular numerals used for all numeric values to ensure perfect vertical alignment.
 - **Contextual Security**: Integrated status layer showing FTID authorization and sync status.
 
+## UI Replication Prompt (Neutral)
+Use this prompt to replicate the FTID design system in another workspace:
+
+> "Apply a high-density institutional financial UI theme using HSL tokens. Primary: Sky Blue (206 100% 70%), Background: Deep Navy (224 71% 4%), Accent: Sea Green (142 71% 45%). Layout density must be tight (p-4 for cards, py-2.5 for table cells). All numeric data MUST use 'font-variant-numeric: tabular-nums' for perfect vertical alignment. Metadata labels must be uppercase, bold, text-xs (10px), and tracked wider. Use 1px subtle borders instead of shadows for elevation."
+
 ## Tech Stack
 - **Frontend**: Next.js 15 (App Router), React 19, Tailwind CSS.
 - **UI Components**: Shadcn UI, Lucide Icons, Recharts.

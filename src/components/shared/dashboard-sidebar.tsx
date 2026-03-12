@@ -5,7 +5,6 @@ import { usePathname, useRouter } from "next/navigation";
 import { cn } from "@/lib/utils";
 import {
   Bot,
-  Building,
   LayoutGrid,
   HeartPulse,
   Landmark,
@@ -129,11 +128,7 @@ export function DashboardSidebar() {
       <SidebarFooter className="border-t border-sidebar-border/50 p-4">
         <div className="rounded-md border bg-secondary/30 border-border/50 p-3">
           <div className="flex items-center gap-3">
-            {isGovernment ? (
-              <Building className="h-5 w-5 text-muted-foreground" />
-            ) : (
-              <User className="h-5 w-5 text-muted-foreground" />
-            )}
+            <User className="h-5 w-5 text-muted-foreground" />
             <div className="flex flex-col">
               <p className="text-xs font-bold leading-none">{userRole} User</p>
               <p className="text-[10px] text-muted-foreground mt-1">Authorized Access</p>

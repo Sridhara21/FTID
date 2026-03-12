@@ -9,7 +9,6 @@ import {
   ShieldCheck,
 } from 'lucide-react';
 
-// CONSENT DATA - Essential for Citizen Hub
 export const consentData = [
   {
     category: 'Banks & Financial Institutions',
