@@ -35,3 +35,4 @@ Use the following blueprint to replicate this visual language.
 - **Cards:** Sharp corners (`rounded-md`), subtle borders.
 - **Tables:** High density (`py-2` cells), `bg-muted/50` for totals.
 - **Sidebar:** Slim profile, primary-colored border active states.
+# FTID
