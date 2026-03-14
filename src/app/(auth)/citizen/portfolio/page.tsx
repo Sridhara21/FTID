@@ -15,12 +15,11 @@ import {
     TableHead,
     TableHeader,
     TableRow,
-    TableFooter,
 } from "@/components/ui/table";
 import { Badge } from "@/components/ui/badge";
 import { portfolioData } from "@/lib/placeholder-data";
 import { getPortfolioSuggestions, PortfolioOutput } from "@/ai/flows/portfolio-suggestions-flow";
-import { Briefcase, CandlestickChart, Folders, Gem, Landmark, Bot, Lightbulb, CheckCircle, PiggyBank, Shield } from "lucide-react";
+import { Briefcase, CandlestickChart, Folders, Bot, Lightbulb, CheckCircle, PiggyBank, Shield, Landmark, Gem } from "lucide-react";
 import { Separator } from "@/components/ui/separator";
 import { Skeleton } from "@/components/ui/skeleton";
 import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from "@/components/ui/tooltip";
@@ -40,6 +39,7 @@ export default function PortfolioPage() {
 
     const totalStocksDayGain = portfolioData.stocks.reduce((sum, item) => sum + item.changeValue, 0);
     const totalMutualFundsDayGain = portfolioData.mutualFunds.reduce((sum, item) => sum + item.changeValue, 0);
+    const totalGoldDayGain = portfolioData.digitalGold.reduce((sum, item) => sum + item.changeValue, 0);
 
     useEffect(() => {
         async function fetchSuggestions() {
@@ -66,11 +66,11 @@ export default function PortfolioPage() {
         fetchSuggestions();
     }, [totalPortfolioValue]);
 
-    const totalDayGain = totalStocksDayGain + totalMutualFundsDayGain;
+    const totalDayGain = totalStocksDayGain + totalMutualFundsDayGain + totalGoldDayGain;
     const dayGainPercentage = totalPortfolioValue > totalDayGain ? (totalDayGain / (totalPortfolioValue - totalDayGain)) * 100 : 0;
 
     const formatCurrency = (value: number) => {
-        return value.toLocaleString('en-IN', { style: 'currency', currency: 'INR', minimumFractionDigits: 2 });
+        return value.toLocaleString('en-IN', { style: 'currency', currency: 'INR', minimumFractionDigits: 0 });
     };
 
     return (
@@ -178,6 +178,92 @@ export default function PortfolioPage() {
                                     ))}
                                 </TableBody>
                             </Table>
+                        </div>
+
+                        <Separator />
+
+                        <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+                            <div>
+                                <h3 className="text-sm font-bold uppercase tracking-widest mb-3 flex items-center gap-2 text-primary"><Landmark className="h-4 w-4"/> Fixed Deposits</h3>
+                                <Table>
+                                    <TableHeader className="bg-secondary/20">
+                                        <TableRow className="h-8 hover:bg-transparent">
+                                            <TableHead className="text-[10px] uppercase font-bold">Bank</TableHead>
+                                            <TableHead className="text-right text-[10px] uppercase font-bold">Value</TableHead>
+                                        </TableRow>
+                                    </TableHeader>
+                                    <TableBody>
+                                        {portfolioData.fixedDeposits.map((fd, idx) => (
+                                            <TableRow key={idx} className="h-10 hover:bg-secondary/10">
+                                                <TableCell className="py-2 text-xs font-bold">{fd.bank} ({fd.interestRate})</TableCell>
+                                                <TableCell className="py-2 text-right font-mono text-xs tabular-nums">{formatCurrency(fd.value)}</TableCell>
+                                            </TableRow>
+                                        ))}
+                                    </TableBody>
+                                </Table>
+                            </div>
+                            <div>
+                                <h3 className="text-sm font-bold uppercase tracking-widest mb-3 flex items-center gap-2 text-primary"><Gem className="h-4 w-4"/> Digital Gold</h3>
+                                <Table>
+                                    <TableHeader className="bg-secondary/20">
+                                        <TableRow className="h-8 hover:bg-transparent">
+                                            <TableHead className="text-[10px] uppercase font-bold">Asset</TableHead>
+                                            <TableHead className="text-right text-[10px] uppercase font-bold">Value</TableHead>
+                                        </TableRow>
+                                    </TableHeader>
+                                    <TableBody>
+                                        {portfolioData.digitalGold.map((gold, idx) => (
+                                            <TableRow key={idx} className="h-10 hover:bg-secondary/10">
+                                                <TableCell className="py-2 text-xs font-bold">{gold.name} ({gold.grams}g)</TableCell>
+                                                <TableCell className="py-2 text-right font-mono text-xs tabular-nums">{formatCurrency(gold.value)}</TableCell>
+                                            </TableRow>
+                                        ))}
+                                    </TableBody>
+                                </Table>
+                            </div>
+                        </div>
+
+                        <Separator />
+
+                        <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+                            <div>
+                                <h3 className="text-sm font-bold uppercase tracking-widest mb-3 flex items-center gap-2 text-primary"><Shield className="h-4 w-4"/> Bonds</h3>
+                                <Table>
+                                    <TableHeader className="bg-secondary/20">
+                                        <TableRow className="h-8 hover:bg-transparent">
+                                            <TableHead className="text-[10px] uppercase font-bold">Bond Name</TableHead>
+                                            <TableHead className="text-right text-[10px] uppercase font-bold">Value</TableHead>
+                                        </TableRow>
+                                    </TableHeader>
+                                    <TableBody>
+                                        {portfolioData.bonds.map((bond, idx) => (
+                                            <TableRow key={idx} className="h-10 hover:bg-secondary/10">
+                                                <TableCell className="py-2 text-xs font-bold">{bond.name}</TableCell>
+                                                <TableCell className="py-2 text-right font-mono text-xs tabular-nums">{formatCurrency(bond.value)}</TableCell>
+                                            </TableRow>
+                                        ))}
+                                    </TableBody>
+                                </Table>
+                            </div>
+                            <div>
+                                <h3 className="text-sm font-bold uppercase tracking-widest mb-3 flex items-center gap-2 text-primary"><PiggyBank className="h-4 w-4"/> Emergency Fund</h3>
+                                <Table>
+                                    <TableHeader className="bg-secondary/20">
+                                        <TableRow className="h-8 hover:bg-transparent">
+                                            <TableHead className="text-[10px] uppercase font-bold">Account</TableHead>
+                                            <TableHead className="text-right text-[10px] uppercase font-bold">Value</TableHead>
+                                        </TableRow>
+                                    </TableHeader>
+                                    <TableBody>
+                                        {portfolioData.emergencyFund.map((fund, idx) => (
+                                            <TableRow key={idx} className="h-10 hover:bg-secondary/10">
+                                                <TableCell className="py-2 text-xs font-bold">{fund.name}</TableCell>
+                                                <TableCell className="py-2 text-right font-mono text-xs tabular-nums">{formatCurrency(fund.value)}</TableCell>
+                                            </TableRow>
+                                        ))}
+                                    </TableBody>
+                                </Table>
+                            </div>
                         </div>
                     </div>
                 </CardContent>

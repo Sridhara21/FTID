@@ -16,8 +16,31 @@ import {
   Server,
   Terminal,
   FileCheck,
-  Vote
+  Vote,
+  PiggyBank
 } from 'lucide-react';
+
+export const userProfileData = {
+  name: 'Ravi Kumar',
+  email: 'ravi.kumar@ftid.in',
+  ftid: '2398-6501-4775',
+  fallback: 'RK',
+  pan: { number: 'ABCDE1234F', status: 'Verified' },
+  aadhaar: { number: 'XXXX-XXXX-8901', status: 'Verified' },
+  address: 'HSR Layout, Sector 2, Bangalore, KA 560102',
+  bankKyc: [
+    { bank: 'HDFC Bank', status: 'Verified', icon: CheckCircle, color: 'text-green-400' },
+    { bank: 'SBI', status: 'Verified', icon: CheckCircle, color: 'text-green-400' }
+  ],
+  security: {
+    devices: [{ id: 1, type: 'Mobile', name: 'OnePlus 12', location: 'Bangalore, IN', lastLogin: '2025-12-29T10:00:00Z' }],
+    loginHistory: [{ id: 1, date: '2025-12-29', action: 'Login', platform: 'Mobile App', ip: '103.48.197.10', status: 'Success' }]
+  },
+  consentHistory: [
+    { id: 1, date: '2025-12-01', entity: 'Income Tax Dept.', action: 'Consent Granted', details: 'Read-only access' },
+    { id: 2, date: '2025-11-15', entity: 'HDFC Bank', action: 'Renewed', details: 'Full flow verification' }
+  ]
+};
 
 export const consentData = [
   {
@@ -40,26 +63,42 @@ export const consentData = [
   }
 ];
 
-export const userProfileData = {
-  name: 'Ravi Kumar',
-  email: 'ravi.kumar@ftid.in',
-  ftid: '2398-6501-4775',
-  fallback: 'RK',
-  pan: { number: 'ABCDE1234F', status: 'Verified' },
-  aadhaar: { number: 'XXXX-XXXX-8901', status: 'Verified' },
-  address: 'HSR Layout, Sector 2, Bangalore, KA 560102',
-  bankKyc: [
-    { bank: 'HDFC Bank', status: 'Verified', icon: CheckCircle, color: 'text-green-400' },
-    { bank: 'SBI', status: 'Verified', icon: CheckCircle, color: 'text-green-400' }
+export const portfolioData = {
+  stocks: [
+    { name: 'Reliance Industries', symbol: 'RELIANCE', quantity: 150, value: 435000, change: "+1.2%", changeValue: 5220, taxClassification: 'LTCG' },
+    { name: 'HDFC Bank', symbol: 'HDFCBANK', quantity: 250, value: 400000, change: "+0.5%", changeValue: 2000, taxClassification: 'LTCG' }
   ],
-  security: {
-    devices: [{ id: 1, type: 'Mobile', name: 'OnePlus 12', location: 'Bangalore, IN', lastLogin: '2025-12-29T10:00:00Z' }],
-    loginHistory: [{ id: 1, date: '2025-12-29', action: 'Login', platform: 'Mobile App', ip: '103.48.197.10', status: 'Success' }]
-  },
-  consentHistory: [
-    { id: 1, date: '2025-12-01', entity: 'Income Tax Dept.', action: 'Consent Granted', details: 'Read-only access' },
-    { id: 2, date: '2025-11-15', entity: 'HDFC Bank', action: 'Renewed', details: 'Full flow verification' }
+  mutualFunds: [
+    { name: 'Parag Parikh Flexi Cap', units: 1379.31, value: 100000, change: "+0.8%", changeValue: 800, taxClassification: 'LTCG' }
+  ],
+  fixedDeposits: [
+    { bank: 'SBI', value: 200000, interestRate: '7.1%', maturityDate: '2026-05-10', taxClassification: 'Debt' }
+  ],
+  digitalGold: [
+    { name: 'SafeGold Digital', grams: 50, value: 350000, change: "+2.1%", changeValue: 7200, taxClassification: 'LTCG' }
+  ],
+  bonds: [
+    { name: 'GOI 7.26% 2033', value: 100000, interestRate: '7.26%', taxClassification: 'Tax-Free' }
+  ],
+  emergencyFund: [
+    { name: 'Liquid Savings Account', value: 250000, bank: 'HDFC Bank', taxClassification: 'Exempt' }
   ]
+};
+
+export const balanceSheetData = {
+  assets: [
+    { name: 'E-Rupee Wallet', value: 85250 },
+    { name: 'Stocks', value: 835000 },
+    { name: 'Mutual Funds', value: 100000 },
+    { name: 'Fixed Deposits', value: 200000 },
+    { name: 'Digital Gold', value: 350000 },
+    { name: 'Bonds', value: 100000 },
+    { name: 'Emergency Fund', value: 250000 }
+  ],
+  liabilities: [
+    { name: 'Credit Card Debt', value: 25000 },
+    { name: 'Vehicle Loan', value: 450000 }
+  ],
 };
 
 export const transactions = [
@@ -109,19 +148,6 @@ export const flowScoreData = {
   ]
 };
 
-export const balanceSheetData = {
-  assets: [
-    { name: 'E-Rupee Wallet', value: 85250 },
-    { name: 'Stocks', value: 835000 },
-    { name: 'Fixed Deposits', value: 200000 },
-    { name: 'Digital Gold', value: 350000 }
-  ],
-  liabilities: [
-    { name: 'Credit Card Debt', value: 25000 },
-    { name: 'Vehicle Loan', value: 450000 }
-  ],
-};
-
 export const governmentBalanceSheetDataFy2526 = {
   assets: [
     { name: 'Revenue Receipts', value: 3502000, subItems: [{ name: 'Tax Revenue', value: 3043000 }] },
@@ -130,6 +156,17 @@ export const governmentBalanceSheetDataFy2526 = {
   liabilities: [
     { name: 'Revenue Expenditure', value: 3945000, subItems: [{ name: 'Interest', value: 1123000 }] },
     { name: 'Capital Expenditure', value: 807000, subItems: [{ name: 'Infrastructure', value: 650000 }] }
+  ],
+};
+
+export const governmentBalanceSheetDataProjected = {
+  assets: [
+    { name: 'Revenue Receipts', value: 3850000, subItems: [{ name: 'Tax Revenue', value: 3340000 }] },
+    { name: 'Capital Receipts', value: 1350000, subItems: [{ name: 'Borrowings', value: 1150000 }] }
+  ],
+  liabilities: [
+    { name: 'Revenue Expenditure', value: 4250000, subItems: [{ name: 'Interest', value: 1210000 }] },
+    { name: 'Capital Expenditure', value: 950000, subItems: [{ name: 'Infrastructure', value: 780000 }] }
   ],
 };
 
@@ -143,6 +180,8 @@ export const revenueData = [
   { name: 'Income Tax', value: 22.4, fill: 'hsl(var(--chart-1))', growth: '+9.5%', risk: 'Low' },
   { name: 'Corporate Tax', value: 13.1, fill: 'hsl(var(--chart-2))', growth: '+7.2%', risk: 'Medium' },
   { name: 'GST', value: 20.8, fill: 'hsl(var(--chart-3))', growth: '+11.1%', risk: 'Low' },
+  { name: 'Customs', value: 5.2, fill: 'hsl(var(--chart-4))', growth: '+4.5%', risk: 'Low' },
+  { name: 'Other', value: 3.5, fill: 'hsl(var(--chart-5))', growth: '+2.1%', risk: 'Medium' },
 ];
 
 export const regulatoryAlerts = [
@@ -168,29 +207,37 @@ export const statePerformanceData = {
   ]
 };
 
-export const portfolioData = {
-  stocks: [{ name: 'Reliance Industries', symbol: 'RELIANCE', quantity: 50, value: 145000, change: "+1.2%", changeValue: 1740, taxClassification: 'LTCG' }],
-  mutualFunds: [{ name: 'Parag Parikh Flexi Cap', nav: 72.50, units: 1379, value: 100000, change: "+0.8%", changeValue: 800, taxClassification: 'LTCG' }],
-  fixedDeposits: [{ bank: 'HDFC Bank', value: 200000, interestRate: '7.1%', maturityDate: '2026-05-10' }],
-  digitalGold: [{ grams: 50, value: 350000 }],
-  bonds: [{ name: 'GOI 7.26% 2033', value: 100000 }],
-  emergencyFund: [{ account: 'Savings Account', value: 250000 }]
-};
+export const subsidyDistributionData = [
+  { name: 'Food', value: 203420, fill: "hsl(var(--chart-1))" },
+  { name: 'Fertiliser', value: 175000, fill: "hsl(var(--chart-2))" },
+  { name: 'Petroleum', value: 35000, fill: "hsl(var(--chart-3))" },
+  { name: 'Interest', value: 15000, fill: "hsl(var(--chart-4))" },
+  { name: 'Other', value: 12000, fill: "hsl(var(--chart-5))" },
+];
 
-export const dummyFtidData = JSON.stringify([{ "transaction_id": "a1b2", "amount": 12500.50, "location": { "latitude": 19.07, "longitude": 72.87 } }]);
+export const subsidyDetailsData = [
+  { title: 'Food Subsidy', amount: 203420, description: 'National Food Security Act implementation and PDS support.', icon: Utensils, color: "hsl(var(--chart-1))" },
+  { title: 'Fertiliser Subsidy', amount: 175000, description: 'Support for urea and nutrient-based fertilisers for farmers.', icon: Landmark, color: "hsl(var(--chart-2))" },
+];
 
 export const economicIndicatorsData = [
   { label: 'GDP (Nominal)', value: '₹324L Cr', change: '~$3.9T', icon: Landmark, trend: 'up', color: 'text-foreground', group: 'Growth', definition: 'Total market value.', source: 'FTID flows.', relevance: 'Primary measure.', limitations: 'Average value.' }
 ];
 
-export const schemes = [{ icon: Landmark, title: "PMAY Urban Expansion", description: "Allocation for housing." }];
-export const subsidyDetailsData = [{ title: 'Food Subsidy', amount: 203420, description: 'NFSA implementation.', icon: Utensils, color: "hsl(var(--chart-1))" }];
-export const governmentBalanceSheetDataProjected = { assets: [], liabilities: [] };
+export const schemes = [
+  { icon: Landmark, title: "PMAY Urban Expansion", description: "Expanded allocation for affordable urban housing." },
+  { icon: HeartPulse, title: "Ayushman Bharat 2.0", description: "Increased coverage for senior citizens and expanded disease registry." }
+];
+
 export const subsidies = [
   { id: 'sub_1', name: 'Food Subsidy (NFSA)', status: 'Active', amount: 600, icon: Utensils, sourceMinistry: 'Dept. of Food', timeline: 'Monthly on 5th', eligibility: 'BPL Card Holder', ftidVerified: true },
   { id: 'sub_2', name: 'Health Insurance (PM-JAY)', status: 'Active', amount: 416, icon: HeartPulse, sourceMinistry: 'NHA', timeline: 'Coverage Active', eligibility: 'SECC 2011', ftidVerified: true },
 ];
-export const donationData = [{ id: 1, election: 'Lok Sabha 2024', donor: 'Future Gaming', party: 'DMK', amount: 5090000000 }];
+
+export const donationData = [
+  { id: 1, election: 'Lok Sabha 2024', donor: 'Future Gaming', party: 'DMK', amount: 5090000000 },
+  { id: 2, election: 'State Assembly 2025', donor: 'Megha Engineering', party: 'BJP', amount: 2000000000 }
+];
 
 export const creditScoreData = {
   score: 742,
@@ -215,3 +262,5 @@ export const creditScoreData = {
     "Avoid applying for multiple new loans in a short period."
   ]
 };
+
+export const dummyFtidData = JSON.stringify([{ "transaction_id": "a1b2", "amount": 12500.50, "location": { "latitude": 19.07, "longitude": 72.87 } }]);
