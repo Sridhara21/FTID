@@ -17,7 +17,12 @@ import {
   Terminal,
   FileCheck,
   Vote,
-  PiggyBank
+  PiggyBank,
+  Activity,
+  Zap,
+  DollarSign,
+  TrendingDown,
+  BarChart3
 } from 'lucide-react';
 
 export const userProfileData = {
@@ -150,23 +155,23 @@ export const flowScoreData = {
 
 export const governmentBalanceSheetDataFy2526 = {
   assets: [
-    { name: 'Revenue Receipts', value: 3502000, subItems: [{ name: 'Tax Revenue', value: 3043000 }] },
-    { name: 'Capital Receipts', value: 1250000, subItems: [{ name: 'Borrowings', value: 1045000 }] }
+    { name: 'Revenue Receipts', value: 3820000, subItems: [{ name: 'Tax Revenue', value: 3412000 }, { name: 'Non-Tax Revenue', value: 408000 }] },
+    { name: 'Capital Receipts', value: 1315000, subItems: [{ name: 'Borrowings', value: 1125000 }, { name: 'Asset Sales', value: 190000 }] }
   ],
   liabilities: [
-    { name: 'Revenue Expenditure', value: 3945000, subItems: [{ name: 'Interest', value: 1123000 }] },
-    { name: 'Capital Expenditure', value: 807000, subItems: [{ name: 'Infrastructure', value: 650000 }] }
+    { name: 'Revenue Expenditure', value: 4125000, subItems: [{ name: 'Interest', value: 1205000 }, { name: 'Subsidies', value: 450000 }, { name: 'Salaries/Pensions', value: 2470000 }] },
+    { name: 'Capital Expenditure', value: 1010000, subItems: [{ name: 'Infrastructure', value: 810000 }, { name: 'Defense Capital', value: 200000 }] }
   ],
 };
 
 export const governmentBalanceSheetDataProjected = {
   assets: [
-    { name: 'Revenue Receipts', value: 3850000, subItems: [{ name: 'Tax Revenue', value: 3340000 }] },
-    { name: 'Capital Receipts', value: 1350000, subItems: [{ name: 'Borrowings', value: 1150000 }] }
+    { name: 'Revenue Receipts', value: 4150000, subItems: [{ name: 'Tax Revenue', value: 3720000 }, { name: 'Non-Tax Revenue', value: 430000 }] },
+    { name: 'Capital Receipts', value: 1420000, subItems: [{ name: 'Borrowings', value: 1210000 }, { name: 'Asset Sales', value: 210000 }] }
   ],
   liabilities: [
-    { name: 'Revenue Expenditure', value: 4250000, subItems: [{ name: 'Interest', value: 1210000 }] },
-    { name: 'Capital Expenditure', value: 950000, subItems: [{ name: 'Infrastructure', value: 780000 }] }
+    { name: 'Revenue Expenditure', value: 4450000, subItems: [{ name: 'Interest', value: 1290000 }, { name: 'Subsidies', value: 470000 }] },
+    { name: 'Capital Expenditure', value: 1120000, subItems: [{ name: 'Infrastructure', value: 910000 }] }
   ],
 };
 
@@ -174,14 +179,15 @@ export const gdpData = [
   { year: '2023', gdp: 345, range: [340, 350] },
   { year: '2024', gdp: 375, range: [370, 380] },
   { year: '2025', gdp: 410, range: [400, 420] },
+  { year: '2026 (Est)', gdp: 442, range: [435, 450] },
 ];
 
 export const revenueData = [
-  { name: 'Income Tax', value: 22.4, fill: 'hsl(var(--chart-1))', growth: '+9.5%', risk: 'Low' },
-  { name: 'Corporate Tax', value: 13.1, fill: 'hsl(var(--chart-2))', growth: '+7.2%', risk: 'Medium' },
-  { name: 'GST', value: 20.8, fill: 'hsl(var(--chart-3))', growth: '+11.1%', risk: 'Low' },
-  { name: 'Customs', value: 5.2, fill: 'hsl(var(--chart-4))', growth: '+4.5%', risk: 'Low' },
-  { name: 'Other', value: 3.5, fill: 'hsl(var(--chart-5))', growth: '+2.1%', risk: 'Medium' },
+  { name: 'Income Tax', value: 24.8, fill: 'hsl(var(--chart-1))', growth: '+10.2%', risk: 'Low' },
+  { name: 'Corporate Tax', value: 14.2, fill: 'hsl(var(--chart-2))', growth: '+8.4%', risk: 'Medium' },
+  { name: 'GST', value: 23.5, fill: 'hsl(var(--chart-3))', growth: '+12.5%', risk: 'Low' },
+  { name: 'Customs', value: 5.8, fill: 'hsl(var(--chart-4))', growth: '+5.1%', risk: 'Low' },
+  { name: 'Other Receipts', value: 4.2, fill: 'hsl(var(--chart-5))', growth: '+3.4%', risk: 'Medium' },
 ];
 
 export const regulatoryAlerts = [
@@ -197,9 +203,9 @@ export const institutionConnectivity = [
 
 export const statePerformanceData = {
   indicators: [
-    { state: 'Maharashtra', gstFy: 245000, gstJun: 22000, perCapita: 215000, gsdpGrowth: 6.8 },
-    { state: 'Karnataka', gstFy: 185000, gstJun: 16500, perCapita: 240000, gsdpGrowth: 7.2 },
-    { state: 'Gujarat', gstFy: 155000, gstJun: 14200, perCapita: 205000, gsdpGrowth: 8.1 }
+    { state: 'Maharashtra', gstFy: 265000, gstJun: 24200, perCapita: 228000, gsdpGrowth: 7.1 },
+    { state: 'Karnataka', gstFy: 198000, gstJun: 18100, perCapita: 252000, gsdpGrowth: 7.4 },
+    { state: 'Gujarat', gstFy: 168000, gstJun: 15400, perCapita: 218000, gsdpGrowth: 8.3 }
   ],
   efficiency: [
     { state: 'Gujarat', metric: 'Ease of Biz', value: 'Rank 1', rank: 'Top' },
@@ -208,20 +214,24 @@ export const statePerformanceData = {
 };
 
 export const subsidyDistributionData = [
-  { name: 'Food', value: 203420, fill: "hsl(var(--chart-1))" },
-  { name: 'Fertiliser', value: 175000, fill: "hsl(var(--chart-2))" },
-  { name: 'Petroleum', value: 35000, fill: "hsl(var(--chart-3))" },
-  { name: 'Interest', value: 15000, fill: "hsl(var(--chart-4))" },
-  { name: 'Other', value: 12000, fill: "hsl(var(--chart-5))" },
+  { name: 'Food', value: 205500, fill: "hsl(var(--chart-1))" },
+  { name: 'Fertiliser', value: 168000, fill: "hsl(var(--chart-2))" },
+  { name: 'Petroleum', value: 28000, fill: "hsl(var(--chart-3))" },
+  { name: 'Interest', value: 18000, fill: "hsl(var(--chart-4))" },
+  { name: 'Other', value: 14500, fill: "hsl(var(--chart-5))" },
 ];
 
 export const subsidyDetailsData = [
-  { title: 'Food Subsidy', amount: 203420, description: 'National Food Security Act implementation and PDS support.', icon: Utensils, color: "hsl(var(--chart-1))" },
-  { title: 'Fertiliser Subsidy', amount: 175000, description: 'Support for urea and nutrient-based fertilisers for farmers.', icon: Landmark, color: "hsl(var(--chart-2))" },
+  { title: 'Food Subsidy', amount: 205500, description: 'Direct Beneficiary Transfer (DBT) via FTID for National Food Security Act.', icon: Utensils, color: "hsl(var(--chart-1))" },
+  { title: 'Fertiliser Subsidy', amount: 168000, description: 'Soil Health Card linked subsidy routing for Urea and Complex fertilisers.', icon: Landmark, color: "hsl(var(--chart-2))" },
 ];
 
 export const economicIndicatorsData = [
-  { label: 'GDP (Nominal)', value: '₹324L Cr', change: '~$3.9T', icon: Landmark, trend: 'up', color: 'text-foreground', group: 'Growth', definition: 'Total market value.', source: 'FTID flows.', relevance: 'Primary measure.', limitations: 'Average value.' }
+  { label: 'GDP Growth (Real)', value: '7.2%', change: '+0.4% YoY', icon: Activity, trend: 'up', color: 'text-green-400', group: 'Growth', definition: 'Real GDP growth rate adjusted for inflation.', source: 'Anonymized FTID flow analysis.', relevance: 'Primary growth benchmark.', limitations: 'Based on financial transaction proxy.' },
+  { label: 'CPI Inflation', value: '4.4%', change: '-0.2% MoM', icon: Zap, trend: 'down', color: 'text-primary', group: 'Stability', definition: 'Consumer Price Index inflation rate.', source: 'Real-time retail flow tracking.', relevance: 'Monetary policy input.', limitations: 'Excludes unorganized cash markets.' },
+  { label: 'Fiscal Deficit', value: '4.2%', change: 'Target 2027', icon: Landmark, trend: 'down', color: 'text-foreground', group: 'Fiscal', definition: 'Gap between government receipts and expenditure.', source: 'Union Budget FY 2026-27.', relevance: 'Macroeconomic health.', limitations: 'Interim budgetary target.' },
+  { label: 'GST Velocity', value: '1.4x', change: 'High Activity', icon: BarChart3, trend: 'up', color: 'text-primary', group: 'Growth', definition: 'Ratio of GST collection growth to nominal GDP growth.', source: 'Direct tax flow stream.', relevance: 'Formalization indicator.', limitations: 'Varies by industrial sector.' },
+  { label: 'Forex Reserves', value: '₹55L Cr', change: '+2.1%', icon: DollarSign, trend: 'up', color: 'text-foreground', group: 'External', definition: 'National foreign exchange reserves in INR equivalent.', source: 'RBI Aggregate Data.', relevance: 'Import cover benchmark.', limitations: 'Subject to exchange rate volatility.' }
 ];
 
 export const schemes = [

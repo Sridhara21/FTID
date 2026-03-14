@@ -1,4 +1,3 @@
-
 "use client";
 
 import {
@@ -18,9 +17,10 @@ import {
     TableFooter
 } from "@/components/ui/table";
 import { governmentBalanceSheetDataFy2526, governmentBalanceSheetDataProjected } from "@/lib/placeholder-data";
-import { Scale, ChevronDown, ChevronRight, TrendingUp, TrendingDown } from "lucide-react";
+import { Scale, ChevronDown, ChevronRight, TrendingUp, TrendingDown, BadgeInfo } from "lucide-react";
 import { useState } from "react";
 import { cn } from "@/lib/utils";
+import { Badge } from "@/components/ui/badge";
 
 type BalanceSheetItem = {
     name: string;
@@ -40,22 +40,22 @@ const CollapsibleRow = ({ itemFy2526, itemProjected }: { itemFy2526: BalanceShee
     return (
         <>
             <TableRow 
-                className={cn("font-semibold bg-secondary/30", hasSubItems && "cursor-pointer hover:bg-secondary/50")}
+                className={cn("font-semibold hover:bg-secondary/10 transition-colors", hasSubItems && "cursor-pointer")}
                 onClick={() => hasSubItems && setIsOpen(!isOpen)}
             >
-                <TableCell className="flex items-center gap-2">
+                <TableCell className="flex items-center gap-2 py-3">
                     {hasSubItems && (
-                        isOpen ? <ChevronDown className="h-4 w-4" /> : <ChevronRight className="h-4 w-4" />
+                        isOpen ? <ChevronDown className="h-4 w-4 text-primary" /> : <ChevronRight className="h-4 w-4 text-muted-foreground" />
                     )}
-                    {itemFy2526.name}
+                    <span className="text-xs font-bold uppercase tracking-tight">{itemFy2526.name}</span>
                 </TableCell>
-                <TableCell className="text-right font-mono">{formatValue(itemFy2526.value)}</TableCell>
-                <TableCell className="text-right font-mono">{formatValue(itemProjected.value)}</TableCell>
+                <TableCell className="text-right font-mono text-xs tabular-nums">{formatValue(itemFy2526.value)}</TableCell>
+                <TableCell className="text-right font-mono text-xs tabular-nums font-bold text-primary">{formatValue(itemProjected.value)}</TableCell>
                 <TableCell className={cn(
-                    "text-right font-mono flex items-center justify-end gap-1",
+                    "text-right font-mono text-[10px] tabular-nums flex items-center justify-end gap-1 py-3",
                     change >= 0 ? "text-green-400" : "text-red-400"
                 )}>
-                    {change !== 0 && (change > 0 ? <TrendingUp className="h-4 w-4" /> : <TrendingDown className="h-4 w-4" />)}
+                    {change !== 0 && (change > 0 ? <TrendingUp className="h-3 w-3" /> : <TrendingDown className="h-3 w-3" />)}
                     {formatValue(Math.abs(change))}
                 </TableCell>
             </TableRow>
@@ -65,15 +65,14 @@ const CollapsibleRow = ({ itemFy2526, itemProjected }: { itemFy2526: BalanceShee
                 const subChange = subItemProjected.value - subItemFy2526.value;
 
                 return (
-                    <TableRow key={subItemFy2526.name}>
-                        <TableCell className="pl-12 text-muted-foreground">{subItemFy2526.name}</TableCell>
-                        <TableCell className="text-right font-mono">{formatValue(subItemFy2526.value)}</TableCell>
-                        <TableCell className="text-right font-mono">{formatValue(subItemProjected.value)}</TableCell>
+                    <TableRow key={subItemFy2526.name} className="bg-secondary/5 border-l-2 border-primary/20">
+                        <TableCell className="pl-12 text-[10px] font-medium text-muted-foreground uppercase py-2">{subItemFy2526.name}</TableCell>
+                        <TableCell className="text-right font-mono text-[10px] tabular-nums opacity-80">{formatValue(subItemFy2526.value)}</TableCell>
+                        <TableCell className="text-right font-mono text-[10px] tabular-nums font-bold">{formatValue(subItemProjected.value)}</TableCell>
                         <TableCell className={cn(
-                            "text-right font-mono flex items-center justify-end gap-1",
+                            "text-right font-mono text-[9px] tabular-nums flex items-center justify-end gap-1 py-2",
                             subChange >= 0 ? "text-green-400" : "text-red-400"
                         )}>
-                            {subChange !== 0 && (subChange > 0 ? <TrendingUp className="h-4 w-4" /> : <TrendingDown className="h-4 w-4" />)}
                             {formatValue(Math.abs(subChange))}
                         </TableCell>
                     </TableRow>
@@ -93,25 +92,42 @@ export default function GovernmentBalanceSheetPage() {
     const receiptsChange = totalReceiptsProjected - totalReceiptsFy2526;
     const expenditureChange = totalExpenditureProjected - totalExpenditureFy2526;
 
+    const fiscalDeficitFy2526 = totalExpenditureFy2526 - totalReceiptsFy2526;
+    const fiscalDeficitProjected = totalExpenditureProjected - totalReceiptsProjected;
+
     return (
         <div className="grid gap-6">
-            <Card>
-                <CardHeader>
-                    <CardTitle className="flex items-center gap-2">
-                        <Scale /> National Balance Sheet
-                    </CardTitle>
-                    <CardDescription>A comparative snapshot of the nation's finances.</CardDescription>
+            <div className="flex flex-col gap-1">
+                <h1 className="text-2xl font-bold tracking-tight">National Balance Sheet</h1>
+                <p className="text-muted-foreground text-sm uppercase tracking-widest font-bold">Financial Year 2026-27 (Estimates & Projections)</p>
+            </div>
+
+            <Card className="border-primary/20 bg-card/50">
+                <CardHeader className="border-b border-border/50 pb-4">
+                    <div className="flex justify-between items-center">
+                      <div>
+                        <CardTitle className="flex items-center gap-2 text-lg">
+                            <Scale className="text-primary" /> Sovereign Ledger Summary
+                        </CardTitle>
+                        <CardDescription className="text-xs">Comparative assessment of Union budget estimates.</CardDescription>
+                      </div>
+                      <Badge variant="outline" className="bg-primary/5 text-primary border-primary/20 font-bold uppercase text-[10px] tracking-widest px-3 py-1">
+                        Institutional Grade Verification Active
+                      </Badge>
+                    </div>
                 </CardHeader>
-                <CardContent className="space-y-6">
+                <CardContent className="space-y-8 pt-6">
                     <div>
-                        <h3 className="text-xl font-semibold mb-3 text-primary">Receipts</h3>
+                        <h3 className="text-xs font-black uppercase tracking-[0.2em] mb-4 text-green-400/80 flex items-center gap-2">
+                          <BadgeInfo className="h-4 w-4" /> Consolidated Receipts
+                        </h3>
                         <Table>
-                            <TableHeader>
-                                <TableRow>
-                                    <TableHead>Item</TableHead>
-                                    <TableHead className="text-right">FY25-26</TableHead>
-                                    <TableHead className="text-right">Projected</TableHead>
-                                    <TableHead className="text-right">Change</TableHead>
+                            <TableHeader className="bg-secondary/30">
+                                <TableRow className="hover:bg-transparent border-b-2">
+                                    <TableHead className="text-[10px] uppercase font-bold tracking-widest">Revenue Item</TableHead>
+                                    <TableHead className="text-right text-[10px] uppercase font-bold tracking-widest">FY26 Est (Cr)</TableHead>
+                                    <TableHead className="text-right text-[10px] uppercase font-bold tracking-widest">FY27 Proj (Cr)</TableHead>
+                                    <TableHead className="text-right text-[10px] uppercase font-bold tracking-widest">Delta (Cr)</TableHead>
                                 </TableRow>
                             </TableHeader>
                             <TableBody>
@@ -121,16 +137,15 @@ export default function GovernmentBalanceSheetPage() {
                                     return <CollapsibleRow key={item.name} itemFy2526={item} itemProjected={projectedItem} />;
                                 })}
                             </TableBody>
-                            <TableFooter>
-                                <TableRow className="text-lg">
-                                    <TableHead>Total Receipts</TableHead>
-                                    <TableHead className="text-right font-mono font-bold">{formatValue(totalReceiptsFy2526)}</TableHead>
-                                    <TableHead className="text-right font-mono font-bold">{formatValue(totalReceiptsProjected)}</TableHead>
+                            <TableFooter className="bg-transparent border-t-2 border-green-400/30">
+                                <TableRow className="hover:bg-transparent">
+                                    <TableHead className="text-xs font-black uppercase text-foreground">Total Receipts</TableHead>
+                                    <TableHead className="text-right font-mono text-xs tabular-nums opacity-60">{formatValue(totalReceiptsFy2526)}</TableHead>
+                                    <TableHead className="text-right font-mono text-sm tabular-nums font-black text-green-400">{formatValue(totalReceiptsProjected)}</TableHead>
                                     <TableHead className={cn(
-                                        "text-right font-mono font-bold flex items-center justify-end gap-1",
+                                        "text-right font-mono text-[10px] tabular-nums font-bold flex items-center justify-end gap-1",
                                         receiptsChange >= 0 ? "text-green-400" : "text-red-400"
                                     )}>
-                                        {receiptsChange !== 0 && (receiptsChange > 0 ? <TrendingUp /> : <TrendingDown />)}
                                         {formatValue(Math.abs(receiptsChange))}
                                     </TableHead>
                                 </TableRow>
@@ -139,14 +154,16 @@ export default function GovernmentBalanceSheetPage() {
                     </div>
 
                     <div>
-                        <h3 className="text-xl font-semibold mb-3 text-primary">Expenditure</h3>
+                        <h3 className="text-xs font-black uppercase tracking-[0.2em] mb-4 text-red-400/80 flex items-center gap-2">
+                          <BadgeInfo className="h-4 w-4" /> Consolidated Expenditure
+                        </h3>
                         <Table>
-                            <TableHeader>
-                                <TableRow>
-                                    <TableHead>Item</TableHead>
-                                    <TableHead className="text-right">FY25-26</TableHead>
-                                    <TableHead className="text-right">Projected</TableHead>
-                                    <TableHead className="text-right">Change</TableHead>
+                            <TableHeader className="bg-secondary/30">
+                                <TableRow className="hover:bg-transparent border-b-2">
+                                    <TableHead className="text-[10px] uppercase font-bold tracking-widest">Expenditure Item</TableHead>
+                                    <TableHead className="text-right text-[10px] uppercase font-bold tracking-widest">FY26 Est (Cr)</TableHead>
+                                    <TableHead className="text-right text-[10px] uppercase font-bold tracking-widest">FY27 Proj (Cr)</TableHead>
+                                    <TableHead className="text-right text-[10px] uppercase font-bold tracking-widest">Delta (Cr)</TableHead>
                                 </TableRow>
                             </TableHeader>
                             <TableBody>
@@ -156,21 +173,39 @@ export default function GovernmentBalanceSheetPage() {
                                     return <CollapsibleRow key={item.name} itemFy2526={item} itemProjected={projectedItem} />;
                                 })}
                             </TableBody>
-                            <TableFooter>
-                                <TableRow className="text-lg">
-                                    <TableHead>Total Expenditure</TableHead>
-                                    <TableHead className="text-right font-mono font-bold">{formatValue(totalExpenditureFy2526)}</TableHead>
-                                    <TableHead className="text-right font-mono font-bold">{formatValue(totalExpenditureProjected)}</TableHead>
+                            <TableFooter className="bg-transparent border-t-2 border-red-400/30">
+                                <TableRow className="hover:bg-transparent">
+                                    <TableHead className="text-xs font-black uppercase text-foreground">Total Expenditure</TableHead>
+                                    <TableHead className="text-right font-mono text-xs tabular-nums opacity-60">{formatValue(totalExpenditureFy2526)}</TableHead>
+                                    <TableHead className="text-right font-mono text-sm tabular-nums font-black text-red-400">{formatValue(totalExpenditureProjected)}</TableHead>
                                     <TableHead className={cn(
-                                        "text-right font-mono font-bold flex items-center justify-end gap-1",
-                                        expenditureChange > 0 ? "text-red-400" : "text-green-400" // More expense is "bad"
+                                        "text-right font-mono text-[10px] tabular-nums font-bold flex items-center justify-end gap-1",
+                                        expenditureChange > 0 ? "text-red-400" : "text-green-400"
                                     )}>
-                                        {expenditureChange !== 0 && (expenditureChange > 0 ? <TrendingUp /> : <TrendingDown />)}
                                         {formatValue(Math.abs(expenditureChange))}
                                     </TableHead>
                                 </TableRow>
                             </TableFooter>
                         </Table>
+                    </div>
+
+                    <div className="pt-6 border-t border-border/50">
+                        <div className="p-4 bg-secondary/20 rounded-lg border border-primary/20 flex flex-col md:flex-row justify-between items-center gap-4">
+                            <div className="text-center md:text-left">
+                                <p className="text-[10px] font-black uppercase tracking-[0.3em] text-muted-foreground mb-1">National Fiscal Deficit Gap</p>
+                                <p className="text-xs text-muted-foreground font-medium uppercase tracking-widest">Calculated as Consolidated Expenditure - Receipts</p>
+                            </div>
+                            <div className="flex gap-8">
+                                <div className="text-right">
+                                    <p className="text-[9px] font-bold uppercase tracking-widest text-muted-foreground">FY26 Estimate</p>
+                                    <p className="text-xl font-black font-mono tracking-tighter tabular-nums text-foreground opacity-60">{formatValue(fiscalDeficitFy2526)}</p>
+                                </div>
+                                <div className="text-right">
+                                    <p className="text-[9px] font-bold uppercase tracking-widest text-primary">FY27 Projection</p>
+                                    <p className="text-2xl font-black font-mono tracking-tighter tabular-nums text-primary">{formatValue(fiscalDeficitProjected)}</p>
+                                </div>
+                            </div>
+                        </div>
                     </div>
                 </CardContent>
             </Card>

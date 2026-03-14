@@ -1,3 +1,4 @@
+"use client";
 
 import {
     Card,
@@ -12,9 +13,9 @@ import { TrendingUp, TrendingDown, Minus } from "lucide-react";
 import { cn } from "@/lib/utils";
 
 const TrendIcon = ({ trend }: { trend: 'up' | 'down' | 'stable' }) => {
-    if (trend === 'up') return <TrendingUp className="h-4 w-4 text-green-400" />;
-    if (trend === 'down') return <TrendingDown className="h-4 w-4 text-red-400" />;
-    return <Minus className="h-4 w-4 text-muted-foreground" />;
+    if (trend === 'up') return <TrendingUp className="h-3.5 w-3.5 text-green-400" />;
+    if (trend === 'down') return <TrendingDown className="h-3.5 w-3.5 text-red-400" />;
+    return <Minus className="h-3.5 w-3.5 text-muted-foreground" />;
 }
 
 type Indicator = typeof economicIndicatorsData[0];
@@ -22,29 +23,33 @@ type Indicator = typeof economicIndicatorsData[0];
 const IndicatorCard = ({ indicator }: { indicator: Indicator }) => (
     <Tooltip>
         <TooltipTrigger asChild>
-            <div className="p-4 rounded-lg bg-secondary/50 flex flex-col justify-between text-left h-full w-full hover:bg-secondary transition-colors">
-                <div className="flex items-center gap-2 mb-2">
-                    <indicator.icon className="h-5 w-5 text-primary flex-shrink-0" />
-                    <h3 className="text-sm font-medium text-muted-foreground">{indicator.label}</h3>
+            <div className="p-3 rounded-md bg-secondary/30 border border-border/50 flex flex-col justify-between text-left h-full w-full hover:bg-secondary/50 transition-colors cursor-help">
+                <div className="flex items-center gap-2 mb-1.5">
+                    <div className="p-1.5 bg-background rounded border border-border/50">
+                        <indicator.icon className="h-3.5 w-3.5 text-primary/80 flex-shrink-0" />
+                    </div>
+                    <h3 className="text-[10px] font-bold uppercase tracking-wider text-muted-foreground truncate">{indicator.label}</h3>
                 </div>
                 <div>
-                    <p className={cn("text-xl font-semibold tracking-tight", indicator.color)}>
+                    <p className={cn("text-lg font-black font-mono tracking-tighter tabular-nums", indicator.color)}>
                         {indicator.value}
                     </p>
-                    <div className="flex items-center gap-1">
+                    <div className="flex items-center gap-1 mt-0.5">
                         <TrendIcon trend={indicator.trend} />
-                        <p className="text-xs text-muted-foreground">{indicator.change}</p>
+                        <p className="text-[9px] font-bold uppercase tracking-widest text-muted-foreground">{indicator.change}</p>
                     </div>
                 </div>
             </div>
         </TooltipTrigger>
-        <TooltipContent className="max-w-xs" side="bottom" align="start">
-            <div className="space-y-2 p-2">
-                <h4 className="font-bold">{indicator.label}</h4>
-                <p><span className="font-semibold">Definition:</span> {indicator.definition}</p>
-                <p><span className="font-semibold">Source:</span> {indicator.source}</p>
-                <p><span className="font-semibold">Policy Relevance:</span> {indicator.relevance}</p>
-                <p className="text-xs text-muted-foreground"><span className="font-semibold">Limitations:</span> {indicator.limitations}</p>
+        <TooltipContent className="max-w-xs border-primary/20 bg-card p-3 shadow-xl" side="bottom" align="start">
+            <div className="space-y-2">
+                <h4 className="text-xs font-black uppercase tracking-widest text-primary">{indicator.label}</h4>
+                <div className="space-y-1.5">
+                  <p className="text-[10px] leading-relaxed"><span className="font-bold opacity-60 uppercase">DEFINITION:</span> {indicator.definition}</p>
+                  <p className="text-[10px] leading-relaxed"><span className="font-bold opacity-60 uppercase">SOURCE:</span> {indicator.source}</p>
+                  <p className="text-[10px] leading-relaxed font-bold text-accent"><span className="opacity-60 uppercase">POLICY:</span> {indicator.relevance}</p>
+                </div>
+                <p className="text-[9px] text-muted-foreground italic border-t border-border/50 pt-1.5 font-medium">{indicator.limitations}</p>
             </div>
         </TooltipContent>
     </Tooltip>
@@ -63,23 +68,18 @@ export function EconomicIndicatorsCard() {
 
 
     return (
-        <Card>
-            <CardHeader>
-                <CardTitle>Key Economic Indicators</CardTitle>
-                <CardDescription>Indicative metrics derived from anonymized FTID transaction aggregates. Not a substitute for official statistics.</CardDescription>
+        <Card className="border-primary/20 bg-secondary/5">
+            <CardHeader className="pb-2">
+                <CardTitle className="text-lg font-bold">Key Economic Indicators</CardTitle>
+                <CardDescription className="text-xs">
+                  Sovereign metrics derived from anonymized FTID flow aggregates (FY 2026-27).
+                </CardDescription>
             </CardHeader>
-            <CardContent>
+            <CardContent className="pt-4">
                 <TooltipProvider>
-                    <div className="space-y-6">
-                        {Object.entries(groupedIndicators).map(([groupName, indicators]) => (
-                            <div key={groupName}>
-                                <h3 className="text-base font-semibold mb-3 text-primary">{groupName}</h3>
-                                <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-4">
-                                     {indicators.map((indicator) => (
-                                        <IndicatorCard key={indicator.label} indicator={indicator} />
-                                    ))}
-                                </div>
-                            </div>
+                    <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-3">
+                        {economicIndicatorsData.map((indicator) => (
+                            <IndicatorCard key={indicator.label} indicator={indicator} />
                         ))}
                     </div>
                 </TooltipProvider>
