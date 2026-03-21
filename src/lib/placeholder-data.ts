@@ -42,28 +42,27 @@ export const userProfileData = {
     loginHistory: [{ id: 1, date: '2025-12-29', action: 'Login', platform: 'Mobile App', ip: '103.48.197.10', status: 'Success' }]
   },
   consentHistory: [
-    { id: 1, date: '2025-12-01', entity: 'Income Tax Dept.', action: 'Consent Granted', details: 'Read-only access' },
-    { id: 2, date: '2025-11-15', entity: 'HDFC Bank', action: 'Renewed', details: 'Full flow verification' }
+    { id: 1, date: '2025-12-01', entity: 'SpendWise AI', action: 'Consent Granted', details: 'Read-only access' },
+    { id: 2, date: '2025-11-15', entity: 'TaxSaver Pro', action: 'Renewed', details: 'Full flow verification' }
   ]
 };
 
 export const consentData = [
   {
-    category: 'Banks & Financial Institutions',
-    description: "For providing financial services, loans, and credit assessment.",
+    category: '3rd Party Applications',
+    description: "Authorize fintech apps, budgeting tools, and lifestyle services to access specific data via FTID.",
     consents: [
-      { id: 'c1', name: 'HDFC Bank', purpose: 'Account Aggregation', type: 'Read-only', expiry: '2026-12-31', given: true },
-      { id: 'c2', name: 'ICICI Bank', purpose: 'Credit Underwriting', type: 'Verification', expiry: '2025-08-15', given: true },
-      { id: 'c3', name: 'Bajaj Finserv', purpose: 'Loan Application', type: 'Analytics', expiry: 'N/A', given: false },
+      { id: 'c1', name: 'SpendWise AI', purpose: 'Personal Budgeting', type: 'Read-only', expiry: '2026-12-31', given: true },
+      { id: 'c2', name: 'TaxSaver Pro', purpose: 'Tax Optimization', type: 'Analytics', expiry: '2025-08-15', given: true },
+      { id: 'c3', name: 'Investify Hub', purpose: 'Portfolio Tracking', type: 'Verification', expiry: 'N/A', given: false },
     ]
   },
   {
-    category: 'Government Departments',
-    description: "For subsidy disbursement, tax compliance, and regulatory oversight.",
+    category: 'Public Services & Governance',
+    description: "Manage data sharing with essential public infrastructure for automated welfare routing.",
     consents: [
-      { id: 'c4', name: 'Income Tax Department', purpose: 'Tax Pre-fill', type: 'Read-only', expiry: 'Perpetual', given: true },
-      { id: 'c5', name: 'Ministry of Agriculture', purpose: 'Subsidy Verification', type: 'Verification', expiry: 'Perpetual', given: true },
-      { id: 'c6', name: 'UIDAI', purpose: 'Aadhaar e-KYC', type: 'Verification', expiry: '2030-01-01', given: true },
+      { id: 'c4', name: 'Income Tax Dept.', purpose: 'Sovereign Pre-fill', type: 'Read-only', expiry: 'Perpetual', given: true },
+      { id: 'c5', name: 'National Health Hub', purpose: 'Insurance Verification', type: 'Verification', expiry: '2028-01-01', given: true },
     ]
   }
 ];

@@ -26,6 +26,17 @@ export function FtidStatusLayer() {
 
     const statusItemClass = "flex items-center gap-2 px-3 py-1 bg-secondary/40 border border-border/50 rounded-md transition-colors hover:bg-secondary/60";
 
+    if (!mounted) {
+        return (
+            <div className="flex items-center gap-3 text-[11px] font-bold text-muted-foreground tracking-tight opacity-50">
+                <div className={statusItemClass}>
+                    <Timer className="h-3.5 w-3.5 text-primary/70" />
+                    <span className="tabular-nums uppercase font-mono tracking-tighter">Initialising System...</span>
+                </div>
+            </div>
+        );
+    }
+
     if (isGovernment) {
         return (
             <div className="flex items-center gap-3 text-[11px] font-bold text-muted-foreground tracking-tight">
@@ -39,7 +50,7 @@ export function FtidStatusLayer() {
                 </div>
                 <div className={statusItemClass}>
                     <Timer className="h-3.5 w-3.5 text-primary/70" />
-                    <span className="tabular-nums uppercase font-mono tracking-tighter">SYNC: {mounted ? syncText : 'Initialising'}</span>
+                    <span className="tabular-nums uppercase font-mono tracking-tighter">SYNC: {syncText}</span>
                 </div>
             </div>
         )
@@ -57,7 +68,7 @@ export function FtidStatusLayer() {
             </div>
             <div className={statusItemClass}>
                 <Timer className="h-3.5 w-3.5 text-primary/70" />
-                <span className="tabular-nums uppercase font-mono tracking-tighter">SYNC: {mounted ? syncText : 'Initialising'}</span>
+                <span className="tabular-nums uppercase font-mono tracking-tighter">SYNC: {syncText}</span>
             </div>
         </div>
     );
