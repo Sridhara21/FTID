@@ -31,28 +31,28 @@ export function DetailedTaxCalculator() {
   const totalDeductions = autoCapturedIncome.deductions.reduce((sum, item) => sum + item.amount, 0);
   const taxableIncome = Math.max(0, totalIncome - totalDeductions);
 
-  // FY 2026-27 New Tax Regime slabs
-  // Standard Deduction: 75,000 (already included in deductions data)
+  /**
+   * FY 2026-27 New Tax Regime (AY 2027-28) Logic:
+   * 0-3L: NIL
+   * 3L-7L: 5%
+   * 7L-10L: 10%
+   * 10L-12L: 15%
+   * 12L-15L: 20%
+   * Above 15L: 30%
+   * Standard Deduction: ₹75,000 (Already included in autoCapturedIncome.deductions)
+   * 87A Rebate: No tax if taxable income <= ₹7,00,000.
+   */
   const calculateTax = (income: number) => {
-    // Section 87A Rebate: NIL tax for income up to 7,00,000 in New Regime
     if (income <= 700000) return 0;
 
     let tax = 0;
-    // Slabs:
-    // 0-3L: 0%
-    // 3L-7L: 5% (4,00,000 * 0.05 = 20,000)
-    // 7L-10L: 10% (3,00,000 * 0.10 = 30,000)
-    // 10L-12L: 15% (2,00,000 * 0.15 = 30,000)
-    // 12L-15L: 20% (3,00,000 * 0.20 = 60,000)
-    // Above 15L: 30%
-
     if (income > 300000) tax += Math.min(income - 300000, 400000) * 0.05;
     if (income > 700000) tax += Math.min(income - 700000, 300000) * 0.10;
     if (income > 1000000) tax += Math.min(income - 1000000, 200000) * 0.15;
     if (income > 1200000) tax += Math.min(income - 1200000, 300000) * 0.20;
     if (income > 1500000) tax += (income - 1500000) * 0.30;
     
-    return tax * 1.04; // 4% Health & Education Cess
+    return tax * 1.04; // 4% Cess
   };
 
   const estimatedTax = calculateTax(taxableIncome);
