@@ -45,10 +45,44 @@ export function MultiMetricChart() {
               <YAxis tickLine={false} axisLine={false} tickMargin={10} stroke="hsl(var(--muted-foreground))" tickFormatter={(v) => `₹${v}T`} className="text-[10px] font-mono" />
               <Tooltip cursor={{ stroke: 'hsl(var(--primary))', strokeWidth: 1, strokeDasharray: '4 4' }} content={<ChartTooltipContent indicator="dot" formatter={(v) => `₹${v}T`} />} />
               <Legend className="text-[10px] uppercase font-bold" />
-              <Area key="area-gdp" type="monotone" dataKey="gdp" name="GDP (Area)" fill="url(#colorGdp)" stroke="none" tooltipType="none" />
-              <Line key="line-gdp" type="monotone" dataKey="gdp" name="GDP" stroke={chartConfig.gdp.color} strokeWidth={3} dot={false} activeDot={{ r: 4 }} />
-              <Line key="line-consumption" type="monotone" dataKey="consumption" name="Consumption" stroke={chartConfig.consumption.color} strokeWidth={2} strokeDasharray="5 5" dot={false} />
-              <Line key="line-tax" type="monotone" dataKey="tax" name="Tax" stroke={chartConfig.tax.color} strokeWidth={2} dot={false} />
+              <Area 
+                key="area-gdp-gradient" 
+                type="monotone" 
+                dataKey="gdp" 
+                name="GDP Trend" 
+                fill="url(#colorGdp)" 
+                stroke="none" 
+                tooltipType="none" 
+              />
+              <Line 
+                key="line-gdp-main" 
+                type="monotone" 
+                dataKey="gdp" 
+                name="GDP (Actual)" 
+                stroke={chartConfig.gdp.color} 
+                strokeWidth={3} 
+                dot={false} 
+                activeDot={{ r: 4 }} 
+              />
+              <Line 
+                key="line-consumption-main" 
+                type="monotone" 
+                dataKey="consumption" 
+                name="Consumption" 
+                stroke={chartConfig.consumption.color} 
+                strokeWidth={2} 
+                strokeDasharray="5 5" 
+                dot={false} 
+              />
+              <Line 
+                key="line-tax-main" 
+                type="monotone" 
+                dataKey="tax" 
+                name="Tax Yield" 
+                stroke={chartConfig.tax.color} 
+                strokeWidth={2} 
+                dot={false} 
+              />
             </ComposedChart>
           </ResponsiveContainer>
         </ChartContainer>
