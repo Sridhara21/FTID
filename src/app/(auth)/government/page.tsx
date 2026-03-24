@@ -32,11 +32,11 @@ export default function GovernmentDashboard() {
   const formatCr = (val: number) => `₹${val.toLocaleString('en-IN')} Cr`;
 
   return (
-    <div className="grid grid-cols-1 gap-6">
+    <div className="flex flex-col gap-6">
       {/* Header Intelligence Layer */}
       <div className="flex flex-col md:flex-row md:items-center justify-between gap-4">
         <div>
-          <h1 className="text-2xl font-bold tracking-tight">FTID — Government Oversight System</h1>
+          <h1 className="text-2xl font-bold tracking-tight text-foreground">FTID — Government Oversight System</h1>
           <div className="flex items-center gap-2 mt-1">
             <Badge variant="outline" className="bg-primary/5 text-primary border-primary/20 text-[9px] font-bold uppercase tracking-institutional px-2 py-0.5">
               Institutional Intelligence
@@ -66,22 +66,22 @@ export default function GovernmentDashboard() {
       <EconomicIndicatorsCard />
       
       {/* Row 2: Macro Analysis Grids */}
-      <div className="grid grid-cols-1 lg:grid-cols-12 gap-6">
-        <div className="lg:col-span-8 space-y-6">
+      <div className="grid grid-cols-1 lg:grid-cols-12 gap-6 items-start">
+        <div className="lg:col-span-8 flex flex-col gap-6">
           <MultiMetricChart />
           <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
             <SectorActivityChart />
             <EconomicHeatmap />
           </div>
         </div>
-        <div className="lg:col-span-4 space-y-6">
+        <div className="lg:col-span-4 flex flex-col gap-6">
           <RevenueChartCard />
           <StatePerformanceSnapshotCard />
         </div>
       </div>
 
       {/* Row 3: Fiscal & Policy Intelligence */}
-      <div className="grid grid-cols-1 lg:grid-cols-12 gap-6">
+      <div className="grid grid-cols-1 lg:grid-cols-12 gap-6 items-start">
         <div className="lg:col-span-7">
           <Card className="border-border/50 bg-card/50">
             <CardHeader className="pb-3 border-b border-border/30">
