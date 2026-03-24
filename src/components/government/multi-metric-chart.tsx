@@ -43,13 +43,15 @@ export function MultiMetricChart() {
               <CartesianGrid vertical={false} strokeDasharray="3 3" />
               <XAxis dataKey="name" tickLine={false} axisLine={false} tickMargin={10} stroke="hsl(var(--muted-foreground))" className="text-[10px] uppercase font-bold" />
               <YAxis tickLine={false} axisLine={false} tickMargin={10} stroke="hsl(var(--muted-foreground))" tickFormatter={(v) => `₹${v}T`} className="text-[10px] font-mono" />
-              <Tooltip cursor={{ stroke: 'hsl(var(--primary))', strokeWidth: 1, strokeDasharray: '4 4' }} content={<ChartTooltipContent indicator="dot" formatter={(v) => `₹${v}T`} />} />
+              <Tooltip 
+                cursor={{ stroke: 'hsl(var(--primary))', strokeWidth: 1, strokeDasharray: '4 4' }} 
+                content={<ChartTooltipContent indicator="dot" formatter={(v) => `₹${v}T`} />} 
+              />
               <Legend className="text-[10px] uppercase font-bold" />
               <Area 
                 key="area-gdp-gradient" 
                 type="monotone" 
                 dataKey="gdp" 
-                name="GDP Trend" 
                 fill="url(#colorGdp)" 
                 stroke="none" 
                 tooltipType="none" 
