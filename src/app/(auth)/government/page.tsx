@@ -83,14 +83,14 @@ export default function GovernmentDashboard() {
             <div className="lg:col-span-7">
                 <Card>
                     <CardHeader className="pb-2 border-b border-border/30">
-                        <CardTitle className="flex items-center gap-2 text-sm uppercase tracking-[0.2em]">
+                        <CardTitle className="flex items-center gap-2 text-sm uppercase tracking-institutional">
                             <Scale className="h-4 w-4 text-primary" /> Sovereign Ledger (Summary)
                         </CardTitle>
                         <CardDescription className="text-xs">Consolidated Receipts vs Expenditure FY 2026-27.</CardDescription>
                     </CardHeader>
                     <CardContent className="grid grid-cols-1 md:grid-cols-2 gap-8 pt-4">
                         <div className="space-y-4">
-                            <h3 className="text-[10px] font-black uppercase tracking-[0.2em] text-green-400/80 border-b border-green-400/10 pb-1">Receipts</h3>
+                            <h3 className="text-[10px] font-black uppercase tracking-institutional text-green-400/80 border-b border-green-400/10 pb-1">Receipts</h3>
                             <Table>
                                 <TableHeader className="bg-secondary/20">
                                     <TableRow className="hover:bg-transparent h-8">
@@ -119,7 +119,7 @@ export default function GovernmentDashboard() {
                             </Table>
                         </div>
                         <div className="space-y-4">
-                            <h3 className="text-[10px] font-black uppercase tracking-[0.2em] text-red-400/80 border-b border-red-400/10 pb-1">Expenditure</h3>
+                            <h3 className="text-[10px] font-black uppercase tracking-institutional text-red-400/80 border-b border-red-400/10 pb-1">Expenditure</h3>
                             <Table>
                                 <TableHeader className="bg-secondary/20">
                                     <TableRow className="hover:bg-transparent h-8">
@@ -156,7 +156,7 @@ export default function GovernmentDashboard() {
         </div>
         
         <div className="p-4 bg-secondary/20 rounded-lg border border-border/50 text-center">
-            <p className="text-[10px] font-bold text-muted-foreground uppercase tracking-[0.3em]">
+            <p className="text-[10px] font-bold text-muted-foreground uppercase tracking-sovereign">
                 System Analytics Powered by FTID Citizen and Business Transaction Flows
             </p>
         </div>

@@ -94,7 +94,7 @@ export function SubsidyOptimizationCard() {
     <Card className="flex flex-col h-full border-primary/20 bg-primary/5">
       <CardHeader className="pb-4 border-b border-primary/10">
         <div className="flex items-center justify-between">
-          <CardTitle className="text-sm font-black uppercase tracking-[0.2em] flex items-center gap-2">
+          <CardTitle className="text-sm font-black uppercase tracking-institutional flex items-center gap-2">
             <WandSparkles className="h-5 w-5 text-primary" /> AI Policy Optimizer
           </CardTitle>
           <Badge className="bg-primary/10 text-primary border-primary/20 text-[9px] font-bold tracking-widest uppercase">Agentic Engine</Badge>
@@ -155,7 +155,7 @@ export function SubsidyOptimizationCard() {
                 </div>
 
                 <div className="p-3 bg-primary/10 rounded-md border border-primary/20">
-                    <h3 className="text-[10px] font-black uppercase tracking-widest flex items-center gap-2 mb-2 text-primary">
+                    <h3 className="text-[10px] font-black uppercase tracking-institutional flex items-center gap-2 mb-2 text-primary">
                         <Zap className="h-3 w-3" /> Suggested Policy Action
                     </h3>
                     <p className="text-[10px] text-muted-foreground leading-relaxed italic">
@@ -164,7 +164,7 @@ export function SubsidyOptimizationCard() {
                 </div>
 
                 <div className="space-y-2">
-                     <h3 className="text-[10px] font-black uppercase tracking-widest opacity-60">Optimized Distribution</h3>
+                     <h3 className="text-[10px] font-black uppercase tracking-institutional opacity-60">Optimized Distribution</h3>
                     <div className="grid grid-cols-1 gap-1.5">
                         {optimizedData.map((item) => (
                             <div key={item.name} className="flex justify-between items-center px-3 py-1.5 bg-background/40 rounded border border-border/20">

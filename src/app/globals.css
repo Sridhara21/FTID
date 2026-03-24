@@ -52,12 +52,14 @@ body {
     @apply bg-background text-foreground;
   }
   .font-mono, .tabular-nums, table, [data-chart] {
-    font-variant-numeric: tabular-nums;
+    font-variant-numeric: tabular-nums !important;
   }
 }
 
+/* Custom scrollbar for high-density tables */
 .custom-scrollbar::-webkit-scrollbar {
-  width: 4px;
+  width: 5px;
+  height: 5px;
 }
 .custom-scrollbar::-webkit-scrollbar-track {
   background: transparent;
@@ -65,4 +67,20 @@ body {
 .custom-scrollbar::-webkit-scrollbar-thumb {
   background: hsl(var(--border));
   border-radius: 10px;
+}
+.custom-scrollbar::-webkit-scrollbar-thumb:hover {
+  background: hsl(var(--primary) / 0.3);
+}
+
+/* Institutional Type Spacing */
+.tracking-widest {
+  letter-spacing: 0.15em !important;
+}
+
+.tracking-institutional {
+  letter-spacing: 0.2em !important;
+}
+
+.tracking-sovereign {
+  letter-spacing: 0.3em !important;
 }

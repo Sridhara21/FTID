@@ -39,7 +39,7 @@ export function PredictiveInsights() {
     <Card className="border-primary/20 bg-primary/5">
       <CardHeader className="pb-4 border-b border-primary/10">
         <div className="flex items-center justify-between">
-          <CardTitle className="text-sm font-bold uppercase tracking-[0.2em] flex items-center gap-2">
+          <CardTitle className="text-sm font-bold uppercase tracking-institutional flex items-center gap-2">
             <Bot className="h-5 w-5 text-primary" /> Predictive Flow Insights
           </CardTitle>
           <Badge variant="outline" className="bg-primary/10 text-primary border-primary/20 text-[9px] font-bold tracking-widest">AI GENERATED</Badge>

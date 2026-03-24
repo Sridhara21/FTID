@@ -25,7 +25,7 @@ export function MultiMetricChart() {
   return (
     <Card className="border-border/50 bg-card/50">
       <CardHeader className="pb-2 border-b border-border/10">
-        <CardTitle className="text-sm font-black uppercase tracking-[0.2em] flex items-center gap-2">
+        <CardTitle className="text-sm font-black uppercase tracking-institutional flex items-center gap-2">
           <TrendingUp className="h-4 w-4 text-primary" /> Macro-Economic Velocity
         </CardTitle>
         <CardDescription className="text-xs">Comparative tracking of production, consumption, and sovereign yield.</CardDescription>

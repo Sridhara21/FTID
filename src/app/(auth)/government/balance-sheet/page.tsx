@@ -118,7 +118,7 @@ export default function GovernmentBalanceSheetPage() {
                 </CardHeader>
                 <CardContent className="space-y-8 pt-6">
                     <div>
-                        <h3 className="text-xs font-black uppercase tracking-[0.2em] mb-4 text-green-400/80 flex items-center gap-2">
+                        <h3 className="text-xs font-black uppercase tracking-institutional text-green-400/80 flex items-center gap-2">
                           <BadgeInfo className="h-4 w-4" /> Consolidated Receipts
                         </h3>
                         <Table>
@@ -154,7 +154,7 @@ export default function GovernmentBalanceSheetPage() {
                     </div>
 
                     <div>
-                        <h3 className="text-xs font-black uppercase tracking-[0.2em] mb-4 text-red-400/80 flex items-center gap-2">
+                        <h3 className="text-xs font-black uppercase tracking-institutional text-red-400/80 flex items-center gap-2">
                           <BadgeInfo className="h-4 w-4" /> Consolidated Expenditure
                         </h3>
                         <Table>
@@ -192,7 +192,7 @@ export default function GovernmentBalanceSheetPage() {
                     <div className="pt-6 border-t border-border/50">
                         <div className="p-4 bg-secondary/20 rounded-lg border border-primary/20 flex flex-col md:flex-row justify-between items-center gap-4">
                             <div className="text-center md:text-left">
-                                <p className="text-[10px] font-black uppercase tracking-[0.3em] text-muted-foreground mb-1">National Fiscal Deficit Gap</p>
+                                <p className="text-[10px] font-black uppercase tracking-sovereign text-muted-foreground mb-1">National Fiscal Deficit Gap</p>
                                 <p className="text-xs text-muted-foreground font-medium uppercase tracking-widest">Calculated as Consolidated Expenditure - Receipts</p>
                             </div>
                             <div className="flex gap-8">

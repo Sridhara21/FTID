@@ -13,14 +13,12 @@ import {
   TrendingDown,
   Wallet,
   PiggyBank,
-  Bot,
   Info
 } from "lucide-react";
 import {
   Card,
   CardHeader,
   CardTitle,
-  CardDescription,
   CardContent,
 } from "@/components/ui/card";
 import {
@@ -35,19 +33,19 @@ import { Button } from "@/components/ui/button";
 import { IncomeExpenseChart } from "@/components/citizen/income-expense-chart";
 import { SpendingChart } from "@/components/citizen/spending-chart";
 import { PredictiveInsights } from "@/components/citizen/predictive-insights";
-import { regulatoryAlerts, institutionConnectivity, consentData, flowScoreData, spendingCategoryData } from "@/lib/placeholder-data";
+import { regulatoryAlerts, institutionConnectivity, consentData, flowScoreData } from "@/lib/placeholder-data";
 import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from "@/components/ui/tooltip";
 import { Badge } from "@/components/ui/badge";
 
 const PrimaryMetric = ({ title, value, subtext, trend, trendDir, icon: Icon }: { title: string, value: string, subtext: string, trend?: string, trendDir?: 'up' | 'down', icon: any }) => (
   <Card className="relative overflow-hidden border-primary/20 bg-primary/5">
-    <CardContent className="pt-6">
-      <div className="flex items-start justify-between mb-2">
+    <CardContent className="p-4">
+      <div className="flex items-start justify-between mb-3">
         <div>
-          <p className="text-[10px] font-black uppercase tracking-[0.2em] text-muted-foreground">{title}</p>
+          <p className="text-[10px] font-black uppercase tracking-institutional text-muted-foreground">{title}</p>
           <p className="text-3xl font-black font-mono tracking-tighter tabular-nums mt-1">{value}</p>
         </div>
-        <div className="p-2.5 bg-primary/10 rounded-lg border border-primary/30">
+        <div className="p-2 bg-primary/10 rounded-lg border border-primary/30">
           <Icon className="h-5 w-5 text-primary" />
         </div>
       </div>
@@ -66,7 +64,7 @@ const PrimaryMetric = ({ title, value, subtext, trend, trendDir, icon: Icon }: {
 
 const QuickAction = ({ href, icon: Icon, title, description }: { href: string; icon: React.ElementType; title: string; description: string }) => (
   <Link href={href} className="block group">
-    <div className="p-4 bg-secondary/30 border border-border/50 rounded-lg h-full transition-all duration-200 hover:bg-primary/10 hover:border-primary/30 group-hover:scale-[1.02]">
+    <div className="p-3 bg-secondary/30 border border-border/50 rounded-lg h-full transition-all duration-200 hover:bg-primary/10 hover:border-primary/30 group-hover:scale-[1.01]">
       <div className="flex items-center gap-3">
         <div className="p-2 bg-background rounded-md border border-border/50 shadow-sm">
           <Icon className="h-4 w-4 text-muted-foreground transition-colors group-hover:text-primary" />
@@ -91,8 +89,8 @@ export default function CitizenDashboard() {
     <div className="grid gap-6">
        <div className="flex items-center justify-between">
         <div>
-          <h1 className="text-2xl font-semibold tracking-tight">FTID — Citizen Financial Dashboard</h1>
-          <p className="text-muted-foreground text-sm font-medium tracking-wide">
+          <h1 className="text-2xl font-bold tracking-tight">FTID — Citizen Dashboard</h1>
+          <p className="text-muted-foreground text-[10px] font-bold uppercase tracking-institutional mt-1">
             Unified Financial Control & Flow Intelligence
           </p>
         </div>
@@ -136,20 +134,20 @@ export default function CitizenDashboard() {
               <PredictiveInsights />
           </div>
           <div className="lg:col-span-4 space-y-6">
-             <Card className="h-full">
-                <CardHeader className="pb-2 border-b border-border/30">
-                    <CardTitle className="flex items-center gap-2 text-sm uppercase tracking-widest">
+             <Card className="h-full border-border/50">
+                <CardHeader className="pb-3 border-b border-border/30">
+                    <CardTitle className="flex items-center gap-2 text-[10px] font-black uppercase tracking-institutional">
                         <ArrowRightLeft className="h-4 w-4 text-primary" /> Quick Flows
                     </CardTitle>
                 </CardHeader>
-                <CardContent className="pt-4 grid grid-cols-1 gap-4">
+                <CardContent className="pt-4 grid grid-cols-1 gap-3">
                    {quickActions.map(action => <QuickAction key={action.title} {...action} />)}
                 </CardContent>
             </Card>
 
-            <Card className="h-full">
-                <CardHeader className="pb-2 border-b border-border/30">
-                    <CardTitle className="flex items-center gap-2 text-sm uppercase tracking-widest">
+            <Card className="h-full border-border/50">
+                <CardHeader className="pb-3 border-b border-border/30">
+                    <CardTitle className="flex items-center gap-2 text-[10px] font-black uppercase tracking-institutional">
                         <AlertTriangle className="h-4 w-4 text-yellow-400" /> Compliance Feed
                     </CardTitle>
                 </CardHeader>
@@ -169,31 +167,31 @@ export default function CitizenDashboard() {
       </div>
       
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
-          <Card>
-                <CardHeader className="pb-2 border-b border-border/30">
-                    <CardTitle className="flex items-center gap-2 text-sm uppercase tracking-widest">
-                        <LinkIcon className="h-4 w-4 text-primary" /> Institutions Connected
+          <Card className="border-border/50">
+                <CardHeader className="pb-3 border-b border-border/30">
+                    <CardTitle className="flex items-center gap-2 text-[10px] font-black uppercase tracking-institutional">
+                        <LinkIcon className="h-4 w-4 text-primary" /> Connected Systems
                     </CardTitle>
                 </CardHeader>
-                <CardContent className="pt-4">
+                <CardContent className="pt-0">
                     <Table>
                         <TableHeader className="bg-secondary/20">
-                            <TableRow className="h-8 hover:bg-transparent">
-                                <TableHead className="text-[10px] uppercase font-bold">Institution</TableHead>
-                                <TableHead className="text-[10px] uppercase font-bold">System</TableHead>
-                                <TableHead className="text-right text-[10px] uppercase font-bold">Status</TableHead>
+                            <TableRow className="h-10 hover:bg-transparent border-b">
+                                <TableHead className="text-[10px] uppercase font-black tracking-widest py-2">Institution</TableHead>
+                                <TableHead className="text-[10px] uppercase font-black tracking-widest py-2">System</TableHead>
+                                <TableHead className="text-right text-[10px] uppercase font-black tracking-widest py-2">Status</TableHead>
                             </TableRow>
                         </TableHeader>
                         <TableBody>
                             {institutionConnectivity.map(item => (
-                                <TableRow key={item.id} className="h-10 hover:bg-secondary/10 border-b last:border-0">
-                                    <TableCell className="py-2 text-xs font-bold flex items-center gap-2">
-                                        <item.icon className="h-3.5 w-3.5 text-muted-foreground/60" />
+                                <TableRow key={item.id} className="h-12 hover:bg-secondary/10 border-b last:border-0 group">
+                                    <TableCell className="py-2.5 text-xs font-bold flex items-center gap-2">
+                                        <item.icon className="h-3.5 w-3.5 text-muted-foreground/60 group-hover:text-primary transition-colors" />
                                         {item.name}
                                     </TableCell>
-                                    <TableCell className="py-2 text-xs text-muted-foreground uppercase tracking-wider">{item.type}</TableCell>
-                                    <TableCell className="py-2 text-right">
-                                        <span className={`flex items-center justify-end gap-1.5 text-[9px] font-bold uppercase tracking-widest ${item.status === 'Active' ? 'text-green-400' : 'text-red-400'}`}>
+                                    <TableCell className="py-2.5 text-[10px] text-muted-foreground uppercase font-bold tracking-wider">{item.type}</TableCell>
+                                    <TableCell className="py-2.5 text-right">
+                                        <span className={`flex items-center justify-end gap-1.5 text-[9px] font-black uppercase tracking-widest ${item.status === 'Active' ? 'text-green-400' : 'text-red-400'}`}>
                                             <span className={`h-1 w-1 rounded-full ${item.status === 'Active' ? 'bg-green-400 animate-pulse' : 'bg-red-400'}`}></span>
                                             {item.status}
                                         </span>
@@ -204,27 +202,33 @@ export default function CitizenDashboard() {
                     </Table>
                 </CardContent>
             </Card>
-            <Card>
-                <CardHeader className="pb-2 border-b border-border/30">
-                    <CardTitle className="flex items-center gap-2 text-sm uppercase tracking-widest">
+            <Card className="border-border/50">
+                <CardHeader className="pb-3 border-b border-border/30">
+                    <CardTitle className="flex items-center gap-2 text-[10px] font-black uppercase tracking-institutional">
                         <Lock className="h-4 w-4 text-primary" /> Active 3rd Party Consents
                     </CardTitle>
                 </CardHeader>
-                <CardContent className="space-y-2 pt-4">
+                <CardContent className="space-y-3 pt-4">
                     {activeConsents.slice(0, 3).map(consent => (
-                        <div key={consent.id} className="flex items-center justify-between p-3 rounded-md bg-secondary/40 border border-border/30 w-full text-left transition-colors hover:bg-secondary/60">
+                        <div key={consent.id} className="flex items-center justify-between p-3.5 rounded-md bg-secondary/40 border border-border/30 w-full text-left transition-all hover:bg-secondary/60">
                             <span className="text-xs font-bold">{consent.name}</span>
                             <div className="flex items-center gap-2">
-                                <span className="text-[8px] uppercase tracking-widest text-muted-foreground font-mono">{consent.type}</span>
+                                <span className="text-[9px] uppercase tracking-institutional text-muted-foreground font-mono">{consent.type}</span>
                                 <CheckCircle className="h-3.5 w-3.5 text-green-400" />
                             </div>
                         </div>
                     ))}
-                    <Button variant="outline" size="sm" className="w-full mt-2 h-8 text-[10px] uppercase font-bold tracking-widest bg-secondary/20" asChild>
-                        <Link href="/citizen/consent">Manage Hub Access <ArrowRightLeft className="ml-2 h-3 w-3" /></Link>
+                    <Button variant="outline" size="sm" className="w-full mt-2 h-9 text-[10px] uppercase font-black tracking-widest bg-secondary/20 hover:bg-primary/10 transition-colors" asChild>
+                        <Link href="/citizen/consent">Manage Hub Access <ArrowRightLeft className="ml-2 h-3.5 w-3.5" /></Link>
                     </Button>
                 </CardContent>
             </Card>
+      </div>
+      
+      <div className="p-4 bg-secondary/20 rounded-lg border border-border/50 text-center">
+          <p className="text-[10px] font-black text-muted-foreground uppercase tracking-sovereign">
+              Data Stream Powered by FTID Flow Intelligence — Secure Institutional Linkage
+          </p>
       </div>
     </div>
   );

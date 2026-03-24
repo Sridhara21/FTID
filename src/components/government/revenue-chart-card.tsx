@@ -42,23 +42,23 @@ export function RevenueChartCard() {
 
   return (
     <Card className="flex flex-col h-full border-primary/20 bg-card/50">
-      <CardHeader className="pb-2">
+      <CardHeader className="pb-3 border-b border-border/30">
         <div className="flex items-center justify-between">
             <CardTitle className="text-lg font-bold flex items-center gap-2">
                 <Banknote className="h-5 w-5 text-primary" />
-                Revenue & Tax Analytics
+                Revenue Analytics
             </CardTitle>
-            <Badge variant="outline" className="text-[10px] font-bold uppercase tracking-widest bg-primary/5">FY 2026-27 ESTIMATES</Badge>
+            <Badge variant="outline" className="text-[10px] font-black uppercase tracking-widest bg-primary/5 px-2.5">FY 2026-27 EST</Badge>
         </div>
-        <CardDescription className="text-xs">
-            Structural analysis of sovereign revenue streams and institutional dependency risk.
+        <CardDescription className="text-[10px] uppercase font-bold tracking-widest mt-1">
+            Structural analysis of sovereign yield streams.
         </CardDescription>
       </CardHeader>
-      <CardContent className="flex-1 grid grid-cols-1 md:grid-cols-12 gap-8 items-center pt-6">
+      <CardContent className="flex-1 grid grid-cols-1 md:grid-cols-12 gap-6 items-center pt-6">
         <div className="md:col-span-4 flex justify-center">
             <ChartContainer
                 config={chartConfig}
-                className="aspect-square w-full max-h-[240px]"
+                className="aspect-square w-full max-h-[220px]"
             >
                 <ResponsiveContainer>
                     <PieChart>
@@ -88,28 +88,24 @@ export function RevenueChartCard() {
            <Table>
               <TableHeader className="bg-secondary/20">
                 <TableRow className="hover:bg-transparent border-b">
-                  <TableHead className="h-8 text-[10px] uppercase font-bold">Revenue Source</TableHead>
-                  <TableHead className="h-8 text-right text-[10px] uppercase font-bold">Yield (₹T)</TableHead>
-                  <TableHead className="h-8 text-right text-[10px] uppercase font-bold">Growth</TableHead>
-                  <TableHead className="h-8 text-right text-[10px] uppercase font-bold">
-                    <div className="flex items-center justify-end gap-1">
-                      Risk <Info className="h-3 w-3 opacity-50" />
-                    </div>
-                  </TableHead>
+                  <TableHead className="h-10 text-[10px] uppercase font-black tracking-widest py-2">Source</TableHead>
+                  <TableHead className="h-10 text-right text-[10px] uppercase font-black tracking-widest py-2">Yield (₹T)</TableHead>
+                  <TableHead className="h-10 text-right text-[10px] uppercase font-black tracking-widest py-2">Growth</TableHead>
+                  <TableHead className="h-10 text-right text-[10px] uppercase font-black tracking-widest py-2">Risk</TableHead>
                 </TableRow>
               </TableHeader>
               <TableBody>
                 {revenueData.map((item) => (
                   <TableRow key={item.name} className="hover:bg-secondary/10 border-b last:border-0 group">
-                    <TableCell className="py-2.5 font-medium flex items-center gap-2">
+                    <TableCell className="py-2.5 font-bold flex items-center gap-2">
                        <div className="w-1.5 h-1.5 rounded-full shrink-0 group-hover:scale-125 transition-transform" style={{ backgroundColor: item.fill }} />
-                      <span className="text-xs font-bold whitespace-nowrap">{item.name}</span>
+                      <span className="text-xs">{item.name}</span>
                     </TableCell>
                     <TableCell className="py-2.5 text-right font-mono text-xs tabular-nums font-bold">
                         ₹{item.value.toFixed(1)}T
                     </TableCell>
                     <TableCell className={cn(
-                        "py-2.5 text-right font-mono text-xs tabular-nums flex items-center justify-end gap-1 font-bold", 
+                        "py-2.5 text-right font-mono text-[10px] tabular-nums flex items-center justify-end gap-1 font-black uppercase", 
                         item.growth.startsWith('+') ? 'text-green-400' : 'text-red-400'
                     )}>
                       {item.growth.startsWith('+') ? <TrendingUp className="h-3 w-3" /> : <TrendingDown className="h-3 w-3" />}
@@ -118,12 +114,12 @@ export function RevenueChartCard() {
                     <TableCell className="py-2.5 text-right">
                        <Tooltip>
                           <TooltipTrigger>
-                            <Badge variant={getRiskBadgeVariant(item.risk)} className="text-[9px] px-1.5 py-0 h-4 uppercase font-bold leading-none cursor-help">
+                            <Badge variant={getRiskBadgeVariant(item.risk)} className="text-[9px] px-2 py-0 h-5 uppercase font-black leading-none cursor-help tracking-widest">
                                 {item.risk}
                             </Badge>
                           </TooltipTrigger>
-                          <TooltipContent className="text-[10px]">
-                            Assessment based on market sensitivity and collection volatility.
+                          <TooltipContent className="text-[10px] bg-background border-primary/20">
+                            Macro-economic sensitivity score based on collection volatility.
                           </TooltipContent>
                        </Tooltip>
                     </TableCell>
@@ -133,8 +129,8 @@ export function RevenueChartCard() {
             </Table>
             </TooltipProvider>
             <div className="mt-4 p-3 rounded bg-secondary/20 border border-border/50">
-                <p className="text-[10px] text-muted-foreground leading-relaxed font-medium uppercase tracking-tighter">
-                    <span className="font-bold text-primary">AUDIT NOTE:</span> Dependency risk is weighted against seasonal volatility and external market shocks. {revenueData.find(r => r.risk === 'High')?.name || 'Indirect tax'} streams show higher sensitivity to consumer sentiment.
+                <p className="text-[10px] text-muted-foreground leading-relaxed font-bold uppercase tracking-widest">
+                    <span className="text-primary">AUDIT:</span> Structural risk weighted against seasonal volatility.
                 </p>
             </div>
         </div>
