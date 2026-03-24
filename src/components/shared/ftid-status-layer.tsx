@@ -28,7 +28,7 @@ export function FtidStatusLayer() {
 
     if (!mounted) {
         return (
-            <div className="flex items-center gap-4 text-[11px] font-bold text-muted-foreground tracking-tight opacity-50">
+            <div className="flex items-center gap-4 text-[10px] font-black text-muted-foreground tracking-widest opacity-50">
                 <div className={statusItemClass}>
                     <Timer className="h-3.5 w-3.5 text-primary/70" />
                     <span className="tabular-nums uppercase font-mono tracking-tighter">Initialising FTID Core...</span>

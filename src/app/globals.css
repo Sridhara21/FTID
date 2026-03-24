@@ -56,7 +56,6 @@ body {
   }
 }
 
-/* Custom scrollbar for high-density tables */
 .custom-scrollbar::-webkit-scrollbar {
   width: 5px;
   height: 5px;
@@ -70,11 +69,6 @@ body {
 }
 .custom-scrollbar::-webkit-scrollbar-thumb:hover {
   background: hsl(var(--primary) / 0.3);
-}
-
-/* Institutional Type Spacing */
-.tracking-widest {
-  letter-spacing: 0.15em !important;
 }
 
 .tracking-institutional {
