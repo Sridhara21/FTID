@@ -1,6 +1,6 @@
 "use client";
 
-import { Line, LineChart, CartesianGrid, XAxis, YAxis, ResponsiveContainer, Tooltip, Legend, ComposedChart, Area } from "recharts";
+import { Line, CartesianGrid, XAxis, YAxis, ResponsiveContainer, Tooltip, Legend, ComposedChart, Area } from "recharts";
 import {
   Card,
   CardContent,
@@ -45,11 +45,11 @@ export function MultiMetricChart() {
               <YAxis tickLine={false} axisLine={false} tickMargin={10} stroke="hsl(var(--muted-foreground))" tickFormatter={(v) => `₹${v}T`} className="text-[10px] font-mono" />
               <Tooltip cursor={{ stroke: 'hsl(var(--primary))', strokeWidth: 1, strokeDasharray: '4 4' }} content={<ChartTooltipContent indicator="dot" formatter={(v) => `₹${v}T`} />} />
               <Legend className="text-[10px] uppercase font-bold" />
-              {/* Added name="GDP_Gradient" to prevent key collision with dataKey="gdp" Line */}
-              <Area type="monotone" dataKey="gdp" name="GDP_Gradient" fill="url(#colorGdp)" stroke="none" tooltipType="none" />
-              <Line type="monotone" dataKey="gdp" name="GDP" stroke={chartConfig.gdp.color} strokeWidth={3} dot={false} activeDot={{ r: 4 }} />
-              <Line type="monotone" dataKey="consumption" name="Consumption" stroke={chartConfig.consumption.color} strokeWidth={2} strokeDasharray="5 5" dot={false} />
-              <Line type="monotone" dataKey="tax" name="Tax" stroke={chartConfig.tax.color} strokeWidth={2} dot={false} />
+              {/* Added unique key and name to prevent collision */}
+              <Area key="area-gdp" type="monotone" dataKey="gdp" name="GDP (Area)" fill="url(#colorGdp)" stroke="none" tooltipType="none" />
+              <Line key="line-gdp" type="monotone" dataKey="gdp" name="GDP" stroke={chartConfig.gdp.color} strokeWidth={3} dot={false} activeDot={{ r: 4 }} />
+              <Line key="line-consumption" type="monotone" dataKey="consumption" name="Consumption" stroke={chartConfig.consumption.color} strokeWidth={2} strokeDasharray="5 5" dot={false} />
+              <Line key="line-tax" type="monotone" dataKey="tax" name="Tax" stroke={chartConfig.tax.color} strokeWidth={2} dot={false} />
             </ComposedChart>
           </ResponsiveContainer>
         </ChartContainer>

@@ -33,7 +33,7 @@ export default function GovernmentDashboard() {
 
   return (
     <div className="flex flex-col gap-6">
-      {/* Header Intelligence Layer */}
+      {/* Header Layer */}
       <div className="flex flex-col md:flex-row md:items-center justify-between gap-4">
         <div>
           <h1 className="text-2xl font-bold tracking-tight text-foreground">FTID — Government Oversight System</h1>
@@ -55,18 +55,19 @@ export default function GovernmentDashboard() {
         </div>
       </div>
       
-      <div className="p-4 bg-primary/5 border border-primary/20 rounded-lg flex items-center gap-3">
+      {/* Data Credibility Banner */}
+      <div className="p-3 bg-primary/5 border border-primary/20 rounded-lg flex items-center gap-3">
         <ShieldAlert className="h-4 w-4 text-primary shrink-0" />
-        <p className="text-[10px] font-bold uppercase tracking-sovereign text-primary/80 leading-relaxed">
-          Data Sovereignty: Based on anonymized FTID transaction aggregates from Citizen and Business flows. Multi-node verification active.
+        <p className="text-[9px] md:text-[10px] font-bold uppercase tracking-sovereign text-primary/80 leading-tight">
+          Sovereign Transparency: Based on anonymized FTID transaction aggregates from Citizen and Business flows. Multi-node verification active.
         </p>
       </div>
 
-      {/* Row 1: Key Indicators */}
+      {/* Row 1: Indicators */}
       <EconomicIndicatorsCard />
       
-      {/* Row 2: Macro Analysis Grids */}
-      <div className="grid grid-cols-1 lg:grid-cols-12 gap-6 items-start">
+      {/* Row 2: Analytics Grid */}
+      <div className="grid grid-cols-1 lg:grid-cols-12 gap-6">
         <div className="lg:col-span-8 flex flex-col gap-6">
           <MultiMetricChart />
           <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
@@ -80,15 +81,15 @@ export default function GovernmentDashboard() {
         </div>
       </div>
 
-      {/* Row 3: Fiscal & Policy Intelligence */}
+      {/* Row 3: Fiscal & Policy */}
       <div className="grid grid-cols-1 lg:grid-cols-12 gap-6 items-start">
         <div className="lg:col-span-7">
-          <Card className="border-border/50 bg-card/50">
+          <Card className="border-border/50 bg-card/50 h-full">
             <CardHeader className="pb-3 border-b border-border/30">
               <CardTitle className="flex items-center gap-2 text-[10px] font-black uppercase tracking-institutional">
                 <Scale className="h-4 w-4 text-primary" /> Sovereign Ledger (Summary)
               </CardTitle>
-              <CardDescription className="text-xs uppercase tracking-widest font-bold">Consolidated Receipts vs Expenditure FY 2026-27.</CardDescription>
+              <CardDescription className="text-[10px] uppercase tracking-widest font-bold">Consolidated Receipts vs Expenditure FY 2026-27</CardDescription>
             </CardHeader>
             <CardContent className="grid grid-cols-1 md:grid-cols-2 gap-8 pt-6">
               <div className="space-y-4">
@@ -96,24 +97,24 @@ export default function GovernmentDashboard() {
                 <Table>
                   <TableHeader className="bg-secondary/20">
                     <TableRow className="hover:bg-transparent h-10">
-                      <TableHead className="text-[9px] uppercase font-black tracking-widest py-2">Source Item</TableHead>
+                      <TableHead className="text-[9px] uppercase font-black tracking-widest py-2">Source</TableHead>
                       <TableHead className="text-right text-[9px] uppercase font-black tracking-widest py-2">Value (Cr)</TableHead>
                     </TableRow>
                   </TableHeader>
                   <TableBody>
                     {governmentBalanceSheetDataFy2526.assets.map(asset => (
-                      <TableRow key={asset.name} className="h-12 hover:bg-secondary/10 border-b last:border-0 group">
-                        <TableCell className="py-2.5 text-[10px] font-bold uppercase">{asset.name}</TableCell>
-                        <TableCell className="py-2.5 text-right font-mono text-[10px] text-green-400 tabular-nums">
+                      <TableRow key={asset.name} className="h-10 hover:bg-secondary/10 border-b last:border-0 group">
+                        <TableCell className="py-2 text-[10px] font-bold uppercase truncate max-w-[100px]">{asset.name}</TableCell>
+                        <TableCell className="py-2 text-right font-mono text-[10px] text-green-400 tabular-nums">
                           {formatCr(asset.value)}
                         </TableCell>
                       </TableRow>
                     ))}
                   </TableBody>
                   <TableFooter className="bg-transparent border-t-2 border-green-400/20">
-                    <TableRow className="h-12 hover:bg-transparent">
-                      <TableHead colSpan={1} className="text-[10px] font-black uppercase text-foreground py-2 px-4">Total Receipts</TableHead>
-                      <TableHead className="text-right font-mono font-black text-green-400 tabular-nums text-[10px] py-2 px-4">
+                    <TableRow className="h-10 hover:bg-transparent">
+                      <TableHead className="text-[10px] font-black uppercase text-foreground py-2">Total</TableHead>
+                      <TableHead className="text-right font-mono font-black text-green-400 tabular-nums text-[10px] py-2">
                         {formatCr(totalReceipts)}
                       </TableHead>
                     </TableRow>
@@ -131,18 +132,18 @@ export default function GovernmentDashboard() {
                   </TableHeader>
                   <TableBody>
                     {governmentBalanceSheetDataFy2526.liabilities.map(liability => (
-                      <TableRow key={liability.name} className="h-12 hover:bg-secondary/10 border-b last:border-0 group">
-                        <TableCell className="py-2.5 text-[10px] font-bold uppercase">{liability.name}</TableCell>
-                        <TableCell className="py-2.5 text-right font-mono text-[10px] text-red-400 tabular-nums">
+                      <TableRow key={liability.name} className="h-10 hover:bg-secondary/10 border-b last:border-0 group">
+                        <TableCell className="py-2 text-[10px] font-bold uppercase truncate max-w-[100px]">{liability.name}</TableCell>
+                        <TableCell className="py-2 text-right font-mono text-[10px] text-red-400 tabular-nums">
                           {formatCr(liability.value)}
                         </TableCell>
                       </TableRow>
                     ))}
                   </TableBody>
                   <TableFooter className="bg-transparent border-t-2 border-red-400/20">
-                    <TableRow className="h-12 hover:bg-transparent">
-                      <TableHead colSpan={1} className="text-[10px] font-black uppercase text-foreground py-2 px-4">Total Outflow</TableHead>
-                      <TableHead className="text-right font-mono font-black text-red-400 tabular-nums text-[10px] py-2 px-4">
+                    <TableRow className="h-10 hover:bg-transparent">
+                      <TableHead className="text-[10px] font-black uppercase text-foreground py-2">Total</TableHead>
+                      <TableHead className="text-right font-mono font-black text-red-400 tabular-nums text-[10px] py-2">
                         {formatCr(totalExpenditure)}
                       </TableHead>
                     </TableRow>
@@ -152,7 +153,7 @@ export default function GovernmentDashboard() {
             </CardContent>
           </Card>
         </div>
-        <div className="lg:col-span-5">
+        <div className="lg:col-span-5 h-full">
           <SubsidyOptimizationCard />
         </div>
       </div>
