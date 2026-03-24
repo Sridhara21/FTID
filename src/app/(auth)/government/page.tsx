@@ -11,6 +11,7 @@ import {
     CardTitle,
     CardDescription,
     CardContent,
+    CardFooter
   } from "@/components/ui/card";
 import {
     Table,
@@ -32,7 +33,8 @@ export default function GovernmentDashboard() {
   const formatCr = (val: number) => `₹${val.toLocaleString('en-IN')} Cr`;
 
   return (
-    <div className="grid gap-6">
+    <div className="grid grid-cols-1 gap-6">
+      {/* Header Intelligence Layer */}
       <div className="flex flex-col md:flex-row md:items-center justify-between gap-4">
         <div>
           <h1 className="text-2xl font-bold tracking-tight">FTID — Government Oversight System</h1>
@@ -61,8 +63,10 @@ export default function GovernmentDashboard() {
         </p>
       </div>
 
+      {/* Row 1: Key Indicators */}
       <EconomicIndicatorsCard />
       
+      {/* Row 2: Macro Analysis Grids */}
       <div className="grid grid-cols-1 lg:grid-cols-12 gap-6">
         <div className="lg:col-span-8 space-y-6">
           <MultiMetricChart />
@@ -77,6 +81,7 @@ export default function GovernmentDashboard() {
         </div>
       </div>
 
+      {/* Row 3: Fiscal & Policy Intelligence */}
       <div className="grid grid-cols-1 lg:grid-cols-12 gap-6">
         <div className="lg:col-span-7">
           <Card className="border-border/50 bg-card/50">
@@ -108,8 +113,8 @@ export default function GovernmentDashboard() {
                   </TableBody>
                   <TableFooter className="bg-transparent border-t-2 border-green-400/20">
                     <TableRow className="h-12 hover:bg-transparent">
-                      <TableHead className="text-[10px] font-black uppercase text-foreground py-2">Total Receipts</TableHead>
-                      <TableHead className="text-right font-mono font-black text-green-400 tabular-nums text-[10px] py-2">
+                      <TableHead colSpan={1} className="text-[10px] font-black uppercase text-foreground py-2 px-4">Total Receipts</TableHead>
+                      <TableHead className="text-right font-mono font-black text-green-400 tabular-nums text-[10px] py-2 px-4">
                         {formatCr(totalReceipts)}
                       </TableHead>
                     </TableRow>
@@ -137,8 +142,8 @@ export default function GovernmentDashboard() {
                   </TableBody>
                   <TableFooter className="bg-transparent border-t-2 border-red-400/20">
                     <TableRow className="h-12 hover:bg-transparent">
-                      <TableHead className="text-[10px] font-black uppercase text-foreground py-2">Total Outflow</TableHead>
-                      <TableHead className="text-right font-mono font-black text-red-400 tabular-nums text-[10px] py-2">
+                      <TableHead colSpan={1} className="text-[10px] font-black uppercase text-foreground py-2 px-4">Total Outflow</TableHead>
+                      <TableHead className="text-right font-mono font-black text-red-400 tabular-nums text-[10px] py-2 px-4">
                         {formatCr(totalExpenditure)}
                       </TableHead>
                     </TableRow>
@@ -153,6 +158,7 @@ export default function GovernmentDashboard() {
         </div>
       </div>
       
+      {/* Footer Branding */}
       <div className="p-4 bg-secondary/20 rounded-lg border border-border/50 text-center">
         <p className="text-[10px] font-black text-muted-foreground uppercase tracking-sovereign">
           System Analytics Powered by FTID Citizen and Business Transaction Flows — Institutional Clearance Active

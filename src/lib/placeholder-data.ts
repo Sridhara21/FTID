@@ -55,11 +55,10 @@ export const userProfileData = {
 export const consentData = [
   {
     category: '3rd Party Applications',
-    description: "Authorize private fintech apps, budgeting tools, and lifestyle services to access specific data streams via FTID.",
+    description: "Authorize private fintech apps and analytical services to access specific data streams via FTID.",
     consents: [
       { id: 'c1', name: 'SpendWise AI', purpose: 'Personal Budgeting', type: 'Read-only', expiry: '2026-12-31', given: true },
       { id: 'c2', name: 'TaxSaver Pro', purpose: 'Tax Optimization', type: 'Analytics', expiry: '2025-08-15', given: true },
-      { id: 'c3', name: 'Investify Hub', purpose: 'Portfolio Tracking', type: 'Verification', expiry: 'N/A', given: false },
     ]
   }
 ];
