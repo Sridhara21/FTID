@@ -1,4 +1,3 @@
-
 "use client";
 
 import { Area, AreaChart, CartesianGrid, XAxis, YAxis, ResponsiveContainer, Tooltip, ComposedChart, Line } from "recharts";
@@ -105,5 +104,3 @@ export function GdpChartCard() {
     </Card>
   );
 }
-
-    

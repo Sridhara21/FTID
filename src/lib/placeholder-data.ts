@@ -178,6 +178,15 @@ export const gdpComposedData = [
   { name: 'Jun', gdp: 442, consumption: 320, tax: 112 },
 ];
 
+export const gdpData = [
+  { year: '2021', gdp: 2.7, range: [2.5, 2.9] },
+  { year: '2022', gdp: 3.1, range: [2.9, 3.3] },
+  { year: '2023', gdp: 3.4, range: [3.2, 3.6] },
+  { year: '2024', gdp: 3.7, range: [3.5, 3.9] },
+  { year: '2025', gdp: 4.1, range: [3.8, 4.4] },
+  { year: '2026', gdp: 4.5, range: [4.2, 4.8] },
+];
+
 export const sectorActivityData = [
   { name: 'Retail', value: 45, fill: 'hsl(var(--chart-1))' },
   { name: 'Services', value: 30, fill: 'hsl(var(--chart-2))' },
@@ -256,28 +265,23 @@ export const donationData = [
   { id: 2, election: 'State Assembly 2025', donor: 'Megha Engineering', party: 'BJP', amount: 2000000000 }
 ];
 
-export const creditScoreData = {
-  score: 742,
-  rating: 'Good',
-  summary: 'Your financial health is stable. Improving repayment history could boost your score further.',
-  history: [
-    { month: 'Jan', score: 710 },
-    { month: 'Feb', score: 715 },
-    { month: 'Mar', score: 725 },
-    { month: 'Apr', score: 730 },
-    { month: 'May', score: 738 },
-    { month: 'Jun', score: 742 },
+export const dummyFtidData = JSON.stringify([{ "transaction_id": "a1b2", "amount": 12500.50, "location": { "latitude": 19.07, "longitude": 72.87 } }]);
+
+export const governmentBalanceSheetDataProjected = {
+  assets: [
+    { name: 'Revenue Receipts', value: 4120000, subItems: [{ name: 'Tax Revenue', value: 3680000 }, { name: 'Non-Tax Revenue', value: 440000 }] },
+    { name: 'Capital Receipts', value: 1450000, subItems: [{ name: 'Borrowings', value: 1210000 }, { name: 'Asset Sales', value: 240000 }] }
   ],
-  factors: [
-    { name: 'Payment History', status: 'Good', impact: 'High', icon: CheckCircle, color: 'text-green-400' },
-    { name: 'Credit Utilization', status: 'Excellent', impact: 'Medium', icon: TrendingUp, color: 'text-green-400' },
-    { name: 'Credit Age', status: 'Fair', impact: 'Low', icon: History, color: 'text-yellow-400' }
+  liabilities: [
+    { name: 'Revenue Expenditure', value: 4350000, subItems: [{ name: 'Interest', value: 1320000 }, { name: 'Subsidies', value: 410000 }, { name: 'Salaries/Pensions', value: 2620000 }] },
+    { name: 'Capital Expenditure', value: 1220000, subItems: [{ name: 'Infrastructure', value: 980000 }, { name: 'Defense Capital', value: 240000 }] }
   ],
-  tips: [
-    "Keep credit card utilization below 30%.",
-    "Ensure all utility bills are paid through FTID-linked accounts for auto-verification.",
-    "Avoid applying for multiple new loans in a short period."
-  ]
 };
 
-export const dummyFtidData = JSON.stringify([{ "transaction_id": "a1b2", "amount": 12500.50, "location": { "latitude": 19.07, "longitude": 72.87 } }]);
+export const subsidyDetailsData = [
+  { title: "Food", amount: 205500, color: "hsl(var(--chart-1))", icon: Utensils, description: "Direct benefits for NFSA and PMGKAY programs." },
+  { title: "Fertiliser", amount: 168000, color: "hsl(var(--chart-2))", icon: Factory, description: "Nutrient-based subsidies for agricultural stability." },
+  { title: "Petroleum", amount: 28000, color: "hsl(var(--chart-3))", icon: Zap, description: "LPG and kerosene subsidies for targeted beneficiaries." },
+  { title: "Interest", amount: 18000, color: "hsl(var(--chart-4))", icon: DollarSign, description: "Incentives for prompt loan repayments." },
+  { title: "Other", amount: 14500, color: "hsl(var(--chart-5))", icon: Globe, description: "Miscellaneous social welfare disbursements." },
+];
