@@ -16,7 +16,7 @@ import {
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table";
 import { Badge } from "@/components/ui/badge";
 import { revenueData } from "@/lib/placeholder-data";
-import { Banknote, TrendingDown, TrendingUp, Info } from "lucide-react";
+import { Banknote, TrendingDown, TrendingUp } from "lucide-react";
 import { cn } from "@/lib/utils";
 import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from "@/components/ui/tooltip";
 
@@ -54,11 +54,11 @@ export function RevenueChartCard() {
             Structural analysis of sovereign yield streams.
         </CardDescription>
       </CardHeader>
-      <CardContent className="flex-1 grid grid-cols-1 md:grid-cols-12 gap-6 items-center pt-6">
-        <div className="md:col-span-4 flex justify-center">
+      <CardContent className="flex-1 flex flex-col pt-6">
+        <div className="flex justify-center mb-6">
             <ChartContainer
                 config={chartConfig}
-                className="aspect-square w-full max-h-[220px]"
+                className="aspect-square w-full max-h-[180px]"
             >
                 <ResponsiveContainer>
                     <PieChart>
@@ -83,14 +83,13 @@ export function RevenueChartCard() {
             </ChartContainer>
         </div>
         
-        <div className="md:col-span-8">
+        <div className="flex-1">
            <TooltipProvider>
            <Table>
               <TableHeader className="bg-secondary/20">
                 <TableRow className="hover:bg-transparent border-b">
                   <TableHead className="h-10 text-[10px] uppercase font-black tracking-widest py-2">Source</TableHead>
                   <TableHead className="h-10 text-right text-[10px] uppercase font-black tracking-widest py-2">Yield (₹T)</TableHead>
-                  <TableHead className="h-10 text-right text-[10px] uppercase font-black tracking-widest py-2">Growth</TableHead>
                   <TableHead className="h-10 text-right text-[10px] uppercase font-black tracking-widest py-2">Risk</TableHead>
                 </TableRow>
               </TableHeader>
@@ -104,16 +103,9 @@ export function RevenueChartCard() {
                     <TableCell className="py-2.5 text-right font-mono text-xs tabular-nums font-bold">
                         ₹{item.value.toFixed(1)}T
                     </TableCell>
-                    <TableCell className={cn(
-                        "py-2.5 text-right font-mono text-[10px] tabular-nums flex items-center justify-end gap-1 font-black uppercase", 
-                        item.growth.startsWith('+') ? 'text-green-400' : 'text-red-400'
-                    )}>
-                      {item.growth.startsWith('+') ? <TrendingUp className="h-3 w-3" /> : <TrendingDown className="h-3 w-3" />}
-                      {item.growth}
-                    </TableCell>
                     <TableCell className="py-2.5 text-right">
                        <Tooltip>
-                          <TooltipTrigger>
+                          <TooltipTrigger asChild>
                             <Badge variant={getRiskBadgeVariant(item.risk)} className="text-[9px] px-2 py-0 h-5 uppercase font-black leading-none cursor-help tracking-widest">
                                 {item.risk}
                             </Badge>

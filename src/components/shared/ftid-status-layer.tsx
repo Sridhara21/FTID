@@ -39,7 +39,7 @@ export function FtidStatusLayer() {
 
     if (isGovernment) {
         return (
-            <div className="flex items-center gap-4 text-[10px] font-black text-muted-foreground tracking-widest">
+            <div className="flex items-center gap-4 text-[10px] font-black text-muted-foreground tracking-widest w-full">
                 <div className={statusItemClass}>
                     <Building className="h-3.5 w-3.5 text-primary/70" />
                     <span className="uppercase font-mono">FINANCE_MINISTRY_INDIA</span>
@@ -57,7 +57,7 @@ export function FtidStatusLayer() {
     }
 
     return (
-        <div className="flex flex-col md:flex-row items-center gap-4 text-[10px] font-black text-muted-foreground tracking-widest">
+        <div className="flex flex-col md:flex-row items-center gap-4 text-[10px] font-black text-muted-foreground tracking-widest w-full">
              <div className="flex items-center gap-3">
                 <div className={statusItemClass}>
                     <User className="h-3.5 w-3.5 text-primary/70" />

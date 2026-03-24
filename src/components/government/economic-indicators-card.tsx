@@ -57,16 +57,6 @@ const IndicatorCard = ({ indicator }: { indicator: Indicator }) => (
 
 
 export function EconomicIndicatorsCard() {
-    const groupedIndicators = economicIndicatorsData.reduce((acc, indicator) => {
-        const group = indicator.group;
-        if (!acc[group]) {
-            acc[group] = [];
-        }
-        acc[group].push(indicator);
-        return acc;
-    }, {} as Record<string, Indicator[]>);
-
-
     return (
         <Card className="border-primary/20 bg-secondary/5">
             <CardHeader className="pb-2">
