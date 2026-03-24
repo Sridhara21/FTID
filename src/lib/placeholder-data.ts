@@ -50,7 +50,7 @@ export const userProfileData = {
 export const consentData = [
   {
     category: '3rd Party Applications',
-    description: "Authorize fintech apps, budgeting tools, and lifestyle services to access specific data streams via FTID.",
+    description: "Authorize private fintech apps, budgeting tools, and lifestyle services to access specific data streams via FTID.",
     consents: [
       { id: 'c1', name: 'SpendWise AI', purpose: 'Personal Budgeting', type: 'Read-only', expiry: '2026-12-31', given: true },
       { id: 'c2', name: 'TaxSaver Pro', purpose: 'Tax Optimization', type: 'Analytics', expiry: '2025-08-15', given: true },
@@ -181,6 +181,14 @@ export const revenueData = [
   { name: 'Other Receipts', value: 4.2, fill: 'hsl(var(--chart-5))', growth: '+3.4%', risk: 'Medium' },
 ];
 
+export const subsidyDistributionData = [
+  { name: 'Food', value: 205500, fill: "hsl(var(--chart-1))" },
+  { name: 'Fertiliser', value: 168000, fill: "hsl(var(--chart-2))" },
+  { name: 'Petroleum', value: 28000, fill: "hsl(var(--chart-3))" },
+  { name: 'Interest', value: 18000, fill: "hsl(var(--chart-4))" },
+  { name: 'Other', value: 14500, fill: "hsl(var(--chart-5))" },
+];
+
 export const regulatoryAlerts = [
   { id: 1, date: '2025-12-28', title: 'New Aadhaar-PAN linking deadline extended to FY27.', severity: 'Medium', icon: AlertTriangle },
   { id: 2, date: '2025-12-15', title: 'Institutional compliance audit required.', severity: 'High', icon: ShieldCheck }
@@ -203,14 +211,6 @@ export const statePerformanceData = {
     { state: 'Karnataka', metric: 'Innovation Index', value: 'Rank 1', rank: 'Top' }
   ]
 };
-
-export const subsidyDistributionData = [
-  { name: 'Food', value: 205500, fill: "hsl(var(--chart-1))" },
-  { name: 'Fertiliser', value: 168000, fill: "hsl(var(--chart-2))" },
-  { name: 'Petroleum', value: 28000, fill: "hsl(var(--chart-3))" },
-  { name: 'Interest', value: 18000, fill: "hsl(var(--chart-4))" },
-  { name: 'Other', value: 14500, fill: "hsl(var(--chart-5))" },
-];
 
 export const subsidyDetailsData = [
   { title: 'Food Subsidy', amount: 205500, description: 'Direct Beneficiary Transfer (DBT) via FTID for National Food Security Act.', icon: Utensils, color: "hsl(var(--chart-1))" },

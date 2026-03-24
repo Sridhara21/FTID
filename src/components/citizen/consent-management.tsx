@@ -32,7 +32,7 @@ export function ConsentManagement() {
                 <div className="flex justify-between items-center">
                     <div>
                         <CardTitle className="flex items-center gap-2 text-lg">
-                            <Lock className="text-primary" /> 3rd Party App Consents
+                            <Lock className="text-primary" /> 3rd Party Application Access
                         </CardTitle>
                         <CardDescription className="text-xs">
                             Manage data sharing for external fintech and analytical applications.
