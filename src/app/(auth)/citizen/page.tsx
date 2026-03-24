@@ -12,7 +12,6 @@ import {
   TrendingUp,
   TrendingDown,
   Wallet,
-  PiggyBank,
   Info
 } from "lucide-react";
 import {
@@ -35,7 +34,6 @@ import { SpendingChart } from "@/components/citizen/spending-chart";
 import { PredictiveInsights } from "@/components/citizen/predictive-insights";
 import { regulatoryAlerts, institutionConnectivity, consentData, flowScoreData } from "@/lib/placeholder-data";
 import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from "@/components/ui/tooltip";
-import { Badge } from "@/components/ui/badge";
 
 const PrimaryMetric = ({ title, value, subtext, trend, trendDir, icon: Icon }: { title: string, value: string, subtext: string, trend?: string, trendDir?: 'up' | 'down', icon: any }) => (
   <Card className="relative overflow-hidden border-primary/20 bg-primary/5">
@@ -100,7 +98,7 @@ export default function CitizenDashboard() {
         </div>
       </div>
 
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
           <TooltipProvider>
             <Tooltip>
               <TooltipTrigger asChild>
@@ -122,7 +120,6 @@ export default function CitizenDashboard() {
             </Tooltip>
           </TooltipProvider>
           <PrimaryMetric title="Total Balance" value="₹85,250" subtext="In E-Rupee Wallet" trend="+₹15k" trendDir="up" icon={Wallet} />
-          <PrimaryMetric title="Monthly Savings Rate" value="28.4%" subtext="Healthy Position" trend="+1.2%" trendDir="up" icon={PiggyBank} />
       </div>
 
       <div className="grid grid-cols-1 lg:grid-cols-12 gap-6">

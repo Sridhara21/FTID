@@ -3,9 +3,8 @@
 import { useState, useEffect } from 'react';
 import { usePathname } from 'next/navigation';
 import { userProfileData } from "@/lib/placeholder-data";
-import { ShieldCheck, Timer, User, Building, Landmark, CreditCard, Zap } from "lucide-react";
+import { ShieldCheck, Timer, User, Building } from "lucide-react";
 import { formatDistanceToNow } from 'date-fns';
-import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from "@/components/ui/tooltip";
 
 export function FtidStatusLayer() {
     const pathname = usePathname();
@@ -49,7 +48,7 @@ export function FtidStatusLayer() {
                     <User className="h-3.5 w-3.5 text-primary/70" />
                     <span className="uppercase font-mono">ROLE: REGULATOR_DIU</span>
                 </div>
-                <div className={`${statusItemClass} hidden lg:flex`}>
+                <div className={`${statusItemClass} ml-auto hidden lg:flex`}>
                     <Timer className="h-3.5 w-3.5 text-primary/70" />
                     <span className="tabular-nums uppercase font-mono tracking-tighter">NETWORK_SYNC: {syncText.toUpperCase()}</span>
                 </div>
@@ -68,26 +67,6 @@ export function FtidStatusLayer() {
                     <ShieldCheck className="h-3.5 w-3.5 text-accent" />
                     <span className="uppercase text-accent font-mono">FLOW: VERIFIED</span>
                 </div>
-             </div>
-             
-             <div className="flex items-center gap-2 px-3 py-1.5 bg-secondary/20 rounded-md border border-border/50">
-                <span className="text-[9px] uppercase tracking-widest opacity-60 mr-1">STREAMS:</span>
-                <TooltipProvider>
-                    <div className="flex items-center gap-3">
-                        <Tooltip>
-                            <TooltipTrigger><Landmark className="h-3.5 w-3.5 text-primary/60 hover:text-primary transition-colors" /></TooltipTrigger>
-                            <TooltipContent className="text-[10px] bg-background border-primary/20">BANK_FLOW (HDFC, SBI)</TooltipContent>
-                        </Tooltip>
-                        <Tooltip>
-                            <TooltipTrigger><Zap className="h-3.5 w-3.5 text-primary/60 hover:text-primary transition-colors" /></TooltipTrigger>
-                            <TooltipContent className="text-[10px] bg-background border-primary/20">UPI_ACTIVITY_SYNC</TooltipContent>
-                        </Tooltip>
-                        <Tooltip>
-                            <TooltipTrigger><CreditCard className="h-3.5 w-3.5 text-primary/60 hover:text-primary transition-colors" /></TooltipTrigger>
-                            <TooltipContent className="text-[10px] bg-background border-primary/20">SOVEREIGN_TAX_LEDGER</TooltipContent>
-                        </Tooltip>
-                    </div>
-                </TooltipProvider>
              </div>
 
             <div className={`${statusItemClass} ml-auto hidden md:flex`}>
