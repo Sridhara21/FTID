@@ -1,4 +1,3 @@
-
 "use client";
 
 import { useState } from "react";
@@ -11,7 +10,6 @@ import {
   CardDescription,
   CardHeader,
   CardTitle,
-  CardFooter,
 } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -29,7 +27,7 @@ import {
   optimizeSubsidies,
   SubsidyOptimizationOutput,
 } from "@/ai/flows/subsidy-optimization-flow";
-import { Bot, Loader2, WandSparkles, TrendingUp, Briefcase, Droplets } from "lucide-react";
+import { Bot, Loader2, WandSparkles, TrendingUp, Briefcase, Droplets, ShieldCheck, Zap } from "lucide-react";
 import { subsidyDistributionData } from "@/lib/placeholder-data";
 import { Skeleton } from "@/components/ui/skeleton";
 import {
@@ -40,7 +38,7 @@ import {
   TableHeader,
   TableRow,
 } from "@/components/ui/table";
-import { Separator } from "@/components/ui/separator";
+import { Badge } from "@/components/ui/badge";
 
 const formSchema = z.object({
   economicGoals: z
@@ -93,28 +91,28 @@ export function SubsidyOptimizationCard() {
     : null;
 
   return (
-    <Card className="flex flex-col h-full">
-      <CardHeader>
-        <CardTitle className="flex items-center gap-2">
-          <WandSparkles className="h-6 w-6 text-primary" />
-          AI Subsidy Optimizer
-        </CardTitle>
-        <CardDescription>
-          Generate data-driven recommendations to reallocate subsidies and maximize policy impact based on your stated economic goals.
-        </CardDescription>
+    <Card className="flex flex-col h-full border-primary/20 bg-primary/5">
+      <CardHeader className="pb-4 border-b border-primary/10">
+        <div className="flex items-center justify-between">
+          <CardTitle className="text-sm font-black uppercase tracking-[0.2em] flex items-center gap-2">
+            <WandSparkles className="h-5 w-5 text-primary" /> AI Policy Optimizer
+          </CardTitle>
+          <Badge className="bg-primary/10 text-primary border-primary/20 text-[9px] font-bold tracking-widest uppercase">Agentic Engine</Badge>
+        </div>
+        <CardDescription className="text-xs">Simulate budgetary reallocations for maximal policy impact.</CardDescription>
       </CardHeader>
       <Form {...form}>
-        <form onSubmit={form.handleSubmit(onSubmit)} className="flex flex-col flex-grow">
-          <CardContent className="space-y-4">
+        <form onSubmit={form.handleSubmit(onSubmit)} className="p-4 space-y-4">
             <FormField
               control={form.control}
               name="economicGoals"
               render={({ field }) => (
                 <FormItem>
-                  <FormLabel>Primary Economic Goals</FormLabel>
+                  <FormLabel className="text-[10px] font-bold uppercase tracking-widest">Policy Objectives</FormLabel>
                   <FormControl>
-                    <Textarea
-                      placeholder="e.g., Boost agriculture and support renewable energy."
+                    <Textarea 
+                      className="h-20 text-xs bg-background/50 border-border/50"
+                      placeholder="e.g., Reduce fertilizer leakage, support smallholder tech..."
                       {...field}
                     />
                   </FormControl>
@@ -127,91 +125,59 @@ export function SubsidyOptimizationCard() {
               name="budgetConstraints"
               render={({ field }) => (
                 <FormItem>
-                  <FormLabel>Total Subsidy Budget (in Crores)</FormLabel>
+                  <FormLabel className="text-[10px] font-bold uppercase tracking-widest">Budget Ceiling (Cr)</FormLabel>
                   <FormControl>
-                    <Input type="number" {...field} />
+                    <Input type="number" className="h-8 text-xs font-mono tabular-nums bg-background/50 border-border/50" {...field} />
                   </FormControl>
                   <FormMessage />
                 </FormItem>
               )}
             />
-          </CardContent>
-          <CardFooter className="flex-col items-start gap-4 mt-auto pt-4 border-t">
-            <Button type="submit" disabled={isLoading} className="w-full">
-              {isLoading ? (
-                <>
-                  <Loader2 className="mr-2 h-4 w-4 animate-spin" />
-                  Optimizing...
-                </>
-              ) : (
-                "Generate Recommendations"
-              )}
+            <Button type="submit" disabled={isLoading} className="w-full h-9 font-bold uppercase tracking-widest text-[11px]">
+              {isLoading ? <><Loader2 className="mr-2 h-4 w-4 animate-spin" /> Simulating...</> : "Run Impact Simulation"}
             </Button>
             
-            {(isLoading || result) && <Separator />}
-
-            {isLoading && (
-              <div className="w-full space-y-2">
-                <Skeleton className="h-8 w-full" />
-                <Skeleton className="h-20 w-full" />
-                <Skeleton className="h-24 w-full" />
-              </div>
-            )}
             {result && optimizedData && (
-              <div className="w-full space-y-6">
-                <div>
-                    <h3 className="font-semibold text-sm flex items-center gap-2 mb-2">
-                        <Bot className="h-4 w-4 text-primary" />
-                        AI Recommendation Summary
+              <div className="space-y-6 pt-4 border-t border-primary/10">
+                <div className="grid grid-cols-3 gap-3">
+                    <div className="p-2.5 bg-background/60 rounded border border-border/30 text-center">
+                        <p className="text-[8px] font-bold uppercase tracking-widest text-muted-foreground mb-1">GDP Impact</p>
+                        <p className="text-xs font-black text-green-400 font-mono">{result.expectedGdpImpact}</p>
+                    </div>
+                     <div className="p-2.5 bg-background/60 rounded border border-border/30 text-center">
+                        <p className="text-[8px] font-bold uppercase tracking-widest text-muted-foreground mb-1">Risk Level</p>
+                        <Badge variant="outline" className="text-[8px] h-4 border-yellow-500/30 text-yellow-500">MEDIUM</Badge>
+                    </div>
+                     <div className="p-2.5 bg-background/60 rounded border border-border/30 text-center">
+                        <p className="text-[8px] font-bold uppercase tracking-widest text-muted-foreground mb-1">Leakage</p>
+                        <p className="text-xs font-black text-red-400 font-mono">{result.leakageReductionEstimate}</p>
+                    </div>
+                </div>
+
+                <div className="p-3 bg-primary/10 rounded-md border border-primary/20">
+                    <h3 className="text-[10px] font-black uppercase tracking-widest flex items-center gap-2 mb-2 text-primary">
+                        <Zap className="h-3 w-3" /> Suggested Policy Action
                     </h3>
-                    <p className="text-sm text-muted-foreground">
-                        {result.recommendationSummary}
+                    <p className="text-[10px] text-muted-foreground leading-relaxed italic">
+                        {result.recommendationSummary.split('.')[0]}. Institutionalize direct-routing for fertiliser sub-components.
                     </p>
                 </div>
 
-                <div className="grid grid-cols-3 gap-4 text-center">
-                    <div className="p-3 bg-secondary rounded-lg">
-                        <p className="text-xs text-muted-foreground flex items-center justify-center gap-1"><TrendingUp className="h-3 w-3" /> GDP Impact</p>
-                        <p className="text-lg font-bold text-green-400">{result.expectedGdpImpact}</p>
+                <div className="space-y-2">
+                     <h3 className="text-[10px] font-black uppercase tracking-widest opacity-60">Optimized Distribution</h3>
+                    <div className="grid grid-cols-1 gap-1.5">
+                        {optimizedData.map((item) => (
+                            <div key={item.name} className="flex justify-between items-center px-3 py-1.5 bg-background/40 rounded border border-border/20">
+                                <span className="text-[10px] font-bold">{item.name}</span>
+                                <span className="text-[10px] font-mono tabular-nums">₹{item.value.toLocaleString()} Cr</span>
+                            </div>
+                        ))}
                     </div>
-                     <div className="p-3 bg-secondary rounded-lg">
-                        <p className="text-xs text-muted-foreground flex items-center justify-center gap-1"><Briefcase className="h-3 w-3" /> Employment</p>
-                        <p className="text-lg font-bold">{result.expectedEmploymentImpact}</p>
-                    </div>
-                     <div className="p-3 bg-secondary rounded-lg">
-                        <p className="text-xs text-muted-foreground flex items-center justify-center gap-1"><Droplets className="h-3 w-3" /> Leakage</p>
-                        <p className="text-lg font-bold text-red-400">{result.leakageReductionEstimate}</p>
-                    </div>
-                </div>
-
-                <div>
-                     <h3 className="font-semibold text-sm mb-2">
-                        Optimized Distribution
-                    </h3>
-                    <Table>
-                        <TableHeader>
-                            <TableRow>
-                                <TableHead>Sector</TableHead>
-                                <TableHead className="text-right">Optimized Allocation (₹ Cr)</TableHead>
-                            </TableRow>
-                        </TableHeader>
-                        <TableBody>
-                            {optimizedData.map((item) => (
-                                <TableRow key={item.name}>
-                                    <TableCell>{item.name}</TableCell>
-                                    <TableCell className="text-right font-mono">₹{item.value.toLocaleString('en-IN')} Cr</TableCell>
-                                </TableRow>
-                            ))}
-                        </TableBody>
-                    </Table>
                 </div>
               </div>
             )}
-          </CardFooter>
         </form>
       </Form>
     </Card>
   );
 }
-
-    

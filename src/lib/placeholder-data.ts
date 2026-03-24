@@ -22,7 +22,12 @@ import {
   Zap,
   DollarSign,
   TrendingDown,
-  BarChart3
+  BarChart3,
+  ShoppingCart,
+  ZapOff,
+  Factory,
+  Cpu,
+  Globe
 } from 'lucide-react';
 
 export const userProfileData = {
@@ -57,6 +62,14 @@ export const consentData = [
       { id: 'c3', name: 'Investify Hub', purpose: 'Portfolio Tracking', type: 'Verification', expiry: 'N/A', given: false },
     ]
   }
+];
+
+export const spendingCategoryData = [
+  { name: 'Housing', value: 35000, fill: 'hsl(var(--chart-1))' },
+  { name: 'Groceries', value: 12500, fill: 'hsl(var(--chart-2))' },
+  { name: 'Transport', value: 8000, fill: 'hsl(var(--chart-3))' },
+  { name: 'Leisure', value: 15000, fill: 'hsl(var(--chart-4))' },
+  { name: 'Utilities', value: 5000, fill: 'hsl(var(--chart-5))' },
 ];
 
 export const portfolioData = {
@@ -129,6 +142,7 @@ export const autoCapturedIncome = {
 export const flowScoreData = {
   score: 820,
   rating: 'Very Strong',
+  trend: '+15',
   summary: 'High financial stability based on consistent cash flows and verified identity.',
   factors: [
     { name: 'Income Stability', status: 'Excellent', impact: 'High', icon: TrendingUp, color: 'text-green-400' },
@@ -155,22 +169,29 @@ export const governmentBalanceSheetDataFy2526 = {
   ],
 };
 
-export const governmentBalanceSheetDataProjected = {
-  assets: [
-    { name: 'Revenue Receipts', value: 4150000, subItems: [{ name: 'Tax Revenue', value: 3720000 }, { name: 'Non-Tax Revenue', value: 430000 }] },
-    { name: 'Capital Receipts', value: 1420000, subItems: [{ name: 'Borrowings', value: 1210000 }, { name: 'Asset Sales', value: 210000 }] }
-  ],
-  liabilities: [
-    { name: 'Revenue Expenditure', value: 4450000, subItems: [{ name: 'Interest', value: 1290000 }, { name: 'Subsidies', value: 470000 }] },
-    { name: 'Capital Expenditure', value: 1120000, subItems: [{ name: 'Infrastructure', value: 910000 }] }
-  ],
-};
+export const gdpComposedData = [
+  { name: 'Jan', gdp: 400, consumption: 280, tax: 85 },
+  { name: 'Feb', gdp: 405, consumption: 285, tax: 88 },
+  { name: 'Mar', gdp: 415, consumption: 290, tax: 92 },
+  { name: 'Apr', gdp: 420, consumption: 300, tax: 98 },
+  { name: 'May', gdp: 435, consumption: 310, tax: 105 },
+  { name: 'Jun', gdp: 442, consumption: 320, tax: 112 },
+];
 
-export const gdpData = [
-  { year: '2023', gdp: 345, range: [340, 350] },
-  { year: '2024', gdp: 375, range: [370, 380] },
-  { year: '2025', gdp: 410, range: [400, 420] },
-  { year: '2026 (Est)', gdp: 442, range: [435, 450] },
+export const sectorActivityData = [
+  { name: 'Retail', value: 45, fill: 'hsl(var(--chart-1))' },
+  { name: 'Services', value: 30, fill: 'hsl(var(--chart-2))' },
+  { name: 'Manufacturing', value: 20, fill: 'hsl(var(--chart-3))' },
+  { name: 'Agri', value: 5, fill: 'hsl(var(--chart-4))' },
+];
+
+export const stateHeatmapData = [
+  { state: 'Maharashtra', intensity: 95, color: 'bg-primary/90' },
+  { state: 'Karnataka', intensity: 88, color: 'bg-primary/80' },
+  { state: 'Tamil Nadu', intensity: 82, color: 'bg-primary/70' },
+  { state: 'Gujarat', intensity: 85, color: 'bg-primary/75' },
+  { state: 'Uttar Pradesh', intensity: 65, color: 'bg-primary/50' },
+  { state: 'Delhi', intensity: 92, color: 'bg-primary/85' },
 ];
 
 export const revenueData = [
@@ -212,17 +233,12 @@ export const statePerformanceData = {
   ]
 };
 
-export const subsidyDetailsData = [
-  { title: 'Food Subsidy', amount: 205500, description: 'Direct Beneficiary Transfer (DBT) via FTID for National Food Security Act.', icon: Utensils, color: "hsl(var(--chart-1))" },
-  { title: 'Fertiliser Subsidy', amount: 168000, description: 'Soil Health Card linked subsidy routing for Urea and Complex fertilisers.', icon: Landmark, color: "hsl(var(--chart-2))" },
-];
-
 export const economicIndicatorsData = [
   { label: 'GDP Growth (Real)', value: '7.2%', change: '+0.4% YoY', icon: Activity, trend: 'up', color: 'text-green-400', group: 'Growth', definition: 'Real GDP growth rate adjusted for inflation.', source: 'Anonymized FTID flow analysis.', relevance: 'Primary growth benchmark.', limitations: 'Based on financial transaction proxy.' },
+  { label: 'Consumption Index', value: '112.5', change: '+2.1% MoM', icon: ShoppingCart, trend: 'up', color: 'text-primary', group: 'Growth', definition: 'Measure of aggregate household consumption velocity.', source: 'Anonymized digital flow streams.', relevance: 'Demand health indicator.', limitations: 'Highly sensitive to seasonal spending.' },
   { label: 'CPI Inflation', value: '4.4%', change: '-0.2% MoM', icon: Zap, trend: 'down', color: 'text-primary', group: 'Stability', definition: 'Consumer Price Index inflation rate.', source: 'Real-time retail flow tracking.', relevance: 'Monetary policy input.', limitations: 'Excludes unorganized cash markets.' },
   { label: 'Fiscal Deficit', value: '4.2%', change: 'Target 2027', icon: Landmark, trend: 'down', color: 'text-foreground', group: 'Fiscal', definition: 'Gap between government receipts and expenditure.', source: 'Union Budget FY 2026-27.', relevance: 'Macroeconomic health.', limitations: 'Interim budgetary target.' },
-  { label: 'GST Velocity', value: '1.4x', change: 'High Activity', icon: BarChart3, trend: 'up', color: 'text-primary', group: 'Growth', definition: 'Ratio of GST collection growth to nominal GDP growth.', source: 'Direct tax flow stream.', relevance: 'Formalization indicator.', limitations: 'Varies by industrial sector.' },
-  { label: 'Forex Reserves', value: '₹55L Cr', change: '+2.1%', icon: DollarSign, trend: 'up', color: 'text-foreground', group: 'External', definition: 'National foreign exchange reserves in INR equivalent.', source: 'RBI Aggregate Data.', relevance: 'Import cover benchmark.', limitations: 'Subject to exchange rate volatility.' }
+  { label: 'Digital Txn Growth', value: '+14.8%', change: 'High Velocity', icon: ZapOff, trend: 'up', color: 'text-accent', group: 'Growth', definition: 'Year-on-year growth in digital transaction volume.', source: 'FTID Ecosystem stats.', relevance: 'Formalization benchmark.', limitations: 'Based on e-Rupee and FTID routes.' }
 ];
 
 export const schemes = [
