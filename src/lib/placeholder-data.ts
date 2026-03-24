@@ -168,6 +168,17 @@ export const governmentBalanceSheetDataFy2526 = {
   ],
 };
 
+export const governmentBalanceSheetDataProjected = {
+  assets: [
+    { name: 'Revenue Receipts', value: 4120000, subItems: [{ name: 'Tax Revenue', value: 3680000 }, { name: 'Non-Tax Revenue', value: 440000 }] },
+    { name: 'Capital Receipts', value: 1450000, subItems: [{ name: 'Borrowings', value: 1210000 }, { name: 'Asset Sales', value: 240000 }] }
+  ],
+  liabilities: [
+    { name: 'Revenue Expenditure', value: 4350000, subItems: [{ name: 'Interest', value: 1320000 }, { name: 'Subsidies', value: 410000 }, { name: 'Salaries/Pensions', value: 2620000 }] },
+    { name: 'Capital Expenditure', value: 1220000, subItems: [{ name: 'Infrastructure', value: 980000 }, { name: 'Defense Capital', value: 240000 }] }
+  ],
+};
+
 export const gdpComposedData = [
   { name: 'Jan', gdp: 400, consumption: 280, tax: 85 },
   { name: 'Feb', gdp: 405, consumption: 285, tax: 88 },
@@ -265,17 +276,6 @@ export const donationData = [
 ];
 
 export const dummyFtidData = JSON.stringify([{ "transaction_id": "a1b2", "amount": 12500.50, "location": { "latitude": 19.07, "longitude": 72.87 } }]);
-
-export const governmentBalanceSheetDataProjected = {
-  assets: [
-    { name: 'Revenue Receipts', value: 4120000, subItems: [{ name: 'Tax Revenue', value: 3680000 }, { name: 'Non-Tax Revenue', value: 440000 }] },
-    { name: 'Capital Receipts', value: 1450000, subItems: [{ name: 'Borrowings', value: 1210000 }, { name: 'Asset Sales', value: 240000 }] }
-  ],
-  liabilities: [
-    { name: 'Revenue Expenditure', value: 4350000, subItems: [{ name: 'Interest', value: 1320000 }, { name: 'Subsidies', value: 410000 }, { name: 'Salaries/Pensions', value: 2620000 }] },
-    { name: 'Capital Expenditure', value: 1220000, subItems: [{ name: 'Infrastructure', value: 980000 }, { name: 'Defense Capital', value: 240000 }] }
-  ],
-};
 
 export const subsidyDetailsData = [
   { title: "Food", amount: 205500, color: "hsl(var(--chart-1))", icon: Utensils, description: "Direct benefits for NFSA and PMGKAY programs." },

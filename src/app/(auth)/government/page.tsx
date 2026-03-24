@@ -1,6 +1,5 @@
 import { EconomicIndicatorsCard } from "@/components/government/economic-indicators-card";
 import { RevenueChartCard } from "@/components/government/revenue-chart-card";
-import { SubsidyOptimizationCard } from "@/components/government/subsidy-optimization-card";
 import { StatePerformanceSnapshotCard } from "@/components/government/state-performance-snapshot-card";
 import { MultiMetricChart } from "@/components/government/multi-metric-chart";
 import { EconomicHeatmap } from "@/components/government/economic-heatmap";
@@ -81,19 +80,18 @@ export default function GovernmentDashboard() {
         </div>
       </div>
 
-      {/* Row 3: Fiscal & Policy */}
-      <div className="grid grid-cols-1 lg:grid-cols-12 gap-6 items-start">
-        <div className="lg:col-span-7">
-          <Card className="border-border/50 bg-card/50 h-full">
+      {/* Row 3: Fiscal Analytics */}
+      <div className="grid grid-cols-1 gap-6">
+          <Card className="border-border/50 bg-card/50">
             <CardHeader className="pb-3 border-b border-border/30">
               <CardTitle className="flex items-center gap-2 text-[10px] font-black uppercase tracking-institutional">
-                <Scale className="h-4 w-4 text-primary" /> Sovereign Ledger (Summary)
+                <Scale className="h-4 w-4 text-primary" /> Sovereign Ledger (Union Budget Summary)
               </CardTitle>
-              <CardDescription className="text-[10px] uppercase tracking-widest font-bold">Consolidated Receipts vs Expenditure FY 2026-27</CardDescription>
+              <CardDescription className="text-[10px] uppercase tracking-widest font-bold">Consolidated Receipts vs Expenditure FY 2026-27 (Estimates)</CardDescription>
             </CardHeader>
             <CardContent className="grid grid-cols-1 md:grid-cols-2 gap-8 pt-6">
               <div className="space-y-4">
-                <h3 className="text-[10px] font-black uppercase tracking-institutional text-green-400/80 border-b border-green-400/10 pb-1">Receipts</h3>
+                <h3 className="text-[10px] font-black uppercase tracking-institutional text-green-400/80 border-b border-green-400/10 pb-1">Revenue & Capital Receipts</h3>
                 <Table>
                   <TableHeader className="bg-secondary/20">
                     <TableRow className="hover:bg-transparent h-10">
@@ -104,7 +102,7 @@ export default function GovernmentDashboard() {
                   <TableBody>
                     {governmentBalanceSheetDataFy2526.assets.map(asset => (
                       <TableRow key={asset.name} className="h-10 hover:bg-secondary/10 border-b last:border-0 group">
-                        <TableCell className="py-2 text-[10px] font-bold uppercase truncate max-w-[100px]">{asset.name}</TableCell>
+                        <TableCell className="py-2 text-[10px] font-bold uppercase truncate">{asset.name}</TableCell>
                         <TableCell className="py-2 text-right font-mono text-[10px] text-green-400 tabular-nums">
                           {formatCr(asset.value)}
                         </TableCell>
@@ -113,7 +111,7 @@ export default function GovernmentDashboard() {
                   </TableBody>
                   <TableFooter className="bg-transparent border-t-2 border-green-400/20">
                     <TableRow className="h-10 hover:bg-transparent">
-                      <TableHead className="text-[10px] font-black uppercase text-foreground py-2">Total</TableHead>
+                      <TableHead className="text-[10px] font-black uppercase text-foreground py-2">Total Receipts</TableHead>
                       <TableHead className="text-right font-mono font-black text-green-400 tabular-nums text-[10px] py-2">
                         {formatCr(totalReceipts)}
                       </TableHead>
@@ -122,18 +120,18 @@ export default function GovernmentDashboard() {
                 </Table>
               </div>
               <div className="space-y-4">
-                <h3 className="text-[10px] font-black uppercase tracking-institutional text-red-400/80 border-b border-red-400/10 pb-1">Expenditure</h3>
+                <h3 className="text-[10px] font-black uppercase tracking-institutional text-red-400/80 border-b border-red-400/10 pb-1">Expenditure Obligations</h3>
                 <Table>
                   <TableHeader className="bg-secondary/20">
                     <TableRow className="hover:bg-transparent h-10">
-                      <TableHead className="text-[9px] uppercase font-black tracking-widest py-2">Item</TableHead>
+                      <TableHead className="text-[9px] uppercase font-black tracking-widest py-2">Allocation</TableHead>
                       <TableHead className="text-right text-[9px] uppercase font-black tracking-widest py-2">Value (Cr)</TableHead>
                     </TableRow>
                   </TableHeader>
                   <TableBody>
                     {governmentBalanceSheetDataFy2526.liabilities.map(liability => (
                       <TableRow key={liability.name} className="h-10 hover:bg-secondary/10 border-b last:border-0 group">
-                        <TableCell className="py-2 text-[10px] font-bold uppercase truncate max-w-[100px]">{liability.name}</TableCell>
+                        <TableCell className="py-2 text-[10px] font-bold uppercase truncate">{liability.name}</TableCell>
                         <TableCell className="py-2 text-right font-mono text-[10px] text-red-400 tabular-nums">
                           {formatCr(liability.value)}
                         </TableCell>
@@ -142,7 +140,7 @@ export default function GovernmentDashboard() {
                   </TableBody>
                   <TableFooter className="bg-transparent border-t-2 border-red-400/20">
                     <TableRow className="h-10 hover:bg-transparent">
-                      <TableHead className="text-[10px] font-black uppercase text-foreground py-2">Total</TableHead>
+                      <TableHead className="text-[10px] font-black uppercase text-foreground py-2">Total Outlay</TableHead>
                       <TableHead className="text-right font-mono font-black text-red-400 tabular-nums text-[10px] py-2">
                         {formatCr(totalExpenditure)}
                       </TableHead>
@@ -152,10 +150,6 @@ export default function GovernmentDashboard() {
               </div>
             </CardContent>
           </Card>
-        </div>
-        <div className="lg:col-span-5 h-full">
-          <SubsidyOptimizationCard />
-        </div>
       </div>
       
       {/* Footer Branding */}
