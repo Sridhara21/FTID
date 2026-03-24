@@ -45,7 +45,7 @@ export function MultiMetricChart() {
               <YAxis tickLine={false} axisLine={false} tickMargin={10} stroke="hsl(var(--muted-foreground))" tickFormatter={(v) => `₹${v}T`} className="text-[10px] font-mono" />
               <Tooltip cursor={{ stroke: 'hsl(var(--primary))', strokeWidth: 1, strokeDasharray: '4 4' }} content={<ChartTooltipContent indicator="dot" formatter={(v) => `₹${v}T`} />} />
               <Legend className="text-[10px] uppercase font-bold" />
-              <Area type="monotone" dataKey="gdp" fill="url(#colorGdp)" stroke="none" />
+              <Area type="monotone" dataKey="gdp" fill="url(#colorGdp)" stroke="none" tooltipType="none" />
               <Line type="monotone" dataKey="gdp" stroke={chartConfig.gdp.color} strokeWidth={3} dot={false} activeDot={{ r: 4 }} />
               <Line type="monotone" dataKey="consumption" stroke={chartConfig.consumption.color} strokeWidth={2} strokeDasharray="5 5" dot={false} />
               <Line type="monotone" dataKey="tax" stroke={chartConfig.tax.color} strokeWidth={2} dot={false} />

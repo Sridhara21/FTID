@@ -11,7 +11,6 @@ import {
     CardTitle,
     CardDescription,
     CardContent,
-    CardFooter
   } from "@/components/ui/card";
 import {
     Table,
@@ -23,7 +22,7 @@ import {
     TableFooter
 } from "@/components/ui/table";
 import { governmentBalanceSheetDataFy2526 } from "@/lib/placeholder-data";
-import { Scale, Globe, ShieldAlert, Activity } from "lucide-react";
+import { Scale, Globe, ShieldAlert } from "lucide-react";
 import { Badge } from "@/components/ui/badge";
 
 export default function GovernmentDashboard() {
