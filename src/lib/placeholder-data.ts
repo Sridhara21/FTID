@@ -159,23 +159,31 @@ export const flowScoreData = {
 
 export const governmentBalanceSheetDataFy2526 = {
   assets: [
-    { name: 'Revenue Receipts', value: 3820000, subItems: [{ name: 'Tax Revenue', value: 3412000 }, { name: 'Non-Tax Revenue', value: 408000 }] },
-    { name: 'Capital Receipts', value: 1315000, subItems: [{ name: 'Borrowings', value: 1125000 }, { name: 'Asset Sales', value: 190000 }] }
+    { name: 'Direct Taxes (Income/Corp)', value: 1612000 },
+    { name: 'GST & Indirect Taxes', value: 1245000 },
+    { name: 'Non-Tax Revenue (Dividends)', value: 408000 },
+    { name: 'Capital Receipts (Borrowing)', value: 1555000 }
   ],
   liabilities: [
-    { name: 'Revenue Expenditure', value: 4125000, subItems: [{ name: 'Interest', value: 1205000 }, { name: 'Subsidies', value: 450000 }, { name: 'Salaries/Pensions', value: 2470000 }] },
-    { name: 'Capital Expenditure', value: 1010000, subItems: [{ name: 'Infrastructure', value: 810000 }, { name: 'Defense Capital', value: 200000 }] }
+    { name: 'Interest Payments', value: 1205000 },
+    { name: 'Centrally Sponsored Schemes', value: 1010000 },
+    { name: 'Subsidies (Food/Fertiliser)', value: 450000 },
+    { name: 'Defense & Infrastructure Outlay', value: 2155000 }
   ],
 };
 
 export const governmentBalanceSheetDataProjected = {
   assets: [
-    { name: 'Revenue Receipts', value: 4120000, subItems: [{ name: 'Tax Revenue', value: 3680000 }, { name: 'Non-Tax Revenue', value: 440000 }] },
-    { name: 'Capital Receipts', value: 1450000, subItems: [{ name: 'Borrowings', value: 1210000 }, { name: 'Asset Sales', value: 240000 }] }
+    { name: 'Direct Taxes (Income/Corp)', value: 1820000, subItems: [{ name: 'Corporate Tax', value: 920000 }, { name: 'Income Tax', value: 900000 }] },
+    { name: 'GST & Indirect Taxes', value: 1412000, subItems: [{ name: 'GST', value: 1100000 }, { name: 'Customs', value: 312000 }] },
+    { name: 'Non-Tax Revenue', value: 440000 },
+    { name: 'Capital Receipts', value: 1750000 }
   ],
   liabilities: [
-    { name: 'Revenue Expenditure', value: 4350000, subItems: [{ name: 'Interest', value: 1320000 }, { name: 'Subsidies', value: 410000 }, { name: 'Salaries/Pensions', value: 2620000 }] },
-    { name: 'Capital Expenditure', value: 1220000, subItems: [{ name: 'Infrastructure', value: 980000 }, { name: 'Defense Capital', value: 240000 }] }
+    { name: 'Interest Payments', value: 1320000 },
+    { name: 'Centrally Sponsored Schemes', value: 1120000 },
+    { name: 'Subsidies', value: 410000 },
+    { name: 'Capital Outlay (National)', value: 2572000 }
   ],
 };
 
