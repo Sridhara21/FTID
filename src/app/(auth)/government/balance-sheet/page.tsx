@@ -84,16 +84,12 @@ const CollapsibleRow = ({ itemFy2526, itemProjected }: { itemFy2526: BalanceShee
 
 export default function GovernmentBalanceSheetPage() {
     const totalReceiptsFy2526 = governmentBalanceSheetDataFy2526.assets.reduce((sum, item) => sum + item.value, 0);
-    const totalExpenditureFy2526 = governmentBalanceSheetDataFy2526.liabilities.reduce((sum, item) => sum + item.value, 0);
-
     const totalReceiptsProjected = governmentBalanceSheetDataProjected.assets.reduce((sum, item) => sum + item.value, 0);
-    const totalExpenditureProjected = governmentBalanceSheetDataProjected.liabilities.reduce((sum, item) => sum + item.value, 0);
-
     const receiptsChange = totalReceiptsProjected - totalReceiptsFy2526;
-    const expenditureChange = totalExpenditureProjected - totalExpenditureFy2526;
 
-    const fiscalDeficitFy2526 = totalExpenditureFy2526 - totalReceiptsFy2526;
-    const fiscalDeficitProjected = totalExpenditureProjected - totalReceiptsProjected;
+    const totalExpenditureFy2526 = governmentBalanceSheetDataFy2526.liabilities.reduce((sum, item) => sum + item.value, 0);
+    const totalExpenditureProjected = governmentBalanceSheetDataProjected.liabilities.reduce((sum, item) => sum + item.value, 0);
+    const expenditureChange = totalExpenditureProjected - totalExpenditureFy2526;
 
     return (
         <div className="grid gap-6">
@@ -187,25 +183,6 @@ export default function GovernmentBalanceSheetPage() {
                                 </TableRow>
                             </TableFooter>
                         </Table>
-                    </div>
-
-                    <div className="pt-6 border-t border-border/50">
-                        <div className="p-4 bg-secondary/20 rounded-lg border border-primary/20 flex flex-col md:flex-row justify-between items-center gap-4">
-                            <div className="text-center md:text-left">
-                                <p className="text-[10px] font-black uppercase tracking-sovereign text-muted-foreground mb-1">National Fiscal Deficit Gap</p>
-                                <p className="text-xs text-muted-foreground font-medium uppercase tracking-widest">Calculated as Consolidated Expenditure - Receipts</p>
-                            </div>
-                            <div className="flex gap-8">
-                                <div className="text-right">
-                                    <p className="text-[9px] font-bold uppercase tracking-widest text-muted-foreground">FY26 Estimate</p>
-                                    <p className="text-xl font-black font-mono tracking-tighter tabular-nums text-foreground opacity-60">{formatValue(fiscalDeficitFy2526)}</p>
-                                </div>
-                                <div className="text-right">
-                                    <p className="text-[9px] font-bold uppercase tracking-widest text-primary">FY27 Projection</p>
-                                    <p className="text-2xl font-black font-mono tracking-tighter tabular-nums text-primary">{formatValue(fiscalDeficitProjected)}</p>
-                                </div>
-                            </div>
-                        </div>
                     </div>
                 </CardContent>
             </Card>
