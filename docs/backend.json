@@ -1,3 +1,4 @@
+
 {
   "entities": {
     "Citizen": {
@@ -8,7 +9,7 @@
       "properties": {
         "id": {
           "type": "string",
-          "description": "Unique identifier for the Citizen entity."
+          "description": "Unique identifier for the Citizen entity (Firebase UID)."
         },
         "fullName": {
           "type": "string",
@@ -16,942 +17,107 @@
         },
         "email": {
           "type": "string",
-          "description": "The primary email address of the citizen, used for communication.",
+          "description": "The primary email address of the citizen.",
           "format": "email"
         },
-        "dateOfBirth": {
-          "type": "string",
-          "description": "The citizen's date of birth.",
-          "format": "date"
+        "pan": {
+          "type": "object",
+          "properties": {
+            "number": { "type": "string" },
+            "status": { "type": "string", "enum": ["Verified", "Pending", "Unlinked"] }
+          }
         },
-        "address": {
-          "type": "string",
-          "description": "The primary residential address of the citizen."
+        "aadhaar": {
+          "type": "object",
+          "properties": {
+            "number": { "type": "string" },
+            "status": { "type": "string", "enum": ["Verified", "Pending", "Unlinked"] }
+          }
+        },
+        "isLinked": {
+          "type": "boolean",
+          "description": "True if sovereign identity is bonded to FTID."
         },
         "registrationDate": {
           "type": "string",
-          "description": "The date and time when the citizen registered with the FTID system.",
           "format": "date-time"
         },
         "currentCreditScore": {
           "type": "number",
-          "description": "The citizen's current credit score, updated by the Credit Score Builder."
+          "description": "The citizen's current Flow Score."
         },
-        "profileImageUrl": {
-          "type": "string",
-          "description": "A URL to the citizen's profile image.",
-          "format": "uri"
+        "address": {
+          "type": "string"
         }
       },
       "required": [
         "id",
         "fullName",
         "email",
-        "dateOfBirth",
-        "address",
-        "registrationDate",
         "currentCreditScore"
-      ]
-    },
-    "GovernmentEntity": {
-      "$schema": "http://json-schema.org/draft-07/schema#",
-      "title": "GovernmentEntity",
-      "type": "object",
-      "description": "Represents a government agency, department, or organization interacting within the FTID system, collecting taxes, distributing subsidies, or tracking economic data.",
-      "properties": {
-        "id": {
-          "type": "string",
-          "description": "Unique identifier for the GovernmentEntity entity."
-        },
-        "name": {
-          "type": "string",
-          "description": "The official name of the government entity (e.g., 'Department of Treasury', 'Ministry of Health')."
-        },
-        "type": {
-          "type": "string",
-          "description": "The classification of the government entity (e.g., 'Federal', 'State', 'Municipal', 'Agency')."
-        },
-        "contactEmail": {
-          "type": "string",
-          "description": "The primary contact email address for the government entity.",
-          "format": "email"
-        },
-        "registrationDate": {
-          "type": "string",
-          "description": "The date and time when the government entity was registered in the FTID system.",
-          "format": "date-time"
-        },
-        "description": {
-          "type": "string",
-          "description": "A brief description of the government entity's role or purpose."
-        }
-      },
-      "required": [
-        "id",
-        "name",
-        "type",
-        "contactEmail",
-        "registrationDate"
       ]
     },
     "Transaction": {
       "$schema": "http://json-schema.org/draft-07/schema#",
       "title": "Transaction",
       "type": "object",
-      "description": "Records all financial transactions occurring between citizens and government entities within the FTID system, serving as the core data for analysis and dashboards.",
+      "description": "Core financial DNS log record.",
       "properties": {
-        "id": {
-          "type": "string",
-          "description": "Unique identifier for the Transaction entity."
-        },
-        "citizenId": {
-          "type": "string",
-          "description": "Reference to the Citizen involved in this transaction. (Relationship: Citizen 1:N Transaction)"
-        },
-        "governmentEntityId": {
-          "type": "string",
-          "description": "Reference to the GovernmentEntity involved in this transaction. (Relationship: GovernmentEntity 1:N Transaction)"
-        },
-        "amount": {
-          "type": "number",
-          "description": "The monetary value of the transaction."
-        },
-        "currency": {
-          "type": "string",
-          "description": "The currency in which the transaction was made (e.g., 'USD', 'EUR')."
-        },
-        "type": {
-          "type": "string",
-          "description": "The type of financial transaction (e.g., 'tax_payment', 'subsidy_disbursement', 'fine', 'utility_payment')."
-        },
-        "timestamp": {
-          "type": "string",
-          "description": "The date and time when the transaction occurred.",
-          "format": "date-time"
-        },
-        "description": {
-          "type": "string",
-          "description": "A brief description or purpose of the transaction."
-        },
-        "status": {
-          "type": "string",
-          "description": "The current status of the transaction (e.g., 'completed', 'pending', 'failed', 'reversed')."
-        },
-        "blockchainHash": {
-          "type": "string",
-          "description": "A hash simulating a blockchain-style immutable record for this transaction."
-        }
+        "id": { "type": "string" },
+        "citizenId": { "type": "string" },
+        "amount": { "type": "number" },
+        "type": { "type": "string", "enum": ["tax_payment", "subsidy_disbursement", "cbdc_transfer", "utility"] },
+        "status": { "type": "string", "enum": ["completed", "pending", "failed"] },
+        "originInstitution": { "type": "string" },
+        "destinationInstitution": { "type": "string" },
+        "timestamp": { "type": "string", "format": "date-time" },
+        "blockchainHash": { "type": "string" }
       },
-      "required": [
-        "id",
-        "citizenId",
-        "governmentEntityId",
-        "amount",
-        "currency",
-        "type",
-        "timestamp",
-        "status",
-        "blockchainHash"
-      ]
-    },
-    "FinancialTip": {
-      "$schema": "http://json-schema.org/draft-07/schema#",
-      "title": "FinancialTip",
-      "type": "object",
-      "description": "Stores personalized financial advice and budgeting tips generated by the AI Financial Advisor for individual citizens.",
-      "properties": {
-        "id": {
-          "type": "string",
-          "description": "Unique identifier for the FinancialTip entity."
-        },
-        "citizenId": {
-          "type": "string",
-          "description": "Reference to the Citizen who received this financial tip. (Relationship: Citizen 1:N FinancialTip)"
-        },
-        "title": {
-          "type": "string",
-          "description": "A concise title for the financial tip."
-        },
-        "content": {
-          "type": "string",
-          "description": "The detailed content of the financial advice or tip."
-        },
-        "category": {
-          "type": "string",
-          "description": "The category of the financial tip (e.g., 'budgeting', 'saving', 'debt management', 'investment')."
-        },
-        "generatedDate": {
-          "type": "string",
-          "description": "The date and time when this financial tip was generated.",
-          "format": "date-time"
-        },
-        "isRead": {
-          "type": "boolean",
-          "description": "Indicates whether the citizen has marked this tip as read."
-        }
-      },
-      "required": [
-        "id",
-        "citizenId",
-        "title",
-        "content",
-        "category",
-        "generatedDate",
-        "isRead"
-      ]
-    },
-    "CreditScoreUpdate": {
-      "$schema": "http://json-schema.org/draft-07/schema#",
-      "title": "CreditScoreUpdate",
-      "type": "object",
-      "description": "Logs historical credit score changes and associated recommendations for a citizen, provided by the Credit Score Builder.",
-      "properties": {
-        "id": {
-          "type": "string",
-          "description": "Unique identifier for the CreditScoreUpdate entity."
-        },
-        "citizenId": {
-          "type": "string",
-          "description": "Reference to the Citizen whose credit score was updated. (Relationship: Citizen 1:N CreditScoreUpdate)"
-        },
-        "score": {
-          "type": "number",
-          "description": "The credit score value at the time of evaluation."
-        },
-        "evaluationDate": {
-          "type": "string",
-          "description": "The date and time when the credit score was evaluated and updated.",
-          "format": "date-time"
-        },
-        "recommendations": {
-          "type": "string",
-          "description": "A summary of recommendations provided to the citizen to improve their credit score."
-        }
-      },
-      "required": [
-        "id",
-        "citizenId",
-        "score",
-        "evaluationDate",
-        "recommendations"
-      ]
-    },
-    "TaxRecord": {
-      "$schema": "http://json-schema.org/draft-07/schema#",
-      "title": "TaxRecord",
-      "type": "object",
-      "description": "Stores details of tax calculations for a citizen for a specific period, generated by the Auto-Tax Calculator.",
-      "properties": {
-        "id": {
-          "type": "string",
-          "description": "Unique identifier for the TaxRecord entity."
-        },
-        "citizenId": {
-          "type": "string",
-          "description": "Reference to the Citizen for whom this tax record was generated. (Relationship: Citizen 1:N TaxRecord)"
-        },
-        "taxPeriod": {
-          "type": "string",
-          "description": "The tax period this record pertains to (e.g., '2023-Q4', '2023-FY', '2023')."
-        },
-        "totalIncome": {
-          "type": "number",
-          "description": "The total calculated income for the tax period."
-        },
-        "totalDeductions": {
-          "type": "number",
-          "description": "The total calculated deductions for the tax period."
-        },
-        "taxableIncome": {
-          "type": "number",
-          "description": "The income subject to tax after deductions."
-        },
-        "calculatedTaxAmount": {
-          "type": "number",
-          "description": "The final amount of tax calculated for the period."
-        },
-        "filingStatus": {
-          "type": "string",
-          "description": "The citizen's tax filing status (e.g., 'single', 'married_jointly')."
-        },
-        "calculationDate": {
-          "type": "string",
-          "description": "The date and time when the tax calculation was performed.",
-          "format": "date-time"
-        },
-        "transactionIds": {
-          "type": "array",
-          "description": "References to the Transaction entities that were included in this tax calculation. (Relationship: TaxRecord N:N Transaction)",
-          "items": {
-            "type": "string"
-          }
-        },
-        "isFiled": {
-          "type": "boolean",
-          "description": "Indicates whether this tax record has been officially filed."
-        }
-      },
-      "required": [
-        "id",
-        "citizenId",
-        "taxPeriod",
-        "totalIncome",
-        "totalDeductions",
-        "taxableIncome",
-        "calculatedTaxAmount",
-        "filingStatus",
-        "calculationDate",
-        "transactionIds",
-        "isFiled"
-      ]
-    },
-    "SubsidyProgram": {
-      "$schema": "http://json-schema.org/draft-07/schema#",
-      "title": "SubsidyProgram",
-      "type": "object",
-      "description": "Defines a government subsidy program that citizens can apply for or receive benefits from.",
-      "properties": {
-        "id": {
-          "type": "string",
-          "description": "Unique identifier for the SubsidyProgram entity."
-        },
-        "name": {
-          "type": "string",
-          "description": "The official name of the subsidy program (e.g., 'Healthcare Assistance Program')."
-        },
-        "description": {
-          "type": "string",
-          "description": "A detailed description of the subsidy program, its goals, and benefits."
-        },
-        "governmentEntityId": {
-          "type": "string",
-          "description": "Reference to the GovernmentEntity that administers this subsidy program. (Relationship: GovernmentEntity 1:N SubsidyProgram)"
-        },
-        "eligibilityCriteria": {
-          "type": "string",
-          "description": "A description of the criteria citizens must meet to be eligible for the subsidy."
-        },
-        "amountType": {
-          "type": "string",
-          "description": "The method used to determine the subsidy amount (e.g., 'fixed', 'variable_per_citizen', 'percentage_based')."
-        },
-        "maxAmount": {
-          "type": "number",
-          "description": "The maximum possible amount a citizen can receive from this subsidy, if applicable."
-        },
-        "startDate": {
-          "type": "string",
-          "description": "The date when the subsidy program officially started.",
-          "format": "date"
-        },
-        "endDate": {
-          "type": "string",
-          "description": "The date when the subsidy program is scheduled to end.",
-          "format": "date"
-        },
-        "status": {
-          "type": "string",
-          "description": "The current operational status of the subsidy program (e.g., 'active', 'pending', 'closed', 'discontinued')."
-        }
-      },
-      "required": [
-        "id",
-        "name",
-        "description",
-        "governmentEntityId",
-        "eligibilityCriteria",
-        "amountType",
-        "startDate",
-        "endDate",
-        "status"
-      ]
-    },
-    "CitizenSubsidyApplication": {
-      "$schema": "http://json-schema.org/draft-07/schema#",
-      "title": "CitizenSubsidyApplication",
-      "type": "object",
-      "description": "Tracks a citizen's application for and receipt of a specific subsidy from a government program.",
-      "properties": {
-        "id": {
-          "type": "string",
-          "description": "Unique identifier for the CitizenSubsidyApplication entity."
-        },
-        "citizenId": {
-          "type": "string",
-          "description": "Reference to the Citizen who applied for/received the subsidy. (Relationship: Citizen 1:N CitizenSubsidyApplication)"
-        },
-        "subsidyProgramId": {
-          "type": "string",
-          "description": "Reference to the SubsidyProgram this application is for. (Relationship: SubsidyProgram 1:N CitizenSubsidyApplication)"
-        },
-        "applicationDate": {
-          "type": "string",
-          "description": "The date and time when the citizen submitted their application.",
-          "format": "date-time"
-        },
-        "approvalDate": {
-          "type": "string",
-          "description": "The date and time when the application was approved, if applicable.",
-          "format": "date-time"
-        },
-        "status": {
-          "type": "string",
-          "description": "The current status of the subsidy application (e.g., 'applied', 'under_review', 'approved', 'rejected', 'disbursed')."
-        },
-        "disbursedAmount": {
-          "type": "number",
-          "description": "The actual amount of subsidy funds disbursed to the citizen, if applicable."
-        },
-        "transactionId": {
-          "type": "string",
-          "description": "Reference to the Transaction entity that records the actual disbursement of the subsidy, if applicable. (Relationship: Transaction 0:1 CitizenSubsidyApplication)"
-        }
-      },
-      "required": [
-        "id",
-        "citizenId",
-        "subsidyProgramId",
-        "applicationDate",
-        "status"
-      ]
-    },
-    "InsurancePolicy": {
-      "$schema": "http://json-schema.org/draft-07/schema#",
-      "title": "InsurancePolicy",
-      "type": "object",
-      "description": "Stores details of a citizen's insurance policy, tracked by the Insurance/Subsidy Tracker.",
-      "properties": {
-        "id": {
-          "type": "string",
-          "description": "Unique identifier for the InsurancePolicy entity."
-        },
-        "citizenId": {
-          "type": "string",
-          "description": "Reference to the Citizen who owns this insurance policy. (Relationship: Citizen 1:N InsurancePolicy)"
-        },
-        "policyNumber": {
-          "type": "string",
-          "description": "The unique policy number assigned by the insurance provider."
-        },
-        "providerName": {
-          "type": "string",
-          "description": "The name of the insurance company or provider."
-        },
-        "type": {
-          "type": "string",
-          "description": "The type of insurance (e.g., 'health', 'auto', 'home', 'life')."
-        },
-        "startDate": {
-          "type": "string",
-          "description": "The date when the insurance policy became active.",
-          "format": "date"
-        },
-        "endDate": {
-          "type": "string",
-          "description": "The date when the insurance policy is scheduled to expire.",
-          "format": "date"
-        },
-        "premiumAmount": {
-          "type": "number",
-          "description": "The recurring payment amount for the insurance policy."
-        },
-        "coverageDetails": {
-          "type": "string",
-          "description": "A summary or key details of what the policy covers."
-        },
-        "status": {
-          "type": "string",
-          "description": "The current status of the insurance policy (e.g., 'active', 'expired', 'cancelled', 'lapsed')."
-        }
-      },
-      "required": [
-        "id",
-        "citizenId",
-        "policyNumber",
-        "providerName",
-        "type",
-        "startDate",
-        "endDate",
-        "premiumAmount",
-        "status"
-      ]
-    },
-    "Notification": {
-      "$schema": "http://json-schema.org/draft-07/schema#",
-      "title": "Notification",
-      "type": "object",
-      "description": "Stores messages and alerts generated by the system and sent to citizens, supporting mobile notifications.",
-      "properties": {
-        "id": {
-          "type": "string",
-          "description": "Unique identifier for the Notification entity."
-        },
-        "citizenId": {
-          "type": "string",
-          "description": "Reference to the Citizen who is the recipient of this notification. (Relationship: Citizen 1:N Notification)"
-        },
-        "message": {
-          "type": "string",
-          "description": "The full content of the notification message."
-        },
-        "type": {
-          "type": "string",
-          "description": "The category of the notification (e.g., 'transaction_alert', 'financial_tip', 'tax_reminder', 'subsidy_update', 'credit_score_alert')."
-        },
-        "timestamp": {
-          "type": "string",
-          "description": "The date and time when the notification was generated.",
-          "format": "date-time"
-        },
-        "isRead": {
-          "type": "boolean",
-          "description": "Indicates whether the citizen has viewed or dismissed the notification."
-        },
-        "link": {
-          "type": "string",
-          "description": "An optional URI to a specific section of the app relevant to the notification.",
-          "format": "uri"
-        }
-      },
-      "required": [
-        "id",
-        "citizenId",
-        "message",
-        "type",
-        "timestamp",
-        "isRead"
-      ]
+      "required": ["id", "citizenId", "amount", "type", "status", "timestamp"]
     },
     "FraudAlert": {
-      "$schema": "http://json-schema.org/draft-07/schema#",
       "title": "FraudAlert",
       "type": "object",
-      "description": "Records detected potential fraudulent activities or financial anomalies identified by the fraud detection system, which contribute to fraud heatmaps.",
       "properties": {
-        "id": {
-          "type": "string",
-          "description": "Unique identifier for the FraudAlert entity."
-        },
-        "transactionId": {
-          "type": "string",
-          "description": "Reference to a specific Transaction related to the potential fraud, if applicable. (Relationship: Transaction 0:1 FraudAlert)"
-        },
-        "governmentEntityId": {
-          "type": "string",
-          "description": "Reference to the GovernmentEntity affected by or detecting the potential fraud, if applicable. (Relationship: GovernmentEntity 0:1 FraudAlert)"
-        },
-        "citizenId": {
-          "type": "string",
-          "description": "Reference to the Citizen potentially involved in or affected by the fraud, if applicable. (Relationship: Citizen 0:1 FraudAlert)"
-        },
-        "alertLevel": {
-          "type": "string",
-          "description": "The severity level of the fraud alert (e.g., 'low', 'medium', 'high', 'critical')."
-        },
-        "description": {
-          "type": "string",
-          "description": "A detailed description of the anomaly or potential fraudulent pattern detected."
-        },
-        "detectionDate": {
-          "type": "string",
-          "description": "The date and time when the fraud alert was detected.",
-          "format": "date-time"
-        },
-        "status": {
-          "type": "string",
-          "description": "The current investigative status of the fraud alert (e.g., 'new', 'under_investigation', 'resolved', 'false_positive')."
-        },
-        "locationDetails": {
-          "type": "string",
-          "description": "Geographic coordinates or region identifier associated with the detected fraud for heatmap visualization (e.g., 'latitude,longitude' or 'city_id')."
-        }
-      },
-      "required": [
-        "id",
-        "alertLevel",
-        "description",
-        "detectionDate",
-        "status"
-      ]
-    },
-    "ElectionCampaign": {
-      "$schema": "http://json-schema.org/draft-07/schema#",
-      "title": "ElectionCampaign",
-      "type": "object",
-      "description": "Defines an election campaign, used for tracking related political donations and ensuring transparency.",
-      "properties": {
-        "id": {
-          "type": "string",
-          "description": "Unique identifier for the ElectionCampaign entity."
-        },
-        "name": {
-          "type": "string",
-          "description": "The official name of the election campaign (e.g., 'Presidential Election 2024', 'Local City Council Run')."
-        },
-        "officeSought": {
-          "type": "string",
-          "description": "The political office that is being sought in this campaign (e.g., 'President', 'Mayor', 'Senator')."
-        },
-        "electionDate": {
-          "type": "string",
-          "description": "The date of the election.",
-          "format": "date"
-        },
-        "startDate": {
-          "type": "string",
-          "description": "The official start date of the campaign period.",
-          "format": "date"
-        },
-        "endDate": {
-          "type": "string",
-          "description": "The official end date of the campaign period.",
-          "format": "date"
-        },
-        "organizingGovernmentEntityId": {
-          "type": "string",
-          "description": "Reference to the GovernmentEntity responsible for overseeing this election (e.g., 'Election Commission'). (Relationship: GovernmentEntity 1:N ElectionCampaign)"
-        },
-        "description": {
-          "type": "string",
-          "description": "A brief description of the election campaign."
-        }
-      },
-      "required": [
-        "id",
-        "name",
-        "officeSought",
-        "electionDate",
-        "startDate",
-        "endDate",
-        "organizingGovernmentEntityId"
-      ]
-    },
-    "PoliticalDonation": {
-      "$schema": "http://json-schema.org/draft-07/schema#",
-      "title": "PoliticalDonation",
-      "type": "object",
-      "description": "Tracks donations made to political campaigns or entities, providing transparency as part of the Election/Donation Transparency Tracker.",
-      "properties": {
-        "id": {
-          "type": "string",
-          "description": "Unique identifier for the PoliticalDonation entity."
-        },
-        "donorCitizenId": {
-          "type": "string",
-          "description": "Reference to the Citizen who made the donation. (Relationship: Citizen 0:1 PoliticalDonation)"
-        },
-        "recipientName": {
-          "type": "string",
-          "description": "The name of the recipient of the donation (e.g., 'Campaign for John Doe', 'Green Party')."
-        },
-        "amount": {
-          "type": "number",
-          "description": "The monetary amount of the donation."
-        },
-        "currency": {
-          "type": "string",
-          "description": "The currency in which the donation was made."
-        },
-        "donationDate": {
-          "type": "string",
-          "description": "The date and time when the donation was made.",
-          "format": "date-time"
-        },
-        "campaignId": {
-          "type": "string",
-          "description": "Reference to the ElectionCampaign this donation is associated with, if applicable. (Relationship: ElectionCampaign 0:1 PoliticalDonation)"
-        },
-        "description": {
-          "type": "string",
-          "description": "An optional description or purpose of the donation."
-        }
-      },
-      "required": [
-        "id",
-        "recipientName",
-        "amount",
-        "currency",
-        "donationDate"
-      ]
+        "id": { "type": "string" },
+        "location": { "type": "string" },
+        "riskLevel": { "type": "string", "enum": ["High", "Medium", "Low"] },
+        "reason": { "type": "string" },
+        "detectionDate": { "type": "string", "format": "date-time" }
+      }
     }
   },
   "auth": {
     "providers": [
-      "password",
-      "anonymous"
+      "password"
     ]
   },
   "firestore": {
     "structure": [
       {
-        "path": "/platformAdmins/{platformAdminId}",
-        "definition": {
-          "entityName": "PlatformAdmin",
-          "schema": {
-            "$ref": "#/backend/entities/Citizen"
-          },
-          "description": "Collection for system-wide platform administrators. Documents simply contain the UID as the ID to grant full platform access. (DBAC: Existence over Content). No specific schema provided, so using Citizen as a placeholder for basic user info if needed.",
-          "params": [
-            {
-              "name": "platformAdminId",
-              "description": "The unique identifier (UID) of the platform administrator, matching request.auth.uid."
-            }
-          ]
-        }
-      },
-      {
         "path": "/citizens/{citizenId}",
         "definition": {
           "entityName": "Citizen",
-          "schema": {
-            "$ref": "#/backend/entities/Citizen"
-          },
-          "description": "Stores individual citizen profiles. The document ID (`citizenId`) MUST match the user's Firebase Authentication UID (`request.auth.uid`). This provides secure, path-based ownership for all citizen-specific data.",
-          "params": [
-            {
-              "name": "citizenId",
-              "description": "The unique identifier (UID) of the citizen, matching request.auth.uid."
-            }
-          ]
-        }
-      },
-      {
-        "path": "/governmentEntities/{governmentEntityId}",
-        "definition": {
-          "entityName": "GovernmentEntity",
-          "schema": {
-            "$ref": "#/backend/entities/GovernmentEntity"
-          },
-          "description": "Stores information about government agencies. Generally publicly readable, with write access restricted to platform administrators or specific government entity administrators.",
-          "params": [
-            {
-              "name": "governmentEntityId",
-              "description": "The unique identifier for the government entity."
-            }
-          ]
-        }
-      },
-      {
-        "path": "/governmentEntities/{governmentEntityId}/admins/{adminId}",
-        "definition": {
-          "entityName": "GovernmentEntityAdmin",
-          "schema": {
-            "$ref": "#/backend/entities/Citizen"
-          },
-          "description": "Subcollection for administrators of a specific GovernmentEntity. Document ID (`adminId`) MUST match the user's Firebase Authentication UID. (DBAC: Existence over Content). No specific schema provided, so using Citizen as a placeholder for basic user info if needed.",
-          "params": [
-            {
-              "name": "governmentEntityId",
-              "description": "The unique identifier for the government entity this admin manages."
-            },
-            {
-              "name": "adminId",
-              "description": "The unique identifier (UID) of the government entity administrator, matching request.auth.uid."
-            }
-          ]
+          "schema": { "$ref": "#/backend/entities/Citizen" },
+          "description": "Private citizen profile and identity data."
         }
       },
       {
         "path": "/transactions/{transactionId}",
         "definition": {
           "entityName": "Transaction",
-          "schema": {
-            "$ref": "#/backend/entities/Transaction"
-          },
-          "description": "Stores all financial transactions between citizens and government entities. Documents include `citizenId` and `governmentEntityId` for authorization independence, allowing citizens to query their own transactions and government entities to query theirs. Supports QAPs by filtering on these denormalized IDs.",
-          "params": [
-            {
-              "name": "transactionId",
-              "description": "The unique identifier for the transaction."
-            }
-          ]
+          "schema": { "$ref": "#/backend/entities/Transaction" },
+          "description": "Global financial DNS flow records."
         }
       },
       {
-        "path": "/citizens/{citizenId}/financialTips/{financialTipId}",
-        "definition": {
-          "entityName": "FinancialTip",
-          "schema": {
-            "$ref": "#/backend/entities/FinancialTip"
-          },
-          "description": "Stores personalized financial tips for a specific citizen. Access is restricted to the owning citizen through path-based authorization. Includes denormalized 'citizenId' for rules clarity.",
-          "params": [
-            {
-              "name": "citizenId",
-              "description": "The unique identifier (UID) of the citizen, matching request.auth.uid."
-            },
-            {
-              "name": "financialTipId",
-              "description": "The unique identifier for the financial tip."
-            }
-          ]
-        }
-      },
-      {
-        "path": "/citizens/{citizenId}/creditScoreUpdates/{creditScoreUpdateId}",
-        "definition": {
-          "entityName": "CreditScoreUpdate",
-          "schema": {
-            "$ref": "#/backend/entities/CreditScoreUpdate"
-          },
-          "description": "Logs historical credit score updates for a specific citizen. Access is restricted to the owning citizen through path-based authorization. Includes denormalized 'citizenId' for rules clarity.",
-          "params": [
-            {
-              "name": "citizenId",
-              "description": "The unique identifier (UID) of the citizen, matching request.auth.uid."
-            },
-            {
-              "name": "creditScoreUpdateId",
-              "description": "The unique identifier for the credit score update."
-            }
-          ]
-        }
-      },
-      {
-        "path": "/citizens/{citizenId}/taxRecords/{taxRecordId}",
-        "definition": {
-          "entityName": "TaxRecord",
-          "schema": {
-            "$ref": "#/backend/entities/TaxRecord"
-          },
-          "description": "Stores tax calculation records for a specific citizen. Access is restricted to the owning citizen through path-based authorization. Includes denormalized 'citizenId' for rules clarity.",
-          "params": [
-            {
-              "name": "citizenId",
-              "description": "The unique identifier (UID) of the citizen, matching request.auth.uid."
-            },
-            {
-              "name": "taxRecordId",
-              "description": "The unique identifier for the tax record."
-            }
-          ]
-        }
-      },
-      {
-        "path": "/subsidyPrograms/{subsidyProgramId}",
-        "definition": {
-          "entityName": "SubsidyProgram",
-          "schema": {
-            "$ref": "#/backend/entities/SubsidyProgram"
-          },
-          "description": "Defines government subsidy programs. Publicly readable for citizens to discover programs. Includes denormalized 'governmentEntityId' for management by relevant government administrators.",
-          "params": [
-            {
-              "name": "subsidyProgramId",
-              "description": "The unique identifier for the subsidy program."
-            }
-          ]
-        }
-      },
-      {
-        "path": "/citizens/{citizenId}/subsidyApplications/{applicationId}",
-        "definition": {
-          "entityName": "CitizenSubsidyApplication",
-          "schema": {
-            "$ref": "#/backend/entities/CitizenSubsidyApplication"
-          },
-          "description": "Tracks a citizen's application for a subsidy. Access is restricted to the owning citizen. Also requires denormalized 'administeringGovernmentEntityId' (from the SubsidyProgram) to allow relevant government entity administrators to manage applications for their programs without `get()` calls, supporting QAPs.",
-          "params": [
-            {
-              "name": "citizenId",
-              "description": "The unique identifier (UID) of the citizen, matching request.auth.uid."
-            },
-            {
-              "name": "applicationId",
-              "description": "The unique identifier for the citizen's subsidy application."
-            }
-          ]
-        }
-      },
-      {
-        "path": "/citizens/{citizenId}/insurancePolicies/{policyId}",
-        "definition": {
-          "entityName": "InsurancePolicy",
-          "schema": {
-            "$ref": "#/backend/entities/InsurancePolicy"
-          },
-          "description": "Stores details of a citizen's insurance policies. Access is restricted to the owning citizen through path-based authorization. Includes denormalized 'citizenId' for rules clarity.",
-          "params": [
-            {
-              "name": "citizenId",
-              "description": "The unique identifier (UID) of the citizen, matching request.auth.uid."
-            },
-            {
-              "name": "policyId",
-              "description": "The unique identifier for the insurance policy."
-            }
-          ]
-        }
-      },
-      {
-        "path": "/citizens/{citizenId}/notifications/{notificationId}",
-        "definition": {
-          "entityName": "Notification",
-          "schema": {
-            "$ref": "#/backend/entities/Notification"
-          },
-          "description": "Stores notifications and alerts for a specific citizen. Access is restricted to the owning citizen through path-based authorization. Includes denormalized 'citizenId' for rules clarity.",
-          "params": [
-            {
-              "name": "citizenId",
-              "description": "The unique identifier (UID) of the citizen, matching request.auth.uid."
-            },
-            {
-              "name": "notificationId",
-              "description": "The unique identifier for the notification."
-            }
-          ]
-        }
-      },
-      {
-        "path": "/fraudAlerts/{fraudAlertId}",
+        "path": "/fraudAlerts/{alertId}",
         "definition": {
           "entityName": "FraudAlert",
-          "schema": {
-            "$ref": "#/backend/entities/FraudAlert"
-          },
-          "description": "Records detected potential fraudulent activities. Primarily for government dashboard use, accessible by government administrators. Includes 'citizenId' and 'governmentEntityId' for contextual filtering and QAPs.",
-          "params": [
-            {
-              "name": "fraudAlertId",
-              "description": "The unique identifier for the fraud alert."
-            }
-          ]
-        }
-      },
-      {
-        "path": "/electionCampaigns/{campaignId}",
-        "definition": {
-          "entityName": "ElectionCampaign",
-          "schema": {
-            "$ref": "#/backend/entities/ElectionCampaign"
-          },
-          "description": "Defines election campaigns. Publicly readable for transparency. Includes denormalized 'organizingGovernmentEntityId' for management by relevant government administrators.",
-          "params": [
-            {
-              "name": "campaignId",
-              "description": "The unique identifier for the election campaign."
-            }
-          ]
-        }
-      },
-      {
-        "path": "/politicalDonations/{donationId}",
-        "definition": {
-          "entityName": "PoliticalDonation",
-          "schema": {
-            "$ref": "#/backend/entities/PoliticalDonation"
-          },
-          "description": "Tracks donations to political campaigns. Publicly readable for transparency, and readable by the donor citizen. Also requires denormalized 'campaignOrganizingGovernmentEntityId' (from the ElectionCampaign) to allow relevant government entity administrators to manage donations for their campaigns without `get()` calls, supporting QAPs.",
-          "params": [
-            {
-              "name": "donationId",
-              "description": "The unique identifier for the political donation."
-            }
-          ]
+          "schema": { "$ref": "#/backend/entities/FraudAlert" },
+          "description": "Anomalies detected in financial flows."
         }
       }
-    ],
-    "reasoning": "The Firestore data structure is designed with a strong emphasis on Authorization Independence, Structural Segregation, and DBAC principles to ensure simple, robust, and debuggable security rules. This approach minimizes complexity and enhances security.\n\n**1. Authorization Independence & Denormalization:**\n*   **Path-Based Ownership:** For entities clearly owned by a `Citizen` (e.g., `Citizen` profile, `FinancialTip`, `CreditScoreUpdate`, `TaxRecord`, `InsurancePolicy`, `Notification`, `CitizenSubsidyApplication`), data is nested under `/citizens/{citizenId}/...`. This makes `request.path[1] == request.auth.uid` a direct authorization check, eliminating `get()` calls for ownership and enabling atomic operations.\n*   **Denormalization for Collaborative/Cross-Entity Access:**\n    *   For `CitizenSubsidyApplication` documents, which involve both a `Citizen` and a `GovernmentEntity` (via `SubsidyProgram`), the `administeringGovernmentEntityId` (obtained from the `SubsidyProgram`) MUST be denormalized directly into each `CitizenSubsidyApplication` document. This allows government entity administrators to query and manage applications for *their* programs (`resource.data.administeringGovernmentEntityId == request.auth.governmentEntityId`) without requiring a `get()` call to the `SubsidyProgram` document, adhering to Authorization Independence.\n    *   Similarly, for `PoliticalDonation` documents, which link to an `ElectionCampaign` organized by a `GovernmentEntity`, the `campaignOrganizingGovernmentEntityId` (obtained from the `ElectionCampaign`) MUST be denormalized into each `PoliticalDonation` document. This enables `governmentEntity` administrators to manage donations related to *their* campaigns without `get()` calls on `ElectionCampaign` documents.\n*   **Global Collections with Denormalized IDs:** Collections like `transactions`, `subsidyPrograms`, `fraudAlerts`, and `electionCampaigns` are top-level. Authorization for these relies on `citizenId` or `governmentEntityId` fields *within the document itself*, meaning `get()` calls for authorization are avoided.\n\n**2. Structural Segregation (Homogeneous Security Posture):**\n*   Data with different security requirements are placed in distinct collections or subcollections. For instance, private citizen data is under `/citizens/{citizenId}`, while publicly readable program definitions like `SubsidyProgram` are at the root level (`/subsidyPrograms`). This significantly simplifies security rules by allowing broader read access where appropriate and strict controls where needed, without complex conditional logic within a single rule block.\n\n**3. DBAC (No Custom Claims) & QAPs (Rules are not Filters):**\n*   **Database-Backed Access Control (DBAC):** Roles are managed directly in Firestore: `/platformAdmins/{uid}` for global administrators and `/governmentEntities/{governmentEntityId}/admins/{uid}` for specific government entity administrators. Authorization checks involve simple `exists()` calls to these collections, relying on the `request.auth.uid` to establish the user's role.\n*   **Queryable Authorization Predicates (QAPs):** The structure facilitates secure `list` operations.\n    *   For subcollections under `/citizens/{citizenId}`, `list` operations are automatically secured as queries must target the current user's `uid` in the path.\n    *   For global collections like `/transactions` and `/politicalDonations`, rules will enforce that `list` queries must include filters on `citizenId` (for citizen access) or relevant `governmentEntityId` (for government admin access). The necessary `citizenId`, `governmentEntityId`, `administeringGovernmentEntityId`, and `campaignOrganizingGovernmentEntityId` fields are denormalized within the documents, allowing rules to directly check `request.query.where('field', '==', value)` without violating Authorization Independence.\n    *   Publicly accessible collections (e.g., `subsidyPrograms`, `electionCampaigns`) allow broad `list` reads, with write access restricted by DBAC roles and denormalized `governmentEntityId` fields."
+    ]
   }
 }
