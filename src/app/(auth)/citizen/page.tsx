@@ -35,6 +35,7 @@ import { Button } from "@/components/ui/button";
 import { IncomeExpenseChart } from "@/components/citizen/income-expense-chart";
 import { SpendingChart } from "@/components/citizen/spending-chart";
 import { PredictiveInsights } from "@/components/citizen/predictive-insights";
+import { LinkAccountDialog } from "@/components/citizen/link-account-dialog";
 import { regulatoryAlerts, institutionConnectivity, consentData, flowScoreData } from "@/lib/placeholder-data";
 import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from "@/components/ui/tooltip";
 import { useUser, useFirestore, useDoc, useCollection, useMemoFirebase } from "@/firebase";
@@ -175,6 +176,8 @@ export default function CitizenDashboard() {
                     </CardTitle>
                 </CardHeader>
                 <CardContent className="pt-4 grid grid-cols-1 gap-3">
+                   {/* Link Account Dialog integrated as a high-priority action */}
+                   <LinkAccountDialog />
                    {quickActions.map(action => <QuickAction key={action.title} {...action} />)}
                 </CardContent>
             </Card>
