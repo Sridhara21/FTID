@@ -1,3 +1,5 @@
+"use client";
+
 import { EconomicIndicatorsCard } from "@/components/government/economic-indicators-card";
 import { RevenueChartCard } from "@/components/government/revenue-chart-card";
 import { MultiMetricChart } from "@/components/government/multi-metric-chart";
@@ -20,10 +22,21 @@ import {
     TableFooter
 } from "@/components/ui/table";
 import { governmentBalanceSheetDataFy2526 } from "@/lib/placeholder-data";
-import { Scale, Globe, ShieldAlert, BadgeInfo } from "lucide-react";
+import { Scale, Globe, ShieldAlert, BadgeInfo, Loader2 } from "lucide-react";
 import { Badge } from "@/components/ui/badge";
+import { useFirestore, useCollection, useMemoFirebase } from "@/firebase";
+import { collection } from "firebase/firestore";
 
 export default function GovernmentDashboard() {
+  const db = useFirestore();
+  
+  const transactionsQuery = useMemoFirebase(() => {
+    if (!db) return null;
+    return collection(db, "transactions");
+  }, [db]);
+
+  const { data: allTransactions, isLoading: isTxnLoading } = useCollection(transactionsQuery);
+
   const totalReceipts = governmentBalanceSheetDataFy2526.assets.reduce((sum, item) => sum + item.value, 0);
   const totalExpenditure = governmentBalanceSheetDataFy2526.liabilities.reduce((sum, item) => sum + item.value, 0);
 
@@ -47,7 +60,7 @@ export default function GovernmentDashboard() {
         <div className="flex flex-col items-end gap-1">
           <div className="flex items-center gap-2 px-3 py-1.5 bg-secondary/30 border border-border/50 rounded-md">
             <Globe className="h-3.5 w-3.5 text-primary/70" />
-            <span className="text-[10px] font-black uppercase tracking-widest text-muted-foreground">Network Status: SYNCED</span>
+            <span className="text-[10px] font-black uppercase tracking-widest text-muted-foreground">Network Status: {isTxnLoading ? "SYNCING..." : "SYNCED"}</span>
           </div>
           <p className="text-[9px] text-muted-foreground italic font-medium uppercase tracking-widest">Indicative insights, not official statistics</p>
         </div>
@@ -63,7 +76,7 @@ export default function GovernmentDashboard() {
         </div>
         <div className="hidden lg:flex items-center gap-2 text-[9px] font-bold uppercase tracking-widest text-muted-foreground opacity-60">
             <BadgeInfo className="h-3 w-3" />
-            Integrity Verification Active
+            Integrity Verification {isTxnLoading ? <Loader2 className="h-2 w-2 animate-spin ml-1" /> : "Active"}
         </div>
       </div>
 

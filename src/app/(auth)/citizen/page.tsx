@@ -1,3 +1,5 @@
+"use client";
+
 import Link from "next/link";
 import {
   Send,
@@ -12,7 +14,8 @@ import {
   TrendingUp,
   TrendingDown,
   Wallet,
-  Info
+  Info,
+  Loader2
 } from "lucide-react";
 import {
   Card,
@@ -34,14 +37,20 @@ import { SpendingChart } from "@/components/citizen/spending-chart";
 import { PredictiveInsights } from "@/components/citizen/predictive-insights";
 import { regulatoryAlerts, institutionConnectivity, consentData, flowScoreData } from "@/lib/placeholder-data";
 import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from "@/components/ui/tooltip";
+import { useUser, useFirestore, useDoc, useCollection, useMemoFirebase } from "@/firebase";
+import { collection, doc, query, where } from "firebase/firestore";
 
-const PrimaryMetric = ({ title, value, subtext, trend, trendDir, icon: Icon }: { title: string, value: string, subtext: string, trend?: string, trendDir?: 'up' | 'down', icon: any }) => (
+const PrimaryMetric = ({ title, value, subtext, trend, trendDir, icon: Icon, isLoading = false }: { title: string, value: string, subtext: string, trend?: string, trendDir?: 'up' | 'down', icon: any, isLoading?: boolean }) => (
   <Card className="relative overflow-hidden border-primary/20 bg-primary/5">
     <CardContent className="p-4">
       <div className="flex items-start justify-between mb-3">
         <div>
           <p className="text-[10px] font-black uppercase tracking-institutional text-muted-foreground">{title}</p>
-          <p className="text-3xl font-black font-mono tracking-tighter tabular-nums mt-1">{value}</p>
+          {isLoading ? (
+            <Loader2 className="h-6 w-6 animate-spin mt-2 text-primary/50" />
+          ) : (
+            <p className="text-3xl font-black font-mono tracking-tighter tabular-nums mt-1">{value}</p>
+          )}
         </div>
         <div className="p-2 bg-primary/10 rounded-lg border border-primary/30">
           <Icon className="h-5 w-5 text-primary" />
@@ -75,7 +84,26 @@ const QuickAction = ({ href, icon: Icon, title, description }: { href: string; i
 );
 
 export default function CitizenDashboard() {
+  const { user, isUserLoading } = useUser();
+  const db = useFirestore();
+
+  const citizenRef = useMemoFirebase(() => {
+    if (!db || !user?.uid) return null;
+    return doc(db, "citizens", user.uid);
+  }, [db, user?.uid]);
+
+  const { data: citizenData, isLoading: isCitizenLoading } = useDoc(citizenRef);
+
+  const transactionsQuery = useMemoFirebase(() => {
+    if (!db || !user?.uid) return null;
+    return query(collection(db, "transactions"), where("citizenId", "==", user.uid));
+  }, [db, user?.uid]);
+
+  const { data: transactionsData, isLoading: isTxnLoading } = useCollection(transactionsQuery);
+
+  const totalBalance = transactionsData?.reduce((acc, curr) => acc + curr.amount, 0) || 85250;
   const activeConsents = consentData.flatMap(cat => cat.consents).filter(c => c.given);
+  
   const quickActions = [
     { href: "/citizen/wallet", icon: Send, title: "CBDC Transfer", description: "Route via FTID Flow" },
     { href: "/citizen/tax", icon: FileText, title: "Tax Statement", description: "Review Pre-filled Data" },
@@ -87,7 +115,7 @@ export default function CitizenDashboard() {
     <div className="grid gap-6">
        <div className="flex items-center justify-between">
         <div>
-          <h1 className="text-2xl font-bold tracking-tight">FTID — Citizen Dashboard</h1>
+          <h1 className="text-2xl font-bold tracking-tight">FTID — {citizenData?.fullName || "Citizen"} Dashboard</h1>
           <p className="text-muted-foreground text-[10px] font-bold uppercase tracking-institutional mt-1">
             Unified Financial Control & Flow Intelligence
           </p>
@@ -105,11 +133,12 @@ export default function CitizenDashboard() {
                 <div className="cursor-help">
                   <PrimaryMetric 
                     title="Flow Score" 
-                    value={flowScoreData.score.toString()} 
-                    subtext="Very Strong" 
+                    value={(citizenData?.currentCreditScore || flowScoreData.score).toString()} 
+                    subtext="Institutional Grade" 
                     trend={flowScoreData.trend} 
                     trendDir="up" 
-                    icon={HeartPulse} 
+                    icon={HeartPulse}
+                    isLoading={isCitizenLoading}
                   />
                 </div>
               </TooltipTrigger>
@@ -119,7 +148,15 @@ export default function CitizenDashboard() {
               </TooltipContent>
             </Tooltip>
           </TooltipProvider>
-          <PrimaryMetric title="Total Balance" value="₹85,250" subtext="In E-Rupee Wallet" trend="+₹15k" trendDir="up" icon={Wallet} />
+          <PrimaryMetric 
+            title="Total Balance" 
+            value={`₹${totalBalance.toLocaleString('en-IN')}`} 
+            subtext="In E-Rupee Wallet" 
+            trend="+₹15k" 
+            trendDir="up" 
+            icon={Wallet}
+            isLoading={isTxnLoading}
+          />
       </div>
 
       <div className="grid grid-cols-1 lg:grid-cols-12 gap-6">
