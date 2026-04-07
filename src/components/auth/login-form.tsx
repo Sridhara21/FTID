@@ -8,11 +8,11 @@ import { Card, CardContent, CardDescription, CardHeader, CardTitle, CardFooter }
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
-import { Building, User, Loader2, UserPlus, LogIn, ShieldCheck, Fingerprint, ArrowRight, ArrowLeft, CheckCircle2 } from "lucide-react";
+import { Building, User, Loader2, UserPlus, LogIn, ShieldCheck, Fingerprint, ArrowRight, ArrowLeft, CheckCircle2, Zap } from "lucide-react";
 import { useAuth, useFirestore } from "@/firebase";
 import { initiateEmailSignIn, initiateEmailSignUp } from "@/firebase/non-blocking-login";
-import { setDocumentNonBlocking } from "@/firebase/non-blocking-updates";
-import { doc } from "firebase/firestore";
+import { setDocumentNonBlocking, addDocumentNonBlocking } from "@/firebase/non-blocking-updates";
+import { doc, collection } from "firebase/firestore";
 import { useToast } from "@/hooks/use-toast";
 
 export function LoginForm() {
@@ -25,6 +25,7 @@ export function LoginForm() {
   const [mode, setMode] = useState<'signin' | 'signup'>('signin');
   const [role, setRole] = useState<'citizen' | 'government'>('citizen');
   const [signupStep, setSignupStep] = useState(1);
+  const [isBonding, setIsBonding] = useState(false);
   
   // Registration Fields
   const [email, setEmail] = useState("");
@@ -54,7 +55,6 @@ export function LoginForm() {
           toast({ variant: "destructive", title: "Missing Identity Data", description: "All identity fields are required for sovereign binding." });
           return;
         }
-        // Basic validation
         if (!/^[A-Z]{5}[0-9]{4}[A-Z]{1}$/.test(pan.toUpperCase())) {
           toast({ variant: "destructive", title: "Invalid PAN", description: "Format: ABCDE1234F" });
           return;
@@ -63,7 +63,17 @@ export function LoginForm() {
           toast({ variant: "destructive", title: "Invalid Aadhaar", description: "Must be 12 digits." });
           return;
         }
-        setSignupStep(2);
+        
+        // Start Data Bonding Simulation
+        setIsBonding(true);
+        setTimeout(() => {
+          setIsBonding(false);
+          setSignupStep(2);
+          toast({
+            title: "External Data Streams Bonded",
+            description: "Successfully retrieved history from Income Tax & Banking nodes.",
+          });
+        }, 2500);
         return;
       }
 
@@ -83,27 +93,43 @@ export function LoginForm() {
       if (mode === 'signup') {
         initiateEmailSignUp(auth, email, password);
         
+        // Use a small delay to ensure auth.currentUser is available
         setTimeout(() => {
           if (auth.currentUser && role === 'citizen') {
             const citizenRef = doc(db, "citizens", auth.currentUser.uid);
+            
+            // Seed the primary Citizen Document
             setDocumentNonBlocking(citizenRef, {
               id: auth.currentUser.uid,
               fullName,
               email,
               pan: { number: pan.toUpperCase(), status: "Verified" },
               aadhaar: { number: `XXXX-XXXX-${aadhaar.slice(-4)}`, status: "Verified" },
-              currentCreditScore: 750,
+              currentCreditScore: 785, // Initial score based on identity verification
               isLinked: true,
               registrationDate: new Date().toISOString(),
+              address: "Verified via Aadhaar Vault",
+              onboardingComplete: true
             }, { merge: true });
+
+            // Seed Initial Transaction History
+            const txnCol = collection(db, "transactions");
+            const seedTxns = [
+              { citizenId: auth.currentUser.uid, description: "System Onboarding Credit", amount: 10000, type: "cbdc_transfer", status: "completed", timestamp: new Date().toISOString(), classification: "Sovereign Incentive", originInstitution: "RBI Central Node", destinationInstitution: "FTID Wallet" },
+              { citizenId: auth.currentUser.uid, description: "External Account Linkage", amount: 45250, type: "cbdc_transfer", status: "completed", timestamp: new Date().toISOString(), classification: "Verified Balance", originInstitution: "HDFC Bank", destinationInstitution: "FTID Wallet" }
+            ];
+            
+            seedTxns.forEach(txn => {
+              addDocumentNonBlocking(txnCol, txn);
+            });
           }
           router.push(role === 'citizen' ? "/citizen" : "/government");
-        }, 1500);
+        }, 2000);
       } else {
         initiateEmailSignIn(auth, email, password);
         setTimeout(() => {
           router.push(role === 'citizen' ? "/citizen" : "/government");
-        }, 1000);
+        }, 1500);
       }
     } catch (error: any) {
       toast({ variant: "destructive", title: "Authentication Error", description: error.message });
@@ -145,8 +171,19 @@ export function LoginForm() {
               )}
             </CardHeader>
             
-            <CardContent className="space-y-4 pt-8">
-              {mode === 'signin' ? (
+            <CardContent className="space-y-4 pt-8 min-h-[350px] flex flex-col justify-center">
+              {isBonding ? (
+                <div className="flex flex-col items-center justify-center space-y-6 animate-in fade-in zoom-in duration-500">
+                  <div className="relative">
+                    <Loader2 className="h-16 w-16 animate-spin text-primary opacity-20" />
+                    <Zap className="h-8 w-8 text-primary absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 animate-pulse" />
+                  </div>
+                  <div className="text-center space-y-2">
+                    <p className="text-xs font-black uppercase tracking-institutional text-primary">Bonding Sovereign Streams</p>
+                    <p className="text-[10px] text-muted-foreground uppercase tracking-widest">Querying UIDAI & Tax Authorization Nodes...</p>
+                  </div>
+                </div>
+              ) : mode === 'signin' ? (
                 <>
                   <div className="space-y-2">
                     <Label htmlFor="email" className="text-[10px] font-black uppercase tracking-widest text-muted-foreground">FTID / Email</Label>
@@ -218,17 +255,19 @@ export function LoginForm() {
                     <ArrowLeft className="h-4 w-4" />
                   </Button>
                 )}
-                <Button 
-                  className="flex-1 h-12 bg-primary hover:bg-primary/90 text-primary-foreground font-black uppercase tracking-institutional text-xs shadow-xl shadow-primary/10"
-                  disabled={isLoading || isScanning}
-                  onClick={handleAction}
-                >
-                  {isLoading ? <Loader2 className="h-5 w-5 animate-spin" /> : (
-                    mode === 'signin' ? <><LogIn className="mr-2 h-4 w-4" /> Sign In</> : (
-                      signupStep === 1 ? <><ArrowRight className="mr-2 h-4 w-4" /> Next: Security Hub</> : <><UserPlus className="mr-2 h-4 w-4" /> Establish ID</>
-                    )
-                  )}
-                </Button>
+                {!isBonding && (
+                  <Button 
+                    className="flex-1 h-12 bg-primary hover:bg-primary/90 text-primary-foreground font-black uppercase tracking-institutional text-xs shadow-xl shadow-primary/10"
+                    disabled={isLoading || isScanning}
+                    onClick={handleAction}
+                  >
+                    {isLoading ? <Loader2 className="h-5 w-5 animate-spin" /> : (
+                      mode === 'signin' ? <><LogIn className="mr-2 h-4 w-4" /> Sign In</> : (
+                        signupStep === 1 ? <><ArrowRight className="mr-2 h-4 w-4" /> Next: Security Hub</> : <><UserPlus className="mr-2 h-4 w-4" /> Establish ID</>
+                      )
+                    )}
+                  </Button>
+                )}
               </div>
             </CardContent>
             

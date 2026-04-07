@@ -48,6 +48,9 @@
         },
         "address": {
           "type": "string"
+        },
+        "onboardingComplete": {
+          "type": "boolean"
         }
       },
       "required": [
