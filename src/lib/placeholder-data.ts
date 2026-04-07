@@ -257,7 +257,7 @@ export const statePerformanceData = {
   ],
   efficiency: [
     { state: 'Gujarat', metric: 'Ease of Biz', value: 'Rank 1', rank: 'Top' },
-    { state: 'Karnataka', metric: 'Innovation Index', value: 'Rank 1', rank: 'Top' }
+    { state: 'Karnataka', metric: Innovation Index, value: 'Rank 1', rank: 'Top' }
   ]
 };
 

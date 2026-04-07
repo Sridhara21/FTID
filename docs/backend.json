@@ -61,29 +61,56 @@
       "$schema": "http://json-schema.org/draft-07/schema#",
       "title": "Transaction",
       "type": "object",
-      "description": "Core financial DNS log record.",
+      "description": "Core financial DNS log record representing a movement of value.",
       "properties": {
         "id": { "type": "string" },
         "citizenId": { "type": "string" },
         "amount": { "type": "number" },
-        "type": { "type": "string", "enum": ["tax_payment", "subsidy_disbursement", "cbdc_transfer", "utility"] },
+        "type": { "type": "string", "enum": ["tax_payment", "subsidy_disbursement", "cbdc_transfer", "utility", "retail"] },
         "status": { "type": "string", "enum": ["completed", "pending", "failed"] },
         "originInstitution": { "type": "string" },
         "destinationInstitution": { "type": "string" },
         "timestamp": { "type": "string", "format": "date-time" },
-        "blockchainHash": { "type": "string" }
+        "blockchainHash": { "type": "string" },
+        "classification": { "type": "string" }
       },
       "required": ["id", "citizenId", "amount", "type", "status", "timestamp"]
     },
     "FraudAlert": {
       "title": "FraudAlert",
       "type": "object",
+      "description": "Anomalies detected in financial flows using AI velocity analysis.",
       "properties": {
         "id": { "type": "string" },
         "location": { "type": "string" },
         "riskLevel": { "type": "string", "enum": ["High", "Medium", "Low"] },
         "reason": { "type": "string" },
-        "detectionDate": { "type": "string", "format": "date-time" }
+        "detectionDate": { "type": "string", "format": "date-time" },
+        "governmentEntityId": { "type": "string" }
+      }
+    },
+    "SubsidyProgram": {
+      "title": "SubsidyProgram",
+      "type": "object",
+      "properties": {
+        "id": { "type": "string" },
+        "name": { "type": "string" },
+        "allocationCr": { "type": "number" },
+        "sourceMinistry": { "type": "string" },
+        "description": { "type": "string" }
+      }
+    },
+    "PoliticalDonation": {
+      "title": "PoliticalDonation",
+      "type": "object",
+      "properties": {
+        "id": { "type": "string" },
+        "donorCitizenId": { "type": "string" },
+        "donorName": { "type": "string" },
+        "recipientParty": { "type": "string" },
+        "amount": { "type": "number" },
+        "electionId": { "type": "string" },
+        "timestamp": { "type": "string", "format": "date-time" }
       }
     }
   },
@@ -116,6 +143,22 @@
           "entityName": "FraudAlert",
           "schema": { "$ref": "#/backend/entities/FraudAlert" },
           "description": "Anomalies detected in financial flows."
+        }
+      },
+      {
+        "path": "/subsidyPrograms/{programId}",
+        "definition": {
+          "entityName": "SubsidyProgram",
+          "schema": { "$ref": "#/backend/entities/SubsidyProgram" },
+          "description": "Government welfare program configurations."
+        }
+      },
+      {
+        "path": "/politicalDonations/{donationId}",
+        "definition": {
+          "entityName": "PoliticalDonation",
+          "schema": { "$ref": "#/backend/entities/PoliticalDonation" },
+          "description": "Public transparency records for political funding."
         }
       }
     ]
