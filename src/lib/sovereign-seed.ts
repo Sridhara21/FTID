@@ -22,9 +22,8 @@ export interface SeedPersona {
   welfare?: any[];
 }
 
-// Compact helper to generate consistent seed data for the 100 users
 const generateSeedData = (): SeedPersona[] => {
-  const baseUsers = [
+  const users = [
     { name: "Ananya Iyer", pan: "PNGND1694Z", aadhaar: "419679142020", persona: "Salaried IT Professional", tier: "Tier1", score: 539, income: 1759794 },
     { name: "Prithviraj Chauhan", pan: "HPGBT9246V", aadhaar: "403393833964", persona: "Sales Executive", tier: "Tier2", score: 528, income: 673738 },
     { name: "Savitri Devi Kumari", pan: "CPLDH2769D", aadhaar: "390892054116", persona: "SHG Member", tier: "Tier3_Rural", score: 322, income: 138235 },
@@ -118,7 +117,6 @@ const generateSeedData = (): SeedPersona[] => {
     { name: "Kailash Meena", pan: "OEVUY6535O", aadhaar: "993579419504", persona: "Wheat Farmer", tier: "Tier3_Rural", score: 496, income: 178950 },
     { name: "Vasantha Lakshmi", pan: "EMCSB0929M", aadhaar: "998169705297", persona: "Primary Teacher", tier: "Tier2", score: 509, income: 325634 },
     { name: "Feroz Ahmed K.", pan: "ZWLFT5789Z", aadhaar: "517001840121", persona: "Logistics Captain", tier: "Tier3_Rural", score: 460, income: 224583 },
-    // Adding 7 more to reach 100
     { name: "Arati Mukherji", pan: "ARMBX1122K", aadhaar: "112233445566", persona: "Web Architect", tier: "Tier1", score: 710, income: 1850000 },
     { name: "Gopal Krishna", pan: "GKPKX3344L", aadhaar: "223344556677", persona: "Dairy Biz", tier: "Tier3_Rural", score: 420, income: 310000 },
     { name: "Sunita Reddy", pan: "SNTRX5566M", aadhaar: "334455667788", persona: "Social Worker", tier: "Tier2", score: 590, income: 420000 },
@@ -128,7 +126,7 @@ const generateSeedData = (): SeedPersona[] => {
     { name: "Fatima Bi", pan: "FTMBX2244Q", aadhaar: "778899001122", persona: "SHG Leader", tier: "Tier3_Rural", score: 395, income: 185000 }
   ];
 
-  return baseUsers.map(u => ({
+  return users.map(u => ({
     fullName: u.name,
     pan: u.pan,
     aadhaar: u.aadhaar,

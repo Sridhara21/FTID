@@ -1,3 +1,4 @@
+
 "use client";
 
 import { useState, useEffect } from "react";
@@ -9,7 +10,7 @@ import { Label } from "@/components/ui/label";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Building, User, Loader2, UserPlus, LogIn, ShieldCheck, Fingerprint, ArrowRight, ArrowLeft, CheckCircle2, Zap } from "lucide-react";
 import { useAuth, useFirestore } from "@/firebase";
-import { initiateEmailSignIn, initiateEmailSignUp } from "@/firebase/non-blocking-login";
+import { initiateEmailSignIn, initiateEmailSignUp, initiateAnonymousSignIn } from "@/firebase/non-blocking-login";
 import { setDocumentNonBlocking, addDocumentNonBlocking } from "@/firebase/non-blocking-updates";
 import { doc, collection } from "firebase/firestore";
 import { useToast } from "@/hooks/use-toast";
@@ -35,7 +36,7 @@ export function LoginForm() {
   const [isBiometricVerified, setIsBiometricVerified] = useState(false);
   const [isScanning, setIsScanning] = useState(false);
 
-  // Auto-fill government credentials when the role is switched
+  // Auto-fill government credentials
   useEffect(() => {
     if (role === 'government') {
       setEmail("official@gov.in");
@@ -59,6 +60,17 @@ export function LoginForm() {
   };
 
   const handleAction = async () => {
+    // Government Bypass for Demo
+    if (role === 'government' && email === "official@gov.in" && password === "gov_access_2026") {
+      setIsLoading(true);
+      // Sign in anonymously for session context in prototype
+      initiateAnonymousSignIn(auth);
+      setTimeout(() => {
+        router.push("/government");
+      }, 1500);
+      return;
+    }
+
     if (mode === 'signup') {
       if (signupStep === 1) {
         if (!fullName || !pan || !aadhaar || !email) {
@@ -109,6 +121,7 @@ export function LoginForm() {
               pan: { number: pan.toUpperCase(), status: "Verified" },
               aadhaar: { number: aadhaar, status: "Verified" },
               currentCreditScore: persona?.creditScore || 785,
+              tier: persona?.tier || "Tier1",
               isLinked: true,
               registrationDate: new Date().toISOString(),
               onboardingComplete: true
@@ -152,7 +165,7 @@ export function LoginForm() {
         }, 1500);
       }
     } catch (error: any) {
-      toast({ variant: "destructive", title: "Auth Error", description: error.message });
+      toast({ variant: "destructive", title: "Auth Error", description: "Verification failed. Use pre-filled creds or valid seed IDs." });
       setIsLoading(false);
     }
   };
