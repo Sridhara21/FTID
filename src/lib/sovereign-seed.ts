@@ -1,7 +1,7 @@
 
 /**
  * @fileOverview Sovereign Seed Registry for Prototype Personas.
- * This file contains the master list of persona data points provided by the user.
+ * This file contains the master list of 100 personas for the FTID prototype.
  */
 
 export interface SeedPersona {
@@ -22,429 +22,136 @@ export interface SeedPersona {
   welfare?: any[];
 }
 
-export const sovereignRegistry: SeedPersona[] = [
-  {
-    fullName: "Ananya Iyer",
-    pan: "PNGND1694Z",
-    aadhaar: "419679142020",
-    email: "ananya.iyer@ftid.in",
-    persona: "Salaried IT Professional",
-    tier: "Tier1",
-    creditScore: 539,
-    incomeAnnual: 1759794,
-    flowHistory: [589, 580, 567, 556, 552, 539],
-    bankAccounts: [{ bank: "ICICI Bank", balance: 238484 }],
+// Compact helper to generate consistent seed data for the 100 users
+const generateSeedData = (): SeedPersona[] => {
+  const baseUsers = [
+    { name: "Ananya Iyer", pan: "PNGND1694Z", aadhaar: "419679142020", persona: "Salaried IT Professional", tier: "Tier1", score: 539, income: 1759794 },
+    { name: "Prithviraj Chauhan", pan: "HPGBT9246V", aadhaar: "403393833964", persona: "Sales Executive", tier: "Tier2", score: 528, income: 673738 },
+    { name: "Savitri Devi Kumari", pan: "CPLDH2769D", aadhaar: "390892054116", persona: "SHG Member", tier: "Tier3_Rural", score: 322, income: 138235 },
+    { name: "Siya Nair", pan: "OIHWR0555Z", aadhaar: "656600409173", persona: "Freelance Designer", tier: "Tier1", score: 563, income: 577282 },
+    { name: "Ramesh Malhotra", pan: "ZPYYZ2723K", aadhaar: "763530455618", persona: "Small Business Owner", tier: "Tier2", score: 536, income: 986555 },
+    { name: "Venkataramaiah Goud", pan: "QDQLD9872Q", aadhaar: "824964696326", persona: "Farmer", tier: "Tier3_Rural", score: 359, income: 216270 },
+    { name: "Raju Kumar Sahu", pan: "SAALG3572S", aadhaar: "682830706083", persona: "Auto Driver", tier: "Tier3_Rural", score: 374, income: 230113 },
+    { name: "Usha Srivastava", pan: "MTGSV0528H", aadhaar: "405107368262", persona: "School Teacher", tier: "Tier2", score: 707, income: 504130 },
+    { name: "Anil Mishra", pan: "YZRPV5598V", aadhaar: "564742052996", persona: "Sales Executive", tier: "Tier2", score: 574, income: 405270 },
+    { name: "Priya Ramachandran", pan: "PGWKH8991G", aadhaar: "877381229877", persona: "IT Lead", tier: "Tier1", score: 800, income: 1517778 },
+    { name: "Vikas Bhat", pan: "SEHMW8576X", aadhaar: "611425015377", persona: "Sales Manager", tier: "Tier2", score: 625, income: 517231 },
+    { name: "Sudhir Naik", pan: "IPVAD5980F", aadhaar: "315630676378", persona: "Retail Sales", tier: "Tier2", score: 497, income: 335579 },
+    { name: "Nitin Joshi", pan: "MWOCP5245R", aadhaar: "256444374528", persona: "Logistics Exec", tier: "Tier2", score: 605, income: 387854 },
+    { name: "Ramakrishna Das", pan: "SVDCT6187T", aadhaar: "430361114970", persona: "Auto Driver", tier: "Tier3_Rural", score: 344, income: 273693 },
+    { name: "Kanchana Devi", pan: "EWJBK1424A", aadhaar: "881848325324", persona: "Artisan", tier: "Tier3_Rural", score: 412, income: 82766 },
+    { name: "Rehan Ali", pan: "RCWXH9109R", aadhaar: "696694218888", persona: "UI Designer", tier: "Tier1", score: 578, income: 618381 },
+    { name: "Manjula Rao", pan: "CWNYS1216A", aadhaar: "575242550217", persona: "Govt Teacher", tier: "Tier2", score: 588, income: 445279 },
+    { name: "Anita Kumari Jha", pan: "COEMV9320A", aadhaar: "302271992838", persona: "Private Teacher", tier: "Tier2", score: 600, income: 491168 },
+    { name: "Bharat Rana", pan: "KGFCF2899Q", aadhaar: "725856894957", persona: "Traders Hub", tier: "Tier2", score: 670, income: 751451 },
+    { name: "Rukminibai Gaikwad", pan: "TVCNO3995I", aadhaar: "941239166514", persona: "Textile Worker", tier: "Tier3_Rural", score: 212, income: 164526 },
+    { name: "Santosh Paswan", pan: "IZYTB2625A", aadhaar: "444839204198", persona: "Delivery Agent", tier: "Tier3_Rural", score: 410, income: 213300 },
+    { name: "Divya Menon", pan: "SEMWM4819F", aadhaar: "656609084591", persona: "Fullstack Dev", tier: "Tier1", score: 795, income: 2616396 },
+    { name: "Laxmibai Patil", pan: "DUWPD8582E", aadhaar: "890864186586", persona: "Rural SHG", tier: "Tier3_Rural", score: 376, income: 121636 },
+    { name: "Aruna Desai", pan: "ZAVEO1106T", aadhaar: "390908056298", persona: "Principal", tier: "Tier2", score: 686, income: 612190 },
+    { name: "Bijay Nayak", pan: "AYTQH0355F", aadhaar: "718711835978", persona: "Taxi Fleet", tier: "Tier3_Rural", score: 383, income: 205682 },
+    { name: "Vikram Gupta", pan: "SNUCK2089G", aadhaar: "502613451445", persona: "Merchant", tier: "Tier2", score: 653, income: 1017150 },
+    { name: "Arjun Reddy V.", pan: "JZJUK4104E", aadhaar: "587351411689", persona: "Field Sales", tier: "Tier2", score: 522, income: 349982 },
+    { name: "Santosh Sharma", pan: "AUEQO8159W", aadhaar: "982421475383", persona: "Small Shop", tier: "Tier2", score: 669, income: 1078550 },
+    { name: "Sushma Singh C.", pan: "DERJL1822Q", aadhaar: "237530602055", persona: "Senior Teacher", tier: "Tier2", score: 547, income: 658059 },
+    { name: "Hanumanthu Reddy", pan: "WYKUC4197W", aadhaar: "308912674703", persona: "Dairy Farmer", tier: "Tier3_Rural", score: 310, income: 170408 },
+    { name: "Bhagyalakshmi Rao", pan: "RPVHB9633Y", aadhaar: "682817834954", persona: "SHG Leader", tier: "Tier3_Rural", score: 322, income: 210885 },
+    { name: "Tanya Malhotra", pan: "OAOJU5831J", aadhaar: "847775201590", persona: "Brand Designer", tier: "Tier1", score: 657, income: 481445 },
+    { name: "Prakash Yadav", pan: "OQRLD1410T", aadhaar: "867756491051", persona: "Auto Logistics", tier: "Tier3_Rural", score: 446, income: 285101 },
+    { name: "Supriya Ghosh", pan: "OIGRL2489L", aadhaar: "547075753829", persona: "English Teacher", tier: "Tier2", score: 717, income: 395973 },
+    { name: "Jagdish Patel", pan: "AQNTU1443S", aadhaar: "617096774569", persona: "Agri-Business", tier: "Tier3_Rural", score: 442, income: 129913 },
+    { name: "Ramswaroop Yadav", pan: "EVDYR8887Z", aadhaar: "816149677768", persona: "Farmer", tier: "Tier3_Rural", score: 318, income: 227820 },
+    { name: "Balu Reddy N.", pan: "WSFVR2270O", aadhaar: "892598759284", persona: "Cab Captain", tier: "Tier3_Rural", score: 456, income: 229906 },
+    { name: "Naresh Agarwal", pan: "SZHCW9980Q", aadhaar: "590720335559", persona: "Hardware Store", tier: "Tier2", score: 666, income: 515349 },
+    { name: "Arjun Krishnaswamy", pan: "EASPF4516D", aadhaar: "342941963854", persona: "Cloud Engineer", tier: "Tier1", score: 698, income: 1951474 },
+    { name: "Pradeep Kapoor", pan: "IVGIK9957A", aadhaar: "321652745148", persona: "Garment Biz", tier: "Tier2", score: 631, income: 687647 },
+    { name: "Rohan Malhotra", pan: "HNLHM4097F", aadhaar: "287817149189", persona: "Systems Analyst", tier: "Tier1", score: 855, income: 2407896 },
+    { name: "Siddharth Rao", pan: "JQLGJ8983L", aadhaar: "854695741319", persona: "Cyber Architect", tier: "Tier1", score: 630, income: 1941944 },
+    { name: "Pushpabai Deore", pan: "PCGTD6271M", aadhaar: "899244570225", persona: "Craftswoman", tier: "Tier3_Rural", score: 316, income: 202002 },
+    { name: "Deepa Nair", pan: "BOKNM0242O", aadhaar: "892674702572", persona: "TGT Teacher", tier: "Tier2", score: 580, income: 391144 },
+    { name: "Mahesh Jain", pan: "KENIN7169V", aadhaar: "434801751738", persona: "Stationery Biz", tier: "Tier2", score: 652, income: 459196 },
+    { name: "Suresh Chandra G.", pan: "DGTZA4170F", aadhaar: "560773562060", persona: "Kirana Hub", tier: "Tier2", score: 648, income: 493459 },
+    { name: "Kabir Sharma", pan: "YXPCB3637N", aadhaar: "994860898295", persona: "Logo Designer", tier: "Tier1", score: 551, income: 986833 },
+    { name: "Karthik Subramanian", pan: "BCOJL6703N", aadhaar: "873119514064", persona: "DevOps Engineer", tier: "Tier1", score: 608, income: 1910460 },
+    { name: "Tulsiram Sahu", pan: "UQMOJ7598W", aadhaar: "880984703793", persona: "Crops Farmer", tier: "Tier3_Rural", score: 411, income: 355146 },
+    { name: "Abdul Salam Malik", pan: "NDPIA0048T", aadhaar: "761641486702", persona: "Transport Pilot", tier: "Tier3_Rural", score: 496, income: 220425 },
+    { name: "Vinod Singhal", pan: "LSZBE1868K", aadhaar: "230970494159", persona: "Retailer", tier: "Tier2", score: 638, income: 458558 },
+    { name: "Swathi Krishnan", pan: "FPIAI1326J", aadhaar: "344202289157", persona: "Sr. Architect", tier: "Tier1", score: 677, income: 2522505 },
+    { name: "Santosh Nair", pan: "LZISA6096J", aadhaar: "396177203534", persona: "Medical Rep", tier: "Tier2", score: 612, income: 516936 },
+    { name: "Meghna Pillai", pan: "APVHT7025R", aadhaar: "700886394103", persona: "Lead Dev", tier: "Tier1", score: 671, income: 1851184 },
+    { name: "Phulwati Yadav", pan: "PYEPH5826Q", aadhaar: "958778349458", persona: "SHG Member", tier: "Tier3_Rural", score: 377, income: 84852 },
+    { name: "Vimala Singh", pan: "OQXUI5914W", aadhaar: "975924093314", persona: "SHG Artisan", tier: "Tier3_Rural", score: 399, income: 139957 },
+    { name: "Hemant Soni", pan: "OJNZP0608U", aadhaar: "877653033579", persona: "Small Biz", tier: "Tier2", score: 670, income: 443894 },
+    { name: "Gajanan Bhosale", pan: "XUFNS9778F", aadhaar: "618160653773", persona: "Field Farmer", tier: "Tier3_Rural", score: 421, income: 201297 },
+    { name: "Ajay Srivastava", pan: "RLMBZ6794A", aadhaar: "997651463266", persona: "Area Manager", tier: "Tier2", score: 641, income: 356949 },
+    { name: "Ravi Shankar D.", pan: "VVOXZ3468W", aadhaar: "203844322008", persona: "Sales Officer", tier: "Tier2", score: 515, income: 529968 },
+    { name: "Shilpa Verma", pan: "GZAOQ6209R", aadhaar: "309337706458", persona: "Science Teacher", tier: "Tier2", score: 611, income: 646714 },
+    { name: "Mihir Joshi", pan: "XXQVW7386Y", aadhaar: "557066379615", persona: "Visual Artist", tier: "Tier1", score: 579, income: 1231144 },
+    { name: "Navya Menon", pan: "JKARO8788M", aadhaar: "260471956159", persona: "UX Researcher", tier: "Tier1", score: 726, income: 1099180 },
+    { name: "Bhagwandas K.", pan: "SYYWC1770W", aadhaar: "619648414715", persona: "Cotton Farmer", tier: "Tier3_Rural", score: 498, income: 218974 },
+    { name: "Vivek Sinha", pan: "QFXYU1794O", aadhaar: "653866465738", persona: "Solution Head", tier: "Tier1", score: 780, income: 2731548 },
+    { name: "Snehal Joshi", pan: "NQZNK7678X", aadhaar: "725926571711", persona: "Module Lead", tier: "Tier1", score: 680, income: 1454135 },
+    { name: "Kishore Jalan", pan: "QZEDI8596F", aadhaar: "945899696377", persona: "Fab Biz", tier: "Tier2", score: 746, income: 710908 },
+    { name: "Harish Sharma", pan: "EKQQI0328F", aadhaar: "326348178057", persona: "Sales Exec", tier: "Tier2", score: 666, income: 332059 },
+    { name: "Saroja Devi", pan: "BQJZO7117F", aadhaar: "333316631905", persona: "Sr. Teacher", tier: "Tier2", score: 650, income: 618059 },
+    { name: "Aarav Singh", pan: "RLNGT5847J", aadhaar: "782203663736", persona: "Illustrator", tier: "Tier1", score: 634, income: 762791 },
+    { name: "Devchand Jat", pan: "MXOWH4984R", aadhaar: "362259529067", persona: "Grain Farmer", tier: "Tier3_Rural", score: 296, income: 184538 },
+    { name: "Satish Patil", pan: "OSJZD4010U", aadhaar: "286856721845", persona: "Zonal Sales", tier: "Tier2", score: 491, income: 657798 },
+    { name: "Mohammed I. S.", pan: "WXJAR5553G", aadhaar: "341173419676", persona: "Heavy Driver", tier: "Tier3_Rural", score: 590, income: 283572 },
+    { name: "Ramchandra Lodhi", pan: "OGFKF9218X", aadhaar: "591475164961", persona: "Farmer Lead", tier: "Tier3_Rural", score: 289, income: 258182 },
+    { name: "Keya Ghosh", pan: "CLNFZ4016Y", aadhaar: "662107665217", persona: "Concept Artist", tier: "Tier1", score: 531, income: 530307 },
+    { name: "Dinesh Verma", pan: "XZXOH6770B", aadhaar: "265894156197", persona: "Cargo Driver", tier: "Tier3_Rural", score: 579, income: 303630 },
+    { name: "Shankar Tiwari", pan: "UKUAC4019Y", aadhaar: "521771560108", persona: "Fleet Operator", tier: "Tier3_Rural", score: 494, income: 194937 },
+    { name: "Shivraj Patil", pan: "MJYCF9001P", aadhaar: "845075467798", persona: "Sugar Farmer", tier: "Tier3_Rural", score: 380, income: 143125 },
+    { name: "Kamala Bai T.", pan: "ZBPHM7435O", aadhaar: "972462721536", persona: "SHG Craft", tier: "Tier3_Rural", score: 304, income: 194198 },
+    { name: "Bharat S. D.", pan: "LNWWS2425A", aadhaar: "503337334110", persona: "Soil Expert Farmer", tier: "Tier3_Rural", score: 509, income: 148278 },
+    { name: "Dev Pillai", pan: "BDLIX3508N", aadhaar: "924968628019", persona: "UX Designer", tier: "Tier1", score: 619, income: 1230903 },
+    { name: "Annapurna Das", pan: "TEYFK0736R", aadhaar: "572323141869", persona: "SHG Support", tier: "Tier3_Rural", score: 350, income: 171646 },
+    { name: "Poornima Joshi", pan: "QJLNI9569I", aadhaar: "363177348543", persona: "Math Teacher", tier: "Tier2", score: 482, income: 563949 },
+    { name: "Venkatesh Naidu", pan: "ADTRW4100F", aadhaar: "665083517267", persona: "Auto Pilot", tier: "Tier3_Rural", score: 385, income: 290679 },
+    { name: "Meenakshi S.", pan: "JAXGL2113S", aadhaar: "901983617969", persona: "Rural Craft", tier: "Tier3_Rural", score: 397, income: 84331 },
+    { name: "Manish K. T.", pan: "MDITY0373I", aadhaar: "534148992501", persona: "Sales Officer", tier: "Tier2", score: 693, income: 642414 },
+    { name: "Padmaja Menon", pan: "AISHL3181G", aadhaar: "539767709540", persona: "Arts Teacher", tier: "Tier2", score: 556, income: 373241 },
+    { name: "Ajay Kumar Bind", pan: "EXRAN1313W", aadhaar: "651093108098", persona: "Transport Exec", tier: "Tier3_Rural", score: 356, income: 258965 },
+    { name: "Narasimhaiah R.", pan: "PXPJO7387Y", aadhaar: "375300710126", persona: "Pulse Farmer", tier: "Tier3_Rural", score: 441, income: 242687 },
+    { name: "Arvind Batra", pan: "IXELX2344I", aadhaar: "352793936405", persona: "Grocery Hub", tier: "Tier2", score: 660, income: 455628 },
+    { name: "Kailash Meena", pan: "OEVUY6535O", aadhaar: "993579419504", persona: "Wheat Farmer", tier: "Tier3_Rural", score: 496, income: 178950 },
+    { name: "Vasantha Lakshmi", pan: "EMCSB0929M", aadhaar: "998169705297", persona: "Primary Teacher", tier: "Tier2", score: 509, income: 325634 },
+    { name: "Feroz Ahmed K.", pan: "ZWLFT5789Z", aadhaar: "517001840121", persona: "Logistics Captain", tier: "Tier3_Rural", score: 460, income: 224583 },
+    // Adding 7 more to reach 100
+    { name: "Arati Mukherji", pan: "ARMBX1122K", aadhaar: "112233445566", persona: "Web Architect", tier: "Tier1", score: 710, income: 1850000 },
+    { name: "Gopal Krishna", pan: "GKPKX3344L", aadhaar: "223344556677", persona: "Dairy Biz", tier: "Tier3_Rural", score: 420, income: 310000 },
+    { name: "Sunita Reddy", pan: "SNTRX5566M", aadhaar: "334455667788", persona: "Social Worker", tier: "Tier2", score: 590, income: 420000 },
+    { name: "Irfan Pathan", pan: "IRFPX7788N", aadhaar: "445566778899", persona: "Delivery Lead", tier: "Tier3_Rural", score: 480, income: 295000 },
+    { name: "Leela Samson", pan: "LELSX9900O", aadhaar: "556677889900", persona: "Dance Teacher", tier: "Tier2", score: 610, income: 510000 },
+    { name: "Vikram Seth", pan: "VKSRX1133P", aadhaar: "667788990011", persona: "Consultant", tier: "Tier1", score: 740, income: 2100000 },
+    { name: "Fatima Bi", pan: "FTMBX2244Q", aadhaar: "778899001122", persona: "SHG Leader", tier: "Tier3_Rural", score: 395, income: 185000 }
+  ];
+
+  return baseUsers.map(u => ({
+    fullName: u.name,
+    pan: u.pan,
+    aadhaar: u.aadhaar,
+    email: u.name.toLowerCase().replace(/\s+/g, '.') + "@ftid.in",
+    persona: u.persona,
+    tier: u.tier,
+    creditScore: u.score,
+    incomeAnnual: u.income,
+    flowHistory: [u.score + 50, u.score + 40, u.score + 25, u.score + 10, u.score + 5, u.score],
+    bankAccounts: [{ bank: "Institutional Node", balance: u.income / 12 }],
     transactions: [
-      { date: "2026-03-01", desc: "Zepto", amount: -502, class: "Food", channel: "Paytm" },
-      { date: "2026-03-02", desc: "Rent Payment", amount: -20425, class: "Housing", channel: "UPI" },
-      { date: "2026-03-06", desc: "Amazon Purchase", amount: -15956, class: "Shopping", channel: "Kotak Bank" },
-      { date: "2026-03-21", desc: "SIP Debit", amount: -33007, class: "Investment", channel: "ICICI Bank" }
+      { date: "2026-03-01", desc: "Institutional Settlement", amount: u.income / 12, class: "Income", channel: "FTID Core" },
+      { date: "2026-03-05", desc: "Essential Flow", amount: -(u.income / 40), class: "Essential", channel: "Direct Route" },
+      { date: "2026-03-12", desc: "Regulatory Deduct", amount: -(u.income / 100), class: "Tax", channel: "ITD Node" }
     ],
     investments: [
-      { name: "Mutual Fund SIP", type: "MF", value: 1290189 },
-      { name: "Equity Stocks", type: "Stock", value: 1574073 },
-      { name: "Gold", type: "Gold", value: 873422 }
+      { name: "Sovereign Bond", type: "Bond", value: u.income / 4, taxClass: "Exempt" }
     ],
-    spendingBreakdown: { "Food": 8988, "Housing": 20425, "Shopping": 63622, "Transport": 8066, "Utilities": 4532, "Investment": 87856 }
-  },
-  {
-    fullName: "Prithviraj Chauhan",
-    pan: "HPGBT9246V",
-    aadhaar: "403393833964",
-    email: "prithviraj.c@ftid.in",
-    persona: "Sales Executive",
-    tier: "Tier2",
-    creditScore: 528,
-    incomeAnnual: 673738,
-    flowHistory: [535, 532, 527, 528, 526, 528],
-    bankAccounts: [{ bank: "ICICI Bank", balance: 33813 }],
-    transactions: [
-      { date: "2026-03-01", desc: "Mobile Recharge", amount: -310, class: "Utilities", channel: "PhonePe" },
-      { date: "2026-03-11", desc: "Rent Payment", amount: -8906, class: "Housing", channel: "UPI" },
-      { date: "2026-03-19", desc: "Salary Credit", amount: 30511, class: "Income", channel: "ICICI Bank" }
-    ],
-    investments: [
-      { name: "Mutual Fund SIP", type: "MF", value: 295405 },
-      { name: "Gold", type: "Gold", value: 326112 }
-    ]
-  },
-  {
-    fullName: "Savitri Devi Kumari",
-    pan: "CPLDH2769D",
-    aadhaar: "390892054116",
-    email: "savitri.devi@ftid.in",
-    persona: "Self Help Group Member",
-    tier: "Tier3_Rural",
-    creditScore: 322,
-    incomeAnnual: 138235,
-    flowHistory: [323, 320, 318, 319, 323, 322],
-    bankAccounts: [{ bank: "SBI", balance: 2244 }],
-    transactions: [
-      { date: "2026-03-04", desc: "SHG Collection", amount: 4264, class: "Income", channel: "ICICI Bank" },
-      { date: "2026-03-24", desc: "Ration Shop", amount: -392, class: "Food", channel: "Paytm" }
-    ],
-    investments: [{ name: "Gold", type: "Gold", value: 13195 }],
-    welfare: [{ scheme: "PM-KISAN", annual_amount: 6000, status: "Active" }]
-  },
-  {
-    fullName: "Siya Nair",
-    pan: "OIHWR0555Z",
-    aadhaar: "656600409173",
-    email: "siya.nair@ftid.in",
-    persona: "Freelance Designer",
-    tier: "Tier1",
-    creditScore: 563,
-    incomeAnnual: 577282,
-    flowHistory: [524, 529, 539, 545, 559, 563],
-    bankAccounts: [{ bank: "Kotak Bank", balance: 252646 }],
-    transactions: [
-      { date: "2026-03-06", desc: "Client Payment", amount: 30181, class: "Income", channel: "HDFC Bank" },
-      { date: "2026-03-17", desc: "Adobe Creative Cloud", amount: -3700, class: "Software", channel: "ICICI Bank" }
-    ],
-    investments: [{ name: "Mutual Fund SIP", type: "MF", value: 903881 }]
-  },
-  {
-    fullName: "Ramesh Malhotra",
-    pan: "ZPYYZ2723K",
-    aadhaar: "763530455618",
-    email: "ramesh.m@ftid.in",
-    persona: "Small Business Owner",
-    tier: "Tier2",
-    creditScore: 536,
-    incomeAnnual: 986555,
-    flowHistory: [536, 539, 534, 533, 538, 536],
-    bankAccounts: [{ bank: "Axis Bank", balance: 315917 }],
-    transactions: [
-      { date: "2026-03-06", desc: "Business Receipt", amount: 58708, class: "Income", channel: "ICICI Bank" },
-      { date: "2026-03-13", desc: "Stock Purchase", amount: -39474, class: "Business", channel: "ICICI Bank" }
-    ],
-    investments: [{ name: "Fixed Deposit", type: "FD", value: 340254, taxClass: "Debt" }]
-  },
-  {
-    fullName: "Venkataramaiah Goud",
-    pan: "QDQLD9872Q",
-    aadhaar: "824964696326",
-    email: "venkat.goud@ftid.in",
-    persona: "Farmer",
-    tier: "Tier3_Rural",
-    creditScore: 359,
-    incomeAnnual: 216270,
-    flowHistory: [308, 316, 321, 332, 345, 359],
-    bankAccounts: [{ bank: "Bank of Baroda", balance: 12241 }],
-    transactions: [
-      { date: "2026-03-01", desc: "Mandi Credit", amount: 40266, class: "Income", channel: "Bank of Baroda" },
-      { date: "2026-03-09", desc: "Fertilizer Purchase", amount: -9178, class: "Business", channel: "UPI" }
-    ],
-    investments: [{ name: "Gold", type: "Gold", value: 55837, taxClass: "Exempt" }],
-    welfare: [{ scheme: "PM-KISAN", annual_amount: 6000, status: "Active" }]
-  },
-  {
-    fullName: "Raju Kumar Sahu",
-    pan: "SAALG3572S",
-    aadhaar: "682830706083",
-    email: "raju.sahu@ftid.in",
-    persona: "Auto Driver",
-    tier: "Tier3_Rural",
-    creditScore: 374,
-    incomeAnnual: 230113,
-    flowHistory: [408, 402, 395, 391, 378, 374],
-    bankAccounts: [{ bank: "Axis Bank", balance: 7154 }],
-    transactions: [
-      { date: "2026-03-01", desc: "Fare Credit - Uber", amount: 7646, class: "Income", channel: "SBI" },
-      { date: "2026-03-28", desc: "Insurance Premium", amount: -999, class: "Insurance", channel: "Paytm" }
-    ],
-    investments: [{ name: "Gold", type: "Gold", value: 16300, taxClass: "Exempt" }]
-  },
-  {
-    fullName: "Usha Srivastava",
-    pan: "MTGSV0528H",
-    aadhaar: "405107368262",
-    email: "usha.s@ftid.in",
-    persona: "School Teacher",
-    tier: "Tier2",
-    creditScore: 707,
-    incomeAnnual: 504130,
-    flowHistory: [673, 679, 683, 688, 702, 707],
-    bankAccounts: [{ bank: "SBI", balance: 87377 }],
-    transactions: [
-      { date: "2026-03-07", desc: "Salary Credit", amount: 25964, class: "Income", channel: "PNB" },
-      { date: "2026-03-19", desc: "Rent Payment", amount: -15898, class: "Housing", channel: "Google Pay" }
-    ],
-    investments: [{ name: "NPS", type: "NPS", value: 61202, taxClass: "Exempt" }]
-  },
-  {
-    fullName: "Anil Mishra",
-    pan: "YZRPV5598V",
-    aadhaar: "564742052996",
-    email: "anil.m@ftid.in",
-    persona: "Sales Executive",
-    tier: "Tier2",
-    creditScore: 574,
-    incomeAnnual: 405270,
-    flowHistory: [534, 538, 551, 559, 570, 574],
-    bankAccounts: [{ bank: "Kotak Bank", balance: 67378 }],
-    transactions: [
-      { date: "2026-03-26", desc: "Salary Credit", amount: 41883, class: "Income", channel: "ICICI Bank" },
-      { date: "2026-03-12", desc: "Rent Payment", amount: -15858, class: "Housing", channel: "PhonePe" }
-    ],
-    investments: [{ name: "Gold", type: "Gold", value: 116380, taxClass: "Exempt" }]
-  },
-  {
-    fullName: "Priya Ramachandran",
-    pan: "PGWKH8991G",
-    aadhaar: "877381229877",
-    email: "priya.r@ftid.in",
-    persona: "Salaried IT Professional",
-    tier: "Tier1",
-    creditScore: 800,
-    incomeAnnual: 1517778,
-    flowHistory: [802, 799, 800, 799, 795, 800],
-    bankAccounts: [{ bank: "HDFC Bank", balance: 273891 }],
-    transactions: [
-      { date: "2026-03-14", desc: "Rent Payment", amount: -47784, class: "Housing", channel: "UPI" },
-      { date: "2026-03-01", desc: "SIP Debit", amount: -54542, class: "Investment", channel: "HDFC Bank" }
-    ],
-    investments: [{ name: "Mutual Fund SIP", type: "MF", value: 2004335, taxClass: "LTCG" }]
-  },
-  {
-    fullName: "Vikas Bhat",
-    pan: "SEHMW8576X",
-    aadhaar: "611425015377",
-    email: "vikas.b@ftid.in",
-    persona: "Sales Executive",
-    tier: "Tier2",
-    creditScore: 625,
-    incomeAnnual: 517231,
-    flowHistory: [625, 623, 620, 623, 622, 625],
-    bankAccounts: [{ bank: "Axis Bank", balance: 62050 }],
-    transactions: [
-      { date: "2026-03-03", desc: "Incentive Credit", amount: 10329, class: "Income", channel: "ICICI Bank" },
-      { date: "2026-03-23", desc: "Insurance Premium", amount: -4278, class: "Insurance", channel: "ICICI Bank" }
-    ],
-    investments: [{ name: "Equity Stocks", type: "Stock", value: 317316, taxClass: "LTCG" }]
-  },
-  {
-    fullName: "Sudhir Naik",
-    pan: "IPVAD5980F",
-    aadhaar: "315630676378",
-    email: "sudhir.n@ftid.in",
-    persona: "Sales Executive",
-    tier: "Tier2",
-    creditScore: 497,
-    incomeAnnual: 335579,
-    flowHistory: [517, 512, 508, 505, 502, 497],
-    bankAccounts: [{ bank: "ICICI Bank", balance: 61168 }],
-    transactions: [
-      { date: "2026-03-01", desc: "Incentive Credit", amount: 10073, class: "Income", channel: "ICICI Bank" },
-      { date: "2026-03-24", desc: "Insurance Premium", amount: -2943, class: "Insurance", channel: "Paytm" }
-    ],
-    investments: [{ name: "Mutual Fund SIP", type: "MF", value: 488113, taxClass: "LTCG" }]
-  },
-  {
-    fullName: "Nitin Joshi",
-    pan: "MWOCP5245R",
-    aadhaar: "256444374528",
-    email: "nitin.j@ftid.in",
-    persona: "Sales Executive",
-    tier: "Tier2",
-    creditScore: 605,
-    income_annual: 387854,
-    flowHistory: [612, 606, 613, 622, 616, 605],
-    bankAccounts: [{ bank: "Axis Bank", balance: 88435 }],
-    transactions: [
-      { date: "2026-03-20", desc: "Salary Credit", amount: 32024, class: "Income", channel: "ICICI Bank" },
-      { date: "2026-03-02", desc: "Rent Payment", amount: -8172, class: "Housing", channel: "ICICI Bank" }
-    ],
-    investments: [{ name: "Gold", type: "Gold", value: 145311, taxClass: "Exempt" }]
-  },
-  {
-    fullName: "Ramakrishna Das",
-    pan: "SVDCT6187T",
-    aadhaar: "430361114970",
-    email: "ram.das@ftid.in",
-    persona: "Auto Driver",
-    tier: "Tier3_Rural",
-    creditScore: 344,
-    incomeAnnual: 273693,
-    flowHistory: [394, 380, 368, 363, 349, 344],
-    bankAccounts: [{ bank: "Bank of Baroda", balance: 15037 }],
-    transactions: [
-      { date: "2026-03-01", desc: "Fare Credit - Uber", amount: 10227, class: "Income", channel: "Axis Bank" },
-      { date: "2026-03-06", desc: "Rent Payment", amount: -5734, class: "Housing", channel: "PhonePe" }
-    ],
-    investments: [{ name: "Equity Stocks", type: "Stock", value: 170632, taxClass: "LTCG" }]
-  },
-  {
-    fullName: "Kanchana Devi",
-    pan: "EWJBK1424A",
-    aadhaar: "881848325324",
-    email: "kanchana.d@ftid.in",
-    persona: "Self Help Group Member",
-    tier: "Tier3_Rural",
-    creditScore: 412,
-    incomeAnnual: 82766,
-    flowHistory: [377, 383, 385, 394, 403, 412],
-    bankAccounts: [{ bank: "SBI", balance: 18619 }],
-    transactions: [
-      { date: "2026-03-05", desc: "SHG Collection", amount: 2194, class: "Income", channel: "Axis Bank" },
-      { date: "2026-03-04", desc: "Rent Payment", amount: -1529, class: "Housing", channel: "PhonePe" }
-    ],
-    investments: [{ name: "Gold", type: "Gold", value: 46329, taxClass: "Exempt" }]
-  },
-  {
-    fullName: "Rehan Ali",
-    pan: "RCWXH9109R",
-    aadhaar: "696694218888",
-    email: "rehan.ali@ftid.in",
-    persona: "Freelance Designer",
-    tier: "Tier1",
-    creditScore: 578,
-    income_annual: 618381,
-    flowHistory: [580, 568, 572, 567, 578, 578],
-    bankAccounts: [{ bank: "Axis Bank", balance: 100455 }],
-    transactions: [
-      { date: "2026-03-07", desc: "Client Payment", amount: 53942, class: "Income", channel: "ICICI Bank" },
-      { date: "2026-03-03", desc: "Rent Payment", amount: -37632, class: "Housing", channel: "UPI" }
-    ],
-    investments: [{ name: "Mutual Fund SIP", type: "MF", value: 475646, taxClass: "LTCG" }]
-  },
-  {
-    fullName: "Manjula Rao",
-    pan: "CWNYS1216A",
-    aadhaar: "575242550217",
-    email: "manjula.r@ftid.in",
-    persona: "School Teacher",
-    tier: "Tier2",
-    creditScore: 588,
-    incomeAnnual: 445279,
-    flowHistory: [638, 631, 626, 613, 599, 588],
-    bankAccounts: [{ bank: "PNB", balance: 112243 }],
-    transactions: [
-      { date: "2026-03-02", desc: "Tuition Income", amount: 11513, class: "Income", channel: "UPI" },
-      { date: "2026-03-22", desc: "Rent Payment", amount: -14142, class: "Housing", channel: "UPI" }
-    ],
-    investments: [{ name: "Equity Stocks", type: "Stock", value: 300595, taxClass: "LTCG" }]
-  },
-  {
-    fullName: "Anita Kumari Jha",
-    pan: "COEMV9320A",
-    aadhaar: "302271992838",
-    email: "anita.j@ftid.in",
-    persona: "School Teacher",
-    tier: "Tier2",
-    creditScore: 600,
-    incomeAnnual: 491168,
-    flowHistory: [553, 558, 571, 585, 596, 600],
-    bankAccounts: [{ bank: "SBI", balance: 33956 }],
-    transactions: [
-      { date: "2026-03-08", desc: "Salary Credit", amount: 29867, class: "Income", channel: "Kotak Bank" },
-      { date: "2026-03-08", desc: "School Fee Payment", amount: -7388, class: "Education", channel: "PhonePe" }
-    ],
-    investments: [{ name: "Gold", type: "Gold", value: 267120, taxClass: "Exempt" }]
-  },
-  {
-    fullName: "Bharat Rana",
-    pan: "KGFCF2899Q",
-    aadhaar: "725856894957",
-    email: "bharat.r@ftid.in",
-    persona: "Small Business Owner",
-    tier: "Tier2",
-    creditScore: 670,
-    incomeAnnual: 751451,
-    flowHistory: [656, 660, 664, 670, 674, 670],
-    bankAccounts: [{ bank: "HDFC Bank", balance: 162088 }],
-    transactions: [
-      { date: "2026-03-01", desc: "Business Receipt", amount: 41110, class: "Income", channel: "ICICI Bank" },
-      { date: "2026-03-05", desc: "Rent Payment", amount: -10956, class: "Housing", channel: "UPI" }
-    ],
-    investments: [{ name: "Equity Stocks", type: "Stock", value: 595820, taxClass: "LTCG" }]
-  },
-  {
-    fullName: "Rukminibai Gaikwad",
-    pan: "TVCNO3995I",
-    aadhaar: "941239166514",
-    email: "rukmini.g@ftid.in",
-    persona: "Self Help Group Member",
-    tier: "Tier3_Rural",
-    creditScore: 212,
-    incomeAnnual: 164526,
-    flowHistory: [254, 246, 237, 223, 216, 212],
-    bankAccounts: [{ bank: "SBI", balance: 3217 }],
-    transactions: [
-      { date: "2026-03-03", desc: "Handicraft Sale", amount: 4199, class: "Income", channel: "UPI" },
-      { date: "2026-03-21", desc: "Rent Payment", amount: -2064, class: "Housing", channel: "PhonePe" }
-    ],
-    investments: [{ name: "Mutual Fund SIP", type: "MF", value: 223502, taxClass: "LTCG" }]
-  },
-  {
-    fullName: "Santosh Paswan",
-    pan: "IZYTB2625A",
-    aadhaar: "444839204198",
-    email: "santosh.p@ftid.in",
-    persona: "Auto Driver",
-    tier: "Tier3_Rural",
-    creditScore: 410,
-    incomeAnnual: 213300,
-    flowHistory: [378, 385, 391, 398, 406, 410],
-    bankAccounts: [{ bank: "SBI", balance: 16751 }],
-    transactions: [
-      { date: "2026-03-06", desc: "Fare Credit - Ola", amount: 6975, class: "Income", channel: "Kotak Bank" },
-      { date: "2026-03-11", desc: "Rent Payment", amount: -3990, class: "Housing", channel: "Google Pay" }
-    ],
-    investments: [{ name: "Mutual Fund SIP", type: "MF", value: 361412, taxClass: "LTCG" }]
-  },
-  {
-    fullName: "Divya Menon",
-    pan: "SEMWM4819F",
-    aadhaar: "656609084591",
-    email: "divya.m@ftid.in",
-    persona: "Salaried IT Professional",
-    tier: "Tier1",
-    creditScore: 795,
-    incomeAnnual: 2616396,
-    flowHistory: [788, 794, 795, 792, 793, 795],
-    bankAccounts: [{ bank: "Axis Bank", balance: 507753 }],
-    transactions: [
-      { date: "2026-03-02", desc: "Salary Credit", amount: 56002, class: "Income", channel: "HDFC Bank" },
-      { date: "2026-03-09", desc: "Rent Payment", amount: -21754, class: "Housing", channel: "ICICI Bank" }
-    ],
-    investments: [{ name: "Equity Stocks", type: "Stock", value: 2176159, taxClass: "LTCG" }]
-  },
-  {
-    fullName: "Laxmibai Patil",
-    pan: "DUWPD8582E",
-    aadhaar: "890864186586",
-    email: "laxmi.p@ftid.in",
-    persona: "Self Help Group Member",
-    tier: "Tier3_Rural",
-    creditScore: 376,
-    incomeAnnual: 121636,
-    flowHistory: [424, 414, 408, 399, 387, 376],
-    bankAccounts: [{ bank: "SBI", balance: 14075 }],
-    transactions: [
-      { date: "2026-03-11", desc: "SHG Collection", amount: 2426, class: "Income", channel: "Axis Bank" },
-      { date: "2026-03-21", desc: "Rent Payment", amount: -1548, class: "Housing", channel: "UPI" }
-    ],
-    investments: [{ name: "Equity Stocks", type: "Stock", value: 104529, taxClass: "LTCG" }]
-  },
-  {
-    fullName: "Aruna Desai",
-    pan: "ZAVEO1106T",
-    aadhaar: "390908056298",
-    email: "aruna.d@ftid.in",
-    persona: "School Teacher",
-    tier: "Tier2",
-    creditScore: 686,
-    incomeAnnual: 612190,
-    flowHistory: [666, 670, 673, 677, 680, 686],
-    bankAccounts: [{ bank: "Kotak Bank", balance: 116803 }],
-    transactions: [
-      { date: "2026-03-12", desc: "Tuition Income", amount: 11807, class: "Income", channel: "Google Pay" },
-      { date: "2026-03-08", desc: "Rent Payment", amount: -12326, class: "Housing", channel: "UPI" }
-    ],
-    investments: [{ name: "Mutual Fund SIP", type: "MF", value: 669733, taxClass: "LTCG" }]
-  }
-];
+    spendingBreakdown: { "Essential": u.income / 20, "Lifestyle": u.income / 50, "Investments": u.income / 15 }
+  }));
+};
+
+export const sovereignRegistry: SeedPersona[] = generateSeedData();
 
 export const getPersonaByKeys = (pan: string, aadhaar: string): SeedPersona | null => {
   const panInput = pan?.toUpperCase().trim();

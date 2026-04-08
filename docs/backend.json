@@ -28,7 +28,9 @@
         "persona": { "type": "string" },
         "isLinked": { "type": "boolean" },
         "registrationDate": { "type": "string", "format": "date-time" },
-        "onboardingComplete": { "type": "boolean" }
+        "onboardingComplete": { "type": "boolean" },
+        "spendingBreakdown": { "type": "object" },
+        "incomeAnnual": { "type": "number" }
       },
       "required": ["id", "fullName", "email", "pan", "aadhaar"]
     },
