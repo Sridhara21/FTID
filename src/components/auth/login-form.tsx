@@ -96,7 +96,7 @@ export function LoginForm() {
               fullName: persona?.fullName || fullName,
               email,
               pan: { number: pan.toUpperCase(), status: "Verified" },
-              aadhaar: { number: `XXXX-XXXX-${aadhaar.slice(-4)}`, status: "Verified" },
+              aadhaar: { number: aadhaar, status: "Verified" },
               currentCreditScore: persona?.creditScore || 785,
               isLinked: true,
               registrationDate: new Date().toISOString(),

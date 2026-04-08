@@ -1,6 +1,6 @@
 /**
  * @fileOverview Sovereign Seed Registry for Prototype Personas.
- * This file contains the master list of persona data points.
+ * This file contains the master list of persona data points provided by the user.
  * During registration, the app checks if an entered PAN/Aadhaar matches a record here.
  */
 
@@ -14,7 +14,9 @@ export interface SeedPersona {
   transactions: any[];
   investments: any[];
   taxRecords: any[];
-  flowHistory: any[];
+  flowHistory: number[];
+  spendingBreakdown?: Record<string, number>;
+  liabilities?: any[];
 }
 
 export const sovereignRegistry: SeedPersona[] = [
@@ -26,12 +28,13 @@ export const sovereignRegistry: SeedPersona[] = [
     creditScore: 539,
     incomeAnnual: 1759794,
     flowHistory: [589, 580, 567, 556, 552, 539],
+    spendingBreakdown: { food: 8988, housing: 20425, shopping: 63622, transport: 8066, utilities: 4532, investment: 87856, insurance: 16226 },
     transactions: [
-      { desc: "Zepto", amount: -502, class: "Food", channel: "Paytm" },
-      { desc: "Rent Payment", amount: -20425, class: "Housing", channel: "UPI" },
-      { desc: "Amazon Purchase", amount: -15956, class: "Shopping", channel: "Kotak Bank" },
-      { desc: "SIP Debit", amount: -33007, class: "Investment", channel: "ICICI Bank" },
-      { desc: "Salary Credit", amount: 146649, class: "Income", channel: "ICICI Bank" }
+      { date: "2026-03-01", desc: "Zepto", amount: -502, class: "Food", channel: "Paytm" },
+      { date: "2026-03-02", desc: "Rent Payment", amount: -20425, class: "Housing", channel: "UPI" },
+      { date: "2026-03-06", desc: "Amazon Purchase", amount: -15956, class: "Shopping", channel: "Kotak Bank" },
+      { date: "2026-03-21", desc: "SIP Debit", amount: -33007, class: "Investment", channel: "ICICI Bank" },
+      { date: "2026-03-28", desc: "Uber", amount: -1167, class: "Transport", channel: "Google Pay" }
     ],
     investments: [
       { name: "Mutual Fund SIP", type: "MF", value: 1290189, taxClass: "LTCG" },
@@ -51,15 +54,16 @@ export const sovereignRegistry: SeedPersona[] = [
     creditScore: 528,
     incomeAnnual: 673738,
     flowHistory: [535, 532, 527, 528, 526, 528],
+    spendingBreakdown: { utilities: 310, food: 3309, transport: 16968, insurance: 2890, business: 4606, housing: 8906, shopping: 10806 },
     transactions: [
-      { desc: "Salary Credit", amount: 30511, class: "Income", channel: "ICICI Bank" },
-      { desc: "Petrol Pump", amount: -2477, class: "Transport", channel: "Paytm" },
-      { desc: "Rent Payment", amount: -8906, class: "Housing", channel: "UPI" },
-      { desc: "Amazon Purchase", amount: -10806, class: "Shopping", channel: "Kotak Bank" }
+      { date: "2026-03-01", desc: "Mobile Recharge", amount: -310, class: "Utilities", channel: "PhonePe" },
+      { date: "2026-03-06", desc: "Petrol Pump", amount: -2477, class: "Transport", channel: "Paytm" },
+      { date: "2026-03-11", desc: "Rent Payment", amount: -8906, class: "Housing", channel: "UPI" },
+      { date: "2026-03-19", desc: "Salary Credit", amount: 30511, class: "Income", channel: "ICICI Bank" },
+      { date: "2026-03-27", desc: "Amazon Purchase", amount: -10806, class: "Shopping", channel: "Kotak Bank" }
     ],
     investments: [
       { name: "Mutual Fund SIP", type: "MF", value: 295405, taxClass: "LTCG" },
-      { name: "Equity Stocks", type: "Stock", value: 282420, taxClass: "LTCG" },
       { name: "Gold", type: "Gold", value: 326112, taxClass: "Exempt" }
     ],
     taxRecords: [
@@ -75,9 +79,9 @@ export const sovereignRegistry: SeedPersona[] = [
     incomeAnnual: 138235,
     flowHistory: [323, 320, 318, 319, 323, 322],
     transactions: [
-      { desc: "SHG Collection", amount: 4264, class: "Income", channel: "ICICI Bank" },
-      { desc: "Ration Shop", amount: -392, class: "Food", channel: "Paytm" },
-      { desc: "SHG Loan Repayment", amount: -818, class: "Liability", channel: "Axis Bank" }
+      { date: "2026-03-04", desc: "SHG Collection", amount: 4264, class: "Income", channel: "ICICI Bank" },
+      { date: "2026-03-10", desc: "SHG Loan Repayment", amount: -818, class: "Liability", channel: "Axis Bank" },
+      { date: "2026-03-24", desc: "Ration Shop", amount: -392, class: "Food", channel: "Paytm" }
     ],
     investments: [
       { name: "Mutual Fund SIP", type: "MF", value: 98896, taxClass: "LTCG" },
@@ -96,9 +100,9 @@ export const sovereignRegistry: SeedPersona[] = [
     incomeAnnual: 577282,
     flowHistory: [524, 529, 539, 545, 559, 563],
     transactions: [
-      { desc: "Client Payment", amount: 30181, class: "Income", channel: "HDFC Bank" },
-      { desc: "Rent Payment", amount: -26953, class: "Housing", channel: "ICICI Bank" },
-      { desc: "Adobe Creative Cloud", amount: -3700, class: "Software", channel: "ICICI Bank" }
+      { date: "2026-03-06", desc: "Client Payment", amount: 30181, class: "Income", channel: "HDFC Bank" },
+      { date: "2026-03-17", desc: "Adobe Creative Cloud", amount: -3700, class: "Software", channel: "ICICI Bank" },
+      { date: "2026-03-26", desc: "Rent Payment", amount: -26953, class: "Housing", channel: "ICICI Bank" }
     ],
     investments: [
       { name: "Mutual Fund SIP", type: "MF", value: 903881, taxClass: "LTCG" },
@@ -117,12 +121,12 @@ export const sovereignRegistry: SeedPersona[] = [
     incomeAnnual: 986555,
     flowHistory: [536, 539, 534, 533, 538, 536],
     transactions: [
-      { desc: "Business Receipt", amount: 58708, class: "Income", channel: "ICICI Bank" },
-      { desc: "Staff Salary", amount: -14471, class: "Business", channel: "HDFC Bank" },
-      { desc: "Stock Purchase", amount: -39474, class: "Business", channel: "ICICI Bank" }
+      { date: "2026-03-01", desc: "Rent Payment", amount: -19017, class: "Housing", channel: "ICICI Bank" },
+      { date: "2026-03-06", desc: "Business Receipt", amount: 58708, class: "Income", channel: "ICICI Bank" },
+      { date: "2026-03-13", desc: "Stock Purchase", amount: -39474, class: "Business", channel: "ICICI Bank" }
     ],
     investments: [
-      { name: "Fixed Deposit", type: "FD", value: 340254, taxClass: "STCG" },
+      { name: "Fixed Deposit", type: "FD", value: 340254, taxClass: "Debt" },
       { name: "Equity Stocks", type: "Stock", value: 791149, taxClass: "LTCG" }
     ],
     taxRecords: [
@@ -138,9 +142,9 @@ export const sovereignRegistry: SeedPersona[] = [
     incomeAnnual: 216270,
     flowHistory: [308, 316, 321, 332, 345, 359],
     transactions: [
-      { desc: "Mandi Credit", amount: 40266, class: "Income", channel: "Bank of Baroda" },
-      { desc: "Fertilizer Purchase", amount: -9178, class: "Business", channel: "UPI" },
-      { desc: "PM-KISAN Credit", amount: 2000, class: "Income", channel: "SBI" }
+      { date: "2026-03-01", desc: "Mandi Credit", amount: 40266, class: "Income", channel: "Bank of Baroda" },
+      { date: "2026-03-09", desc: "Fertilizer Purchase", amount: -9178, class: "Business", channel: "UPI" },
+      { date: "2026-03-13", desc: "PM-KISAN Credit", amount: 2000, class: "Income", channel: "SBI" }
     ],
     investments: [
       { name: "Mutual Fund SIP", type: "MF", value: 123398, taxClass: "LTCG" },
@@ -150,11 +154,15 @@ export const sovereignRegistry: SeedPersona[] = [
       { source: "Agriculture Income", type: "Income", amount: 216270, verified: true, fy: "2025-26" }
     ]
   }
+  // ... more personas can be added here following the same pattern
 ];
 
 export const getPersonaByKeys = (pan: string, aadhaar: string): SeedPersona | null => {
+  const panInput = pan.toUpperCase().trim();
+  const aadhaarInput = aadhaar.replace(/[-\s]/g, '').trim();
+  
   return sovereignRegistry.find(p => 
-    p.pan.toUpperCase() === pan.toUpperCase() || 
-    p.aadhaar === aadhaar
+    p.pan.toUpperCase() === panInput || 
+    p.aadhaar === aadhaarInput
   ) || null;
 };
