@@ -1,3 +1,4 @@
+
 "use client";
 
 import Link from "next/link";
@@ -20,7 +21,8 @@ import {
   Lock,
   FileText,
   HandCoins,
-  ArrowRightLeft
+  ArrowRightLeft,
+  Database
 } from "lucide-react";
 import {
   SidebarHeader,
@@ -46,6 +48,7 @@ const citizenNav = [
 
 const governmentNav = [
   { href: "/government", icon: LayoutGrid, label: "Dashboard" },
+  { href: "/government/registry", icon: Database, label: "Registry Audit" },
   { href: "/government/gdp", icon: Landmark, label: "GDP Tracking" },
   { href: "/government/revenue", icon: PieChart, label: "Revenue" },
   { href: "/government/subsidies", icon: ShieldCheck, label: "Subsidies" },

@@ -1,3 +1,4 @@
+
 {
   "entities": {
     "Citizen": {
@@ -23,6 +24,8 @@
           }
         },
         "currentCreditScore": { "type": "number", "description": "FTID Flow Score" },
+        "tier": { "type": "string", "enum": ["Tier1", "Tier2", "Tier3_Rural"] },
+        "persona": { "type": "string" },
         "isLinked": { "type": "boolean" },
         "registrationDate": { "type": "string", "format": "date-time" },
         "onboardingComplete": { "type": "boolean" }
@@ -38,48 +41,26 @@
         "citizenId": { "type": "string" },
         "description": { "type": "string" },
         "amount": { "type": "number" },
-        "type": { "type": "string", "enum": ["tax_payment", "subsidy", "cbdc_transfer", "essential", "discretionary"] },
+        "type": { "type": "string" },
         "status": { "type": "string" },
         "classification": { "type": "string" },
         "timestamp": { "type": "string", "format": "date-time" },
         "originInstitution": { "type": "string" },
-        "destinationInstitution": { "type": "string" }
+        "destinationInstitution": { "type": "string" },
+        "channel": { "type": "string" }
       }
     },
     "Investment": {
       "title": "Investment",
-      "description": "Bonded asset record for portfolio tracking and capital gains analysis.",
+      "description": "Bonded asset record for portfolio tracking.",
       "type": "object",
       "properties": {
         "id": { "type": "string" },
         "name": { "type": "string" },
-        "type": { "type": "string", "enum": ["Stock", "Mutual Fund", "FD", "Bond", "Gold"] },
+        "type": { "type": "string" },
         "value": { "type": "number" },
-        "taxClass": { "type": "string", "enum": ["LTCG", "STCG", "Exempt"] }
+        "taxClass": { "type": "string" }
       }
-    },
-    "TaxRecord": {
-      "title": "TaxRecord",
-      "description": "Institutional income and deduction data used for real-time tax calculation.",
-      "type": "object",
-      "properties": {
-        "id": { "type": "string" },
-        "type": { "type": "string", "enum": ["Income", "Deduction"] },
-        "source": { "type": "string" },
-        "amount": { "type": "number" },
-        "verified": { "type": "boolean" },
-        "fy": { "type": "string" }
-      }
-    }
-  },
-  "seedingRequirements": {
-    "purpose": "To generate 50-100 live-prototype personas accessible via specific Aadhaar/PAN keys.",
-    "fieldsRequired": {
-      "profile": ["fullName", "email", "pan_number", "aadhaar_number"],
-      "finance": ["monthly_income", "avg_expenses", "savings_ratio"],
-      "transactions": ["date", "description", "amount", "category", "institution"],
-      "portfolio": ["asset_name", "type", "market_value", "qty"],
-      "tax": ["salary_income", "standard_deductions", "section_80c", "section_80d"]
     }
   },
   "auth": {
@@ -88,19 +69,15 @@
   "firestore": {
     "/citizens/{citizenId}": {
       "schema": { "$ref": "#/backend/entities/Citizen" },
-      "description": "Primary identity node."
+      "description": "Sovereign identity nodes."
     },
     "/transactions/{transactionId}": {
       "schema": { "$ref": "#/backend/entities/Transaction" },
-      "description": "Global transaction DNS flows."
+      "description": "Global transaction ledger."
     },
     "/citizens/{citizenId}/investments/{id}": {
       "schema": { "$ref": "#/backend/entities/Investment" },
-      "description": "Private asset portfolio."
-    },
-    "/citizens/{citizenId}/taxRecords/{id}": {
-      "schema": { "$ref": "#/backend/entities/TaxRecord" },
-      "description": "Sovereign tax intelligence."
+      "description": "Bonded assets."
     }
   }
 }
