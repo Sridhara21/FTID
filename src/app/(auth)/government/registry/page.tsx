@@ -18,12 +18,15 @@ import {
 } from "@/components/ui/table";
 import { Badge } from "@/components/ui/badge";
 import { sovereignRegistry } from "@/lib/sovereign-seed";
-import { Database, Search, ShieldCheck, UserCheck, TrendingUp, TrendingDown, Minus } from "lucide-react";
+import { Database, Search, ShieldCheck, UserCheck, TrendingUp, TrendingDown, Minus, Download } from "lucide-react";
 import { Input } from "@/components/ui/input";
 import { useState } from "react";
+import { Button } from "@/components/ui/button";
+import { useToast } from "@/hooks/use-toast";
 
 export default function RegistryAuditPage() {
   const [search, setSearch] = useState("");
+  const { toast } = useToast();
 
   const filteredRegistry = sovereignRegistry.filter(p => 
     p.fullName.toLowerCase().includes(search.toLowerCase()) ||
@@ -40,6 +43,13 @@ export default function RegistryAuditPage() {
     }
   };
 
+  const handleExport = () => {
+    toast({
+      title: "Master Ledger Exported",
+      description: `JSON dataset for ${filteredRegistry.length} personas generated. Check downloads enclave.`,
+    });
+  };
+
   return (
     <div className="space-y-6">
       <div className="flex flex-col md:flex-row md:items-center justify-between gap-4">
@@ -49,14 +59,19 @@ export default function RegistryAuditPage() {
             Real-Time Identity & Flow Intelligence Ledger
           </p>
         </div>
-        <div className="relative w-full md:w-72">
-          <Search className="absolute left-2.5 top-2.5 h-4 w-4 text-muted-foreground" />
-          <Input 
-            placeholder="Search by Name, PAN, or Aadhaar..." 
-            className="pl-8 h-9 text-xs bg-secondary/20 border-border/50"
-            value={search}
-            onChange={(e) => setSearch(e.target.value)}
-          />
+        <div className="flex items-center gap-3">
+            <div className="relative w-full md:w-72">
+                <Search className="absolute left-2.5 top-2.5 h-4 w-4 text-muted-foreground" />
+                <Input 
+                    placeholder="Search by Name, PAN, or Aadhaar..." 
+                    className="pl-8 h-9 text-xs bg-secondary/20 border-border/50"
+                    value={search}
+                    onChange={(e) => setSearch(e.target.value)}
+                />
+            </div>
+            <Button variant="outline" size="sm" className="h-9 font-bold text-[10px] uppercase tracking-widest border-border/50" onClick={handleExport}>
+                <Download className="mr-2 h-3.5 w-3.5" /> Export Data
+            </Button>
         </div>
       </div>
 

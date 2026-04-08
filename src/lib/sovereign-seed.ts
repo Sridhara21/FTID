@@ -37,13 +37,15 @@ export const sovereignRegistry: SeedPersona[] = [
     transactions: [
       { date: "2026-03-01", desc: "Zepto", amount: -502, class: "Food", channel: "Paytm" },
       { date: "2026-03-02", desc: "Rent Payment", amount: -20425, class: "Housing", channel: "UPI" },
-      { date: "2026-03-06", desc: "Amazon Purchase", amount: -15956, class: "Shopping", channel: "Kotak Bank" }
+      { date: "2026-03-06", desc: "Amazon Purchase", amount: -15956, class: "Shopping", channel: "Kotak Bank" },
+      { date: "2026-03-21", desc: "SIP Debit", amount: -33007, class: "Investment", channel: "ICICI Bank" }
     ],
     investments: [
-      { name: "Mutual Fund SIP", type: "MF", value: 1290189, taxClass: "LTCG" },
-      { name: "Equity Stocks", type: "Stock", value: 1574073, taxClass: "LTCG" },
-      { name: "Gold", type: "Gold", value: 873422, taxClass: "Exempt" }
-    ]
+      { name: "Mutual Fund SIP", type: "MF", value: 1290189 },
+      { name: "Equity Stocks", type: "Stock", value: 1574073 },
+      { name: "Gold", type: "Gold", value: 873422 }
+    ],
+    spendingBreakdown: { "Food": 8988, "Housing": 20425, "Shopping": 63622, "Transport": 8066, "Utilities": 4532, "Investment": 87856 }
   },
   {
     fullName: "Prithviraj Chauhan",
@@ -62,8 +64,8 @@ export const sovereignRegistry: SeedPersona[] = [
       { date: "2026-03-19", desc: "Salary Credit", amount: 30511, class: "Income", channel: "ICICI Bank" }
     ],
     investments: [
-      { name: "Mutual Fund SIP", type: "MF", value: 295405, taxClass: "LTCG" },
-      { name: "Gold", type: "Gold", value: 326112, taxClass: "Exempt" }
+      { name: "Mutual Fund SIP", type: "MF", value: 295405 },
+      { name: "Gold", type: "Gold", value: 326112 }
     ]
   },
   {
@@ -81,7 +83,7 @@ export const sovereignRegistry: SeedPersona[] = [
       { date: "2026-03-04", desc: "SHG Collection", amount: 4264, class: "Income", channel: "ICICI Bank" },
       { date: "2026-03-24", desc: "Ration Shop", amount: -392, class: "Food", channel: "Paytm" }
     ],
-    investments: [{ name: "Gold", type: "Gold", value: 13195, taxClass: "Exempt" }],
+    investments: [{ name: "Gold", type: "Gold", value: 13195 }],
     welfare: [{ scheme: "PM-KISAN", annual_amount: 6000, status: "Active" }]
   },
   {
@@ -99,7 +101,7 @@ export const sovereignRegistry: SeedPersona[] = [
       { date: "2026-03-06", desc: "Client Payment", amount: 30181, class: "Income", channel: "HDFC Bank" },
       { date: "2026-03-17", desc: "Adobe Creative Cloud", amount: -3700, class: "Software", channel: "ICICI Bank" }
     ],
-    investments: [{ name: "Mutual Fund SIP", type: "MF", value: 903881, taxClass: "LTCG" }]
+    investments: [{ name: "Mutual Fund SIP", type: "MF", value: 903881 }]
   },
   {
     fullName: "Ramesh Malhotra",
@@ -246,7 +248,7 @@ export const sovereignRegistry: SeedPersona[] = [
     persona: "Sales Executive",
     tier: "Tier2",
     creditScore: 605,
-    incomeAnnual: 387854,
+    income_annual: 387854,
     flowHistory: [612, 606, 613, 622, 616, 605],
     bankAccounts: [{ bank: "Axis Bank", balance: 88435 }],
     transactions: [
@@ -297,7 +299,7 @@ export const sovereignRegistry: SeedPersona[] = [
     persona: "Freelance Designer",
     tier: "Tier1",
     creditScore: 578,
-    incomeAnnual: 618381,
+    income_annual: 618381,
     flowHistory: [580, 568, 572, 567, 578, 578],
     bankAccounts: [{ bank: "Axis Bank", balance: 100455 }],
     transactions: [
@@ -314,7 +316,7 @@ export const sovereignRegistry: SeedPersona[] = [
     persona: "School Teacher",
     tier: "Tier2",
     creditScore: 588,
-    income_annual: 445279,
+    incomeAnnual: 445279,
     flowHistory: [638, 631, 626, 613, 599, 588],
     bankAccounts: [{ bank: "PNB", balance: 112243 }],
     transactions: [
@@ -399,7 +401,7 @@ export const sovereignRegistry: SeedPersona[] = [
     persona: "Salaried IT Professional",
     tier: "Tier1",
     creditScore: 795,
-    income_annual: 2616396,
+    incomeAnnual: 2616396,
     flowHistory: [788, 794, 795, 792, 793, 795],
     bankAccounts: [{ bank: "Axis Bank", balance: 507753 }],
     transactions: [

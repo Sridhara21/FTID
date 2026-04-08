@@ -22,7 +22,8 @@ import {
   FileText,
   HandCoins,
   ArrowRightLeft,
-  Database
+  Database,
+  Cpu
 } from "lucide-react";
 import {
   SidebarHeader,
@@ -56,6 +57,7 @@ const governmentNav = [
   { href: "/government/state-performance", icon: BarChart, label: "State Performance" },
   { href: "/government/balance-sheet", icon: Scale, label: "National Balance Sheet" },
   { href: "/government/fraud-heatmaps", icon: AlertTriangle, label: "Fraud Heatmaps" },
+  { href: "/government/architecture", icon: Cpu, label: "System Architecture" },
 ];
 
 export function DashboardSidebar() {
