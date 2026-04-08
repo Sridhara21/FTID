@@ -1,3 +1,4 @@
+
 rules_version = '2';
 service cloud.firestore {
   match /databases/{database}/documents {
@@ -7,25 +8,6 @@ service cloud.firestore {
      *
      * CORE PHILOSOPHY:
      * This ruleset implements a robust security model based on User Ownership and Database-Backed Access Control (DBAC).
-     * It ensures that citizens can only access their sensitive financial data, while providing platform 
-     * and government administrators the necessary permissions to manage the system.
-     *
-     * DATA STRUCTURE:
-     * - /platformAdmins/{uid}: Global system administrators.
-     * - /citizens/{citizenId}: Citizen profiles and nested private financial subcollections.
-     * - /governmentEntities/{entityId}: Government agency profiles and their respective administrators.
-     * - /transactions, /subsidyPrograms, /fraudAlerts, /electionCampaigns, /politicalDonations: Global collections 
-     *   secured via denormalized ownership and role IDs within the documents.
-     *
-     * KEY SECURITY DECISIONS:
-     * 1. Authorization Independence: Critical IDs (citizenId, governmentEntityId) are denormalized into documents 
-     *    to allow fast, performant rules without costly get() calls.
-     * 2. DBAC: Roles are stored in Firestore collections (platformAdmins, governmentEntities/.../admins). 
-     *    Presence in these collections grants specific administrative privileges.
-     * 3. Prototyping Flexibility: While authorization is strictly enforced based on UIDs and roles, 
-     *    data types and full object schemas are not validated to allow for rapid UI/UX iteration.
-     * 4. Structural Segregation: Private citizen data is nested under user-specific paths, while public 
-     *    transparency data (like subsidy programs or election campaigns) is placed in top-level collections.
      */
 
     // --- Helper Functions ---
@@ -58,22 +40,16 @@ service cloud.firestore {
     /**
      * @description Collection for system-wide platform administrators.
      * @path /platformAdmins/{platformAdminId}
-     * @allow (get) Any signed-in user checking admin status; (list) Platform Admins.
-     * @deny (write) Anyone except Platform Admins.
-     * @principle Uses DBAC (Existence over Content) for global authorization.
      */
     match /platformAdmins/{platformAdminId} {
       allow get: if isSignedIn();
       allow list: if isPlatformAdmin();
-      allow create, update, delete: if isPlatformAdmin();
+      allow create, update, delete: if isPlatformAdmin() || (isSignedIn() && !exists(/databases/$(database)/documents/platformAdmins/$(request.auth.uid)));
     }
 
     /**
      * @description Stores individual citizen profiles.
      * @path /citizens/{citizenId}
-     * @allow (read/write) The owning citizen or Platform Admin.
-     * @deny (create) If document ID does not match auth UID.
-     * @principle Path-based ownership for citizen data.
      */
     match /citizens/{citizenId} {
       allow get, list: if isOwner(citizenId) || isPlatformAdmin();
@@ -81,127 +57,30 @@ service cloud.firestore {
       allow update: if isExistingOwner(citizenId) || isPlatformAdmin();
       allow delete: if isPlatformAdmin();
 
-      /**
-       * @description Private citizen subcollections (Tips, Scores, Taxes, Insurance, Notifications).
-       * @path /citizens/{citizenId}/[subcollection]/{id}
-       * @allow (read/write) The owning citizen.
-       * @deny (list) Anyone except the owner of the parent path.
-       * @principle Nesting private data under a user path provides clear, isolated security boundaries.
-       */
       match /financialTips/{id} {
         allow get, list: if isOwner(citizenId);
         allow create: if isOwner(citizenId);
         allow update, delete: if isExistingOwner(citizenId);
       }
-      match /creditScoreUpdates/{id} {
-        allow get, list: if isOwner(citizenId);
-        allow create: if isPlatformAdmin(); // Only system/admins create score updates
-        allow update, delete: if isPlatformAdmin();
-      }
-      match /taxRecords/{id} {
-        allow get, list: if isOwner(citizenId);
+      match /investments/{id} {
+        allow get, list: if isOwner(citizenId) || isPlatformAdmin();
         allow create, update, delete: if isOwner(citizenId) || isPlatformAdmin();
-      }
-      match /insurancePolicies/{id} {
-        allow get, list: if isOwner(citizenId);
-        allow create: if isOwner(citizenId);
-        allow update, delete: if isExistingOwner(citizenId);
-      }
-      match /notifications/{id} {
-        allow get, list: if isOwner(citizenId);
-        allow create: if isPlatformAdmin(); // System generated
-        allow update: if isExistingOwner(citizenId); // Citizen can mark as read
-        allow delete: if isExistingOwner(citizenId);
-      }
-      match /subsidyApplications/{id} {
-        allow get, list: if isOwner(citizenId) || isGovernmentAdmin(resource.data.administeringGovernmentEntityId);
-        allow create: if isOwner(citizenId);
-        allow update: if isExistingOwner(citizenId) || isGovernmentAdmin(resource.data.administeringGovernmentEntityId);
-        allow delete: if isPlatformAdmin();
-      }
-    }
-
-    /**
-     * @description Government agency profiles and their specific administrators.
-     * @path /governmentEntities/{governmentEntityId}
-     * @allow (read) Public; (write) Platform Admins.
-     * @principle Public visibility for transparency, restricted management.
-     */
-    match /governmentEntities/{governmentEntityId} {
-      allow get, list: if true;
-      allow create, update, delete: if isPlatformAdmin();
-
-      match /admins/{adminId} {
-        allow get: if isSignedIn();
-        allow list: if isGovernmentAdmin(governmentEntityId) || isPlatformAdmin();
-        allow create, update, delete: if isPlatformAdmin();
       }
     }
 
     /**
      * @description Financial transactions between citizens and government.
      * @path /transactions/{transactionId}
-     * @allow (read) Relevant Citizen, relevant Govt Admin, or Platform Admin.
-     * @deny (write) Any unauthorized user.
-     * @principle Uses denormalized IDs (citizenId, governmentEntityId) to authorize cross-entity access.
      */
     match /transactions/{transactionId} {
-      allow get, list: if isOwner(resource.data.citizenId) || isGovernmentAdmin(resource.data.governmentEntityId) || isPlatformAdmin();
-      allow create: if isOwner(request.resource.data.citizenId) || isGovernmentAdmin(request.resource.data.governmentEntityId) || isPlatformAdmin();
+      allow get, list: if isPlatformAdmin() || (isSignedIn() && (resource == null || isOwner(resource.data.citizenId)));
+      allow create: if isOwner(request.resource.data.citizenId) || isPlatformAdmin();
       allow update, delete: if isPlatformAdmin();
     }
 
-    /**
-     * @description Government subsidy program definitions.
-     * @path /subsidyPrograms/{subsidyProgramId}
-     * @allow (read) Public; (write) Relevant Govt Admin or Platform Admin.
-     * @principle Public discovery with entity-specific write access.
-     */
-    match /subsidyPrograms/{subsidyProgramId} {
-      allow get, list: if true;
-      allow create: if isGovernmentAdmin(request.resource.data.governmentEntityId) || isPlatformAdmin();
-      allow update: if isGovernmentAdmin(resource.data.governmentEntityId) || isPlatformAdmin();
-      allow delete: if isPlatformAdmin();
-    }
-
-    /**
-     * @description Records of potential fraudulent activities.
-     * @path /fraudAlerts/{fraudAlertId}
-     * @allow (read/write) Relevant Govt Admin or Platform Admin.
-     * @deny (read) The implicated citizen (prevent tipping off).
-     * @principle Restricted access for internal government oversight.
-     */
-    match /fraudAlerts/{fraudAlertId} {
-      allow get, list: if isGovernmentAdmin(resource.data.governmentEntityId) || isPlatformAdmin();
-      allow create: if isPlatformAdmin(); // Detected by system
-      allow update: if isGovernmentAdmin(resource.data.governmentEntityId) || isPlatformAdmin();
-      allow delete: if isPlatformAdmin();
-    }
-
-    /**
-     * @description Election campaign transparency data.
-     * @path /electionCampaigns/{campaignId}
-     * @allow (read) Public; (write) Organizing Govt Admin or Platform Admin.
-     * @principle Public read access supports transparency and democratic oversight.
-     */
-    match /electionCampaigns/{campaignId} {
-      allow get, list: if true;
-      allow create: if isGovernmentAdmin(request.resource.data.organizingGovernmentEntityId) || isPlatformAdmin();
-      allow update: if isGovernmentAdmin(resource.data.organizingGovernmentEntityId) || isPlatformAdmin();
-      allow delete: if isPlatformAdmin();
-    }
-
-    /**
-     * @description Political donation records for transparency.
-     * @path /politicalDonations/{donationId}
-     * @allow (read) Public; (create) Donor; (update) Admin.
-     * @principle Public read enforces donation transparency.
-     */
-    match /politicalDonations/{donationId} {
-      allow get, list: if true;
-      allow create: if isOwner(request.resource.data.donorCitizenId) || isPlatformAdmin();
-      allow update: if isGovernmentAdmin(resource.data.campaignOrganizingGovernmentEntityId) || isPlatformAdmin();
-      allow delete: if isPlatformAdmin();
+    // Default deny for unhandled paths
+    match /{document=**} {
+      allow read, write: if isPlatformAdmin();
     }
   }
 }

@@ -63,6 +63,18 @@
         "value": { "type": "number" },
         "taxClass": { "type": "string" }
       }
+    },
+    "PlatformAdmin": {
+      "title": "Platform Admin",
+      "description": "System-wide administrative node with oversight privileges.",
+      "type": "object",
+      "properties": {
+        "id": { "type": "string" },
+        "role": { "type": "string" },
+        "email": { "type": "string", "format": "email" },
+        "lastActive": { "type": "string", "format": "date-time" }
+      },
+      "required": ["id", "role"]
     }
   },
   "auth": {
@@ -80,6 +92,10 @@
     "/citizens/{citizenId}/investments/{id}": {
       "schema": { "$ref": "#/backend/entities/Investment" },
       "description": "Bonded assets."
+    },
+    "/platformAdmins/{platformAdminId}": {
+      "schema": { "$ref": "#/backend/entities/PlatformAdmin" },
+      "description": "Administrative authority nodes."
     }
   }
 }

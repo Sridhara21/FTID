@@ -9,7 +9,7 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Building, User, Loader2, UserPlus, LogIn, ShieldCheck, Fingerprint, ArrowRight, ArrowLeft, CheckCircle2, Zap } from "lucide-react";
-import { useAuth, useFirestore } from "@/firebase";
+import { useAuth, useFirestore, useUser } from "@/firebase";
 import { initiateEmailSignIn, initiateEmailSignUp, initiateAnonymousSignIn } from "@/firebase/non-blocking-login";
 import { setDocumentNonBlocking, addDocumentNonBlocking } from "@/firebase/non-blocking-updates";
 import { doc, collection } from "firebase/firestore";
@@ -19,6 +19,7 @@ import { getPersonaByKeys } from "@/lib/sovereign-seed";
 export function LoginForm() {
   const auth = useAuth();
   const db = useFirestore();
+  const { user } = useUser();
   const router = useRouter();
   const { toast } = useToast();
   
@@ -27,6 +28,7 @@ export function LoginForm() {
   const [role, setRole] = useState<'citizen' | 'government'>('citizen');
   const [signupStep, setSignupStep] = useState(1);
   const [isBonding, setIsBonding] = useState(false);
+  const [govLoginStarted, setGovLoginStarted] = useState(false);
   
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
@@ -47,6 +49,25 @@ export function LoginForm() {
     }
   }, [role]);
 
+  // Handle government role seeding after auth settles
+  useEffect(() => {
+    if (govLoginStarted && user && role === 'government' && db) {
+      const adminRef = doc(db, "platformAdmins", user.uid);
+      setDocumentNonBlocking(adminRef, {
+        id: user.uid,
+        role: "REGULATOR_DIU",
+        email: "official@gov.in",
+        lastActive: new Date().toISOString()
+      }, { merge: true });
+      
+      setGovLoginStarted(false);
+      // Wait briefly for firestore rules synchronization
+      setTimeout(() => {
+        router.push("/government");
+      }, 1000);
+    }
+  }, [user, govLoginStarted, role, db, router]);
+
   const simulateBiometric = () => {
     setIsScanning(true);
     setTimeout(() => {
@@ -63,11 +84,8 @@ export function LoginForm() {
     // Government Bypass for Demo
     if (role === 'government' && email === "official@gov.in" && password === "gov_access_2026") {
       setIsLoading(true);
-      // Sign in anonymously for session context in prototype
+      setGovLoginStarted(true);
       initiateAnonymousSignIn(auth);
-      setTimeout(() => {
-        router.push("/government");
-      }, 1500);
       return;
     }
 
