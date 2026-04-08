@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { useRouter } from "next/navigation";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle, CardFooter } from "@/components/ui/card";
@@ -34,6 +34,17 @@ export function LoginForm() {
   const [aadhaar, setAadhaar] = useState("");
   const [isBiometricVerified, setIsBiometricVerified] = useState(false);
   const [isScanning, setIsScanning] = useState(false);
+
+  // Auto-fill government credentials when the role is switched
+  useEffect(() => {
+    if (role === 'government') {
+      setEmail("official@gov.in");
+      setPassword("gov_access_2026");
+    } else {
+      setEmail("");
+      setPassword("");
+    }
+  }, [role]);
 
   const simulateBiometric = () => {
     setIsScanning(true);
@@ -104,35 +115,33 @@ export function LoginForm() {
             }, { merge: true });
 
             // Seeding Transactions
-            const txnCol = collection(db, "transactions");
-            const seedTxns = persona?.transactions.map(t => ({
-              description: t.desc,
-              amount: t.amount,
-              type: t.class === 'Income' ? 'cbdc_transfer' : 'essential',
-              status: "completed",
-              classification: t.class,
-              originInstitution: t.channel,
-              destinationInstitution: t.desc,
-              citizenId: uid,
-              timestamp: new Date().toISOString()
-            })) || [
-              { description: "Sovereign Onboarding Incentive", amount: 10000, type: "cbdc_transfer", status: "completed", classification: "Incentive", originInstitution: "RBI Central Node", destinationInstitution: "FTID Wallet", citizenId: uid, timestamp: new Date().toISOString() }
-            ];
-            seedTxns.forEach(txn => addDocumentNonBlocking(txnCol, txn));
+            if (persona) {
+                const txnCol = collection(db, "transactions");
+                persona.transactions.forEach(t => {
+                    addDocumentNonBlocking(txnCol, {
+                        description: t.desc,
+                        amount: t.amount,
+                        type: t.class === 'Income' ? 'cbdc_transfer' : 'essential',
+                        status: "completed",
+                        classification: t.class,
+                        originInstitution: t.channel,
+                        destinationInstitution: t.desc,
+                        citizenId: uid,
+                        timestamp: new Date().toISOString()
+                    });
+                });
 
-            // Seeding Portfolio
-            const portCol = collection(db, "citizens", uid, "investments");
-            const seedInvestments = persona?.investments || [
-              { name: "Reliance Industries", type: "Stock", value: 435000, taxClass: "LTCG" }
-            ];
-            seedInvestments.forEach(inv => addDocumentNonBlocking(portCol, inv));
-
-            // Seeding Tax Records
-            const taxCol = collection(db, "citizens", uid, "taxRecords");
-            const seedTax = persona?.taxRecords || [
-              { source: "Employment (TDS Form 16)", amount: persona?.incomeAnnual || 1200000, verified: true, type: "Income", fy: "2025-26" }
-            ];
-            seedTax.forEach(rec => addDocumentNonBlocking(taxCol, rec));
+                // Seeding Portfolio
+                const portCol = collection(db, "citizens", uid, "investments");
+                persona.investments.forEach(inv => {
+                    addDocumentNonBlocking(portCol, {
+                        name: inv.name,
+                        type: inv.type,
+                        value: inv.value,
+                        taxClass: "LTCG"
+                    });
+                });
+            }
           }
           router.push(role === 'citizen' ? "/citizen" : "/government");
         }, 2000);
