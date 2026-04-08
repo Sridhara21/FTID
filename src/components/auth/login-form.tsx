@@ -105,25 +105,32 @@ export function LoginForm() {
 
             // Seeding Transactions
             const txnCol = collection(db, "transactions");
-            const seedTxns = persona?.transactions || [
-              { description: "Sovereign Onboarding Incentive", amount: 10000, type: "cbdc_transfer", status: "completed", classification: "Incentive", originInstitution: "RBI Central Node", destinationInstitution: "FTID Wallet" },
-              { description: "Verified HDFC Balance Link", amount: 45250, type: "cbdc_transfer", status: "completed", classification: "Essential", originInstitution: "HDFC Bank", destinationInstitution: "FTID Wallet" }
+            const seedTxns = persona?.transactions.map(t => ({
+              description: t.desc,
+              amount: t.amount,
+              type: t.class === 'Income' ? 'cbdc_transfer' : 'essential',
+              status: "completed",
+              classification: t.class,
+              originInstitution: t.channel,
+              destinationInstitution: t.desc,
+              citizenId: uid,
+              timestamp: new Date().toISOString()
+            })) || [
+              { description: "Sovereign Onboarding Incentive", amount: 10000, type: "cbdc_transfer", status: "completed", classification: "Incentive", originInstitution: "RBI Central Node", destinationInstitution: "FTID Wallet", citizenId: uid, timestamp: new Date().toISOString() }
             ];
-            seedTxns.forEach(txn => addDocumentNonBlocking(txnCol, { ...txn, citizenId: uid, timestamp: new Date().toISOString() }));
+            seedTxns.forEach(txn => addDocumentNonBlocking(txnCol, txn));
 
             // Seeding Portfolio
             const portCol = collection(db, "citizens", uid, "investments");
             const seedInvestments = persona?.investments || [
-              { name: "Reliance Industries", type: "Stock", value: 435000, taxClass: "LTCG" },
-              { name: "Parag Parikh Flexi Cap", type: "Mutual Fund", value: 100000, taxClass: "LTCG" }
+              { name: "Reliance Industries", type: "Stock", value: 435000, taxClass: "LTCG" }
             ];
             seedInvestments.forEach(inv => addDocumentNonBlocking(portCol, inv));
 
             // Seeding Tax Records
             const taxCol = collection(db, "citizens", uid, "taxRecords");
             const seedTax = persona?.taxRecords || [
-              { source: "Employment (TDS Form 16)", amount: 1245000, verified: true, type: "Income", fy: "2025-26" },
-              { source: "Standard Deduction", amount: 75000, verified: true, type: "Deduction", fy: "2025-26" }
+              { source: "Employment (TDS Form 16)", amount: persona?.incomeAnnual || 1200000, verified: true, type: "Income", fy: "2025-26" }
             ];
             seedTax.forEach(rec => addDocumentNonBlocking(taxCol, rec));
           }

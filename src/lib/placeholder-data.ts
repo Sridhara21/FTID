@@ -31,24 +31,24 @@ import {
 } from 'lucide-react';
 
 export const userProfileData = {
-  name: 'Ravi Kumar',
-  email: 'ravi.kumar@ftid.in',
-  ftid: '2398-6501-4775',
-  fallback: 'RK',
-  pan: { number: 'ABCDE1234F', status: 'Verified' },
-  aadhaar: { number: 'XXXX-XXXX-8901', status: 'Verified' },
-  address: 'HSR Layout, Sector 2, Bangalore, KA 560102',
+  name: 'Ananya Iyer',
+  email: 'ananya.iyer@ftid.in',
+  ftid: '4196-7914-2020',
+  fallback: 'AI',
+  pan: { number: 'PNGND1694Z', status: 'Verified' },
+  aadhaar: { number: 'XXXX-XXXX-2020', status: 'Verified' },
+  address: 'Indiranagar, 100 Feet Rd, Bangalore, KA 560038',
   bankKyc: [
-    { bank: 'HDFC Bank', status: 'Verified', icon: CheckCircle, color: 'text-green-400' },
-    { bank: 'SBI', status: 'Verified', icon: CheckCircle, color: 'text-green-400' }
+    { bank: 'ICICI Bank', status: 'Verified', icon: CheckCircle, color: 'text-green-400' },
+    { bank: 'HDFC Bank', status: 'Verified', icon: CheckCircle, color: 'text-green-400' }
   ],
   security: {
-    devices: [{ id: 1, type: 'Mobile', name: 'OnePlus 12', location: 'Bangalore, IN', lastLogin: '2025-12-29T10:00:00Z' }],
-    loginHistory: [{ id: 1, date: '2025-12-29', action: 'Login', platform: 'Mobile App', ip: '103.48.197.10', status: 'Success' }]
+    devices: [{ id: 1, type: 'Mobile', name: 'iPhone 15 Pro', location: 'Bangalore, IN', lastLogin: '2026-04-08T10:00:00Z' }],
+    loginHistory: [{ id: 1, date: '2026-04-08', action: 'Login', platform: 'Mobile App', ip: '103.48.197.10', status: 'Success' }]
   },
   consentHistory: [
-    { id: 1, date: '2025-12-01', entity: 'SpendWise AI', action: 'Consent Granted', details: 'Read-only access' },
-    { id: 2, date: '2025-11-15', entity: 'TaxSaver Pro', action: 'Renewed', details: 'Full flow verification' }
+    { id: 1, date: '2026-03-01', entity: 'SpendWise AI', action: 'Consent Granted', details: 'Read-only access' },
+    { id: 2, date: '2026-02-15', entity: 'TaxSaver Pro', action: 'Renewed', details: 'Full flow verification' }
   ]
 };
 
@@ -64,95 +64,86 @@ export const consentData = [
 ];
 
 export const spendingCategoryData = [
-  { name: 'Housing', value: 35000, fill: 'hsl(var(--chart-1))' },
-  { name: 'Groceries', value: 12500, fill: 'hsl(var(--chart-2))' },
-  { name: 'Transport', value: 8000, fill: 'hsl(var(--chart-3))' },
-  { name: 'Leisure', value: 15000, fill: 'hsl(var(--chart-4))' },
-  { name: 'Utilities', value: 5000, fill: 'hsl(var(--chart-5))' },
+  { name: 'Housing', value: 20425, fill: 'hsl(var(--chart-1))' },
+  { name: 'Food', value: 8988, fill: 'hsl(var(--chart-2))' },
+  { name: 'Shopping', value: 63622, fill: 'hsl(var(--chart-3))' },
+  { name: 'Investment', value: 87856, fill: 'hsl(var(--chart-4))' },
+  { name: 'Utilities', value: 4532, fill: 'hsl(var(--chart-5))' },
 ];
 
 export const portfolioData = {
   stocks: [
-    { name: 'Reliance Industries', symbol: 'RELIANCE', quantity: 150, value: 435000, change: "+1.2%", changeValue: 5220, taxClassification: 'LTCG' },
-    { name: 'HDFC Bank', symbol: 'HDFCBANK', quantity: 250, value: 400000, change: "+0.5%", changeValue: 2000, taxClassification: 'LTCG' }
+    { name: 'Equity Stocks', symbol: 'EQUITY', quantity: 1, value: 1574073, change: "+1.2%", changeValue: 18888, taxClassification: 'LTCG' }
   ],
   mutualFunds: [
-    { name: 'Parag Parikh Flexi Cap', units: 1379.31, value: 100000, change: "+0.8%", changeValue: 800, taxClassification: 'LTCG' }
+    { name: 'Mutual Fund SIP', units: 1000, value: 1290189, change: "+0.8%", changeValue: 10321, taxClassification: 'LTCG' }
   ],
   fixedDeposits: [
-    { bank: 'SBI', value: 200000, interestRate: '7.1%', maturityDate: '2026-05-10', taxClassification: 'Debt' }
+    { bank: 'ICICI Bank', value: 238484, interestRate: '7.1%', maturityDate: '2027-05-10', taxClassification: 'Debt' }
   ],
   digitalGold: [
-    { name: 'SafeGold Digital', grams: 50, value: 350000, change: "+2.1%", changeValue: 7200, taxClassification: 'LTCG' }
+    { name: 'Gold', grams: 120, value: 873422, change: "+2.1%", changeValue: 18341, taxClassification: 'LTCG' }
   ],
-  bonds: [
-    { name: 'GOI 7.26% 2033', value: 100000, interestRate: '7.26%', taxClassification: 'Tax-Free' }
-  ],
+  bonds: [],
   emergencyFund: [
-    { name: 'Liquid Savings Account', value: 250000, bank: 'HDFC Bank', taxClassification: 'Exempt' }
+    { name: 'Savings Account', value: 238484, bank: 'ICICI Bank', taxClassification: 'Exempt' }
   ]
 };
 
 export const balanceSheetData = {
   assets: [
-    { name: 'E-Rupee Wallet', value: 85250 },
-    { name: 'Stocks', value: 835000 },
-    { name: 'Mutual Funds', value: 100000 },
-    { name: 'Fixed Deposits', value: 200000 },
-    { name: 'Digital Gold', value: 350000 },
-    { name: 'Bonds', value: 100000 },
-    { name: 'Emergency Fund', value: 250000 }
+    { name: 'ICICI Savings', value: 238484 },
+    { name: 'Stocks', value: 1574073 },
+    { name: 'Mutual Funds', value: 1290189 },
+    { name: 'Gold', value: 873422 }
   ],
   liabilities: [
-    { name: 'Credit Card Debt', value: 25000 },
-    { name: 'Vehicle Loan', value: 450000 }
+    { name: 'Credit Card', value: 12500 }
   ],
 };
 
 export const transactions = [
-  { id: 'txn_1', description: 'Grocery Store Purchase', amount: -5240.50, date: '2024-07-20', icon: Receipt, classification: 'Discretionary Spending', originInstitution: 'Self (HDFC Bank)', destinationInstitution: 'Masked Merchant (Reliance Fresh)' },
-  { id: 'txn_2', description: 'Salary Credit', amount: 85000.00, date: '2024-07-19', icon: Landmark, classification: 'Primary Income', originInstitution: 'Masked Employer (Infosys)', destinationInstitution: 'Self (HDFC Bank)' },
-  { id: 'txn_3', description: 'Utility Bill Payment', amount: -8200.00, date: '2024-07-18', icon: Receipt, classification: 'Essential Spending', originInstitution: 'Self (HDFC Bank)', destinationInstitution: 'Masked Utility (BESCOM)' },
+  { id: 'txn_1', description: 'Zepto', amount: -502, date: '2026-03-01', icon: ShoppingCart, classification: 'Food', originInstitution: 'Paytm', destinationInstitution: 'Zepto' },
+  { id: 'txn_2', description: 'Rent Payment', amount: -20425, date: '2026-03-02', icon: Landmark, classification: 'Housing', originInstitution: 'UPI', destinationInstitution: 'Landlord Node' },
+  { id: 'txn_3', description: 'Amazon Purchase', amount: -15956, date: '2026-03-06', icon: ShoppingCart, classification: 'Shopping', originInstitution: 'Kotak Bank', destinationInstitution: 'Amazon' },
 ];
 
 export const incomeExpenseData = [
-  { name: 'Jan', income: 75000, window: '2024-01-01', expense: 42000 },
-  { name: 'Feb', income: 78000, window: '2024-02-01', expense: 45000 },
-  { name: 'Mar', income: 82000, window: '2024-03-01', expense: 48000 },
-  { name: 'Apr', income: 80000, window: '2024-04-01', expense: 52000 },
-  { name: 'May', income: 85000, window: '2024-05-01', expense: 46000 },
-  { name: 'Jun', income: 88000, window: '2024-06-01', expense: 50000 },
+  { name: 'Jan', income: 146000, window: '2026-01-01', expense: 85000 },
+  { name: 'Feb', income: 146000, window: '2026-02-01', expense: 92000 },
+  { name: 'Mar', income: 146649, window: '2026-03-01', expense: 87000 },
 ];
 
 export const autoCapturedIncome = {
   sources: [
-    { source: 'Employment (TDS Form 16)', amount: 1245000, verified: true },
-    { source: 'Dividend Income', amount: 12500, verified: true },
-    { source: 'Bank Interest (Sec 194A)', amount: 8400, verified: true },
-    { source: 'Consulting (Form 26AS)', amount: 45000, verified: false }
+    { source: 'Employment (TDS Form 16)', amount: 1759794, verified: true },
+    { source: 'Dividend Income', amount: 12500, verified: true }
   ],
   deductions: [
     { section: 'Standard Deduction', amount: 75000, verified: true },
-    { section: '80C (EPF/LIC)', amount: 150000, verified: true },
-    { section: '80D (Medical)', amount: 25000, verified: true }
+    { section: '80C (EPF/LIC)', amount: 150000, verified: true }
   ]
 };
 
 export const flowScoreData = {
-  score: 820,
-  rating: 'Very Strong',
-  trend: '+15',
-  summary: 'High financial stability based on consistent cash flows and verified identity.',
+  score: 539,
+  rating: 'Fair',
+  trend: '-13',
+  summary: 'Declining trend due to increased high-value discretionary spending in March cycle.',
   factors: [
-    { name: 'Income Stability', status: 'Excellent', impact: 'High', icon: TrendingUp, color: 'text-green-400' },
-    { name: 'Repayment Consistency', status: 'Excellent', impact: 'High', icon: CheckCircle, color: 'text-green-400' },
+    { name: 'Spending Velocity', status: 'High', impact: 'High', icon: TrendingUp, color: 'text-red-400' },
+    { name: 'Savings Ratio', status: 'Healthy', impact: 'Medium', icon: CheckCircle, color: 'text-green-400' },
   ],
   history: [
-    { month: 'Jan', score: 790 },
-    { month: 'Jun', score: 820 },
+    { month: 'Oct', score: 589 },
+    { month: 'Nov', score: 580 },
+    { month: 'Dec', score: 567 },
+    { month: 'Jan', score: 556 },
+    { month: 'Feb', score: 552 },
+    { month: 'Mar', score: 539 },
   ],
   dataSources: [
-    { name: 'HDFC Bank (Account Data)', verified: true },
+    { name: 'ICICI Bank (Account Data)', verified: true },
     { name: 'Income Tax Dept (ITR Data)', verified: true }
   ]
 };
@@ -238,13 +229,13 @@ export const subsidyDistributionData = [
 ];
 
 export const regulatoryAlerts = [
-  { id: 1, date: '2025-12-28', title: 'New Aadhaar-PAN linking deadline extended to FY27.', severity: 'Medium', icon: AlertTriangle },
-  { id: 2, date: '2025-12-15', title: 'Institutional compliance audit required.', severity: 'High', icon: ShieldCheck }
+  { id: 1, date: '2026-04-08', title: 'New Aadhaar-PAN linking deadline extended to FY27.', severity: 'Medium', icon: AlertTriangle },
+  { id: 2, date: '2026-03-15', title: 'Institutional compliance audit required.', severity: 'High', icon: ShieldCheck }
 ];
 
 export const institutionConnectivity = [
-  { id: 1, name: 'HDFC Bank', status: 'Active', type: 'Bank', icon: Landmark },
-  { id: 2, name: 'ICICI Bank', status: 'Active', type: 'Bank', icon: Landmark },
+  { id: 1, name: 'ICICI Bank', status: 'Active', type: 'Bank', icon: Landmark },
+  { id: 2, name: 'HDFC Bank', status: 'Active', type: 'Bank', icon: Landmark },
   { id: 3, name: 'Income Tax Dept.', status: 'Active', type: 'Regulator', icon: ShieldCheck }
 ];
 
@@ -274,8 +265,8 @@ export const schemes = [
 ];
 
 export const subsidies = [
-  { id: 'sub_1', name: 'Food Subsidy (NFSA)', status: 'Active', amount: 600, icon: Utensils, sourceMinistry: 'Dept. of Food', timeline: 'Monthly on 5th', eligibility: 'BPL Card Holder', ftidVerified: true },
-  { id: 'sub_2', name: 'Health Insurance (PM-JAY)', status: 'Active', amount: 416, icon: HeartPulse, sourceMinistry: 'NHA', timeline: 'Coverage Active', eligibility: 'SECC 2011', ftidVerified: true },
+  { id: 'sub_1', name: 'LPG Subsidy', status: 'Active', amount: 100, icon: Zap, sourceMinistry: 'Ministry of Petroleum', timeline: 'Monthly on 10th', eligibility: 'Ujjwala Beneficiary', ftidVerified: true },
+  { id: 'sub_2', name: 'Health Insurance (PM-JAY)', status: 'Active', amount: 0, icon: HeartPulse, sourceMinistry: 'NHA', timeline: 'Coverage Active', eligibility: 'SECC 2011', ftidVerified: true },
 ];
 
 export const donationData = [
