@@ -1,169 +1,106 @@
-
 {
   "entities": {
     "Citizen": {
-      "$schema": "http://json-schema.org/draft-07/schema#",
       "title": "Citizen",
+      "description": "Sovereign identity profile with institutional bonding metrics.",
       "type": "object",
-      "description": "Represents an individual user (citizen) of the FTID system, managing their personal financial data and interactions with government entities.",
       "properties": {
-        "id": {
-          "type": "string",
-          "description": "Unique identifier for the Citizen entity (Firebase UID)."
-        },
-        "fullName": {
-          "type": "string",
-          "description": "The full legal name of the citizen."
-        },
-        "email": {
-          "type": "string",
-          "description": "The primary email address of the citizen.",
-          "format": "email"
-        },
+        "id": { "type": "string" },
+        "fullName": { "type": "string" },
+        "email": { "type": "string", "format": "email" },
         "pan": {
           "type": "object",
           "properties": {
             "number": { "type": "string" },
-            "status": { "type": "string", "enum": ["Verified", "Pending", "Unlinked"] }
+            "status": { "type": "string", "enum": ["Verified", "Pending"] }
           }
         },
         "aadhaar": {
           "type": "object",
           "properties": {
             "number": { "type": "string" },
-            "status": { "type": "string", "enum": ["Verified", "Pending", "Unlinked"] }
+            "status": { "type": "string" }
           }
         },
-        "isLinked": {
-          "type": "boolean",
-          "description": "True if sovereign identity is bonded to FTID."
-        },
-        "registrationDate": {
-          "type": "string",
-          "format": "date-time"
-        },
-        "currentCreditScore": {
-          "type": "number",
-          "description": "The citizen's current Flow Score."
-        },
-        "address": {
-          "type": "string"
-        },
-        "onboardingComplete": {
-          "type": "boolean"
-        }
+        "currentCreditScore": { "type": "number", "description": "FTID Flow Score" },
+        "isLinked": { "type": "boolean" },
+        "registrationDate": { "type": "string", "format": "date-time" },
+        "onboardingComplete": { "type": "boolean" }
       },
-      "required": [
-        "id",
-        "fullName",
-        "email",
-        "currentCreditScore"
-      ]
+      "required": ["id", "fullName", "email", "pan", "aadhaar"]
     },
     "Transaction": {
-      "$schema": "http://json-schema.org/draft-07/schema#",
       "title": "Transaction",
+      "description": "Verified financial flow record used for spending analysis and tax estimation.",
       "type": "object",
-      "description": "Core financial DNS log record representing a movement of value.",
       "properties": {
         "id": { "type": "string" },
         "citizenId": { "type": "string" },
+        "description": { "type": "string" },
         "amount": { "type": "number" },
-        "type": { "type": "string", "enum": ["tax_payment", "subsidy_disbursement", "cbdc_transfer", "utility", "retail"] },
-        "status": { "type": "string", "enum": ["completed", "pending", "failed"] },
-        "originInstitution": { "type": "string" },
-        "destinationInstitution": { "type": "string" },
+        "type": { "type": "string", "enum": ["tax_payment", "subsidy", "cbdc_transfer", "essential", "discretionary"] },
+        "status": { "type": "string" },
+        "classification": { "type": "string" },
         "timestamp": { "type": "string", "format": "date-time" },
-        "blockchainHash": { "type": "string" },
-        "classification": { "type": "string" }
-      },
-      "required": ["id", "citizenId", "amount", "type", "status", "timestamp"]
-    },
-    "FraudAlert": {
-      "title": "FraudAlert",
-      "type": "object",
-      "description": "Anomalies detected in financial flows using AI velocity analysis.",
-      "properties": {
-        "id": { "type": "string" },
-        "location": { "type": "string" },
-        "riskLevel": { "type": "string", "enum": ["High", "Medium", "Low"] },
-        "reason": { "type": "string" },
-        "detectionDate": { "type": "string", "format": "date-time" },
-        "governmentEntityId": { "type": "string" }
+        "originInstitution": { "type": "string" },
+        "destinationInstitution": { "type": "string" }
       }
     },
-    "SubsidyProgram": {
-      "title": "SubsidyProgram",
+    "Investment": {
+      "title": "Investment",
+      "description": "Bonded asset record for portfolio tracking and capital gains analysis.",
       "type": "object",
       "properties": {
         "id": { "type": "string" },
         "name": { "type": "string" },
-        "allocationCr": { "type": "number" },
-        "sourceMinistry": { "type": "string" },
-        "description": { "type": "string" }
+        "type": { "type": "string", "enum": ["Stock", "Mutual Fund", "FD", "Bond", "Gold"] },
+        "value": { "type": "number" },
+        "taxClass": { "type": "string", "enum": ["LTCG", "STCG", "Exempt"] }
       }
     },
-    "PoliticalDonation": {
-      "title": "PoliticalDonation",
+    "TaxRecord": {
+      "title": "TaxRecord",
+      "description": "Institutional income and deduction data used for real-time tax calculation.",
       "type": "object",
       "properties": {
         "id": { "type": "string" },
-        "donorCitizenId": { "type": "string" },
-        "donorName": { "type": "string" },
-        "recipientParty": { "type": "string" },
+        "type": { "type": "string", "enum": ["Income", "Deduction"] },
+        "source": { "type": "string" },
         "amount": { "type": "number" },
-        "electionId": { "type": "string" },
-        "timestamp": { "type": "string", "format": "date-time" }
+        "verified": { "type": "boolean" },
+        "fy": { "type": "string" }
       }
     }
   },
+  "seedingRequirements": {
+    "purpose": "To generate 50-100 live-prototype personas accessible via specific Aadhaar/PAN keys.",
+    "fieldsRequired": {
+      "profile": ["fullName", "email", "pan_number", "aadhaar_number"],
+      "finance": ["monthly_income", "avg_expenses", "savings_ratio"],
+      "transactions": ["date", "description", "amount", "category", "institution"],
+      "portfolio": ["asset_name", "type", "market_value", "qty"],
+      "tax": ["salary_income", "standard_deductions", "section_80c", "section_80d"]
+    }
+  },
   "auth": {
-    "providers": [
-      "password"
-    ]
+    "providers": ["password"]
   },
   "firestore": {
-    "structure": [
-      {
-        "path": "/citizens/{citizenId}",
-        "definition": {
-          "entityName": "Citizen",
-          "schema": { "$ref": "#/backend/entities/Citizen" },
-          "description": "Private citizen profile and identity data."
-        }
-      },
-      {
-        "path": "/transactions/{transactionId}",
-        "definition": {
-          "entityName": "Transaction",
-          "schema": { "$ref": "#/backend/entities/Transaction" },
-          "description": "Global financial DNS flow records."
-        }
-      },
-      {
-        "path": "/fraudAlerts/{alertId}",
-        "definition": {
-          "entityName": "FraudAlert",
-          "schema": { "$ref": "#/backend/entities/FraudAlert" },
-          "description": "Anomalies detected in financial flows."
-        }
-      },
-      {
-        "path": "/subsidyPrograms/{programId}",
-        "definition": {
-          "entityName": "SubsidyProgram",
-          "schema": { "$ref": "#/backend/entities/SubsidyProgram" },
-          "description": "Government welfare program configurations."
-        }
-      },
-      {
-        "path": "/politicalDonations/{donationId}",
-        "definition": {
-          "entityName": "PoliticalDonation",
-          "schema": { "$ref": "#/backend/entities/PoliticalDonation" },
-          "description": "Public transparency records for political funding."
-        }
-      }
-    ]
+    "/citizens/{citizenId}": {
+      "schema": { "$ref": "#/backend/entities/Citizen" },
+      "description": "Primary identity node."
+    },
+    "/transactions/{transactionId}": {
+      "schema": { "$ref": "#/backend/entities/Transaction" },
+      "description": "Global transaction DNS flows."
+    },
+    "/citizens/{citizenId}/investments/{id}": {
+      "schema": { "$ref": "#/backend/entities/Investment" },
+      "description": "Private asset portfolio."
+    },
+    "/citizens/{citizenId}/taxRecords/{id}": {
+      "schema": { "$ref": "#/backend/entities/TaxRecord" },
+      "description": "Sovereign tax intelligence."
+    }
   }
 }

@@ -1,4 +1,3 @@
-
 "use client";
 
 import { useState } from "react";
@@ -14,6 +13,7 @@ import { initiateEmailSignIn, initiateEmailSignUp } from "@/firebase/non-blockin
 import { setDocumentNonBlocking, addDocumentNonBlocking } from "@/firebase/non-blocking-updates";
 import { doc, collection } from "firebase/firestore";
 import { useToast } from "@/hooks/use-toast";
+import { getPersonaByKeys } from "@/lib/sovereign-seed";
 
 export function LoginForm() {
   const auth = useAuth();
@@ -27,7 +27,6 @@ export function LoginForm() {
   const [signupStep, setSignupStep] = useState(1);
   const [isBonding, setIsBonding] = useState(false);
   
-  // Registration Fields
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [fullName, setFullName] = useState("");
@@ -43,7 +42,7 @@ export function LoginForm() {
       setIsBiometricVerified(true);
       toast({
         title: "Biometrics Verified",
-        description: "Sovereign fingerprint hash bonded to session.",
+        description: "Sovereign fingerprint hash bonded to session enclave.",
       });
     }, 2000);
   };
@@ -52,33 +51,23 @@ export function LoginForm() {
     if (mode === 'signup') {
       if (signupStep === 1) {
         if (!fullName || !pan || !aadhaar || !email) {
-          toast({ variant: "destructive", title: "Missing Identity Data", description: "All identity fields are required for sovereign binding." });
+          toast({ variant: "destructive", title: "Missing Identity Data", description: "All fields required for sovereign binding." });
           return;
         }
-        if (!/^[A-Z]{5}[0-9]{4}[A-Z]{1}$/.test(pan.toUpperCase())) {
-          toast({ variant: "destructive", title: "Invalid PAN", description: "Format: ABCDE1234F" });
-          return;
-        }
-        if (!/^[0-9]{12}$/.test(aadhaar)) {
-          toast({ variant: "destructive", title: "Invalid Aadhaar", description: "Must be 12 digits." });
-          return;
-        }
-        
-        // Start Data Bonding Simulation
         setIsBonding(true);
         setTimeout(() => {
           setIsBonding(false);
           setSignupStep(2);
           toast({
-            title: "External Data Streams Bonded",
-            description: "Successfully retrieved history from Income Tax & Banking nodes.",
+            title: "Identity Validated",
+            description: "Institutional match found in FTID Sovereign Node.",
           });
         }, 2500);
         return;
       }
 
       if (!password || !isBiometricVerified) {
-        toast({ variant: "destructive", title: "Security Missing", description: "Please complete biometric verification and set a password." });
+        toast({ variant: "destructive", title: "Security Hub Incomplete", description: "Complete biometric scan and set password." });
         return;
       }
     } else {
@@ -93,35 +82,50 @@ export function LoginForm() {
       if (mode === 'signup') {
         initiateEmailSignUp(auth, email, password);
         
-        // Use a small delay to ensure auth.currentUser is available
         setTimeout(() => {
-          if (auth.currentUser && role === 'citizen') {
-            const citizenRef = doc(db, "citizens", auth.currentUser.uid);
+          if (auth.currentUser && role === 'citizen' && db) {
+            const uid = auth.currentUser.uid;
+            const citizenRef = doc(db, "citizens", uid);
             
-            // Seed the primary Citizen Document
+            // Check Sovereign Seed Registry for specific Persona data
+            const persona = getPersonaByKeys(pan, aadhaar);
+            
+            // Initial Profile Document
             setDocumentNonBlocking(citizenRef, {
-              id: auth.currentUser.uid,
-              fullName,
+              id: uid,
+              fullName: persona?.fullName || fullName,
               email,
               pan: { number: pan.toUpperCase(), status: "Verified" },
               aadhaar: { number: `XXXX-XXXX-${aadhaar.slice(-4)}`, status: "Verified" },
-              currentCreditScore: 785, // Initial score based on identity verification
+              currentCreditScore: persona?.creditScore || 785,
               isLinked: true,
               registrationDate: new Date().toISOString(),
-              address: "Verified via Aadhaar Vault",
               onboardingComplete: true
             }, { merge: true });
 
-            // Seed Initial Transaction History
+            // Seeding Transactions
             const txnCol = collection(db, "transactions");
-            const seedTxns = [
-              { citizenId: auth.currentUser.uid, description: "System Onboarding Credit", amount: 10000, type: "cbdc_transfer", status: "completed", timestamp: new Date().toISOString(), classification: "Sovereign Incentive", originInstitution: "RBI Central Node", destinationInstitution: "FTID Wallet" },
-              { citizenId: auth.currentUser.uid, description: "External Account Linkage", amount: 45250, type: "cbdc_transfer", status: "completed", timestamp: new Date().toISOString(), classification: "Verified Balance", originInstitution: "HDFC Bank", destinationInstitution: "FTID Wallet" }
+            const seedTxns = persona?.transactions || [
+              { description: "Sovereign Onboarding Incentive", amount: 10000, type: "cbdc_transfer", status: "completed", classification: "Incentive", originInstitution: "RBI Central Node", destinationInstitution: "FTID Wallet" },
+              { description: "Verified HDFC Balance Link", amount: 45250, type: "cbdc_transfer", status: "completed", classification: "Essential", originInstitution: "HDFC Bank", destinationInstitution: "FTID Wallet" }
             ];
-            
-            seedTxns.forEach(txn => {
-              addDocumentNonBlocking(txnCol, txn);
-            });
+            seedTxns.forEach(txn => addDocumentNonBlocking(txnCol, { ...txn, citizenId: uid, timestamp: new Date().toISOString() }));
+
+            // Seeding Portfolio
+            const portCol = collection(db, "citizens", uid, "investments");
+            const seedInvestments = persona?.investments || [
+              { name: "Reliance Industries", type: "Stock", value: 435000, taxClass: "LTCG" },
+              { name: "Parag Parikh Flexi Cap", type: "Mutual Fund", value: 100000, taxClass: "LTCG" }
+            ];
+            seedInvestments.forEach(inv => addDocumentNonBlocking(portCol, inv));
+
+            // Seeding Tax Records
+            const taxCol = collection(db, "citizens", uid, "taxRecords");
+            const seedTax = persona?.taxRecords || [
+              { source: "Employment (TDS Form 16)", amount: 1245000, verified: true, type: "Income", fy: "2025-26" },
+              { source: "Standard Deduction", amount: 75000, verified: true, type: "Deduction", fy: "2025-26" }
+            ];
+            seedTax.forEach(rec => addDocumentNonBlocking(taxCol, rec));
           }
           router.push(role === 'citizen' ? "/citizen" : "/government");
         }, 2000);
@@ -132,7 +136,7 @@ export function LoginForm() {
         }, 1500);
       }
     } catch (error: any) {
-      toast({ variant: "destructive", title: "Authentication Error", description: error.message });
+      toast({ variant: "destructive", title: "Auth Error", description: error.message });
       setIsLoading(false);
     }
   };
@@ -140,17 +144,15 @@ export function LoginForm() {
   return (
     <div className="w-full space-y-6">
       <Tabs defaultValue="citizen" className="w-full" onValueChange={(v) => {
-        setRole(v as any);
+        setRole(v as 'citizen' | 'government');
         setSignupStep(1);
       }}>
         <TabsList className="grid w-full grid-cols-2 h-12 bg-secondary/30 p-1">
           <TabsTrigger value="citizen" className="data-[state=active]:bg-primary data-[state=active]:text-primary-foreground font-bold uppercase text-[10px] tracking-widest">
-            <User className="mr-2 h-4 w-4" />
-            Citizen
+            <User className="mr-2 h-4 w-4" /> Citizen
           </TabsTrigger>
           <TabsTrigger value="government" className="data-[state=active]:bg-primary data-[state=active]:text-primary-foreground font-bold uppercase text-[10px] tracking-widest">
-            <Building className="mr-2 h-4 w-4" />
-            Government
+            <Building className="mr-2 h-4 w-4" /> Government
           </TabsTrigger>
         </TabsList>
         
@@ -161,7 +163,7 @@ export function LoginForm() {
                 <ShieldCheck className="h-8 w-8 text-primary" />
               </div>
               <CardTitle className="text-2xl font-black tracking-tight uppercase">
-                {mode === 'signin' ? 'Citizen Portal' : 'Register Sovereign ID'}
+                {mode === 'signin' ? 'Citizen Portal' : 'Establish Sovereign ID'}
               </CardTitle>
               {mode === 'signup' && (
                 <div className="flex items-center justify-center gap-2 mt-3">
@@ -171,7 +173,7 @@ export function LoginForm() {
               )}
             </CardHeader>
             
-            <CardContent className="space-y-4 pt-8 min-h-[350px] flex flex-col justify-center">
+            <CardContent className="space-y-4 pt-8 min-h-[380px] flex flex-col justify-center">
               {isBonding ? (
                 <div className="flex flex-col items-center justify-center space-y-6 animate-in fade-in zoom-in duration-500">
                   <div className="relative">
@@ -180,73 +182,64 @@ export function LoginForm() {
                   </div>
                   <div className="text-center space-y-2">
                     <p className="text-xs font-black uppercase tracking-institutional text-primary">Bonding Sovereign Streams</p>
-                    <p className="text-[10px] text-muted-foreground uppercase tracking-widest">Querying UIDAI & Tax Authorization Nodes...</p>
+                    <p className="text-[10px] text-muted-foreground uppercase tracking-widest">Querying UIDAI & Tax Authority Nodes...</p>
                   </div>
                 </div>
-              ) : mode === 'signin' ? (
-                <>
-                  <div className="space-y-2">
-                    <Label htmlFor="email" className="text-[10px] font-black uppercase tracking-widest text-muted-foreground">FTID / Email</Label>
-                    <Input id="email" type="email" placeholder="name@ftid.in" className="bg-secondary/20 h-11 border-border/50 font-bold" value={email} onChange={(e) => setEmail(e.target.value)} />
-                  </div>
-                  <div className="space-y-2">
-                    <Label htmlFor="password" className="text-[10px] font-black uppercase tracking-widest text-muted-foreground">Password</Label>
-                    <Input id="password" type="password" className="bg-secondary/20 h-11 border-border/50" value={password} onChange={(e) => setPassword(e.target.value)} />
-                  </div>
-                </>
               ) : (
-                <>
-                  {signupStep === 1 ? (
-                    <div className="space-y-4 animate-in fade-in slide-in-from-right-4 duration-300">
+                <div className="space-y-4">
+                  {mode === 'signin' ? (
+                    <div className="space-y-4">
                       <div className="space-y-2">
-                        <Label className="text-[10px] font-black uppercase tracking-widest text-muted-foreground">Full Legal Name</Label>
-                        <Input placeholder="Enter as per Aadhaar" className="bg-secondary/20 h-11 border-border/50 font-bold" value={fullName} onChange={(e) => setFullName(e.target.value)} />
-                      </div>
-                      <div className="grid grid-cols-2 gap-4">
-                        <div className="space-y-2">
-                          <Label className="text-[10px] font-black uppercase tracking-widest text-muted-foreground">PAN Number</Label>
-                          <Input placeholder="ABCDE1234F" className="bg-secondary/20 h-11 border-border/50 font-mono uppercase" value={pan} onChange={(e) => setPan(e.target.value)} maxLength={10} />
-                        </div>
-                        <div className="space-y-2">
-                          <Label className="text-[10px] font-black uppercase tracking-widest text-muted-foreground">Aadhaar ID</Label>
-                          <Input placeholder="12 Digits" className="bg-secondary/20 h-11 border-border/50 font-mono" value={aadhaar} onChange={(e) => setAadhaar(e.target.value)} maxLength={12} />
-                        </div>
+                        <Label className="text-[10px] font-black uppercase tracking-widest text-muted-foreground">FTID / Email</Label>
+                        <Input type="email" placeholder="name@ftid.in" className="bg-secondary/20 h-11 border-border/50 font-bold" value={email} onChange={(e) => setEmail(e.target.value)} />
                       </div>
                       <div className="space-y-2">
-                        <Label className="text-[10px] font-black uppercase tracking-widest text-muted-foreground">Primary Email</Label>
-                        <Input type="email" placeholder="name@example.com" className="bg-secondary/20 h-11 border-border/50 font-bold" value={email} onChange={(e) => setEmail(e.target.value)} />
+                        <Label className="text-[10px] font-black uppercase tracking-widest text-muted-foreground">Password</Label>
+                        <Input type="password" placeholder="••••••••" className="bg-secondary/20 h-11 border-border/50" value={password} onChange={(e) => setPassword(e.target.value)} />
                       </div>
                     </div>
                   ) : (
-                    <div className="space-y-6 animate-in fade-in slide-in-from-right-4 duration-300">
-                      <div className="p-6 border-2 border-dashed border-primary/20 rounded-xl bg-primary/5 text-center space-y-4">
-                        <div className={`mx-auto p-4 rounded-full w-fit transition-all duration-500 ${isBiometricVerified ? 'bg-green-500/20' : 'bg-primary/10'}`}>
-                          {isBiometricVerified ? (
-                            <CheckCircle2 className="h-10 w-10 text-green-400" />
-                          ) : (
-                            <Fingerprint className={`h-10 w-10 text-primary ${isScanning ? 'animate-pulse scale-110' : ''}`} />
-                          )}
+                    <div className="space-y-4">
+                      {signupStep === 1 ? (
+                        <div className="space-y-4 animate-in fade-in slide-in-from-right-4 duration-300">
+                          <div className="space-y-2">
+                            <Label className="text-[10px] font-black uppercase tracking-widest text-muted-foreground">Full Legal Name</Label>
+                            <Input placeholder="As per Aadhaar" className="bg-secondary/20 h-11 border-border/50 font-bold" value={fullName} onChange={(e) => setFullName(e.target.value)} />
+                          </div>
+                          <div className="grid grid-cols-2 gap-4">
+                            <div className="space-y-2">
+                              <Label className="text-[10px] font-black uppercase tracking-widest text-muted-foreground">PAN Number</Label>
+                              <Input placeholder="ABCDE1234F" className="bg-secondary/20 h-11 border-border/50 font-mono uppercase" value={pan} onChange={(e) => setPan(e.target.value)} maxLength={10} />
+                            </div>
+                            <div className="space-y-2">
+                              <Label className="text-[10px] font-black uppercase tracking-widest text-muted-foreground">Aadhaar ID</Label>
+                              <Input placeholder="12 Digits" className="bg-secondary/20 h-11 border-border/50 font-mono" value={aadhaar} onChange={(e) => setAadhaar(e.target.value)} maxLength={12} />
+                            </div>
+                          </div>
+                          <div className="space-y-2">
+                            <Label className="text-[10px] font-black uppercase tracking-widest text-muted-foreground">Email</Label>
+                            <Input type="email" placeholder="test@ftid.in" className="bg-secondary/20 h-11 border-border/50 font-bold" value={email} onChange={(e) => setEmail(e.target.value)} />
+                          </div>
                         </div>
-                        <div className="space-y-1">
-                          <p className="text-xs font-bold uppercase tracking-widest">Biometric Enrollment</p>
-                          <p className="text-[10px] text-muted-foreground uppercase">Bond your device's secure enclave to FTID</p>
+                      ) : (
+                        <div className="space-y-6 animate-in fade-in slide-in-from-right-4 duration-300">
+                          <div className="p-6 border-2 border-dashed border-primary/20 rounded-xl bg-primary/5 text-center space-y-4">
+                            <div className={`mx-auto p-4 rounded-full w-fit transition-all duration-500 ${isBiometricVerified ? 'bg-green-500/20' : 'bg-primary/10'}`}>
+                              {isBiometricVerified ? <CheckCircle2 className="h-10 w-10 text-green-400" /> : <Fingerprint className={`h-10 w-10 text-primary ${isScanning ? 'animate-pulse scale-110' : ''}`} />}
+                            </div>
+                            <Button variant="outline" className="w-full h-10 border-primary/30 text-[10px] font-black uppercase tracking-widest" onClick={simulateBiometric} disabled={isScanning || isBiometricVerified}>
+                              {isScanning ? "Scanning..." : isBiometricVerified ? "Bonded" : "Initiate Biometric Enrolment"}
+                            </Button>
+                          </div>
+                          <div className="space-y-2">
+                            <Label className="text-[10px] font-black uppercase tracking-widest text-muted-foreground">Set Password</Label>
+                            <Input type="password" placeholder="Minimum 12 chars" className="bg-secondary/20 h-11 border-border/50" value={password} onChange={(e) => setPassword(e.target.value)} />
+                          </div>
                         </div>
-                        <Button 
-                          variant="outline" 
-                          className="w-full h-10 border-primary/30 text-[10px] font-black uppercase tracking-widest hover:bg-primary/10"
-                          onClick={simulateBiometric}
-                          disabled={isScanning || isBiometricVerified}
-                        >
-                          {isScanning ? "Scanning Surface..." : isBiometricVerified ? "Identity Bonded" : "Initiate Biometric Scan"}
-                        </Button>
-                      </div>
-                      <div className="space-y-2">
-                        <Label className="text-[10px] font-black uppercase tracking-widest text-muted-foreground">Sovereign Password</Label>
-                        <Input type="password" placeholder="Minimum 12 characters" className="bg-secondary/20 h-11 border-border/50" value={password} onChange={(e) => setPassword(e.target.value)} />
-                      </div>
+                      )}
                     </div>
                   )}
-                </>
+                </div>
               )}
 
               <div className="flex gap-3 pt-4">
@@ -262,10 +255,11 @@ export function LoginForm() {
                     onClick={handleAction}
                   >
                     {isLoading ? <Loader2 className="h-5 w-5 animate-spin" /> : (
-                      mode === 'signin' ? <><LogIn className="mr-2 h-4 w-4" /> Sign In</> : (
-                        signupStep === 1 ? <><ArrowRight className="mr-2 h-4 w-4" /> Next: Security Hub</> : <><UserPlus className="mr-2 h-4 w-4" /> Establish ID</>
+                      mode === 'signin' ? <LogIn className="mr-2 h-4 w-4" /> : (
+                        signupStep === 1 ? <ArrowRight className="mr-2 h-4 w-4" /> : <UserPlus className="mr-2 h-4 w-4" />
                       )
                     )}
+                    {mode === 'signin' ? ' Sign In' : (signupStep === 1 ? ' Next Step' : ' Establish ID')}
                   </Button>
                 )}
               </div>
@@ -278,10 +272,7 @@ export function LoginForm() {
               <Button 
                 variant="outline" 
                 className="w-full h-10 border-border/50 hover:bg-secondary/50 text-[10px] font-black uppercase tracking-widest"
-                onClick={() => {
-                  setMode(mode === 'signin' ? 'signup' : 'signin');
-                  setSignupStep(1);
-                }}
+                onClick={() => { setMode(mode === 'signin' ? 'signup' : 'signin'); setSignupStep(1); }}
               >
                 {mode === 'signin' ? "Establish New Sovereign ID" : "Back to Institutional Login"}
               </Button>
@@ -296,26 +287,24 @@ export function LoginForm() {
                 <Building className="h-8 w-8 text-primary" />
               </div>
               <CardTitle className="text-2xl font-black tracking-tight uppercase">Government Hub</CardTitle>
-              <CardDescription className="text-[10px] font-bold uppercase tracking-widest text-muted-foreground mt-2">
-                Authorized Regulatory & Analytical Access
-              </CardDescription>
+              <CardDescription className="text-[10px] font-bold uppercase tracking-widest mt-2">Authorized Analytical Access</CardDescription>
             </CardHeader>
             <CardContent className="space-y-4 pt-8">
               <div className="space-y-2">
-                <Label htmlFor="gov-email" className="text-[10px] font-black uppercase tracking-widest text-muted-foreground">Official ID</Label>
-                <Input id="gov-email" type="email" placeholder="official@gov.in" className="bg-secondary/20 h-11 border-border/50 font-bold" value={email} onChange={(e) => setEmail(e.target.value)} />
+                <Label className="text-[10px] font-black uppercase tracking-widest text-muted-foreground">Official ID</Label>
+                <Input type="email" placeholder="official@gov.in" className="bg-secondary/20 h-11 border-border/50 font-bold" value={email} onChange={(e) => setEmail(e.target.value)} />
               </div>
               <div className="space-y-2">
-                <Label htmlFor="gov-password" className="text-[10px] font-black uppercase tracking-widest text-muted-foreground">Security Credentials</Label>
-                <Input id="gov-password" type="password" className="bg-secondary/20 h-11 border-border/50" value={password} onChange={(e) => setPassword(e.target.value)} />
+                <Label className="text-[10px] font-black uppercase tracking-widest text-muted-foreground">Security Credentials</Label>
+                <Input type="password" placeholder="••••••••" className="bg-secondary/20 h-11 border-border/50" value={password} onChange={(e) => setPassword(e.target.value)} />
               </div>
               <Button className="w-full h-12 bg-primary hover:bg-primary/90 text-primary-foreground font-black uppercase tracking-institutional text-xs" disabled={isLoading} onClick={handleAction}>
-                {isLoading ? <Loader2 className="h-5 w-5 animate-spin" /> : "Authorize Official Session"}
+                {isLoading ? <Loader2 className="h-5 w-5 animate-spin" /> : "Authorize Session"}
               </Button>
             </CardContent>
             <CardFooter className="bg-secondary/10 p-4 text-center">
               <p className="text-[9px] text-muted-foreground font-black uppercase tracking-sovereign leading-relaxed">
-                Unauthorized access to the Sovereign Data Hub is prohibited. All actions are logged via immutable audit trails.
+                Unauthorized access prohibited. All actions logged via immutable audit trails.
               </p>
             </CardFooter>
           </Card>

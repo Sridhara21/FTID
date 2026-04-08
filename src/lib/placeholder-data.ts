@@ -1,4 +1,3 @@
-
 import {
   Landmark,
   Receipt,
@@ -117,12 +116,12 @@ export const transactions = [
 ];
 
 export const incomeExpenseData = [
-  { name: 'Jan', income: 75000, expense: 42000 },
-  { name: 'Feb', income: 78000, expense: 45000 },
-  { name: 'Mar', income: 82000, expense: 48000 },
-  { name: 'Apr', income: 80000, expense: 52000 },
-  { name: 'May', income: 85000, expense: 46000 },
-  { name: 'Jun', income: 88000, expense: 50000 },
+  { name: 'Jan', income: 75000, window: '2024-01-01', expense: 42000 },
+  { name: 'Feb', income: 78000, window: '2024-02-01', expense: 45000 },
+  { name: 'Mar', income: 82000, window: '2024-03-01', expense: 48000 },
+  { name: 'Apr', income: 80000, window: '2024-04-01', expense: 52000 },
+  { name: 'May', income: 85000, window: '2024-05-01', expense: 46000 },
+  { name: 'Jun', income: 88000, window: '2024-06-01', expense: 50000 },
 ];
 
 export const autoCapturedIncome = {
@@ -257,7 +256,7 @@ export const statePerformanceData = {
   ],
   efficiency: [
     { state: 'Gujarat', metric: 'Ease of Biz', value: 'Rank 1', rank: 'Top' },
-    { state: 'Karnataka', metric: Innovation Index, value: 'Rank 1', rank: 'Top' }
+    { state: 'Karnataka', metric: 'Innovation Index', value: 'Rank 1', rank: 'Top' }
   ]
 };
 
