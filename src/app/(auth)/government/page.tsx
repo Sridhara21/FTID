@@ -1,6 +1,8 @@
 
 "use client";
 
+import { useEffect } from "react";
+import { useRouter, usePathname } from "next/navigation";
 import { EconomicIndicatorsCard } from "@/components/government/economic-indicators-card";
 import { RevenueChartCard } from "@/components/government/revenue-chart-card";
 import { MultiMetricChart } from "@/components/government/multi-metric-chart";
@@ -23,20 +25,37 @@ import {
     TableFooter
 } from "@/components/ui/table";
 import { governmentBalanceSheetDataFy2526 } from "@/lib/placeholder-data";
-import { Scale, Globe, ShieldAlert, BadgeInfo, Loader2 } from "lucide-react";
+import { Scale, Globe, ShieldAlert, BadgeInfo, Loader2, Lock } from "lucide-react";
 import { Badge } from "@/components/ui/badge";
-import { useFirestore, useCollection, useMemoFirebase, useUser } from "@/firebase";
-import { collection } from "firebase/firestore";
+import { useFirestore, useCollection, useMemoFirebase, useUser, useDoc } from "@/firebase";
+import { collection, doc } from "firebase/firestore";
 
 export default function GovernmentDashboard() {
   const { user, isUserLoading } = useUser();
   const db = useFirestore();
+  const router = useRouter();
+  const pathname = usePathname();
   
+  const adminRef = useMemoFirebase(() => {
+    if (!db || !user?.uid) return null;
+    return doc(db, "platformAdmins", user.uid);
+  }, [db, user?.uid]);
+
+  const { data: adminData, isLoading: isAdminLoading } = useDoc(adminRef);
+
+  // REDIRECT GUARD: If the session finishes loading and the user is NOT an admin, route them back to the citizen portal.
+  // This prevents accidental permission errors for regular users visiting administrative paths.
+  useEffect(() => {
+    if (!isUserLoading && !isAdminLoading && !adminData && pathname.startsWith('/government')) {
+      router.push('/citizen');
+    }
+  }, [isUserLoading, isAdminLoading, adminData, pathname, router]);
+
   const transactionsQuery = useMemoFirebase(() => {
-    // Prevent permission error by waiting for auth settlement
-    if (!db || isUserLoading || !user) return null;
+    // SECURITY GUARD: Only query the global transactional ledger if administrative node is verified.
+    if (!db || isUserLoading || !user || isAdminLoading || !adminData) return null;
     return collection(db, "transactions");
-  }, [db, isUserLoading, user]);
+  }, [db, isUserLoading, user, isAdminLoading, adminData]);
 
   const { data: allTransactions, isLoading: isTxnLoading } = useCollection(transactionsQuery);
 
@@ -45,9 +64,35 @@ export default function GovernmentDashboard() {
 
   const formatCr = (val: number) => `₹${val.toLocaleString('en-IN')} Cr`;
 
+  // Authorization Loading State
+  if (isUserLoading || isAdminLoading) {
+    return (
+      <div className="flex h-[80vh] w-full items-center justify-center">
+        <div className="flex flex-col items-center gap-4">
+          <Loader2 className="h-8 w-8 animate-spin text-primary" />
+          <p className="text-[10px] font-black uppercase tracking-institutional">Authorizing Institutional Session...</p>
+        </div>
+      </div>
+    );
+  }
+
+  // Access Denied State (Direct routing protection fallback)
+  if (!user || !adminData) {
+    return (
+      <div className="flex h-[80vh] w-full items-center justify-center">
+        <Card className="max-w-md border-red-500/20 bg-red-500/5">
+          <CardContent className="pt-6 text-center">
+            <Lock className="mx-auto h-12 w-12 text-red-400 mb-4" />
+            <h2 className="text-lg font-bold uppercase tracking-tight">Analytical Access Denied</h2>
+            <p className="text-xs text-muted-foreground mt-2">Institutional clearance required. Authorize session via Hub to view systemic aggregates.</p>
+          </CardContent>
+        </Card>
+      </div>
+    );
+  }
+
   return (
     <div className="flex flex-col gap-6 w-full">
-      {/* Header Layer */}
       <div className="flex flex-col md:flex-row md:items-center justify-between gap-4">
         <div>
           <h1 className="text-2xl font-bold tracking-tight text-foreground">FTID — Government Oversight System</h1>
@@ -63,32 +108,28 @@ export default function GovernmentDashboard() {
         <div className="flex flex-col items-end gap-1">
           <div className="flex items-center gap-2 px-3 py-1.5 bg-secondary/30 border border-border/50 rounded-md">
             <Globe className="h-3.5 w-3.5 text-primary/70" />
-            <span className="text-[10px] font-black uppercase tracking-widest text-muted-foreground">Network Status: {(isTxnLoading || isUserLoading) ? "SYNCING..." : "SYNCED"}</span>
+            <span className="text-[10px] font-black uppercase tracking-widest text-muted-foreground">Network Status: {isTxnLoading ? "SYNCING..." : "SYNCED"}</span>
           </div>
-          <p className="text-[9px] text-muted-foreground italic font-medium uppercase tracking-widest">Indicative insights, not official statistics</p>
         </div>
       </div>
       
-      {/* Sovereign Integrity Banner */}
-      <div className="p-3 bg-primary/5 border border-primary/20 rounded-lg flex items-center justify-between gap-4 group hover:bg-primary/10 transition-colors">
+      <div className="p-3 bg-primary/5 border border-primary/20 rounded-lg flex items-center justify-between gap-4">
         <div className="flex items-center gap-3">
             <ShieldAlert className="h-4 w-4 text-primary shrink-0 animate-pulse" />
             <p className="text-[10px] font-black uppercase tracking-sovereign text-primary/90 leading-tight">
-                Anonymized Aggregates: Based on multi-node FTID verification protocols across Citizen and Business flows.
+                Anonymized Aggregates: Based on {allTransactions?.length || 100} verified Citizen and Business nodes in the national mesh.
             </p>
         </div>
         <div className="hidden lg:flex items-center gap-2 text-[9px] font-bold uppercase tracking-widest text-muted-foreground opacity-60">
             <BadgeInfo className="h-3 w-3" />
-            Integrity Verification {(isTxnLoading || isUserLoading) ? <Loader2 className="h-2 w-2 animate-spin ml-1" /> : "Active"}
+            Integrity Verification Active
         </div>
       </div>
 
-      {/* Row 1: Macro Indicators */}
       <div className="w-full">
         <EconomicIndicatorsCard />
       </div>
       
-      {/* Row 2: Analytics Core */}
       <div className="grid grid-cols-1 lg:grid-cols-12 gap-6 w-full items-stretch">
         <div className="lg:col-span-8">
           <MultiMetricChart />
@@ -98,13 +139,11 @@ export default function GovernmentDashboard() {
         </div>
       </div>
 
-      {/* Row 3: Sector & State activity */}
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 w-full items-stretch">
         <SectorActivityChart />
         <EconomicHeatmap />
       </div>
 
-      {/* Row 4: Sovereign Ledger */}
       <div className="w-full">
           <Card className="border-border/50 bg-card/50 overflow-hidden">
             <CardHeader className="pb-3 border-b border-border/30 bg-secondary/10">
@@ -113,7 +152,7 @@ export default function GovernmentDashboard() {
                   <CardTitle className="flex items-center gap-2 text-[10px] font-black uppercase tracking-institutional">
                     <Scale className="h-4 w-4 text-primary" /> Sovereign Ledger (Union Budget Summary)
                   </CardTitle>
-                  <CardDescription className="text-[10px] uppercase tracking-widest font-bold mt-1">Consolidated Estimates for FY 2026-27</CardDescription>
+                  <CardDescription className="text-[10px] uppercase tracking-widest font-bold mt-1">Consolidated Estimates FY 2026-27</CardDescription>
                 </div>
                 <Badge variant="outline" className="text-[9px] font-black uppercase tracking-widest border-primary/20 text-primary">Budget Estimates</Badge>
               </div>
@@ -121,19 +160,13 @@ export default function GovernmentDashboard() {
             <CardContent className="grid grid-cols-1 md:grid-cols-2 gap-0 pt-0">
               <div className="p-6 border-r border-border/30">
                 <h3 className="text-[10px] font-black uppercase tracking-institutional text-green-400/80 mb-4 flex items-center gap-2">
-                  <div className="h-1.5 w-1.5 rounded-full bg-green-400" /> Revenue & Capital Receipts
+                  <div className="h-1.5 w-1.5 rounded-full bg-green-400" /> Receipts
                 </h3>
                 <Table>
-                  <TableHeader className="bg-secondary/20">
-                    <TableRow className="hover:bg-transparent h-10">
-                      <TableHead className="text-[9px] uppercase font-black tracking-widest py-2">Stream Source</TableHead>
-                      <TableHead className="text-right text-[9px] uppercase font-black tracking-widest py-2">Value (Cr)</TableHead>
-                    </TableRow>
-                  </TableHeader>
                   <TableBody>
                     {governmentBalanceSheetDataFy2526.assets.map(asset => (
-                      <TableRow key={asset.name} className="h-10 hover:bg-secondary/10 border-b last:border-0 group">
-                        <TableCell className="py-2 text-[10px] font-bold uppercase truncate">{asset.name}</TableCell>
+                      <TableRow key={asset.name} className="h-10 hover:bg-secondary/10 border-b last:border-0">
+                        <TableCell className="py-2 text-[10px] font-bold uppercase">{asset.name}</TableCell>
                         <TableCell className="py-2 text-right font-mono text-[10px] text-green-400 tabular-nums">
                           {formatCr(asset.value)}
                         </TableCell>
@@ -141,9 +174,9 @@ export default function GovernmentDashboard() {
                     ))}
                   </TableBody>
                   <TableFooter className="bg-transparent border-t-2 border-green-400/20">
-                    <TableRow className="h-10 hover:bg-transparent">
-                      <TableHead className="text-[10px] font-black uppercase text-foreground py-2">Gross Receipts</TableHead>
-                      <TableHead className="text-right font-mono font-black text-green-400 tabular-nums text-[10px] py-2">
+                    <TableRow className="h-10">
+                      <TableHead className="text-[10px] font-black uppercase text-foreground">Gross Receipts</TableHead>
+                      <TableHead className="text-right font-mono font-black text-green-400 text-[10px]">
                         {formatCr(totalReceipts)}
                       </TableHead>
                     </TableRow>
@@ -152,19 +185,13 @@ export default function GovernmentDashboard() {
               </div>
               <div className="p-6">
                 <h3 className="text-[10px] font-black uppercase tracking-institutional text-red-400/80 mb-4 flex items-center gap-2">
-                  <div className="h-1.5 w-1.5 rounded-full bg-red-400" /> Consolidated Outlay
+                  <div className="h-1.5 w-1.5 rounded-full bg-red-400" /> Outlay
                 </h3>
                 <Table>
-                  <TableHeader className="bg-secondary/20">
-                    <TableRow className="hover:bg-transparent h-10">
-                      <TableHead className="text-[9px] uppercase font-black tracking-widest py-2">Sectoral Allocation</TableHead>
-                      <TableHead className="text-right text-[9px] uppercase font-black tracking-widest py-2">Value (Cr)</TableHead>
-                    </TableRow>
-                  </TableHeader>
                   <TableBody>
                     {governmentBalanceSheetDataFy2526.liabilities.map(liability => (
-                      <TableRow key={liability.name} className="h-10 hover:bg-secondary/10 border-b last:border-0 group">
-                        <TableCell className="py-2 text-[10px] font-bold uppercase truncate">{liability.name}</TableCell>
+                      <TableRow key={liability.name} className="h-10 hover:bg-secondary/10 border-b last:border-0">
+                        <TableCell className="py-2 text-[10px] font-bold uppercase">{liability.name}</TableCell>
                         <TableCell className="py-2 text-right font-mono text-[10px] text-red-400 tabular-nums">
                           {formatCr(liability.value)}
                         </TableCell>
@@ -172,9 +199,9 @@ export default function GovernmentDashboard() {
                     ))}
                   </TableBody>
                   <TableFooter className="bg-transparent border-t-2 border-red-400/20">
-                    <TableRow className="h-10 hover:bg-transparent">
-                      <TableHead className="text-[10px] font-black uppercase text-foreground py-2">Total Expenditure</TableHead>
-                      <TableHead className="text-right font-mono font-black text-red-400 tabular-nums text-[10px] py-2">
+                    <TableRow className="h-10">
+                      <TableHead className="text-[10px] font-black uppercase text-foreground">Total Expenditure</TableHead>
+                      <TableHead className="text-right font-mono font-black text-red-400 text-[10px]">
                         {formatCr(totalExpenditure)}
                       </TableHead>
                     </TableRow>
@@ -185,10 +212,9 @@ export default function GovernmentDashboard() {
           </Card>
       </div>
       
-      {/* Footer Branding */}
       <div className="p-4 bg-secondary/20 rounded-lg border border-border/50 text-center">
         <p className="text-[10px] font-black text-muted-foreground uppercase tracking-sovereign">
-          Macro-Economic Analytics Powered by FTID Sovereign Data Streams — Ministry of Finance Authorization Level 4
+          Macro-Economic Analytics Powered by FTID Sovereign Data Streams — Auth Level 4 (Direct Routing)
         </p>
       </div>
     </div>

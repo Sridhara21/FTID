@@ -39,7 +39,7 @@ import { LinkAccountDialog } from "@/components/citizen/link-account-dialog";
 import { regulatoryAlerts, institutionConnectivity, consentData, flowScoreData } from "@/lib/placeholder-data";
 import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from "@/components/ui/tooltip";
 import { useUser, useFirestore, useDoc, useCollection, useMemoFirebase } from "@/firebase";
-import { collection, doc, query, where } from "firebase/firestore";
+import { collection, doc, query, where, orderBy } from "firebase/firestore";
 
 const PrimaryMetric = ({ title, value, subtext, trend, trendDir, icon: Icon, isLoading = false }: { title: string, value: string, subtext: string, trend?: string, trendDir?: 'up' | 'down', icon: any, isLoading?: boolean }) => (
   <Card className="relative overflow-hidden border-primary/20 bg-primary/5">
@@ -97,12 +97,16 @@ export default function CitizenDashboard() {
 
   const transactionsQuery = useMemoFirebase(() => {
     if (!db || !user?.uid) return null;
-    return query(collection(db, "transactions"), where("citizenId", "==", user.uid));
+    return query(
+      collection(db, "transactions"), 
+      where("citizenId", "==", user.uid),
+      orderBy("timestamp", "desc")
+    );
   }, [db, user?.uid]);
 
   const { data: transactionsData, isLoading: isTxnLoading } = useCollection(transactionsQuery);
 
-  const totalBalance = transactionsData?.reduce((acc, curr) => acc + curr.amount, 0) || 85250;
+  const totalBalance = transactionsData?.reduce((acc, curr) => acc + curr.amount, 0) || 0;
   const activeConsents = consentData.flatMap(cat => cat.consents).filter(c => c.given);
   
   const quickActions = [
@@ -176,7 +180,6 @@ export default function CitizenDashboard() {
                     </CardTitle>
                 </CardHeader>
                 <CardContent className="pt-4 grid grid-cols-1 gap-3">
-                   {/* Link Account Dialog integrated as a high-priority action */}
                    <LinkAccountDialog />
                    {quickActions.map(action => <QuickAction key={action.title} {...action} />)}
                 </CardContent>

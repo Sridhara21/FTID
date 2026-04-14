@@ -1,4 +1,3 @@
-
 "use client";
 
 import {
@@ -56,7 +55,7 @@ export default function RegistryAuditPage() {
         <div>
           <h1 className="text-2xl font-bold tracking-tight">Sovereign Registry Audit</h1>
           <p className="text-muted-foreground text-[10px] font-bold uppercase tracking-institutional mt-1">
-            Real-Time Identity & Flow Intelligence Ledger
+            Real-Time Identity & Flow Intelligence Ledger (100 Active Nodes)
           </p>
         </div>
         <div className="flex items-center gap-3">
@@ -86,7 +85,7 @@ export default function RegistryAuditPage() {
             </Badge>
           </div>
           <CardDescription className="text-xs">
-            Viewing authenticated data streams for {filteredRegistry.length} verified sovereign identities.
+            Viewing authenticated data streams for {filteredRegistry.length} verified sovereign identities in the national mesh.
           </CardDescription>
         </CardHeader>
         <CardContent className="p-0">

@@ -1,6 +1,5 @@
 import {
   Landmark,
-  Receipt,
   Utensils,
   HeartPulse,
   TrendingUp,
@@ -8,26 +7,14 @@ import {
   AlertTriangle,
   ShieldCheck,
   Briefcase,
-  User,
-  CreditCard,
-  History,
-  Lock,
-  Smartphone,
-  Server,
-  Terminal,
-  FileCheck,
-  Vote,
-  PiggyBank,
-  Activity,
-  Zap,
-  DollarSign,
-  TrendingDown,
-  BarChart3,
   ShoppingCart,
   ZapOff,
   Factory,
   Cpu,
-  Globe
+  Globe,
+  DollarSign,
+  Activity,
+  Zap
 } from 'lucide-react';
 
 export const userProfileData = {

@@ -63,7 +63,7 @@ export function LinkAccountDialog() {
       lastUpdated: new Date().toISOString(),
     });
 
-    // Optimistic UI update: Close dialog and show success
+    // Optimized for quick responsiveness
     setTimeout(() => {
       setIsSubmitting(false);
       setIsOpen(false);
@@ -71,7 +71,7 @@ export function LinkAccountDialog() {
         title: "Identity Linked Successfully",
         description: "Your sovereign financial identity has been verified and bonded to FTID.",
       });
-    }, 800);
+    }, 300);
   }
 
   return (
@@ -89,7 +89,7 @@ export function LinkAccountDialog() {
       </DialogTrigger>
       <DialogContent className="sm:max-w-[425px] border-primary/20 bg-card">
         <DialogHeader>
-          <DialogTitle className="flex items-center gap-2">
+          <DialogTitle className="flex items-center gap-2 text-sm font-black uppercase tracking-institutional">
             <ShieldCheck className="h-5 w-5 text-primary" />
             Link Sovereign Account
           </DialogTitle>
@@ -106,7 +106,7 @@ export function LinkAccountDialog() {
                 <FormItem>
                   <FormLabel className="text-[10px] font-black uppercase tracking-widest text-muted-foreground">Full Legal Name</FormLabel>
                   <FormControl>
-                    <Input placeholder="Enter as per Aadhaar" className="h-9 font-bold bg-secondary/20" {...field} />
+                    <Input placeholder="Enter as per Aadhaar" className="h-9 font-bold bg-secondary/20 border-border/50 text-xs" {...field} />
                   </FormControl>
                   <FormMessage className="text-[10px]" />
                 </FormItem>
@@ -120,7 +120,7 @@ export function LinkAccountDialog() {
                   <FormItem>
                     <FormLabel className="text-[10px] font-black uppercase tracking-widest text-muted-foreground">PAN Number</FormLabel>
                     <FormControl>
-                      <Input placeholder="ABCDE1234F" className="h-9 font-mono uppercase bg-secondary/20" {...field} />
+                      <Input placeholder="ABCDE1234F" className="h-9 font-mono uppercase bg-secondary/20 border-border/50 text-xs" {...field} />
                     </FormControl>
                     <FormMessage className="text-[10px]" />
                   </FormItem>
@@ -133,7 +133,7 @@ export function LinkAccountDialog() {
                   <FormItem>
                     <FormLabel className="text-[10px] font-black uppercase tracking-widest text-muted-foreground">Aadhaar ID (12 Digits)</FormLabel>
                     <FormControl>
-                      <Input placeholder="XXXX XXXX XXXX" className="h-9 font-mono bg-secondary/20" {...field} />
+                      <Input placeholder="XXXX XXXX XXXX" className="h-9 font-mono bg-secondary/20 border-border/50 text-xs" {...field} />
                     </FormControl>
                     <FormMessage className="text-[10px]" />
                   </FormItem>

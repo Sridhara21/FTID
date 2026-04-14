@@ -30,11 +30,6 @@ service cloud.firestore {
       return isSignedIn() && exists(/databases/$(database)/documents/platformAdmins/$(request.auth.uid));
     }
 
-    // Checks if the user is an administrator for a specific government entity
-    function isGovernmentAdmin(entityId) {
-      return isSignedIn() && exists(/databases/$(database)/documents/governmentEntities/$(entityId)/admins/$(request.auth.uid));
-    }
-
     // --- Rules ---
 
     /**
@@ -58,13 +53,10 @@ service cloud.firestore {
       allow delete: if isPlatformAdmin();
 
       match /financialTips/{id} {
-        allow get, list: if isOwner(citizenId);
-        allow create: if isOwner(citizenId);
-        allow update, delete: if isExistingOwner(citizenId);
+        allow read, write: if isOwner(citizenId);
       }
       match /investments/{id} {
-        allow get, list: if isOwner(citizenId) || isPlatformAdmin();
-        allow create, update, delete: if isOwner(citizenId) || isPlatformAdmin();
+        allow read, write: if isOwner(citizenId) || isPlatformAdmin();
       }
     }
 
@@ -73,7 +65,11 @@ service cloud.firestore {
      * @path /transactions/{transactionId}
      */
     match /transactions/{transactionId} {
-      allow get, list: if isPlatformAdmin() || (isSignedIn() && (resource == null || isOwner(resource.data.citizenId)));
+      // Platform Admins can see everything.
+      // Citizens can only list documents where they are the owner.
+      allow list: if isPlatformAdmin() || (isSignedIn() && resource.data.citizenId == request.auth.uid);
+      allow get: if isPlatformAdmin() || (isSignedIn() && resource.data.citizenId == request.auth.uid);
+      
       allow create: if isOwner(request.resource.data.citizenId) || isPlatformAdmin();
       allow update, delete: if isPlatformAdmin();
     }
