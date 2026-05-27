@@ -2,7 +2,7 @@
 "use client";
 
 import { useEffect } from "react";
-import { useRouter, usePathname } from "next/navigation";
+import { useRouter } from "next/navigation";
 import { EconomicIndicatorsCard } from "@/components/government/economic-indicators-card";
 import { RevenueChartCard } from "@/components/government/revenue-chart-card";
 import { MultiMetricChart } from "@/components/government/multi-metric-chart";
@@ -27,14 +27,13 @@ import {
 import { governmentBalanceSheetDataFy2526 } from "@/lib/placeholder-data";
 import { Scale, Globe, ShieldAlert, BadgeInfo, Loader2, Lock } from "lucide-react";
 import { Badge } from "@/components/ui/badge";
-import { useFirestore, useCollection, useMemoFirebase, useUser, useDoc } from "@/firebase";
-import { collection, doc } from "firebase/firestore";
+import { useFirestore, useCollection, useMemoFirebase, useUser, useDoc } from "@/local";
+import { collection, doc } from "@/local/store";
 
 export default function GovernmentDashboard() {
   const { user, isUserLoading } = useUser();
   const db = useFirestore();
   const router = useRouter();
-  const pathname = usePathname();
   
   const adminRef = useMemoFirebase(() => {
     if (!db || !user?.uid) return null;
@@ -43,17 +42,17 @@ export default function GovernmentDashboard() {
 
   const { data: adminData, isLoading: isAdminLoading } = useDoc(adminRef);
 
-  // REDIRECT GUARD: If the session finishes loading and the user is NOT an admin, route them back to the citizen portal.
-  // This prevents accidental permission errors for regular users visiting administrative paths.
   useEffect(() => {
-    if (!isUserLoading && !isAdminLoading && !adminData && pathname.startsWith('/government')) {
+    if (!isUserLoading && !isAdminLoading && !adminData && user) {
       router.push('/citizen');
     }
-  }, [isUserLoading, isAdminLoading, adminData, pathname, router]);
+  }, [isUserLoading, isAdminLoading, adminData, user, router]);
 
+  // Fast-fail query logic: Prevents citizens from triggering unauthorized ledger queries
   const transactionsQuery = useMemoFirebase(() => {
-    // SECURITY GUARD: Only query the global transactional ledger if administrative node is verified.
     if (!db || isUserLoading || !user || isAdminLoading || !adminData) return null;
+    // Only return the collection if the session has verified institutional role
+    if (adminData.role !== 'REGULATOR_DIU') return null;
     return collection(db, "transactions");
   }, [db, isUserLoading, user, isAdminLoading, adminData]);
 
@@ -64,7 +63,6 @@ export default function GovernmentDashboard() {
 
   const formatCr = (val: number) => `₹${val.toLocaleString('en-IN')} Cr`;
 
-  // Authorization Loading State
   if (isUserLoading || isAdminLoading) {
     return (
       <div className="flex h-[80vh] w-full items-center justify-center">
@@ -76,23 +74,26 @@ export default function GovernmentDashboard() {
     );
   }
 
-  // Access Denied State (Direct routing protection fallback)
   if (!user || !adminData) {
+    const MetricCard = ({ title, value, detail, icon: Icon, colorClass, status }: { title: string, value: string, detail: string, icon: any, colorClass: string, status?: string }) => (
+      <Card className={`relative overflow-hidden border-border/50 glass-panel slide-up-fade animated-pulse-hover`}>
+        <CardContent className="pt-6 text-center">
+          <Lock className="mx-auto h-12 w-12 text-red-400 mb-4" />
+          <h2 className="text-lg font-bold uppercase tracking-tight">Analytical Access Denied</h2>
+          <p className="text-xs text-muted-foreground mt-2">Institutional clearance required. Authorize session via Sovereign Hub to view systemic aggregates.</p>
+        </CardContent>
+      </Card>
+    );
+
     return (
       <div className="flex h-[80vh] w-full items-center justify-center">
-        <Card className="max-w-md border-red-500/20 bg-red-500/5">
-          <CardContent className="pt-6 text-center">
-            <Lock className="mx-auto h-12 w-12 text-red-400 mb-4" />
-            <h2 className="text-lg font-bold uppercase tracking-tight">Analytical Access Denied</h2>
-            <p className="text-xs text-muted-foreground mt-2">Institutional clearance required. Authorize session via Hub to view systemic aggregates.</p>
-          </CardContent>
-        </Card>
+        <MetricCard title="" value="" detail="" icon={null} colorClass="" />
       </div>
     );
   }
 
   return (
-    <div className="flex flex-col gap-6 w-full">
+    <div className="flex flex-col gap-6 w-full animate-in fade-in duration-500">
       <div className="flex flex-col md:flex-row md:items-center justify-between gap-4">
         <div>
           <h1 className="text-2xl font-bold tracking-tight text-foreground">FTID — Government Oversight System</h1>
@@ -145,7 +146,7 @@ export default function GovernmentDashboard() {
       </div>
 
       <div className="w-full">
-          <Card className="border-border/50 bg-card/50 overflow-hidden">
+          <Card className="border-border/50 glass-panel slide-up-fade animated-pulse-hover overflow-hidden">
             <CardHeader className="pb-3 border-b border-border/30 bg-secondary/10">
               <div className="flex justify-between items-center">
                 <div>

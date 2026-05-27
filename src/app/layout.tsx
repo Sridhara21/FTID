@@ -2,7 +2,7 @@ import type { Metadata } from 'next';
 import './globals.css';
 import { Toaster } from '@/components/ui/toaster';
 import { Inter } from 'next/font/google';
-import { FirebaseClientProvider } from '@/firebase/client-provider';
+import { FirebaseClientProvider } from '@/local/client-provider';
 
 const inter = Inter({ subsets: ['latin'], variable: '--font-inter' });
 
@@ -18,7 +18,7 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en" className={`${inter.variable} scroll-smooth`} suppressHydrationWarning>
-      <body className="font-body antialiased" suppressHydrationWarning>
+      <body className={`${inter.variable} font-sans antialiased dynamic-gradient-bg min-h-screen text-foreground`} suppressHydrationWarning>
         <FirebaseClientProvider>
           {children}
           <Toaster />

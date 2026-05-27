@@ -7,7 +7,7 @@ import {
   ChartTooltip,
   ChartTooltipContent,
 } from "@/components/ui/chart";
-import { creditScoreData } from "@/lib/placeholder-data";
+import { flowScoreData as creditScoreData } from "@/lib/placeholder-data";
 import { Lightbulb, HeartPulse, TrendingUp } from "lucide-react";
 import { Label, Pie, PieChart, Cell, LineChart, Line, XAxis, YAxis, Tooltip, ResponsiveContainer, CartesianGrid } from "recharts";
 import {
@@ -177,7 +177,7 @@ export default function CreditScorePage() {
                                 </TableRow>
                             </TableHeader>
                             <TableBody>
-                                {creditScoreData.factors.map((factor) => (
+                                {creditScoreData.factors.map((factor: any) => (
                                 <TableRow key={factor.name}>
                                     <TableCell className="font-medium flex items-center gap-2">
                                         <factor.icon className={`h-4 w-4 ${factor.color}`} />
@@ -203,7 +203,7 @@ export default function CreditScorePage() {
                         <CardDescription>Actionable tips to improve your score.</CardDescription>
                     </CardHeader>
                     <CardContent className="space-y-3">
-                        {creditScoreData.tips.map((tip, index) => (
+                        {creditScoreData.tips.map((tip: string, index: number) => (
                             <div key={index} className="flex items-start gap-3 p-3 rounded-lg bg-secondary/50">
                                 <Lightbulb className="h-5 w-5 mt-0.5 text-primary flex-shrink-0"/>
                                 <span className="text-sm">{tip}</span>

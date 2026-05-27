@@ -1,13 +1,14 @@
+
 'use client';
 
 import { useState } from 'react';
 import { Card, CardContent, CardHeader, CardTitle, CardDescription } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
-import { ArrowUpRight, ArrowDownLeft, Wallet, ShieldCheck, Terminal, Loader2, ShoppingCart, Landmark, Utensils, Zap, HeartPulse, DollarSign, Activity } from "lucide-react";
+import { ArrowUpRight, ArrowDownLeft, Wallet, ShieldCheck, Terminal, Loader2, ShoppingCart, Landmark, Utensils, Zap, HeartPulse, DollarSign, Activity, Truck, ArrowRightLeft } from "lucide-react";
 import { Separator } from "@/components/ui/separator";
 import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from "@/components/ui/tooltip";
-import { useUser, useFirestore, useCollection, useMemoFirebase, addDocumentNonBlocking } from "@/firebase";
-import { collection, query, where, orderBy } from "firebase/firestore";
+import { useUser, useFirestore, useCollection, useMemoFirebase, addDocumentNonBlocking } from "@/local";
+import { collection, query, where, orderBy, limit } from "@/local/store";
 import {
   Dialog,
   DialogContent,
@@ -29,6 +30,7 @@ const ICON_MAP: Record<string, any> = {
   'Utilities': Zap,
   'Healthcare': HeartPulse,
   'Investment': DollarSign,
+  'Transport': Truck,
   'Other': Activity
 };
 
@@ -43,38 +45,63 @@ export function WalletCard() {
   const [txnDesc, setTxnDesc] = useState("");
   const [isProcessing, setIsProcessing] = useState(false);
 
+  // REAL-TIME LEDGER SYNC: Pulls live flows bonded to this FTID
   const transactionsQuery = useMemoFirebase(() => {
     if (!db || !user?.uid) return null;
     return query(
       collection(db, "transactions"), 
       where("citizenId", "==", user.uid),
-      orderBy("timestamp", "desc")
+      orderBy("timestamp", "desc"),
+      limit(50)
     );
   }, [db, user?.uid]);
 
   const { data: transactions, isLoading } = useCollection(transactionsQuery);
 
-  const totalBalance = transactions?.reduce((acc, curr) => acc + curr.amount, 0) || 0;
+  // DYNAMIC AGGREGATE BALANCE: Computed from historical ledger records
+  const totalBalance = transactions?.reduce((acc, curr) => acc + (Number(curr.amount) || 0), 0) || 0;
 
   const handleTransaction = async (type: 'payment' | 'request') => {
     if (!user?.uid || !db || !txnAmount) return;
     
     setIsProcessing(true);
-    const amount = type === 'payment' ? -Math.abs(Number(txnAmount)) : Math.abs(Number(txnAmount));
+    const numAmount = Number(txnAmount);
+    if (isNaN(numAmount) || numAmount <= 0) {
+        toast({ variant: "destructive", title: "Invalid Amount", description: "Please enter a valid positive numeric value." });
+        setIsProcessing(false);
+        return;
+    }
+
+    const otherPartyId = txnDesc || (type === 'payment' ? "External Node" : "Unknown Node");
+    const amountForUser = type === 'payment' ? -Math.abs(numAmount) : Math.abs(numAmount);
     
+    // Debit/Credit the Current User
     addDocumentNonBlocking(collection(db, "transactions"), {
       citizenId: user.uid,
-      amount: amount,
-      description: txnDesc || (type === 'payment' ? "CBDC Payment" : "Funds Received"),
+      amount: amountForUser,
+      description: type === 'payment' ? `Payment to ${otherPartyId}` : `Received from ${otherPartyId}`,
       classification: type === 'payment' ? "Shopping" : "Income",
       timestamp: new Date().toISOString(),
       status: "completed",
-      originInstitution: type === 'payment' ? "FTID Wallet" : "External Node",
-      destinationInstitution: type === 'payment' ? "Merchant Enclave" : "FTID Wallet",
+      originInstitution: type === 'payment' ? "FTID Wallet" : otherPartyId,
+      destinationInstitution: type === 'payment' ? otherPartyId : "FTID Wallet",
       channel: "CBDC_FLOW"
     });
 
-    // Snappy responsive update
+    // Mirror the transaction on the other party's ledger (to update their balance accordingly)
+    const amountForOther = type === 'payment' ? Math.abs(numAmount) : -Math.abs(numAmount);
+    addDocumentNonBlocking(collection(db, "transactions"), {
+      citizenId: otherPartyId, // The other individual's FTID
+      amount: amountForOther,
+      description: type === 'payment' ? `Received from ${user.uid}` : `Payment to ${user.uid}`,
+      classification: type === 'payment' ? "Income" : "Shopping",
+      timestamp: new Date().toISOString(),
+      status: "completed",
+      originInstitution: type === 'payment' ? user.uid : "FTID Wallet",
+      destinationInstitution: type === 'payment' ? "FTID Wallet" : user.uid,
+      channel: "CBDC_FLOW"
+    });
+
     setTimeout(() => {
       setIsProcessing(false);
       setIsPayOpen(false);
@@ -83,13 +110,13 @@ export function WalletCard() {
       setTxnDesc("");
       toast({
         title: type === 'payment' ? "Payment Routed" : "Flow Received",
-        description: `₹${Math.abs(amount).toLocaleString()} successfully processed via FTID Secure Route.`,
+        description: `₹${Math.abs(numAmount).toLocaleString('en-IN')} successfully processed via FTID Secure Route.`,
       });
-    }, 100);
+    }, 50);
   };
 
   return (
-    <Card className="flex flex-col h-full border-primary/20">
+    <Card className="flex flex-col h-full border-primary/20 glass-panel slide-up-fade animated-pulse-hover">
       <CardHeader className="pb-2">
         <CardTitle className="flex items-center gap-2 text-lg">
             <Wallet className="h-5 w-5 text-primary" />
@@ -109,7 +136,7 @@ export function WalletCard() {
                         </span>
                     </TooltipTrigger>
                     <TooltipContent>
-                        <p className="text-[10px]">Offline CBDC mode is Active. Last sync: 5 minutes ago.</p>
+                        <p className="text-[10px]">Offline CBDC mode is Active. System sync status: High.</p>
                     </TooltipContent>
                 </Tooltip>
             </TooltipProvider>
@@ -153,10 +180,12 @@ export function WalletCard() {
                   />
                 </div>
                 <div className="space-y-2">
-                  <Label className="text-[10px] font-black uppercase tracking-widest text-muted-foreground">Reference / Description</Label>
+                  <Label className="text-[10px] font-black uppercase tracking-widest text-muted-foreground">Recipient Phone Number</Label>
                   <Input 
-                    placeholder="Merchant ID or Service" 
+                    type="tel"
+                    placeholder="10 Digit Number" 
                     className="bg-secondary/20 h-11"
+                    maxLength={10}
                     value={txnDesc}
                     onChange={(e) => setTxnDesc(e.target.value)}
                   />
@@ -193,10 +222,12 @@ export function WalletCard() {
                   />
                 </div>
                 <div className="space-y-2">
-                  <Label className="text-[10px] font-black uppercase tracking-widest text-muted-foreground">Source Identity</Label>
+                  <Label className="text-[10px] font-black uppercase tracking-widest text-muted-foreground">Sender Phone Number</Label>
                   <Input 
-                    placeholder="FTID or External Node" 
+                    type="tel"
+                    placeholder="10 Digit Number" 
                     className="bg-secondary/20 h-11"
+                    maxLength={10}
                     value={txnDesc}
                     onChange={(e) => setTxnDesc(e.target.value)}
                   />
@@ -239,7 +270,7 @@ export function WalletCard() {
                   return (
                     <Tooltip key={transaction.id}>
                         <TooltipTrigger asChild>
-                            <div className="flex items-center text-left w-full p-2.5 rounded-md border border-transparent hover:bg-secondary/50 hover:border-border/50 transition-all group cursor-pointer">
+                            <div className="flex items-center text-left w-full p-2.5 rounded-md border border-transparent hover:bg-secondary/50 hover:border-border/50 transition-all group cursor-pointer animate-in slide-in-from-left-2 duration-300">
                               <div className="p-2 bg-background border border-border/50 rounded-md shrink-0 transition-colors group-hover:border-primary/30">
                                   <Icon className="h-4 w-4 text-primary" />
                               </div>

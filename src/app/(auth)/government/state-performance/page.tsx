@@ -117,7 +117,7 @@ export default function StatePerformancePage() {
                                     axisLine={false} 
                                     tickMargin={10} 
                                     stroke="hsl(var(--muted-foreground))"
-                                    valueFormatter={(value) => `${value.toLocaleString('en-IN')}`}
+                                    tickFormatter={(value: number) => `${value.toLocaleString('en-IN')}`}
                                 />
                                 <Tooltip
                                     cursor={{ fill: 'hsl(var(--muted))' }}

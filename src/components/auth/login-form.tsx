@@ -9,10 +9,10 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Building, User, Loader2, UserPlus, LogIn, ShieldCheck, Fingerprint, ArrowRight, ArrowLeft, CheckCircle2, Zap } from "lucide-react";
-import { useAuth, useFirestore, useUser } from "@/firebase";
-import { initiateAnonymousSignIn, initiateEmailSignIn, initiateEmailSignUp } from "@/firebase/non-blocking-login";
-import { setDocumentNonBlocking, addDocumentNonBlocking } from "@/firebase/non-blocking-updates";
-import { doc, collection } from "firebase/firestore";
+import { useAuth, useFirestore, useUser } from "@/local";
+import { initiateAnonymousSignIn, initiateEmailSignIn, initiateEmailSignUp } from "@/local/non-blocking-login";
+import { setDocumentNonBlocking, addDocumentNonBlocking } from "@/local/non-blocking-updates";
+import { doc, collection } from "@/local/store";
 import { useToast } from "@/hooks/use-toast";
 import { getPersonaByKeys } from "@/lib/sovereign-seed";
 
@@ -28,9 +28,10 @@ export function LoginForm() {
   const [role, setRole] = useState<'citizen' | 'government'>('citizen');
   const [signupStep, setSignupStep] = useState(1);
   const [isBonding, setIsBonding] = useState(false);
+  const [hasBonded, setHasBonded] = useState(false);
   const [govLoginStarted, setGovLoginStarted] = useState(false);
   
-  const [email, setEmail] = useState("");
+  const [phoneNumber, setPhoneNumber] = useState("");
   const [password, setPassword] = useState("");
   const [fullName, setFullName] = useState("");
   const [pan, setPan] = useState("");
@@ -40,13 +41,51 @@ export function LoginForm() {
 
   useEffect(() => {
     if (role === 'government') {
-      setEmail("official@gov.in");
+      setPhoneNumber("9999999999");
       setPassword("gov_access_2026");
     } else if (mode === 'signin') {
-      setEmail("");
+      setPhoneNumber("");
       setPassword("");
     }
   }, [role, mode]);
+
+  // IDENTITY BONDING PROTOCOL: Merges seeded persona data with live Firestore node
+  useEffect(() => {
+    if (user && role === 'citizen' && mode === 'signup' && !hasBonded && db) {
+      setHasBonded(true);
+      const uid = user.uid;
+      const persona = getPersonaByKeys(pan, aadhaar);
+      const citizenRef = doc(db, "citizens", uid);
+      
+      setDocumentNonBlocking(citizenRef, {
+        id: uid,
+        fullName: persona?.fullName || fullName,
+        phoneNumber: phoneNumber,
+        pan: { number: pan.toUpperCase(), status: "Verified" },
+        aadhaar: { number: aadhaar, status: "Verified" },
+        currentCreditScore: persona?.creditScore || 785,
+        tier: persona?.tier || "Tier1",
+        isLinked: true,
+        registrationDate: new Date().toISOString(),
+        onboardingComplete: true
+      }, { merge: true });
+
+      if (persona) {
+        const txnCol = collection(db, "transactions");
+        persona.transactions.forEach(t => {
+          addDocumentNonBlocking(txnCol, {
+            ...t,
+            citizenId: uid,
+            status: "completed",
+            timestamp: new Date().toISOString()
+          });
+        });
+      }
+      
+      // High-speed redirect for institutional feel
+      setTimeout(() => router.push("/citizen"), 50);
+    }
+  }, [user, role, mode, hasBonded, db, router, pan, aadhaar, fullName, phoneNumber]);
 
   useEffect(() => {
     if (govLoginStarted && user && role === 'government' && db) {
@@ -54,7 +93,7 @@ export function LoginForm() {
       setDocumentNonBlocking(adminRef, {
         id: user.uid,
         role: "REGULATOR_DIU",
-        email: "official@gov.in",
+        phoneNumber: "9999999999",
         lastActive: new Date().toISOString()
       }, { merge: true });
       
@@ -78,6 +117,8 @@ export function LoginForm() {
   };
 
   const handleAction = async () => {
+    if (!auth) return;
+
     if (role === 'government') {
       setIsLoading(true);
       setGovLoginStarted(true);
@@ -87,7 +128,7 @@ export function LoginForm() {
 
     if (mode === 'signup') {
       if (signupStep === 1) {
-        if (!fullName || !pan || !aadhaar || !email) {
+        if (!fullName || !pan || !aadhaar || !phoneNumber) {
           toast({ variant: "destructive", title: "Missing Identity Data", description: "All fields required for sovereign binding." });
           return;
         }
@@ -103,53 +144,30 @@ export function LoginForm() {
         toast({ variant: "destructive", title: "Security Hub Incomplete", description: "Complete biometric scan and set password." });
         return;
       }
-    } else if (!email || !password) {
-      toast({ variant: "destructive", title: "Missing Credentials", description: "Email and password are required." });
+    } else if (!phoneNumber || !password) {
+      toast({ variant: "destructive", title: "Missing Credentials", description: "Phone number and password are required." });
       return;
     }
 
     setIsLoading(true);
     try {
       if (mode === 'signup') {
-        initiateEmailSignUp(auth, email, password);
-        setTimeout(() => {
-          if (auth.currentUser && role === 'citizen' && db) {
-            const uid = auth.currentUser.uid;
-            const persona = getPersonaByKeys(pan, aadhaar);
-            const citizenRef = doc(db, "citizens", uid);
-            
-            setDocumentNonBlocking(citizenRef, {
-              id: uid,
-              fullName: persona?.fullName || fullName,
-              email,
-              pan: { number: pan.toUpperCase(), status: "Verified" },
-              aadhaar: { number: aadhaar, status: "Verified" },
-              currentCreditScore: persona?.creditScore || 785,
-              tier: persona?.tier || "Tier1",
-              isLinked: true,
-              registrationDate: new Date().toISOString(),
-              onboardingComplete: true
-            }, { merge: true });
-
-            if (persona) {
-              const txnCol = collection(db, "transactions");
-              persona.transactions.forEach(t => {
-                addDocumentNonBlocking(txnCol, {
-                  ...t,
-                  citizenId: uid,
-                  status: "completed",
-                  timestamp: new Date().toISOString()
-                });
-              });
-            }
-          }
-          router.push("/citizen");
-        }, 100);
+        initiateEmailSignUp(auth, phoneNumber, password);
       } else {
-        initiateEmailSignIn(auth, email, password);
-        setTimeout(() => {
-          router.push(role === 'citizen' ? "/citizen" : "/government");
-        }, 100);
+        initiateEmailSignIn(auth, phoneNumber, password);
+        // Instant check for current user to speed up redirect
+        if (auth.currentUser) {
+            router.push(role === 'citizen' ? "/citizen" : "/government");
+        } else {
+            // Short delay if auth isn't immediate
+            setTimeout(() => {
+                if (auth.currentUser) {
+                    router.push(role === 'citizen' ? "/citizen" : "/government");
+                } else {
+                    setIsLoading(false);
+                }
+            }, 200);
+        }
       }
     } catch (error: any) {
       setIsLoading(false);
@@ -165,9 +183,9 @@ export function LoginForm() {
           <TabsTrigger value="government" className="font-bold uppercase text-[10px] tracking-widest"><Building className="mr-2 h-4 w-4" /> Government</TabsTrigger>
         </TabsList>
         
-        <TabsContent value="citizen">
-          <Card className="border-primary/20 bg-card/50 backdrop-blur-sm overflow-hidden">
-            <CardHeader className="text-center pb-6 border-b border-border/30 bg-secondary/10">
+        <TabsContent value="citizen" className="slide-up-fade">
+          <Card className="border-primary/20 glass-panel overflow-hidden animated-pulse-hover">
+            <CardHeader className="text-center pb-6 border-b border-white/5 bg-secondary/10">
               <div className="mx-auto p-3 bg-primary/10 rounded-full w-fit mb-4"><ShieldCheck className="h-8 w-8 text-primary" /></div>
               <CardTitle className="text-2xl font-black tracking-tight uppercase">{mode === 'signin' ? 'Citizen Portal' : 'Establish Sovereign ID'}</CardTitle>
             </CardHeader>
@@ -188,8 +206,8 @@ export function LoginForm() {
                   {mode === 'signin' ? (
                     <>
                       <div className="space-y-2">
-                        <Label className="text-[10px] font-black uppercase tracking-widest text-muted-foreground">FTID / Email</Label>
-                        <Input type="email" placeholder="name@ftid.in" className="bg-secondary/20 h-11 border-border/50 font-bold" value={email} onChange={(e) => setEmail(e.target.value)} />
+                        <Label className="text-[10px] font-black uppercase tracking-widest text-muted-foreground">Phone Number</Label>
+                        <Input type="tel" placeholder="10 Digit Number" className="bg-secondary/20 h-11 border-border/50 font-bold" value={phoneNumber} onChange={(e) => setPhoneNumber(e.target.value)} maxLength={10} />
                       </div>
                       <div className="space-y-2">
                         <Label className="text-[10px] font-black uppercase tracking-widest text-muted-foreground">Password</Label>
@@ -214,8 +232,8 @@ export function LoginForm() {
                           </div>
                         </div>
                         <div className="space-y-2">
-                          <Label className="text-[10px] font-black uppercase tracking-widest text-muted-foreground">Email</Label>
-                          <Input type="email" placeholder="test@ftid.in" className="bg-secondary/20 h-11 border-border/50 font-bold" value={email} onChange={(e) => setEmail(e.target.value)} />
+                          <Label className="text-[10px] font-black uppercase tracking-widest text-muted-foreground">Phone Number</Label>
+                          <Input type="tel" placeholder="10 Digit Number" className="bg-secondary/20 h-11 border-border/50 font-bold" value={phoneNumber} onChange={(e) => setPhoneNumber(e.target.value)} maxLength={10} />
                         </div>
                       </div>
                     ) : (
@@ -257,17 +275,17 @@ export function LoginForm() {
           </Card>
         </TabsContent>
 
-        <TabsContent value="government">
-          <Card className="border-primary/20 bg-card/50 backdrop-blur-sm">
-            <CardHeader className="text-center pb-8 border-b border-border/30 bg-secondary/10">
+        <TabsContent value="government" className="slide-up-fade">
+          <Card className="border-primary/20 glass-panel animated-pulse-hover">
+            <CardHeader className="text-center pb-8 border-b border-white/5 bg-secondary/10">
               <div className="mx-auto p-3 bg-primary/10 rounded-full w-fit mb-4"><Building className="h-8 w-8 text-primary" /></div>
               <CardTitle className="text-2xl font-black tracking-tight uppercase">Government Hub</CardTitle>
               <CardDescription className="text-[10px] font-bold uppercase tracking-widest mt-2">Authorized Analytical Access</CardDescription>
             </CardHeader>
             <CardContent className="space-y-4 pt-8">
               <div className="space-y-2">
-                <Label className="text-[10px] font-black uppercase tracking-widest text-muted-foreground">Official ID</Label>
-                <Input type="email" readOnly className="bg-secondary/20 h-11 border-border/50 font-bold opacity-70" value={email} />
+                <Label className="text-[10px] font-black uppercase tracking-widest text-muted-foreground">Official Phone Number</Label>
+                <Input type="tel" readOnly className="bg-secondary/20 h-11 border-border/50 font-bold opacity-70" value={phoneNumber} />
               </div>
               <div className="space-y-2">
                 <Label className="text-[10px] font-black uppercase tracking-widest text-muted-foreground">Security Credentials</Label>

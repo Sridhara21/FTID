@@ -5,9 +5,7 @@ service cloud.firestore {
 
     /**
      * FTID (Financial Transparency & Identity) Security Rules
-     *
-     * CORE PHILOSOPHY:
-     * This ruleset implements a robust security model based on User Ownership and Database-Backed Access Control (DBAC).
+     * Optimized for ownership-based isolation and administrative oversight.
      */
 
     // --- Helper Functions ---
@@ -20,12 +18,7 @@ service cloud.firestore {
       return isSignedIn() && request.auth.uid == userId;
     }
 
-    // Combined existence and ownership check for update/delete
-    function isExistingOwner(userId) {
-      return resource != null && isOwner(userId);
-    }
-
-    // Checks if the user is a global platform administrator
+    // Checks if the user exists in the platformAdmins collection
     function isPlatformAdmin() {
       return isSignedIn() && exists(/databases/$(database)/documents/platformAdmins/$(request.auth.uid));
     }
@@ -34,7 +27,6 @@ service cloud.firestore {
 
     /**
      * @description Collection for system-wide platform administrators.
-     * @path /platformAdmins/{platformAdminId}
      */
     match /platformAdmins/{platformAdminId} {
       allow get: if isSignedIn();
@@ -44,12 +36,12 @@ service cloud.firestore {
 
     /**
      * @description Stores individual citizen profiles.
-     * @path /citizens/{citizenId}
      */
     match /citizens/{citizenId} {
-      allow get, list: if isOwner(citizenId) || isPlatformAdmin();
-      allow create: if isOwner(citizenId) && request.resource.data.id == citizenId;
-      allow update: if isExistingOwner(citizenId) || isPlatformAdmin();
+      allow get: if isOwner(citizenId) || isPlatformAdmin();
+      allow list: if isPlatformAdmin();
+      allow create: if isOwner(citizenId);
+      allow update: if isOwner(citizenId) || isPlatformAdmin();
       allow delete: if isPlatformAdmin();
 
       match /financialTips/{id} {
@@ -61,16 +53,26 @@ service cloud.firestore {
     }
 
     /**
-     * @description Financial transactions between citizens and government.
-     * @path /transactions/{transactionId}
+     * @description Financial transactions ledger.
      */
     match /transactions/{transactionId} {
-      // Platform Admins can see everything.
-      // Citizens can only list documents where they are the owner.
-      allow list: if isPlatformAdmin() || (isSignedIn() && resource.data.citizenId == request.auth.uid);
-      allow get: if isPlatformAdmin() || (isSignedIn() && resource.data.citizenId == request.auth.uid);
+      // For List operations, ensure users only query their own data OR are admins.
+      // This is enforced by including the citizenId filter in queries.
+      allow list: if isSignedIn() && (
+        isPlatformAdmin() || 
+        (resource.data.citizenId == request.auth.uid && ("limit" in request.query ? request.query.limit <= 1000 : true))
+      );
       
-      allow create: if isOwner(request.resource.data.citizenId) || isPlatformAdmin();
+      allow get: if isSignedIn() && (
+        isPlatformAdmin() || 
+        resource.data.citizenId == request.auth.uid
+      );
+      
+      allow create: if isSignedIn() && (
+        request.resource.data.citizenId == request.auth.uid || 
+        isPlatformAdmin()
+      );
+      
       allow update, delete: if isPlatformAdmin();
     }
 

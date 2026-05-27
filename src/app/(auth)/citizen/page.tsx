@@ -1,3 +1,4 @@
+
 "use client";
 
 import Link from "next/link";
@@ -38,11 +39,11 @@ import { PredictiveInsights } from "@/components/citizen/predictive-insights";
 import { LinkAccountDialog } from "@/components/citizen/link-account-dialog";
 import { regulatoryAlerts, institutionConnectivity, consentData, flowScoreData } from "@/lib/placeholder-data";
 import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from "@/components/ui/tooltip";
-import { useUser, useFirestore, useDoc, useCollection, useMemoFirebase } from "@/firebase";
-import { collection, doc, query, where, orderBy } from "firebase/firestore";
+import { useUser, useFirestore, useDoc, useCollection, useMemoFirebase } from "@/local";
+import { collection, doc, query, where, orderBy, limit } from "@/local/store";
 
 const PrimaryMetric = ({ title, value, subtext, trend, trendDir, icon: Icon, isLoading = false }: { title: string, value: string, subtext: string, trend?: string, trendDir?: 'up' | 'down', icon: any, isLoading?: boolean }) => (
-  <Card className="relative overflow-hidden border-primary/20 bg-primary/5">
+  <Card className="relative overflow-hidden border-primary/20 glass-panel slide-up-fade animated-pulse-hover">
     <CardContent className="p-4">
       <div className="flex items-start justify-between mb-3">
         <div>
@@ -100,13 +101,14 @@ export default function CitizenDashboard() {
     return query(
       collection(db, "transactions"), 
       where("citizenId", "==", user.uid),
-      orderBy("timestamp", "desc")
+      orderBy("timestamp", "desc"),
+      limit(50)
     );
   }, [db, user?.uid]);
 
   const { data: transactionsData, isLoading: isTxnLoading } = useCollection(transactionsQuery);
 
-  const totalBalance = transactionsData?.reduce((acc, curr) => acc + curr.amount, 0) || 0;
+  const totalBalance = transactionsData?.reduce((acc, curr) => acc + (Number(curr.amount) || 0), 0) || 0;
   const activeConsents = consentData.flatMap(cat => cat.consents).filter(c => c.given);
   
   const quickActions = [
@@ -167,8 +169,8 @@ export default function CitizenDashboard() {
       <div className="grid grid-cols-1 lg:grid-cols-12 gap-6">
           <div className="lg:col-span-8 space-y-6">
               <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-                  <IncomeExpenseChart />
-                  <SpendingChart />
+                  <IncomeExpenseChart transactions={transactionsData} />
+                  <SpendingChart transactions={transactionsData} />
               </div>
               <PredictiveInsights />
           </div>
@@ -197,7 +199,7 @@ export default function CitizenDashboard() {
                             <alert.icon className={`h-3.5 w-3.5 mt-0.5 flex-shrink-0 ${alert.severity === 'High' ? 'text-red-400' : alert.severity === 'Medium' ? 'text-yellow-400' : 'text-blue-400'}`} />
                             <div className="flex-1 overflow-hidden">
                                 <p className="text-xs font-bold leading-tight truncate">{alert.title}</p>
-                                <p className="text-[9px] text-muted-foreground font-mono mt-1 uppercase">Date: {new Date(alert.date).toLocaleDateString()}</p>
+                                <p className="text-[9px] text-muted-foreground font-mono mt-1 uppercase">Date: {new Date(alert.date).toLocaleDateString('en-US')}</p>
                             </div>
                         </div>
                     ))}

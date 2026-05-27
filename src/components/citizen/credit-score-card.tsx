@@ -6,7 +6,7 @@ import {
   ChartTooltip,
   ChartTooltipContent,
 } from "@/components/ui/chart";
-import { creditScoreData } from "@/lib/placeholder-data";
+import { flowScoreData as creditScoreData } from "@/lib/placeholder-data";
 import { Lightbulb, HeartPulse } from "lucide-react";
 import { Label, Pie, PieChart, Cell } from "recharts";
 

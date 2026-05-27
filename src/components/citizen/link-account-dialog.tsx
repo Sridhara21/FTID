@@ -23,8 +23,8 @@ import {
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import { ShieldCheck, Loader2, Link as LinkIcon } from "lucide-react";
-import { useFirestore, useUser, updateDocumentNonBlocking } from "@/firebase";
-import { doc } from "firebase/firestore";
+import { useFirestore, useUser, updateDocumentNonBlocking } from "@/local";
+import { doc } from "@/local/store";
 import { useToast } from "@/hooks/use-toast";
 
 const linkSchema = z.object({

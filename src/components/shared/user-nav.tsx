@@ -27,7 +27,7 @@ export function UserNav() {
   const userAvatar = PlaceHolderImages.find((img) => img.id === userAvatarId);
   const fallback = isGovernment ? "GOV" : userProfileData.fallback;
   const name = isGovernment ? "Government Official" : userProfileData.name;
-  const email = isGovernment ? "official@gov.in" : userProfileData.email;
+  const phoneNumber = isGovernment ? "9999999999" : userProfileData.phoneNumber;
   const profileLink = isGovernment ? "/government" : "/citizen/profile";
 
   return (
@@ -54,7 +54,7 @@ export function UserNav() {
           <div className="flex flex-col space-y-1">
             <p className="text-sm font-medium leading-none">{name}</p>
             <p className="text-xs leading-none text-muted-foreground">
-              {email}
+              {phoneNumber}
             </p>
           </div>
         </DropdownMenuLabel>

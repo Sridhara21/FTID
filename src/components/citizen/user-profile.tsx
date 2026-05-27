@@ -178,7 +178,7 @@ export function UserProfile() {
                                         </div>
                                         <div className="flex-1">
                                             <p className="text-xs font-bold uppercase tracking-wider">{device.name}</p>
-                                            <p className="text-[10px] text-muted-foreground mt-0.5">{device.location} &middot; Last Sync: {new Date(device.lastLogin).toLocaleDateString()}</p>
+                                            <p className="text-[10px] text-muted-foreground mt-0.5">{device.location} &middot; Last Sync: {new Date(device.lastLogin).toLocaleDateString('en-US')}</p>
                                         </div>
                                         <Badge variant="outline" className="text-[9px] font-bold text-green-400 border-green-400/30">ACTIVE</Badge>
                                     </div>

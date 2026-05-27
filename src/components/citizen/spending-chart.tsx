@@ -1,5 +1,6 @@
 "use client";
 
+import React from "react";
 import { Pie, PieChart, ResponsiveContainer, Cell, Tooltip, Label } from "recharts";
 import {
   Card,
@@ -24,8 +25,26 @@ const chartConfig = {
   Utilities: { label: "Utilities", color: "hsl(var(--chart-5))" },
 };
 
-export function SpendingChart() {
-  const totalSpending = spendingCategoryData.reduce((acc, curr) => acc + curr.value, 0);
+export function SpendingChart({ transactions }: { transactions: any[] | null }) {
+  const dynamicData = React.useMemo(() => {
+    if (!transactions) return spendingCategoryData;
+    const totals: Record<string, number> = {};
+    transactions.forEach(t => {
+      if (t.amount < 0) {
+        const cat = t.classification || 'Other';
+        totals[cat] = (totals[cat] || 0) + Math.abs(t.amount);
+      }
+    });
+    const colors = ["hsl(var(--chart-1))", "hsl(var(--chart-2))", "hsl(var(--chart-3))", "hsl(var(--chart-4))", "hsl(var(--chart-5))", "hsl(var(--chart-1))"];
+    const out = Object.entries(totals).map(([name, value], i) => ({
+      name,
+      value,
+      fill: colors[i % colors.length]
+    }));
+    return out.length > 0 ? out : spendingCategoryData;
+  }, [transactions]);
+
+  const totalSpending = dynamicData.reduce((acc, curr) => acc + curr.value, 0);
 
   return (
     <Card className="flex flex-col h-full border-border/50 bg-secondary/5">
@@ -47,7 +66,7 @@ export function SpendingChart() {
                 content={<ChartTooltipContent hideLabel formatter={(value) => `₹${value.toLocaleString()}`} />}
               />
               <Pie
-                data={spendingCategoryData}
+                data={dynamicData}
                 dataKey="value"
                 nameKey="name"
                 innerRadius="70%"
@@ -55,7 +74,7 @@ export function SpendingChart() {
                 paddingAngle={4}
                 strokeWidth={0}
               >
-                {spendingCategoryData.map((entry) => (
+                {dynamicData.map((entry) => (
                   <Cell key={`cell-${entry.name}`} fill={entry.fill} className="hover:opacity-80 transition-opacity" />
                 ))}
                 <Label
@@ -92,7 +111,7 @@ export function SpendingChart() {
           </ResponsiveContainer>
         </ChartContainer>
         <div className="mt-6 grid grid-cols-2 gap-x-4 gap-y-2">
-          {spendingCategoryData.map((item) => (
+          {dynamicData.map((item) => (
             <div key={item.name} className="flex items-center justify-between text-[9px] font-bold p-1.5 rounded-sm bg-secondary/20">
               <div className="flex items-center gap-2">
                 <div className="w-1.5 h-1.5 rounded-full" style={{ backgroundColor: item.fill }} />

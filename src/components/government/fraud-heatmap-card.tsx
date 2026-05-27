@@ -1,7 +1,7 @@
+
 "use client";
 
 import { useState } from "react";
-import Image from "next/image";
 import {
   Card,
   CardContent,
@@ -37,20 +37,11 @@ export function FraudHeatmapCard() {
     setIsLoading(true);
     setResult(null);
     try {
-      // Optimized for quick responsiveness
-      await new Promise(resolve => setTimeout(resolve, 600));
-      const mockResult: FraudAnalysisOutput = {
-        region: region,
-        totalTransactionsAnalyzed: 1850392,
-        suspiciousTransactionCount: 4892,
-        hotspots: [
-            { location: 'Dharavi, Mumbai', riskLevel: 'High', reason: 'Anomalous high-velocity cash-out patterns.' },
-            { location: 'Thane West', riskLevel: 'Medium', reason: 'Unusual concentration of new FTID activations with immediate high-value transfers.' },
-            { location: 'Panvel', riskLevel: 'Low', reason: 'Slight increase in cross-border transaction failures.' },
-        ],
-        summary: 'Potential circular trading and mule account activity detected in the Dharavi cluster. Recommend flagging accounts with more than 5 transactions per hour for manual review. Thane activity seems coordinated, suggesting a potential organized fraud attempt.'
-      };
-      setResult(mockResult);
+      const res = await analyzeFraudData({
+        region,
+        ftidTransactionData: ftidData,
+      });
+      setResult(res);
     } catch (error) {
       console.error("Error generating analysis:", error);
     }
@@ -64,7 +55,6 @@ export function FraudHeatmapCard() {
         default: return 'outline';
     }
   };
-
 
   return (
     <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
@@ -82,7 +72,7 @@ export function FraudHeatmapCard() {
               id="region" 
               value={region} 
               onChange={(e) => setRegion(e.target.value)} 
-              placeholder="e.g., California" 
+              placeholder="e.g., Maharashtra" 
               className="bg-secondary/20 h-9 border-border/50 text-xs"
               disabled={isLoading}
             />

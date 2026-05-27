@@ -19,7 +19,7 @@ import {
 
 export const userProfileData = {
   name: 'Ananya Iyer',
-  email: 'ananya.iyer@ftid.in',
+  phoneNumber: '9876543210',
   ftid: '4196-7914-2020',
   fallback: 'AI',
   pan: { number: 'PNGND1694Z', status: 'Verified' },
@@ -71,7 +71,7 @@ export const portfolioData = {
   digitalGold: [
     { name: 'Gold', grams: 120, value: 873422, change: "+2.1%", changeValue: 18341, taxClassification: 'LTCG' }
   ],
-  bonds: [],
+  bonds: [] as { name: string, value: number, taxClassification: string }[],
   emergencyFund: [
     { name: 'Savings Account', value: 238484, bank: 'ICICI Bank', taxClassification: 'Exempt' }
   ]
@@ -132,6 +132,10 @@ export const flowScoreData = {
   dataSources: [
     { name: 'ICICI Bank (Account Data)', verified: true },
     { name: 'Income Tax Dept (ITR Data)', verified: true }
+  ],
+  tips: [
+    "Reduce high-value discretionary spending.",
+    "Maintain a healthy savings ratio."
   ]
 };
 
@@ -239,11 +243,11 @@ export const statePerformanceData = {
 };
 
 export const economicIndicatorsData = [
-  { label: 'GDP Growth (Real)', value: '7.2%', change: '+0.4% YoY', icon: Activity, trend: 'up', color: 'text-green-400', group: 'Growth', definition: 'Real GDP growth rate adjusted for inflation.', source: 'Anonymized FTID flow analysis.', relevance: 'Primary growth benchmark.', limitations: 'Based on financial transaction proxy.' },
-  { label: 'Consumption Index', value: '112.5', change: '+2.1% MoM', icon: ShoppingCart, trend: 'up', color: 'text-primary', group: 'Growth', definition: 'Measure of aggregate household consumption velocity.', source: 'Anonymized digital flow streams.', relevance: 'Demand health indicator.', limitations: 'Highly sensitive to seasonal spending.' },
-  { label: 'CPI Inflation', value: '4.4%', change: '-0.2% MoM', icon: Zap, trend: 'down', color: 'text-primary', group: 'Stability', definition: 'Consumer Price Index inflation rate.', source: 'Real-time retail flow tracking.', relevance: 'Monetary policy input.', limitations: 'Excludes unorganized cash markets.' },
-  { label: 'Fiscal Deficit', value: '4.2%', change: 'Target 2027', icon: Landmark, trend: 'down', color: 'text-foreground', group: 'Fiscal', definition: 'Gap between government receipts and expenditure.', source: 'Union Budget FY 2026-27.', relevance: 'Macroeconomic health.', limitations: 'Interim budgetary target.' },
-  { label: 'Digital Txn Growth', value: '+14.8%', change: 'High Velocity', icon: ZapOff, trend: 'up', color: 'text-accent', group: 'Growth', definition: 'Year-on-year growth in digital transaction volume.', source: 'FTID Ecosystem stats.', relevance: 'Formalization benchmark.', limitations: 'Based on e-Rupee and FTID routes.' }
+  { label: 'GDP Growth (Real)', value: '7.2%', change: '+0.4% YoY', icon: Activity, trend: 'up' as const, color: 'text-green-400', group: 'Growth', definition: 'Real GDP growth rate adjusted for inflation.', source: 'Anonymized FTID flow analysis.', relevance: 'Primary growth benchmark.', limitations: 'Based on financial transaction proxy.' },
+  { label: 'Consumption Index', value: '112.5', change: '+2.1% MoM', icon: ShoppingCart, trend: 'up' as const, color: 'text-primary', group: 'Growth', definition: 'Measure of aggregate household consumption velocity.', source: 'Anonymized digital flow streams.', relevance: 'Demand health indicator.', limitations: 'Highly sensitive to seasonal spending.' },
+  { label: 'CPI Inflation', value: '4.4%', change: '-0.2% MoM', icon: Zap, trend: 'down' as const, color: 'text-primary', group: 'Stability', definition: 'Consumer Price Index inflation rate.', source: 'Real-time retail flow tracking.', relevance: 'Monetary policy input.', limitations: 'Excludes unorganized cash markets.' },
+  { label: 'Fiscal Deficit', value: '4.2%', change: 'Target 2027', icon: Landmark, trend: 'down' as const, color: 'text-foreground', group: 'Fiscal', definition: 'Gap between government receipts and expenditure.', source: 'Union Budget FY 2026-27.', relevance: 'Macroeconomic health.', limitations: 'Interim budgetary target.' },
+  { label: 'Digital Txn Growth', value: '+14.8%', change: 'High Velocity', icon: ZapOff, trend: 'up' as const, color: 'text-accent', group: 'Growth', definition: 'Year-on-year growth in digital transaction volume.', source: 'FTID Ecosystem stats.', relevance: 'Formalization benchmark.', limitations: 'Based on e-Rupee and FTID routes.' }
 ];
 
 export const schemes = [
