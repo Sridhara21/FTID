@@ -23,7 +23,24 @@ import {
   HandCoins,
   ArrowRightLeft,
   Database,
-  Cpu
+  Cpu,
+  Network,
+  Activity,
+  Globe,
+  LineChart,
+  ShieldAlert,
+  Building2,
+  Factory,
+  Coins,
+  Shield,
+  FileSearch,
+  Code,
+  Terminal,
+  Search,
+  CheckCircle,
+  Truck,
+  Box,
+  Fingerprint
 } from "lucide-react";
 import {
   SidebarHeader,
@@ -49,26 +66,95 @@ const citizenNav = [
 
 const governmentNav = [
   { href: "/government", icon: LayoutGrid, label: "Dashboard" },
+  { href: "/government/economy", icon: Globe, label: "Economic Observatory" },
+  { href: "/government/subsidies", icon: HandCoins, label: "Subsidy Intelligence" },
+  { href: "/government/informal", icon: Database, label: "Informal Economy" },
+  { href: "/government/policy", icon: LineChart, label: "Policy Simulation" },
   { href: "/government/registry", icon: Database, label: "Registry Audit" },
   { href: "/government/gdp", icon: Landmark, label: "GDP Tracking" },
   { href: "/government/revenue", icon: PieChart, label: "Revenue" },
-  { href: "/government/subsidies", icon: ShieldCheck, label: "Subsidies" },
-  { href: "/government/donations", icon: Vote, label: "Donations" },
-  { href: "/government/state-performance", icon: BarChart, label: "State Performance" },
-  { href: "/government/balance-sheet", icon: Scale, label: "National Balance Sheet" },
   { href: "/government/fraud-heatmaps", icon: AlertTriangle, label: "Fraud Heatmaps" },
   { href: "/government/architecture", icon: Cpu, label: "System Architecture" },
+];
+
+const regulatorNav = [
+  { href: "/regulator", icon: LayoutGrid, label: "Regulator Core" },
+  { href: "/regulator/graph", icon: Network, label: "National Graph" },
+  { href: "/regulator/ews", icon: Activity, label: "Early Warning" },
+  { href: "/regulator/systemic-risk", icon: AlertTriangle, label: "Systemic Risk" },
+  { href: "/regulator/trust", icon: ShieldCheck, label: "Trust Index" },
+  { href: "/regulator/fraud", icon: ShieldAlert, label: "AML Intelligence" },
+];
+
+const businessNav = [
+  { href: "/business", icon: LayoutGrid, label: "Enterprise Hub" },
+  { href: "/business/vendors", icon: Factory, label: "Vendor Network" },
+  { href: "/business/cashflow", icon: LineChart, label: "AI Cashflow Engine" },
+  { href: "/business/invoices", icon: FileText, label: "Invoice Intelligence" },
+  { href: "/business/supply-chain", icon: Truck, label: "Supply Chain" },
+  { href: "/business/compliance", icon: Shield, label: "Compliance Engine" },
+];
+
+const institutionNav = [
+  { href: "/institution", icon: Building2, label: "Institution Hub" },
+  { href: "/institution/underwriting", icon: Activity, label: "Smart Underwriting" },
+  { href: "/institution/risk", icon: ShieldAlert, label: "Portfolio Risk" },
+  { href: "/institution/fraud", icon: AlertTriangle, label: "Fraud Shield" },
+];
+
+const gatewayNav = [
+  { href: "/gateway", icon: LayoutGrid, label: "Gateway Node" },
+  { href: "/gateway/cbdc", icon: Coins, label: "CBDC Settlement" },
+  { href: "/gateway/velocity", icon: Activity, label: "Velocity Engine" },
+  { href: "/gateway/compliance", icon: ShieldCheck, label: "AML Interceptor" },
+];
+
+const auditorNav = [
+  { href: "/auditor", icon: FileSearch, label: "Audit Terminal" },
+  { href: "/auditor/assistant", icon: Bot, label: "AI Audit Copilot" },
+  { href: "/auditor/ledger", icon: Database, label: "Immutable Ledger" },
+  { href: "/auditor/risk", icon: ShieldAlert, label: "Audit Risk Engine" },
+];
+
+const developerNav = [
+  { href: "/developer", icon: Code, label: "Developer Hub" },
+  { href: "/developer/apis", icon: Network, label: "API Marketplace" },
+  { href: "/developer/sandbox", icon: Terminal, label: "Sandbox Simulator" },
+  { href: "/developer/sdk", icon: Box, label: "SDK Hub" },
 ];
 
 export function DashboardSidebar() {
   const pathname = usePathname();
   const router = useRouter();
   const isGovernment = pathname.startsWith("/government");
-  const navItems = isGovernment ? governmentNav : citizenNav;
-  const userRole = isGovernment ? "Government" : "Citizen";
+  const isRegulator = pathname.startsWith("/regulator");
+  const isBusiness = pathname.startsWith("/business");
+  const isInstitution = pathname.startsWith("/institution");
+  const isGateway = pathname.startsWith("/gateway");
+  const isAuditor = pathname.startsWith("/auditor");
+  const isDeveloper = pathname.startsWith("/developer");
+
+  let navItems = citizenNav;
+  let userRole = "Citizen";
+  if (isGovernment) { navItems = governmentNav; userRole = "Government"; }
+  else if (isRegulator) { navItems = regulatorNav; userRole = "Regulator"; }
+  else if (isBusiness) { navItems = businessNav; userRole = "Enterprise"; }
+  else if (isInstitution) { navItems = institutionNav; userRole = "Institution"; }
+  else if (isGateway) { navItems = gatewayNav; userRole = "Gateway"; }
+  else if (isAuditor) { navItems = auditorNav; userRole = "Auditor"; }
+  else if (isDeveloper) { navItems = developerNav; userRole = "Developer"; }
 
   const togglePortal = () => {
-    const target = isGovernment ? "/citizen" : "/government";
+    let target = "/citizen";
+    if (pathname.startsWith("/citizen")) target = "/government";
+    else if (pathname.startsWith("/government")) target = "/regulator";
+    else if (pathname.startsWith("/regulator")) target = "/business";
+    else if (pathname.startsWith("/business")) target = "/institution";
+    else if (pathname.startsWith("/institution")) target = "/gateway";
+    else if (pathname.startsWith("/gateway")) target = "/auditor";
+    else if (pathname.startsWith("/auditor")) target = "/developer";
+    else if (pathname.startsWith("/developer")) target = "/citizen";
+    
     router.push(target);
   };
 
@@ -98,7 +184,7 @@ export function DashboardSidebar() {
               className="w-full justify-start gap-2 h-8 text-[10px] font-bold uppercase tracking-wider bg-primary/5 hover:bg-primary/10 border-primary/20 text-primary transition-all active:scale-95"
             >
               <ArrowRightLeft className="h-3 w-3" />
-              Switch to {isGovernment ? "Citizen" : "Government"}
+              Switch Portal
             </Button>
           </div>
         </div>

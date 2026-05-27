@@ -1,15 +1,15 @@
 "use client";
 
 import { Card, CardContent, CardHeader, CardTitle, CardDescription } from "@/components/ui/card";
-import { Lock, Activity, Network, ShieldCheck } from "lucide-react";
+import { ShieldCheck, Activity, Network } from "lucide-react";
 
 export default function PageComponent() {
   return (
     <div className="flex flex-col gap-6 animate-in fade-in duration-500">
       <div>
-        <h1 className="text-2xl font-bold tracking-tight">Advanced Consent Manager</h1>
+        <h1 className="text-2xl font-bold tracking-tight">AML Interceptor</h1>
         <p className="text-muted-foreground">
-          Granular control over data sharing.
+          Cross-border transaction firewall.
         </p>
       </div>
 
@@ -18,9 +18,9 @@ export default function PageComponent() {
           <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_center,_var(--tw-gradient-stops))] from-primary/10 via-background to-background opacity-50"></div>
           <div className="z-10 text-center flex flex-col items-center">
             <div className="p-4 rounded-full bg-primary/10 border border-primary/20 mb-4 animate-pulse">
-              <Lock className="h-10 w-10 text-primary" />
+              <ShieldCheck className="h-10 w-10 text-primary" />
             </div>
-            <h3 className="text-lg font-semibold">Advanced Consent Manager Module</h3>
+            <h3 className="text-lg font-semibold">AML Interceptor Module</h3>
             <p className="text-sm text-muted-foreground mt-2 max-w-sm">Initializing AI processing models and securely connecting to the FTID network...</p>
           </div>
         </Card>
