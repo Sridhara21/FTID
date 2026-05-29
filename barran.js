@@ -19,7 +19,7 @@ function getAllFiles(dirPath, arrayOfFiles) {
         arrayOfFiles = getAllFiles(dirPath + "/" + file, arrayOfFiles);
       }
     } else {
-      if (file.endsWith('.ts') || file.endsWith('.tsx') || file.endsWith('.css') || file.endsWith('.md')) {
+      if (file.endsWith('.ts') || file.endsWith('.tsx') || file.endsWith('.md')) {
         arrayOfFiles.push(path.join(dirPath, "/", file));
       }
     }
