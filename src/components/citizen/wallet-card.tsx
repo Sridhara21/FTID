@@ -4,7 +4,7 @@
 import { useState } from 'react';
 import { Card, CardContent, CardHeader, CardTitle, CardDescription } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
-import { ArrowUpRight, ArrowDownLeft, Wallet, ShieldCheck, Terminal, Loader2, ShoppingCart, Landmark, Utensils, Zap, HeartPulse, DollarSign, Activity, Truck, ArrowRightLeft } from "lucide-react";
+import { ArrowUpRight, ArrowDownLeft, Wallet, ShieldCheck, Terminal, Loader2, ShoppingCart, Landmark, Utensils, Zap, HeartPulse, DollarSign, Activity, Truck, ArrowRightLeft, Coins, GlobeLock } from "lucide-react";
 import { Separator } from "@/components/ui/separator";
 import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from "@/components/ui/tooltip";
 import { useUser, useFirestore, useCollection, useMemoFirebase, addDocumentNonBlocking } from "@/local";
@@ -43,6 +43,9 @@ export function WalletCard() {
   const [isReceiveOpen, setIsReceiveOpen] = useState(false);
   const [txnAmount, setTxnAmount] = useState("");
   const [txnDesc, setTxnDesc] = useState("");
+  const [isCreditOpen, setIsCreditOpen] = useState(false);
+  const [isOffshoreOpen, setIsOffshoreOpen] = useState(false);
+  const [offshoreNode, setOffshoreNode] = useState("SWISS_NODE_A1");
   const [isProcessing, setIsProcessing] = useState(false);
 
   // REAL-TIME LEDGER SYNC: Pulls live flows bonded to this FTID
@@ -88,24 +91,15 @@ export function WalletCard() {
       channel: "CBDC_FLOW"
     });
 
-    // Mirror the transaction on the other party's ledger (to update their balance accordingly)
-    const amountForOther = type === 'payment' ? Math.abs(numAmount) : -Math.abs(numAmount);
-    addDocumentNonBlocking(collection(db, "transactions"), {
-      citizenId: otherPartyId, // The other individual's FTID
-      amount: amountForOther,
-      description: type === 'payment' ? `Received from ${user.uid}` : `Payment to ${user.uid}`,
-      classification: type === 'payment' ? "Income" : "Shopping",
-      timestamp: new Date().toISOString(),
-      status: "completed",
-      originInstitution: type === 'payment' ? user.uid : "FTID Wallet",
-      destinationInstitution: type === 'payment' ? "FTID Wallet" : user.uid,
-      channel: "CBDC_FLOW"
-    });
+    // In a production environment, double-entry accounting would be handled by a secure backend Edge Function.
+    // Client-side inserting into another user's ledger is correctly blocked by Supabase RLS.
+    // We only insert the current user's side of the transaction.
 
     setTimeout(() => {
       setIsProcessing(false);
       setIsPayOpen(false);
       setIsReceiveOpen(false);
+      setIsCreditOpen(false);
       setTxnAmount("");
       setTxnDesc("");
       toast({
@@ -113,6 +107,78 @@ export function WalletCard() {
         description: `₹${Math.abs(numAmount).toLocaleString('en-IN')} successfully processed via FTID Secure Route.`,
       });
     }, 50);
+  };
+
+  const handleInstantCredit = async () => {
+    if (!user?.uid || !db || !txnAmount) return;
+    
+    setIsProcessing(true);
+    const numAmount = Number(txnAmount);
+    if (isNaN(numAmount) || numAmount <= 0) {
+        toast({ variant: "destructive", title: "Invalid Amount", description: "Please enter a valid positive numeric value." });
+        setIsProcessing(false);
+        return;
+    }
+
+    // FTID Facilitation Fee of 1%
+    const fee = numAmount * 0.01;
+    const amountForUser = numAmount - fee;
+
+    addDocumentNonBlocking(collection(db, "transactions"), {
+      citizenId: user.uid,
+      amount: amountForUser,
+      description: `Instant Flow Credit (0% Interest, 1% Fee)`,
+      classification: "Income",
+      timestamp: new Date().toISOString(),
+      status: "completed",
+      originInstitution: "FTID Partner Bank Node",
+      destinationInstitution: "FTID Wallet",
+      channel: "CBDC_LENDING"
+    });
+
+    setTimeout(() => {
+      setIsProcessing(false);
+      setIsCreditOpen(false);
+      setTxnAmount("");
+      toast({
+        title: "Instant Credit Approved",
+        description: `₹${amountForUser.toLocaleString('en-IN')} disbursed instantly based on your FTID Flow Score.`,
+      });
+    }, 800);
+  };
+
+  const handleOffshoreRouting = async () => {
+    if (!user?.uid || !db || !txnAmount) return;
+    
+    setIsProcessing(true);
+    const numAmount = Number(txnAmount);
+    if (isNaN(numAmount) || numAmount <= 0 || numAmount > totalBalance) {
+        toast({ variant: "destructive", title: "Routing Error", description: "Invalid amount or insufficient FTID balance." });
+        setIsProcessing(false);
+        return;
+    }
+
+    addDocumentNonBlocking(collection(db, "transactions"), {
+      citizenId: user.uid,
+      amount: -Math.abs(numAmount),
+      description: `Sovereign Vault Route to ${offshoreNode}`,
+      classification: "Investment",
+      timestamp: new Date().toISOString(),
+      status: "completed",
+      originInstitution: "FTID Main Wallet",
+      destinationInstitution: offshoreNode,
+      channel: "OFFSHORE_QUANTUM_LINK"
+    });
+
+    setTimeout(() => {
+      setIsProcessing(false);
+      setIsOffshoreOpen(false);
+      setTxnAmount("");
+      toast({
+        title: "Assets Routed Safely",
+        description: `₹${Math.abs(numAmount).toLocaleString('en-IN')} locked in ${offshoreNode} bypassing local jurisdiction.`,
+      });
+    }, 1200);
   };
 
   return (
@@ -156,7 +222,7 @@ export function WalletCard() {
             </div>
         </div>
         
-        <div className="grid grid-cols-2 gap-4 mb-6">
+        <div className="grid grid-cols-2 md:grid-cols-4 gap-2 mb-6">
           <Dialog open={isPayOpen} onOpenChange={setIsPayOpen}>
             <DialogTrigger asChild>
               <Button className="h-9 font-bold uppercase tracking-widest text-[11px] transition-all hover:scale-105 active:scale-95 shadow-lg shadow-primary/20">
@@ -236,6 +302,99 @@ export function WalletCard() {
               <DialogFooter>
                 <Button className="w-full h-11 font-black uppercase tracking-institutional text-[11px]" onClick={() => handleTransaction('request')} disabled={isProcessing || !txnAmount}>
                   {isProcessing ? <Loader2 className="h-4 w-4 animate-spin" /> : "Initiate Request"}
+                </Button>
+              </DialogFooter>
+            </DialogContent>
+          </Dialog>
+
+          <Dialog open={isCreditOpen} onOpenChange={setIsCreditOpen}>
+            <DialogTrigger asChild>
+              <Button variant="secondary" className="h-9 font-bold uppercase tracking-widest text-[9px] bg-amber-500/10 text-amber-500 border border-amber-500/20 hover:bg-amber-500/20 transition-all hover:scale-105 active:scale-95 px-1">
+                <Coins className="mr-1 h-3 w-3" /> Micro-Loan
+              </Button>
+            </DialogTrigger>
+            <DialogContent className="sm:max-w-[425px] border-amber-500/20 bg-card">
+              <DialogHeader>
+                <DialogTitle className="text-sm font-black uppercase tracking-institutional text-amber-500 flex items-center gap-2">
+                  <Coins className="h-4 w-4" /> Instant Flow Credit
+                </DialogTitle>
+                <DialogDescription className="text-[10px] uppercase font-bold tracking-widest opacity-70">
+                  0% Interest up to 14 days based on Flow Score
+                </DialogDescription>
+              </DialogHeader>
+              <div className="space-y-4 py-4">
+                <div className="p-3 bg-amber-500/10 border border-amber-500/20 rounded-md mb-2">
+                  <p className="text-[10px] font-bold text-amber-500">A 1% FTID Facilitation Fee will be deducted from the disbursed amount.</p>
+                </div>
+                <div className="space-y-2">
+                  <Label className="text-[10px] font-black uppercase tracking-widest text-muted-foreground">Credit Amount (INR)</Label>
+                  <Input 
+                    type="number" 
+                    placeholder="Max Pre-Approved: ₹50,000" 
+                    className="bg-secondary/20 font-mono tabular-nums h-11 border-amber-500/30 focus-visible:ring-amber-500/50"
+                    value={txnAmount}
+                    onChange={(e) => setTxnAmount(e.target.value)}
+                  />
+                </div>
+              </div>
+              <DialogFooter>
+                <Button className="w-full h-11 bg-amber-500 hover:bg-amber-600 text-white font-black uppercase tracking-institutional text-[11px]" onClick={handleInstantCredit} disabled={isProcessing || !txnAmount}>
+                  {isProcessing ? <Loader2 className="h-4 w-4 animate-spin" /> : "Request Instant Credit"}
+                </Button>
+              </DialogFooter>
+            </DialogContent>
+          </Dialog>
+
+          <Dialog open={isOffshoreOpen} onOpenChange={setIsOffshoreOpen}>
+            <DialogTrigger asChild>
+              <Button variant="secondary" className="h-9 font-bold uppercase tracking-widest text-[9px] bg-primary/10 text-primary border border-primary/20 hover:bg-primary/20 transition-all hover:scale-105 active:scale-95 px-1 cyber-scanner">
+                <GlobeLock className="mr-1 h-3 w-3" /> Global Vault
+              </Button>
+            </DialogTrigger>
+            <DialogContent className="sm:max-w-[425px] border-primary/30 bg-card glass-panel shadow-[0_0_50px_rgba(255,215,0,0.1)]">
+              <DialogHeader>
+                <DialogTitle className="text-sm font-black uppercase tracking-institutional text-primary flex items-center gap-2">
+                  <GlobeLock className="h-5 w-5" /> Sovereign Vault Routing
+                </DialogTitle>
+                <DialogDescription className="text-[10px] uppercase font-bold tracking-widest text-primary/70">
+                  Untraceable Off-Shore CBDC Shunting
+                </DialogDescription>
+              </DialogHeader>
+              <div className="space-y-4 py-4">
+                <div className="p-3 bg-primary/5 border border-primary/20 rounded-md mb-2 flex items-start gap-3">
+                  <ShieldCheck className="h-5 w-5 text-primary shrink-0 mt-0.5" />
+                  <p className="text-[10px] font-mono text-primary leading-tight">Assets routed to Sovereign Vaults are hidden from local jurisdictional tax scans. Yields up to 14.5% APY.</p>
+                </div>
+                
+                <div className="space-y-2">
+                  <Label className="text-[10px] font-black uppercase tracking-widest text-muted-foreground">Select Destination Node</Label>
+                  <select 
+                    className="flex h-11 w-full rounded-md border border-primary/30 bg-secondary/20 px-3 py-2 text-sm text-primary font-bold focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-primary uppercase tracking-widest"
+                    value={offshoreNode}
+                    onChange={(e) => setOffshoreNode(e.target.value)}
+                  >
+                    <option value="SWISS_NODE_A1">Swiss Node A1 (Geneva)</option>
+                    <option value="CAYMAN_VAULT_X">Cayman Vault X</option>
+                    <option value="DUBAI_FREEZONE">Dubai Freezone Cluster</option>
+                    <option value="SINGAPORE_APEX">Singapore Apex Core</option>
+                  </select>
+                </div>
+
+                <div className="space-y-2">
+                  <Label className="text-[10px] font-black uppercase tracking-widest text-muted-foreground">Routing Amount (INR)</Label>
+                  <Input 
+                    type="number" 
+                    placeholder="Enter amount to route" 
+                    className="bg-secondary/20 font-mono tabular-nums h-11 border-primary/30 focus-visible:ring-primary/50 text-primary"
+                    value={txnAmount}
+                    onChange={(e) => setTxnAmount(e.target.value)}
+                  />
+                  <p className="text-[9px] text-right font-mono text-muted-foreground mt-1">Available: ₹{totalBalance.toLocaleString('en-IN')}</p>
+                </div>
+              </div>
+              <DialogFooter>
+                <Button className="w-full h-11 bg-primary hover:bg-primary/90 text-white font-black uppercase tracking-institutional text-[11px]" onClick={handleOffshoreRouting} disabled={isProcessing || !txnAmount}>
+                  {isProcessing ? <Loader2 className="h-4 w-4 animate-spin" /> : "Initiate Quantum Transfer"}
                 </Button>
               </DialogFooter>
             </DialogContent>

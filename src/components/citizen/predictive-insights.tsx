@@ -8,9 +8,15 @@ import {
   CardContent,
 } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
-import { Bot, AlertTriangle, TrendingUp, PiggyBank, Target } from "lucide-react";
+import { Bot, AlertTriangle, TrendingUp, PiggyBank, Target, Lock } from "lucide-react";
+import { FtidBlackModal } from "./ftid-black-modal";
+import { Button } from "@/components/ui/button";
 
-export function PredictiveInsights() {
+interface PredictiveInsightsProps {
+  isPremium?: boolean;
+}
+
+export function PredictiveInsights({ isPremium = false }: PredictiveInsightsProps) {
   const insights = [
     {
       title: "End-of-Month Projection",
@@ -46,8 +52,26 @@ export function PredictiveInsights() {
         </div>
         <CardDescription className="text-xs">Behavioral analysis of projected end-of-cycle positions.</CardDescription>
       </CardHeader>
-      <CardContent className="pt-6">
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+      <CardContent className="pt-6 relative overflow-hidden">
+        
+        {!isPremium && (
+          <div className="absolute inset-0 z-10 backdrop-blur-md bg-background/50 flex flex-col items-center justify-center p-6 text-center">
+             <div className="p-3 bg-amber-500/10 rounded-full border border-amber-500/20 mb-3">
+               <Lock className="h-6 w-6 text-amber-500" />
+             </div>
+             <p className="text-sm font-black uppercase tracking-widest text-primary mb-1">AI Tax & Wealth Engine Locked</p>
+             <p className="text-[10px] text-muted-foreground font-bold max-w-xs mb-4">
+                Our AI detected potential tax deductions and redundant subscriptions in your AA data stream. Upgrade to view.
+             </p>
+             <FtidBlackModal>
+                <Button className="bg-gradient-to-r from-amber-400 to-amber-600 hover:from-amber-300 hover:to-amber-500 text-white font-black uppercase tracking-institutional text-xs h-10 shadow-[0_0_15px_rgba(245,158,11,0.2)] border-0">
+                  Unlock FTID Black
+                </Button>
+             </FtidBlackModal>
+          </div>
+        )}
+
+        <div className={`grid grid-cols-1 md:grid-cols-3 gap-6 ${!isPremium ? 'opacity-30 pointer-events-none blur-sm' : ''}`}>
           {insights.map((insight) => (
             <div key={insight.title} className="relative p-4 rounded-lg bg-background/50 border border-border/50 group hover:border-primary/30 transition-colors">
               <div className="flex items-center gap-3 mb-2">

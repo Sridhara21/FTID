@@ -15,38 +15,11 @@ function load() {
     if (saved) {
       try {
         store = JSON.parse(saved);
-        if (Object.keys(store).length === 0) seedData();
       } catch (e) {
         store = {};
-        seedData();
       }
-    } else {
-      seedData();
     }
   }
-}
-
-function seedData() {
-  store = {
-    aml_alerts: [
-      { id: '1', type: 'Layering', risk: 'High', amount: 54000, entities: ['Company A', 'Shell B'], status: 'Open', timestamp: Date.now() - 100000 },
-      { id: '2', type: 'Structuring', risk: 'Medium', amount: 12000, entities: ['User X'], status: 'Investigating', timestamp: Date.now() - 500000 },
-    ],
-    graph_nodes: [
-      { id: 'n1', label: 'Citizen John', type: 'citizen', riskScore: 10 },
-      { id: 'n2', label: 'Shell Corp A', type: 'business', riskScore: 95 },
-      { id: 'n3', label: 'Bank XYZ', type: 'bank', riskScore: 5 },
-    ],
-    audit_logs: [
-      { id: 'a1', action: 'KYC Approved', actor: 'SysAdmin', timestamp: Date.now() - 3600000 },
-      { id: 'a2', action: 'Flagged Transaction', actor: 'AML Engine', timestamp: Date.now() - 1800000 },
-    ],
-    economic_indicators: [
-      { id: 'e1', metric: 'GDP Growth', value: '7.2%', trend: 'up' },
-      { id: 'e2', metric: 'Inflation', value: '4.1%', trend: 'down' },
-    ]
-  };
-  persist();
 }
 
 function persist() {

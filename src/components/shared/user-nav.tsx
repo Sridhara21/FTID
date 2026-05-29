@@ -3,7 +3,6 @@
 
 import Link from "next/link";
 import Image from "next/image";
-import { usePathname } from 'next/navigation';
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { Button } from "@/components/ui/button";
 import {
@@ -17,18 +16,16 @@ import {
 } from "@/components/ui/dropdown-menu";
 import { PlaceHolderImages } from "@/lib/placeholder-images";
 import { CreditCard, LogOut, Settings, User } from "lucide-react";
-import { userProfileData } from "@/lib/placeholder-data";
+import { useCitizen } from "@/hooks/use-citizen";
 
 export function UserNav() {
-  const pathname = usePathname();
-  const isGovernment = pathname.startsWith('/government');
-
-  const userAvatarId = isGovernment ? "gov-avatar" : "user-avatar";
+  const userAvatarId = "user-avatar";
   const userAvatar = PlaceHolderImages.find((img) => img.id === userAvatarId);
-  const fallback = isGovernment ? "GOV" : userProfileData.fallback;
-  const name = isGovernment ? "Government Official" : userProfileData.name;
-  const phoneNumber = isGovernment ? "9999999999" : userProfileData.phoneNumber;
-  const profileLink = isGovernment ? "/government" : "/citizen/profile";
+  const { citizenData, isLoading } = useCitizen();
+  const fallback = citizenData?.fullName?.charAt(0) || "U";
+  const name = isLoading ? "Loading..." : (citizenData?.fullName || "Citizen User");
+  const phoneNumber = citizenData?.phoneNumber || "No Phone Provided";
+  const profileLink = "/citizen/profile";
 
   return (
     <DropdownMenu>

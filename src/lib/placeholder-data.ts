@@ -113,28 +113,30 @@ export const autoCapturedIncome = {
 };
 
 export const flowScoreData = {
-  score: 539,
-  rating: 'Fair',
-  trend: '-13',
-  summary: 'Declining trend due to increased high-value discretionary spending in March cycle.',
+  score: 839,
+  rating: 'Excellent',
+  trend: '+12',
+  summary: 'Your financial health is strong. Your credit utilization is low and you have a consistent savings record.',
   factors: [
-    { name: 'Spending Velocity', status: 'High', impact: 'High', icon: TrendingUp, color: 'text-red-400' },
-    { name: 'Savings Ratio', status: 'Healthy', impact: 'Medium', icon: CheckCircle, color: 'text-green-400' },
+    { name: 'Credit Utilization', status: 'Good', impact: 'High', icon: ShieldCheck, color: 'text-emerald-700' },
+    { name: 'On-Time Payments', status: 'Excellent', impact: 'High', icon: CheckCircle, color: 'text-emerald-700' },
+    { name: 'Savings Ratio', status: 'Healthy', impact: 'Medium', icon: TrendingUp, color: 'text-emerald-700' },
+    { name: 'Investment Growth', status: 'Good', impact: 'Medium', icon: Briefcase, color: 'text-emerald-700' },
   ],
   history: [
-    { month: 'Oct', score: 589 },
-    { month: 'Nov', score: 580 },
-    { month: 'Dec', score: 567 },
-    { month: 'Jan', score: 556 },
-    { month: 'Feb', score: 552 },
-    { month: 'Mar', score: 539 },
+    { month: 'Oct', score: 810 },
+    { month: 'Nov', score: 815 },
+    { month: 'Dec', score: 822 },
+    { month: 'Jan', score: 825 },
+    { month: 'Feb', score: 827 },
+    { month: 'Mar', score: 839 },
   ],
   dataSources: [
-    { name: 'ICICI Bank (Account Data)', verified: true },
-    { name: 'Income Tax Dept (ITR Data)', verified: true }
+    { name: 'Connected Banks', verified: true },
+    { name: 'Tax Profile', verified: true }
   ],
   tips: [
-    "Reduce high-value discretionary spending.",
+    "Keep credit utilization under 30%.",
     "Maintain a healthy savings ratio."
   ]
 };

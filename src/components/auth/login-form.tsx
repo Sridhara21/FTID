@@ -7,8 +7,7 @@ import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle, CardFooter } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
-import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
-import { Building, User, Loader2, UserPlus, LogIn, ShieldCheck, Fingerprint, ArrowRight, ArrowLeft, CheckCircle2, Zap } from "lucide-react";
+import { User, Loader2, UserPlus, LogIn, ShieldCheck, Fingerprint, ArrowRight, ArrowLeft, CheckCircle2, Zap } from "lucide-react";
 import { useAuth, useFirestore, useUser } from "@/local";
 import { initiateAnonymousSignIn, initiateEmailSignIn, initiateEmailSignUp } from "@/local/non-blocking-login";
 import { setDocumentNonBlocking, addDocumentNonBlocking } from "@/local/non-blocking-updates";
@@ -25,11 +24,9 @@ export function LoginForm() {
   
   const [isLoading, setIsLoading] = useState(false);
   const [mode, setMode] = useState<'signin' | 'signup'>('signin');
-  const [role, setRole] = useState<'citizen' | 'government'>('citizen');
   const [signupStep, setSignupStep] = useState(1);
   const [isBonding, setIsBonding] = useState(false);
   const [hasBonded, setHasBonded] = useState(false);
-  const [govLoginStarted, setGovLoginStarted] = useState(false);
   
   const [phoneNumber, setPhoneNumber] = useState("");
   const [password, setPassword] = useState("");
@@ -40,18 +37,14 @@ export function LoginForm() {
   const [isScanning, setIsScanning] = useState(false);
 
   useEffect(() => {
-    if (role === 'government') {
-      setPhoneNumber("9999999999");
-      setPassword("gov_access_2026");
-    } else if (mode === 'signin') {
+    if (mode === 'signin') {
       setPhoneNumber("");
       setPassword("");
     }
-  }, [role, mode]);
+  }, [mode]);
 
-  // IDENTITY BONDING PROTOCOL: Merges seeded persona data with live Firestore node
   useEffect(() => {
-    if (user && role === 'citizen' && mode === 'signup' && !hasBonded && db) {
+    if (user && mode === 'signup' && !hasBonded && db) {
       setHasBonded(true);
       const uid = user.uid;
       const persona = getPersonaByKeys(pan, aadhaar);
@@ -63,8 +56,8 @@ export function LoginForm() {
         phoneNumber: phoneNumber,
         pan: { number: pan.toUpperCase(), status: "Verified" },
         aadhaar: { number: aadhaar, status: "Verified" },
-        currentCreditScore: persona?.creditScore || 785,
-        tier: persona?.tier || "Tier1",
+        currentCreditScore: persona?.creditScore || 850,
+        tier: "Black", // Forced for Elite Testing
         isLinked: true,
         registrationDate: new Date().toISOString(),
         onboardingComplete: true
@@ -85,24 +78,7 @@ export function LoginForm() {
       // High-speed redirect for institutional feel
       setTimeout(() => router.push("/citizen"), 50);
     }
-  }, [user, role, mode, hasBonded, db, router, pan, aadhaar, fullName, phoneNumber]);
-
-  useEffect(() => {
-    if (govLoginStarted && user && role === 'government' && db) {
-      const adminRef = doc(db, "platformAdmins", user.uid);
-      setDocumentNonBlocking(adminRef, {
-        id: user.uid,
-        role: "REGULATOR_DIU",
-        phoneNumber: "9999999999",
-        lastActive: new Date().toISOString()
-      }, { merge: true });
-      
-      setGovLoginStarted(false);
-      setTimeout(() => {
-        router.push("/government");
-      }, 50);
-    }
-  }, [user, govLoginStarted, role, db, router]);
+  }, [user, mode, hasBonded, db, router, pan, aadhaar, fullName, phoneNumber]);
 
   const simulateBiometric = () => {
     setIsScanning(true);
@@ -118,13 +94,6 @@ export function LoginForm() {
 
   const handleAction = async () => {
     if (!auth) return;
-
-    if (role === 'government') {
-      setIsLoading(true);
-      setGovLoginStarted(true);
-      initiateAnonymousSignIn(auth);
-      return;
-    }
 
     if (mode === 'signup') {
       if (signupStep === 1) {
@@ -157,12 +126,12 @@ export function LoginForm() {
         initiateEmailSignIn(auth, phoneNumber, password);
         // Instant check for current user to speed up redirect
         if (auth.currentUser) {
-            router.push(role === 'citizen' ? "/citizen" : "/government");
+            router.push("/citizen");
         } else {
             // Short delay if auth isn't immediate
             setTimeout(() => {
                 if (auth.currentUser) {
-                    router.push(role === 'citizen' ? "/citizen" : "/government");
+                    router.push("/citizen");
                 } else {
                     setIsLoading(false);
                 }
@@ -177,28 +146,22 @@ export function LoginForm() {
 
   return (
     <div className="w-full space-y-6">
-      <Tabs defaultValue="citizen" className="w-full" onValueChange={(v) => { setRole(v as 'citizen' | 'government'); setSignupStep(1); }}>
-        <TabsList className="grid w-full grid-cols-2 h-12 bg-secondary/30 p-1">
-          <TabsTrigger value="citizen" className="font-bold uppercase text-[10px] tracking-widest"><User className="mr-2 h-4 w-4" /> Citizen</TabsTrigger>
-          <TabsTrigger value="government" className="font-bold uppercase text-[10px] tracking-widest"><Building className="mr-2 h-4 w-4" /> Government</TabsTrigger>
-        </TabsList>
-        
-        <TabsContent value="citizen" className="slide-up-fade">
           <Card className="border-primary/20 glass-panel overflow-hidden animated-pulse-hover">
-            <CardHeader className="text-center pb-6 border-b border-white/5 bg-secondary/10">
+            <CardHeader className="text-center pb-6 border-b border-white/40 bg-secondary/10">
               <div className="mx-auto p-3 bg-primary/10 rounded-full w-fit mb-4"><ShieldCheck className="h-8 w-8 text-primary" /></div>
               <CardTitle className="text-2xl font-black tracking-tight uppercase">{mode === 'signin' ? 'Citizen Portal' : 'Establish Sovereign ID'}</CardTitle>
             </CardHeader>
-            <CardContent className="space-y-4 pt-8 min-h-[380px] flex flex-col justify-center">
+            <CardContent className="space-y-4 pt-8">
               {isBonding ? (
-                <div className="flex flex-col items-center justify-center space-y-6">
+                <div className="flex flex-col items-center justify-center space-y-8 py-8 cyber-scanner">
                   <div className="relative">
-                    <Loader2 className="h-16 w-16 animate-spin text-primary opacity-20" />
-                    <Zap className="h-8 w-8 text-primary absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 animate-pulse" />
+                    <Loader2 className="h-20 w-20 animate-spin text-primary opacity-20" />
+                    <Zap className="h-10 w-10 text-primary absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 animate-pulse" />
                   </div>
-                  <div className="text-center space-y-2">
-                    <p className="text-xs font-black uppercase tracking-institutional text-primary">Bonding Sovereign Streams</p>
-                    <p className="text-[10px] text-muted-foreground uppercase tracking-widest">Querying UIDAI & Tax Authority Nodes...</p>
+                  <div className="text-center space-y-3">
+                    <p className="text-sm font-black uppercase tracking-institutional text-primary">Bonding Quantum Sovereign Streams</p>
+                    <p className="text-[10px] text-muted-foreground uppercase tracking-widest font-mono">Handshaking via Level-0 Interpol Node...</p>
+                    <p className="text-[10px] text-primary/50 uppercase tracking-widest font-mono animate-pulse">Decrypting CBDC Layer 2 state...</p>
                   </div>
                 </div>
               ) : (
@@ -238,12 +201,12 @@ export function LoginForm() {
                       </div>
                     ) : (
                       <div className="space-y-6">
-                        <div className="p-6 border-2 border-dashed border-primary/20 rounded-xl bg-primary/5 text-center space-y-4">
-                          <div className={`mx-auto p-4 rounded-full w-fit transition-all duration-500 ${isBiometricVerified ? 'bg-green-500/20' : 'bg-primary/10'}`}>
-                            {isBiometricVerified ? <CheckCircle2 className="h-10 w-10 text-green-400" /> : <Fingerprint className={`h-10 w-10 text-primary ${isScanning ? 'animate-pulse' : ''}`} />}
+                        <div className={`p-8 border-2 border-dashed ${isScanning ? 'border-primary cyber-scanner bg-primary/10' : 'border-primary/20 bg-primary/5'} rounded-xl text-center space-y-6 transition-all duration-700`}>
+                          <div className={`mx-auto p-5 rounded-full w-fit transition-all duration-500 ${isBiometricVerified ? 'bg-green-500/20 shadow-[0_0_30px_rgba(74,222,128,0.3)]' : 'bg-primary/10'}`}>
+                            {isBiometricVerified ? <CheckCircle2 className="h-12 w-12 text-green-400" /> : <Fingerprint className={`h-12 w-12 text-primary ${isScanning ? 'animate-ping' : ''}`} />}
                           </div>
-                          <Button variant="outline" className="w-full h-10 border-primary/30 text-[10px] font-black uppercase" onClick={simulateBiometric} disabled={isScanning || isBiometricVerified}>
-                            {isScanning ? "Scanning..." : isBiometricVerified ? "Identity Bonded" : "Initiate Biometric Enrolment"}
+                          <Button variant="outline" className={`w-full h-12 border-primary/30 text-xs font-black uppercase tracking-widest transition-all ${isScanning ? 'bg-primary/20' : ''}`} onClick={simulateBiometric} disabled={isScanning || isBiometricVerified}>
+                            {isScanning ? "Processing Quantum Biometrics..." : isBiometricVerified ? "Identity Bonded Cryptographically" : "Initiate Quantum Biometric Enrolment"}
                           </Button>
                         </div>
                         <div className="space-y-2">
@@ -273,34 +236,6 @@ export function LoginForm() {
               </Button>
             </CardFooter>
           </Card>
-        </TabsContent>
-
-        <TabsContent value="government" className="slide-up-fade">
-          <Card className="border-primary/20 glass-panel animated-pulse-hover">
-            <CardHeader className="text-center pb-8 border-b border-white/5 bg-secondary/10">
-              <div className="mx-auto p-3 bg-primary/10 rounded-full w-fit mb-4"><Building className="h-8 w-8 text-primary" /></div>
-              <CardTitle className="text-2xl font-black tracking-tight uppercase">Government Hub</CardTitle>
-              <CardDescription className="text-[10px] font-bold uppercase tracking-widest mt-2">Authorized Analytical Access</CardDescription>
-            </CardHeader>
-            <CardContent className="space-y-4 pt-8">
-              <div className="space-y-2">
-                <Label className="text-[10px] font-black uppercase tracking-widest text-muted-foreground">Official Phone Number</Label>
-                <Input type="tel" readOnly className="bg-secondary/20 h-11 border-border/50 font-bold opacity-70" value={phoneNumber} />
-              </div>
-              <div className="space-y-2">
-                <Label className="text-[10px] font-black uppercase tracking-widest text-muted-foreground">Security Credentials</Label>
-                <Input type="password" readOnly className="bg-secondary/20 h-11 border-border/50 opacity-70" value={password} />
-              </div>
-              <Button className="w-full h-12 bg-primary hover:bg-primary/90 text-primary-foreground font-black uppercase tracking-institutional text-xs" disabled={isLoading} onClick={handleAction}>
-                {isLoading ? <Loader2 className="h-5 w-5 animate-spin" /> : "Authorize Session"}
-              </Button>
-            </CardContent>
-            <CardFooter className="bg-secondary/10 p-4 text-center">
-              <p className="text-[9px] text-muted-foreground font-black uppercase tracking-sovereign leading-relaxed">Unauthorized access prohibited. All actions logged via immutable audit trails.</p>
-            </CardFooter>
-          </Card>
-        </TabsContent>
-      </Tabs>
     </div>
   );
 }

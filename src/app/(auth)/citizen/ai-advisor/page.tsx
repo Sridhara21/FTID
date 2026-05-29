@@ -1,6 +1,7 @@
 "use client";
 
 import { AiAdvisorCard } from "@/components/citizen/ai-advisor-card";
+import { AiAdvisorChat } from "@/components/citizen/ai-advisor-chat";
 import { IncomeExpenseChart } from "@/components/citizen/income-expense-chart";
 import { useUser, useFirestore, useCollection, useMemoFirebase } from "@/local";
 import { collection, query, where, orderBy, limit } from "@/local/store";
@@ -23,8 +24,9 @@ export default function AiAdvisorPage() {
 
     return (
         <div className="grid grid-cols-1 gap-6 lg:grid-cols-5 lg:gap-8">
-            <div className="lg:col-span-3">
+            <div className="lg:col-span-3 flex flex-col gap-6">
                 <IncomeExpenseChart transactions={transactionsData} />
+                <AiAdvisorChat />
             </div>
             <div className="lg:col-span-2">
                 <AiAdvisorCard />
@@ -32,3 +34,4 @@ export default function AiAdvisorPage() {
         </div>
     );
 }
+

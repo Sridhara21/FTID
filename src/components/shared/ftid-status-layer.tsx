@@ -2,7 +2,7 @@
 
 import { useState, useEffect } from 'react';
 import { usePathname } from 'next/navigation';
-import { userProfileData } from "@/lib/placeholder-data";
+import { useCitizen } from "@/hooks/use-citizen";
 import { ShieldCheck, Timer, User, Building } from "lucide-react";
 import { formatDistanceToNow } from 'date-fns';
 
@@ -13,6 +13,7 @@ export function FtidStatusLayer() {
     const [mounted, setMounted] = useState(false);
     const [lastSyncTime] = useState(new Date());
     const [syncText, setSyncText] = useState('Syncing...');
+    const { citizenData } = useCitizen();
 
     useEffect(() => {
         setMounted(true);
@@ -61,7 +62,7 @@ export function FtidStatusLayer() {
              <div className="flex items-center gap-3">
                 <div className={statusItemClass}>
                     <User className="h-3.5 w-3.5 text-primary/70" />
-                    <span className="tabular-nums font-mono tracking-widest">FTID: {userProfileData.ftid}</span>
+                    <span className="tabular-nums font-mono tracking-widest">FTID: {citizenData?.ftid || citizenData?.id?.substring(0,8) || "PENDING"}</span>
                 </div>
                 <div className={statusItemClass}>
                     <ShieldCheck className="h-3.5 w-3.5 text-accent" />

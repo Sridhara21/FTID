@@ -4,12 +4,19 @@
 import { Card, CardContent, CardHeader, CardTitle, CardDescription } from "@/components/ui/card";
 import { Avatar, AvatarImage, AvatarFallback } from "@/components/ui/avatar";
 import { userProfileData } from "@/lib/placeholder-data";
+import { useCitizen } from "@/hooks/use-citizen";
 import { PlaceHolderImages } from "@/lib/placeholder-images";
 import { User, Home, CreditCard } from "lucide-react";
 import Image from "next/image";
 
 export function UserProfileCard() {
+    const { citizenData, isLoading } = useCitizen();
     const userAvatar = PlaceHolderImages.find((img) => img.id === 'user-avatar');
+
+    const fallback = citizenData?.fullName?.charAt(0) || userProfileData.fallback;
+    const name = isLoading ? "Loading..." : (citizenData?.fullName || userProfileData.name);
+    const ftid = citizenData?.ftid || citizenData?.id?.substring(0,8) || userProfileData.ftid;
+    const pan = citizenData?.pan?.number || userProfileData.pan.number;
 
     return (
         <Card>
@@ -23,11 +30,11 @@ export function UserProfileCard() {
                         {userAvatar && (
                           <Image src={userAvatar.imageUrl} alt="User Avatar" data-ai-hint={userAvatar.imageHint} width={96} height={96} className="rounded-full" />
                         )}
-                        <AvatarFallback>{userProfileData.fallback}</AvatarFallback>
+                        <AvatarFallback>{fallback}</AvatarFallback>
                     </Avatar>
                     <div>
-                        <h2 className="text-2xl font-bold">{userProfileData.name}</h2>
-                        <p className="text-muted-foreground font-mono">{userProfileData.ftid}</p>
+                        <h2 className="text-2xl font-bold">{name}</h2>
+                        <p className="text-muted-foreground font-mono">{ftid}</p>
                     </div>
                 </div>
 
@@ -36,21 +43,21 @@ export function UserProfileCard() {
                         <User className="h-5 w-5 mt-0.5 text-primary flex-shrink-0"/>
                         <div>
                             <p className="font-medium">Name</p>
-                            <p className="text-muted-foreground">{userProfileData.name}</p>
+                            <p className="text-muted-foreground">{name}</p>
                         </div>
                     </div>
                     <div className="flex items-start gap-3 p-3 rounded-lg bg-muted/50">
                         <CreditCard className="h-5 w-5 mt-0.5 text-primary flex-shrink-0"/>
                         <div>
                             <p className="font-medium">PAN Number</p>
-                            <p className="text-muted-foreground font-mono">{userProfileData.pan.number}</p>
+                            <p className="text-muted-foreground font-mono">{pan}</p>
                         </div>
                     </div>
                      <div className="flex items-start gap-3 p-3 rounded-lg bg-muted/50">
                         <CreditCard className="h-5 w-5 mt-0.5 text-primary flex-shrink-0"/>
                         <div>
                             <p className="font-medium">FTID Number</p>
-                            <p className="text-muted-foreground font-mono">{userProfileData.ftid}</p>
+                            <p className="text-muted-foreground font-mono">{ftid}</p>
                         </div>
                     </div>
                     <div className="flex items-start gap-3 p-3 rounded-lg bg-muted/50">

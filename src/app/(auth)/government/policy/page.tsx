@@ -1,70 +1,107 @@
 "use client";
 
-import { Card, CardContent, CardHeader, CardTitle, CardDescription } from "@/components/ui/card";
-import { LineChart, Play, Settings2 } from "lucide-react";
+import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import { Scale, CheckCircle2, FlaskConical, Target, BrainCircuit } from "lucide-react";
+import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
-import { Input } from "@/components/ui/input";
 
-export default function PolicySimulationPage() {
+export default function GovernmentPolicyPage() {
   return (
-    <div className="flex flex-col gap-6 animate-in fade-in duration-500">
-      <div className="flex items-center justify-between">
+    <div className="flex flex-col gap-6 animate-in fade-in duration-500 pb-10">
+      
+      <div className="flex flex-col md:flex-row md:items-end justify-between gap-4 mb-2">
         <div>
-          <h1 className="text-2xl font-bold tracking-tight">Policy Simulation Hub</h1>
-          <p className="text-muted-foreground">
-            Test macroeconomic changes and visualize economic impact before deployment.
+          <h1 className="text-3xl font-black tracking-tight text-blue-500 uppercase flex items-center gap-3">
+              <Scale className="h-8 w-8" />
+              Policy Sandbox & Impact Simulation
+          </h1>
+          <p className="text-muted-foreground font-medium tracking-widest uppercase text-xs mt-1 flex items-center gap-2">
+            AI-Driven Macroeconomic War-Gaming
           </p>
         </div>
-        <Button className="gap-2 bg-indigo-600 hover:bg-indigo-700">
-          <Play className="h-4 w-4" /> Run Simulation
-        </Button>
-      </div>
-
-      <div className="grid gap-6 md:grid-cols-3">
-        <Card className="col-span-1">
-          <CardHeader>
-            <CardTitle>Simulation Parameters</CardTitle>
-            <CardDescription>Adjust GST and Interest Rates.</CardDescription>
-          </CardHeader>
-          <CardContent className="space-y-4">
-            <div className="space-y-2">
-              <label className="text-sm font-medium">Standard GST Slab (%)</label>
-              <div className="flex items-center gap-2">
-                <Input type="number" defaultValue="18" className="w-20" />
-                <span className="text-muted-foreground text-xs">Current: 18%</span>
-              </div>
-            </div>
-            <div className="space-y-2">
-              <label className="text-sm font-medium">Policy Repo Rate (%)</label>
-              <div className="flex items-center gap-2">
-                <Input type="number" defaultValue="6.5" step="0.25" className="w-20" />
-                <span className="text-muted-foreground text-xs">Current: 6.5%</span>
-              </div>
-            </div>
-            <div className="space-y-2">
-              <label className="text-sm font-medium">Corporate Tax (%)</label>
-              <div className="flex items-center gap-2">
-                <Input type="number" defaultValue="25" className="w-20" />
-                <span className="text-muted-foreground text-xs">Current: 25%</span>
-              </div>
-            </div>
-            <Button variant="outline" className="w-full gap-2 mt-4">
-              <Settings2 className="h-4 w-4" /> Advanced Settings
+        <div className="flex gap-2">
+            <Button className="gap-2 uppercase tracking-widest text-[10px] font-bold bg-blue-600 hover:bg-blue-700 text-white shadow-[0_0_15px_rgba(59,130,246,0.3)]">
+                <FlaskConical className="h-4 w-4" /> Run New Simulation
             </Button>
-          </CardContent>
-        </Card>
-
-        <Card className="col-span-1 md:col-span-2 border-border/50 bg-secondary/10 flex flex-col justify-center items-center relative overflow-hidden min-h-[300px]">
-          <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_top,_var(--tw-gradient-stops))] from-indigo-500/10 via-background to-background"></div>
-          <div className="z-10 flex flex-col items-center text-center">
-            <LineChart className="h-12 w-12 text-indigo-500 mb-4" />
-            <h3 className="text-lg font-bold">Awaiting Parameters</h3>
-            <p className="text-sm text-muted-foreground max-w-sm mt-2">
-              Enter your policy variables on the left and click "Run Simulation" to generate the 5-year macro forecast.
-            </p>
-          </div>
-        </Card>
+        </div>
       </div>
+
+      <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
+         <Card className="lg:col-span-2 border-border/50 bg-secondary/10 flex flex-col">
+            <CardHeader className="pb-4 border-b border-border/50">
+               <CardTitle className="text-xs font-black uppercase tracking-widest flex items-center gap-2">
+                 <BrainCircuit className="h-4 w-4 text-blue-500" /> Active Policy Simulations
+               </CardTitle>
+            </CardHeader>
+            <CardContent className="flex-1 overflow-auto p-0">
+                 <table className="w-full text-left text-sm whitespace-nowrap">
+                    <thead className="bg-background/50 border-b border-border/50 sticky top-0 z-10 backdrop-blur-sm">
+                       <tr>
+                         <th className="px-4 py-3 text-[9px] font-bold uppercase tracking-widest text-muted-foreground">Scenario Name</th>
+                         <th className="px-4 py-3 text-[9px] font-bold uppercase tracking-widest text-muted-foreground">Target Variable</th>
+                         <th className="px-4 py-3 text-[9px] font-bold uppercase tracking-widest text-muted-foreground text-center">Confidence</th>
+                         <th className="px-4 py-3 text-[9px] font-bold uppercase tracking-widest text-muted-foreground text-right">Proj. GDP Impact</th>
+                       </tr>
+                    </thead>
+                    <tbody className="divide-y divide-border/50">
+                       {[
+                         { name: "GST Cut on EVs (12% -> 5%)", target: "Auto Sector Demand", conf: "92%", impact: "+0.15%" },
+                         { name: "Export Subsidy: Semiconductors", target: "FDI Inflow", conf: "84%", impact: "+0.30%" },
+                         { name: "Repo Rate Hike (+25 bps)", target: "Inflation Control", conf: "89%", impact: "-0.10%" },
+                         { name: "Universal Basic Income (Pilot)", target: "Rural Consumption", conf: "71%", impact: "+0.45%" },
+                       ].map((sim, i) => (
+                          <tr key={i} className="hover:bg-background/40 transition-colors">
+                             <td className="px-4 py-4 font-semibold text-xs text-foreground flex items-center gap-2">
+                                <FlaskConical className="h-3 w-3 text-blue-500" /> {sim.name}
+                             </td>
+                             <td className="px-4 py-4 text-[10px] font-mono text-muted-foreground uppercase">
+                                {sim.target}
+                             </td>
+                             <td className="px-4 py-4 text-center">
+                                 <Badge variant="outline" className="font-mono text-[9px] uppercase bg-blue-500/10 text-blue-500 border-blue-500/30">
+                                     {sim.conf}
+                                 </Badge>
+                             </td>
+                             <td className={`px-4 py-4 text-right font-mono font-black ${sim.impact.startsWith('+') ? 'text-emerald-500' : 'text-amber-500'}`}>
+                                 {sim.impact}
+                             </td>
+                          </tr>
+                       ))}
+                    </tbody>
+                 </table>
+            </CardContent>
+         </Card>
+
+         <Card className="col-span-1 border-blue-500/20 bg-blue-500/5 flex flex-col relative overflow-hidden">
+            <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_bottom_right,_var(--tw-gradient-stops))] from-blue-500/10 via-transparent to-transparent pointer-events-none"></div>
+            <CardHeader className="pb-4 border-b border-blue-500/20 relative z-10">
+               <CardTitle className="text-xs font-black uppercase tracking-widest flex items-center gap-2 text-blue-500">
+                 <Target className="h-4 w-4" /> AI Policy Analyst
+               </CardTitle>
+            </CardHeader>
+            <CardContent className="flex-1 pt-6 space-y-6 relative z-10">
+               
+               <div className="p-4 bg-background border border-blue-500/20 rounded-lg">
+                   <h4 className="text-[10px] font-bold uppercase tracking-widest text-blue-500 mb-2">Recommendation</h4>
+                   <p className="text-xs font-mono text-muted-foreground mb-4">
+                       Based on real-time E-Way bill velocity, the logistics sector is facing a temporary bottleneck in the Western corridor.
+                   </p>
+                   <div className="flex items-center gap-3">
+                       <CheckCircle2 className="h-4 w-4 text-emerald-500" />
+                       <p className="text-[10px] font-mono text-emerald-500/80">
+                           Action: Temporarily waive toll limits for heavy cargo.
+                       </p>
+                   </div>
+               </div>
+               
+               <Button variant="outline" className="w-full text-[10px] font-bold uppercase tracking-widest border-blue-500/50 text-blue-500 hover:bg-blue-500/20">
+                   Generate Cabinet Report
+               </Button>
+
+            </CardContent>
+         </Card>
+      </div>
+
     </div>
   );
 }

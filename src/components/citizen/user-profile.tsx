@@ -25,6 +25,7 @@ import {
   TabsTrigger,
 } from "@/components/ui/tabs";
 import { userProfileData } from "@/lib/placeholder-data";
+import { useCitizen } from "@/hooks/use-citizen";
 import { PlaceHolderImages } from "@/lib/placeholder-images";
 import {
   User,
@@ -41,7 +42,14 @@ import {
 import Image from "next/image";
 
 export function UserProfile() {
+  const { citizenData, isLoading } = useCitizen();
   const userAvatar = PlaceHolderImages.find((img) => img.id === "user-avatar");
+
+  const fallback = citizenData?.fullName?.charAt(0) || userProfileData.fallback;
+  const name = isLoading ? "Loading..." : (citizenData?.fullName || userProfileData.name);
+  const ftid = citizenData?.ftid || citizenData?.id?.substring(0,8) || userProfileData.ftid;
+  const pan = citizenData?.pan?.number || userProfileData.pan.number;
+  const aadhaar = citizenData?.aadhaar?.number || userProfileData.aadhaar.number;
 
   return (
     <div className="space-y-6">
@@ -60,31 +68,31 @@ export function UserProfile() {
                             className="rounded-full object-cover"
                         />
                         )}
-                        <AvatarFallback className="text-4xl">{userProfileData.fallback}</AvatarFallback>
+                        <AvatarFallback className="text-4xl">{fallback}</AvatarFallback>
                     </Avatar>
                     <div className="absolute -bottom-2 -right-2 p-2 bg-green-500 rounded-full border-4 border-background shadow-lg">
-                        <ShieldCheck className="h-6 w-6 text-white" />
+                        <ShieldCheck className="h-6 w-6 text-slate-900" />
                     </div>
                 </div>
                 <div className="flex-1 text-center md:text-left pt-2">
                     <div className="flex flex-col md:flex-row items-center gap-3 mb-2">
-                        <h1 className="text-3xl font-black tracking-tight">{userProfileData.name}</h1>
+                        <h1 className="text-3xl font-black tracking-tight">{name}</h1>
                         <Badge className="bg-green-500/10 text-green-400 border-green-500/20 h-6 uppercase font-bold text-[10px] tracking-widest">
                             Verified Financial Identity
                         </Badge>
                     </div>
                     <div className="flex items-center justify-center md:justify-start gap-2 bg-background/50 px-3 py-1.5 rounded-md border border-border/50 w-fit">
                         <Terminal className="h-3.5 w-3.5 text-primary/70" />
-                        <p className="text-sm font-bold font-mono text-primary tracking-widest">FTID: {userProfileData.ftid}</p>
+                        <p className="text-sm font-bold font-mono text-primary tracking-widest">FTID: {ftid}</p>
                     </div>
                     <div className="mt-4 flex flex-wrap justify-center md:justify-start gap-4">
                         <div className="flex items-center gap-1.5 text-xs text-muted-foreground">
                             <CreditCard className="h-3.5 w-3.5" />
-                            <span className="font-mono tabular-nums">{userProfileData.pan.number}</span>
+                            <span className="font-mono tabular-nums">{pan}</span>
                         </div>
                         <div className="flex items-center gap-1.5 text-xs text-muted-foreground">
                             <User className="h-3.5 w-3.5" />
-                            <span className="font-mono tabular-nums">{userProfileData.aadhaar.number}</span>
+                            <span className="font-mono tabular-nums">{aadhaar}</span>
                         </div>
                     </div>
                 </div>
@@ -118,7 +126,7 @@ export function UserProfile() {
                                     </div>
                                     <div>
                                         <p className="text-xs font-bold uppercase tracking-wider">PAN (Income Tax)</p>
-                                        <p className="text-xs text-muted-foreground font-mono tabular-nums">{userProfileData.pan.number}</p>
+                                        <p className="text-xs text-muted-foreground font-mono tabular-nums">{pan}</p>
                                     </div>
                                 </div>
                                 <Badge className="bg-green-500/10 text-green-400 border-green-500/20 text-[9px] uppercase font-bold tracking-widest">
@@ -132,7 +140,7 @@ export function UserProfile() {
                                     </div>
                                     <div>
                                         <p className="text-xs font-bold uppercase tracking-wider">Aadhaar (UIDAI)</p>
-                                        <p className="text-xs text-muted-foreground font-mono tabular-nums">{userProfileData.aadhaar.number}</p>
+                                        <p className="text-xs text-muted-foreground font-mono tabular-nums">{aadhaar}</p>
                                     </div>
                                 </div>
                                 <Badge className="bg-green-500/10 text-green-400 border-green-500/20 text-[9px] uppercase font-bold tracking-widest">

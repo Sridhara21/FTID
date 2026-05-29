@@ -1,228 +1,254 @@
-
 "use client";
 
 import Link from "next/link";
-import { usePathname, useRouter } from "next/navigation";
+import { usePathname } from "next/navigation";
 import { cn } from "@/lib/utils";
 import {
-  Bot,
-  LayoutGrid,
-  HeartPulse,
-  Landmark,
-  PieChart,
-  ShieldCheck,
-  User,
-  Vote,
-  Wallet,
-  Scale,
-  BarChart,
-  AlertTriangle,
-  Briefcase,
-  Lock,
-  FileText,
-  HandCoins,
-  ArrowRightLeft,
-  Database,
-  Cpu,
-  Network,
-  Activity,
-  Globe,
-  LineChart,
-  ShieldAlert,
-  Building2,
-  Factory,
-  Coins,
-  Shield,
-  FileSearch,
-  Code,
-  Terminal,
-  Search,
-  CheckCircle,
-  Truck,
-  Box,
-  Fingerprint
+  Bot, LayoutGrid, HeartPulse, Landmark, ShieldCheck, User, Wallet, Scale,
+  FileText, HandCoins, ArrowRightLeft, Briefcase, Lock, Database, Target,
+  Building2, PieChart, Network, Terminal, Settings, Activity, Layers, Receipt
 } from "lucide-react";
 import {
-  SidebarHeader,
-  SidebarContent,
-  SidebarMenu,
-  SidebarMenuItem,
-  SidebarMenuButton,
-  SidebarFooter,
+  SidebarHeader, SidebarContent, SidebarMenu, SidebarMenuItem, SidebarMenuButton, SidebarFooter,
 } from "@/components/ui/sidebar";
 import { Button } from "@/components/ui/button";
 
-const citizenNav = [
-  { href: "/citizen", icon: LayoutGrid, label: "Control Center" },
-  { href: "/citizen/profile", icon: User, label: "Identity Hub" },
-  { href: "/citizen/consent", icon: Lock, label: "Consent Management" },
-  { href: "/citizen/wallet", icon: Wallet, label: "CBDC Wallet" },
-  { href: "/citizen/portfolio", icon: Briefcase, label: "Investments" },
-  { href: "/citizen/credit-score", icon: HeartPulse, label: "Financial Health" },
-  { href: "/citizen/tax", icon: FileText, label: "Tax & Compliance" },
-  { href: "/citizen/subsidies", icon: HandCoins, label: "Subsidies & Welfare" },
-  { href: "/citizen/balance-sheet", icon: Scale, label: "Personal Balance Sheet" },
-];
+// --- Configuration for Portals ---
+const PORTALS = {
+  citizen: {
+    title: "FTID",
+    subtitle: "Citizen Node",
+    headerIcon: Bot,
+    headerColor: "text-cyan-400",
+    headerBg: "bg-cyan-900/30",
+    headerBorder: "border-cyan-500/20",
+    sectionTitle: "Identity Portal",
+    menuColor: "text-cyan-400",
+    menuActiveBg: "bg-cyan-900/30",
+    menuActiveBorder: "border-cyan-500",
+    navItems: [
+      { href: "/citizen", icon: LayoutGrid, label: "Control Center" },
+      { href: "/citizen/profile", icon: User, label: "Identity Hub" },
+      { href: "/citizen/consent", icon: Lock, label: "Consent Management" },
+      { href: "/citizen/wallet", icon: Wallet, label: "CBDC Wallet" },
+      { href: "/citizen/portfolio", icon: Briefcase, label: "Investments" },
+      { href: "/citizen/credit-score", icon: HeartPulse, label: "Financial Health" },
+      { href: "/citizen/tax", icon: FileText, label: "Tax & Compliance" }
+    ]
+  },
+  business: {
+    title: "FTID",
+    subtitle: "Enterprise Node",
+    headerIcon: Building2,
+    headerColor: "text-emerald-400",
+    headerBg: "bg-emerald-900/30",
+    headerBorder: "border-emerald-500/20",
+    sectionTitle: "Corporate Portal",
+    menuColor: "text-emerald-400",
+    menuActiveBg: "bg-emerald-900/30",
+    menuActiveBorder: "border-emerald-500",
+    navItems: [
+      { href: "/business", icon: LayoutGrid, label: "Enterprise Command" },
+      { href: "/business/invoices", icon: Receipt, label: "Smart Invoices" },
+      { href: "/business/compliance", icon: ShieldCheck, label: "Real-Time Compliance" },
+      { href: "/business/vendors", icon: Network, label: "Vendor Trust Network" },
+      { href: "/business/credit", icon: Target, label: "Credit Readiness" }
+    ]
+  },
+  bank: {
+    title: "FTID",
+    subtitle: "Institutional Node",
+    headerIcon: Landmark,
+    headerColor: "text-blue-400",
+    headerBg: "bg-blue-900/30",
+    headerBorder: "border-blue-500/20",
+    sectionTitle: "Banking Portal",
+    menuColor: "text-blue-400",
+    menuActiveBg: "bg-blue-900/30",
+    menuActiveBorder: "border-blue-500",
+    navItems: [
+      { href: "/bank", icon: LayoutGrid, label: "Risk Command" },
+      { href: "/bank/underwriting", icon: FileText, label: "SME Underwriting" },
+      { href: "/bank/fraud", icon: AlertTriangle, label: "Fraud Intelligence" },
+      { href: "/bank/network", icon: Network, label: "Network Analysis" }
+    ]
+  },
+  government: {
+    title: "FTID",
+    subtitle: "Gov. Infrastructure",
+    headerIcon: Scale,
+    headerColor: "text-amber-400",
+    headerBg: "bg-amber-900/30",
+    headerBorder: "border-amber-500/20",
+    sectionTitle: "Gov Portal",
+    menuColor: "text-amber-400",
+    menuActiveBg: "bg-amber-900/30",
+    menuActiveBorder: "border-amber-500",
+    navItems: [
+      { href: "/government", icon: LayoutGrid, label: "Economic Monitor" },
+      { href: "/government/tax", icon: Database, label: "Tax Intelligence" },
+      { href: "/government/stress", icon: Activity, label: "Stress Detection" },
+      { href: "/government/policy", icon: HandCoins, label: "Policy Analytics" },
+      { href: "/government/departments", icon: Building2, label: "Departmental Funds" }
+    ]
+  },
+  regulator: {
+    title: "FTID",
+    subtitle: "RBI Core Command",
+    headerIcon: ShieldCheck,
+    headerColor: "text-rose-400",
+    headerBg: "bg-rose-900/30",
+    headerBorder: "border-rose-500/20",
+    sectionTitle: "Regulator Portal",
+    menuColor: "text-rose-400",
+    menuActiveBg: "bg-rose-900/30",
+    menuActiveBorder: "border-rose-500",
+    navItems: [
+      { href: "/regulator", icon: LayoutGrid, label: "Stability Engine" },
+      { href: "/regulator/fraud", icon: AlertTriangle, label: "Systemic Fraud" },
+      { href: "/regulator/heatmap", icon: PieChart, label: "Compliance Heatmap" },
+      { href: "/regulator/trust", icon: Layers, label: "Digital Trust Index" }
+    ]
+  },
+  auditor: {
+    title: "FTID",
+    subtitle: "Audit Network",
+    headerIcon: FileText,
+    headerColor: "text-indigo-400",
+    headerBg: "bg-indigo-900/30",
+    headerBorder: "border-indigo-500/20",
+    sectionTitle: "Audit Portal",
+    menuColor: "text-indigo-400",
+    menuActiveBg: "bg-indigo-900/30",
+    menuActiveBorder: "border-indigo-500",
+    navItems: [
+      { href: "/auditor", icon: LayoutGrid, label: "Audit Intelligence" },
+      { href: "/auditor/reconciliation", icon: ArrowRightLeft, label: "Smart Recon" },
+      { href: "/auditor/trails", icon: Database, label: "Automated Trails" },
+      { href: "/auditor/risk", icon: Target, label: "Risk Scoring" }
+    ]
+  },
+  developer: {
+    title: "FTID",
+    subtitle: "API Core",
+    headerIcon: Terminal,
+    headerColor: "text-purple-400",
+    headerBg: "bg-purple-900/30",
+    headerBorder: "border-purple-500/20",
+    sectionTitle: "Dev Portal",
+    menuColor: "text-purple-400",
+    menuActiveBg: "bg-purple-900/30",
+    menuActiveBorder: "border-purple-500",
+    navItems: [
+      { href: "/developer", icon: Terminal, label: "API Dashboard" },
+      { href: "/developer/keys", icon: Lock, label: "Secure Keys" },
+      { href: "/developer/verification", icon: ShieldCheck, label: "Verification APIs" },
+      { href: "/developer/consent", icon: Database, label: "Consent Infrastructure" }
+    ]
+  },
+  gateway: {
+    title: "FTID",
+    subtitle: "Gateway Node",
+    headerIcon: ArrowRightLeft,
+    headerColor: "text-sky-400",
+    headerBg: "bg-sky-900/30",
+    headerBorder: "border-sky-500/20",
+    sectionTitle: "Gateway Portal",
+    menuColor: "text-sky-400",
+    menuActiveBg: "bg-sky-900/30",
+    menuActiveBorder: "border-sky-500",
+    navItems: [
+      { href: "/gateway", icon: LayoutGrid, label: "Gateway Command" },
+      { href: "/gateway/transactions", icon: Activity, label: "Live Settlements" },
+      { href: "/gateway/compliance", icon: ShieldCheck, label: "Rule Enforcer" }
+    ]
+  }
+};
 
-const governmentNav = [
-  { href: "/government", icon: LayoutGrid, label: "Dashboard" },
-  { href: "/government/economy", icon: Globe, label: "Economic Observatory" },
-  { href: "/government/subsidies", icon: HandCoins, label: "Subsidy Intelligence" },
-  { href: "/government/informal", icon: Database, label: "Informal Economy" },
-  { href: "/government/policy", icon: LineChart, label: "Policy Simulation" },
-  { href: "/government/registry", icon: Database, label: "Registry Audit" },
-  { href: "/government/gdp", icon: Landmark, label: "GDP Tracking" },
-  { href: "/government/revenue", icon: PieChart, label: "Revenue" },
-  { href: "/government/fraud-heatmaps", icon: AlertTriangle, label: "Fraud Heatmaps" },
-  { href: "/government/architecture", icon: Cpu, label: "System Architecture" },
-];
-
-const regulatorNav = [
-  { href: "/regulator", icon: LayoutGrid, label: "Regulator Core" },
-  { href: "/regulator/graph", icon: Network, label: "National Graph" },
-  { href: "/regulator/ews", icon: Activity, label: "Early Warning" },
-  { href: "/regulator/systemic-risk", icon: AlertTriangle, label: "Systemic Risk" },
-  { href: "/regulator/trust", icon: ShieldCheck, label: "Trust Index" },
-  { href: "/regulator/fraud", icon: ShieldAlert, label: "AML Intelligence" },
-];
-
-const businessNav = [
-  { href: "/business", icon: LayoutGrid, label: "Enterprise Hub" },
-  { href: "/business/vendors", icon: Factory, label: "Vendor Network" },
-  { href: "/business/cashflow", icon: LineChart, label: "AI Cashflow Engine" },
-  { href: "/business/invoices", icon: FileText, label: "Invoice Intelligence" },
-  { href: "/business/supply-chain", icon: Truck, label: "Supply Chain" },
-  { href: "/business/compliance", icon: Shield, label: "Compliance Engine" },
-];
-
-const institutionNav = [
-  { href: "/institution", icon: Building2, label: "Institution Hub" },
-  { href: "/institution/underwriting", icon: Activity, label: "Smart Underwriting" },
-  { href: "/institution/risk", icon: ShieldAlert, label: "Portfolio Risk" },
-  { href: "/institution/fraud", icon: AlertTriangle, label: "Fraud Shield" },
-];
-
-const gatewayNav = [
-  { href: "/gateway", icon: LayoutGrid, label: "Gateway Node" },
-  { href: "/gateway/cbdc", icon: Coins, label: "CBDC Settlement" },
-  { href: "/gateway/velocity", icon: Activity, label: "Velocity Engine" },
-  { href: "/gateway/compliance", icon: ShieldCheck, label: "AML Interceptor" },
-];
-
-const auditorNav = [
-  { href: "/auditor", icon: FileSearch, label: "Audit Terminal" },
-  { href: "/auditor/assistant", icon: Bot, label: "AI Audit Copilot" },
-  { href: "/auditor/ledger", icon: Database, label: "Immutable Ledger" },
-  { href: "/auditor/risk", icon: ShieldAlert, label: "Audit Risk Engine" },
-];
-
-const developerNav = [
-  { href: "/developer", icon: Code, label: "Developer Hub" },
-  { href: "/developer/apis", icon: Network, label: "API Marketplace" },
-  { href: "/developer/sandbox", icon: Terminal, label: "Sandbox Simulator" },
-  { href: "/developer/sdk", icon: Box, label: "SDK Hub" },
-];
+function AlertTriangle(props: any) {
+  return (
+    <svg {...props} xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+      <path d="m21.73 18-8-14a2 2 0 0 0-3.48 0l-8 14A2 2 0 0 0 4 21h16a2 2 0 0 0 1.73-3Z" />
+      <path d="M12 9v4" />
+      <path d="M12 17h.01" />
+    </svg>
+  );
+}
 
 export function DashboardSidebar() {
   const pathname = usePathname();
-  const router = useRouter();
-  const isGovernment = pathname.startsWith("/government");
-  const isRegulator = pathname.startsWith("/regulator");
-  const isBusiness = pathname.startsWith("/business");
-  const isInstitution = pathname.startsWith("/institution");
-  const isGateway = pathname.startsWith("/gateway");
-  const isAuditor = pathname.startsWith("/auditor");
-  const isDeveloper = pathname.startsWith("/developer");
-
-  let navItems = citizenNav;
-  let userRole = "Citizen";
-  if (isGovernment) { navItems = governmentNav; userRole = "Government"; }
-  else if (isRegulator) { navItems = regulatorNav; userRole = "Regulator"; }
-  else if (isBusiness) { navItems = businessNav; userRole = "Enterprise"; }
-  else if (isInstitution) { navItems = institutionNav; userRole = "Institution"; }
-  else if (isGateway) { navItems = gatewayNav; userRole = "Gateway"; }
-  else if (isAuditor) { navItems = auditorNav; userRole = "Auditor"; }
-  else if (isDeveloper) { navItems = developerNav; userRole = "Developer"; }
-
-  const togglePortal = () => {
-    let target = "/citizen";
-    if (pathname.startsWith("/citizen")) target = "/government";
-    else if (pathname.startsWith("/government")) target = "/regulator";
-    else if (pathname.startsWith("/regulator")) target = "/business";
-    else if (pathname.startsWith("/business")) target = "/institution";
-    else if (pathname.startsWith("/institution")) target = "/gateway";
-    else if (pathname.startsWith("/gateway")) target = "/auditor";
-    else if (pathname.startsWith("/auditor")) target = "/developer";
-    else if (pathname.startsWith("/developer")) target = "/citizen";
-    
-    router.push(target);
-  };
+  
+  // Determine context based on the root path
+  const currentContext = pathname.split('/')[1] || 'citizen';
+  // Use config or default to citizen
+  const config = PORTALS[currentContext as keyof typeof PORTALS] || PORTALS.citizen;
 
   return (
     <>
-      <SidebarHeader className="border-b border-sidebar-border/50 pb-4 mb-2">
+      <SidebarHeader className={`border-b border-white/5 pb-4 mb-2`}>
         <div className="flex flex-col gap-4">
           <div className="flex items-center gap-2.5 px-2">
-            <div className="p-1.5 bg-primary/10 rounded border border-primary/20">
-              <Bot className="h-5 w-5 text-primary" />
+            <div className={`p-1.5 ${config.headerBg} rounded border ${config.headerBorder}`}>
+              <config.headerIcon className={`h-5 w-5 ${config.headerColor}`} />
             </div>
             <div className="flex flex-col">
-              <h2 className="text-sm font-bold tracking-tight text-sidebar-foreground">
-                FTID
+              <h2 className="text-sm font-black tracking-tight text-white uppercase">
+                {config.title}
               </h2>
-              <span className="text-[10px] font-medium text-muted-foreground uppercase tracking-widest leading-none">
-                System Core
+              <span className={`text-[10px] font-medium uppercase tracking-widest leading-none ${config.headerColor}`}>
+                {config.subtitle}
               </span>
             </div>
           </div>
-          
           <div className="px-2">
-            <Button 
-              variant="outline" 
-              size="sm" 
-              onClick={togglePortal}
-              className="w-full justify-start gap-2 h-8 text-[10px] font-bold uppercase tracking-wider bg-primary/5 hover:bg-primary/10 border-primary/20 text-primary transition-all active:scale-95"
-            >
-              <ArrowRightLeft className="h-3 w-3" />
-              Switch Portal
-            </Button>
+            <Link href="/">
+              <Button variant="outline" className="w-full justify-start text-[10px] font-bold tracking-widest uppercase border-slate-800 bg-[#0a1520] hover:bg-slate-800 text-slate-400 hover:text-white">
+                 <ArrowRightLeft className="h-3 w-3 mr-2" />
+                 Switch Node
+              </Button>
+            </Link>
           </div>
         </div>
       </SidebarHeader>
       <SidebarContent className="px-3">
-        <div className="px-2 mb-3">
-          <p className="text-[10px] font-bold uppercase tracking-widest text-muted-foreground/60">
-            {userRole} Portal
+        <div className="px-2 mb-3 mt-4">
+          <p className="text-[10px] font-bold uppercase tracking-widest text-slate-500">
+            {config.sectionTitle}
           </p>
         </div>
         <SidebarMenu className="gap-0.5">
-          {navItems.map((item) => (
-            <SidebarMenuItem key={item.label}>
-              <Link href={item.href} passHref>
-                <SidebarMenuButton
-                  isActive={pathname === item.href}
-                  className={cn(
-                    "justify-start h-9 transition-all duration-200 px-3",
-                    pathname === item.href 
-                      ? "bg-primary/10 text-primary border-r-2 border-primary rounded-none" 
-                      : "hover:bg-secondary/50"
-                  )}
-                >
-                  <item.icon className={cn("h-4 w-4 shrink-0", pathname === item.href ? "text-primary" : "text-muted-foreground")} />
-                  <span className="text-sm font-medium">{item.label}</span>
-                </SidebarMenuButton>
-              </Link>
-            </SidebarMenuItem>
-          ))}
+          {config.navItems.map((item) => {
+            // Check exact or sub-route match
+            const isActive = pathname === item.href || (item.href !== `/${currentContext}` && pathname.startsWith(item.href));
+            
+            return (
+              <SidebarMenuItem key={item.label}>
+                <Link href={item.href} passHref>
+                  <SidebarMenuButton
+                    isActive={isActive}
+                    className={cn(
+                      "justify-start h-9 transition-all duration-200 px-3",
+                      isActive 
+                        ? `${config.menuActiveBg} text-white border-l-2 ${config.menuActiveBorder} rounded-none` 
+                        : "hover:bg-white/5 text-slate-400 hover:text-slate-200"
+                    )}
+                  >
+                    <item.icon className={cn("h-4 w-4 shrink-0", isActive ? config.menuColor : "text-slate-500")} />
+                    <span className="text-sm font-medium">{item.label}</span>
+                  </SidebarMenuButton>
+                </Link>
+              </SidebarMenuItem>
+            );
+          })}
         </SidebarMenu>
       </SidebarContent>
-      <SidebarFooter className="border-t border-sidebar-border/50 p-4">
-        <div className="rounded-md border bg-secondary/30 border-border/50 p-3">
+      <SidebarFooter className="border-t border-white/5 p-4">
+        <div className="rounded-md border bg-[#0a1520] border-slate-800 p-3">
           <div className="flex items-center gap-3">
-            <User className="h-5 w-5 text-muted-foreground" />
+            <Settings className="h-5 w-5 text-slate-500" />
             <div className="flex flex-col">
-              <p className="text-xs font-bold leading-none">{userRole} User</p>
-              <p className="text-[10px] text-muted-foreground mt-1">Authorized Access</p>
+              <p className="text-xs font-bold leading-none text-slate-200">System Logs</p>
+              <p className="text-[10px] text-emerald-500 mt-1 uppercase tracking-wider font-bold">• Secure Connection</p>
             </div>
           </div>
         </div>

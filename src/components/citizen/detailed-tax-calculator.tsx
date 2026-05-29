@@ -23,6 +23,7 @@ import {
 import { autoCapturedIncome } from "@/lib/placeholder-data";
 import { Badge } from "@/components/ui/badge";
 import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from "@/components/ui/tooltip";
+import { GlobalRoutingMap } from "@/components/citizen/global-routing-map";
 
 export function DetailedTaxCalculator() {
   const [showGovView, setShowGovView] = useState(false);
@@ -46,140 +47,152 @@ export function DetailedTaxCalculator() {
   const formatCurrency = (value: number) => value.toLocaleString('en-IN', { style: 'currency', currency: 'INR', minimumFractionDigits: 0 });
 
   return (
-    <Card className="border-primary/20 bg-card/50">
-      <CardHeader className="pb-4 border-b border-border/30">
-        <div className="flex flex-col md:flex-row justify-between items-start gap-4">
-            <div className="flex-1">
-                <CardTitle className="flex items-center gap-2 text-xl font-bold">
-                <FileText className="h-6 w-6 text-primary" />
-                Tax Statement (FY 2026-27)
-                </CardTitle>
-                <CardDescription className="max-w-2xl mt-1 text-[10px] uppercase font-bold tracking-widest text-muted-foreground">
-                Verified sovereign transaction streams via FTID direct-routing.
-                </CardDescription>
-            </div>
-            <TooltipProvider>
-                <Tooltip>
-                    <TooltipTrigger asChild>
-                        <Button variant="outline" size="sm" className="h-9 font-black text-[10px] uppercase tracking-widest bg-secondary/20" onClick={() => setShowGovView(!showGovView)}>
-                            <Eye className="mr-2 h-3.5 w-3.5" />
-                            {showGovView ? "EXIT AUDIT MODE" : "SIMULATE AUDIT"}
-                        </Button>
-                    </TooltipTrigger>
-                    <TooltipContent className="text-[10px] bg-background">Read-only simulation of Revenue Officer view.</TooltipContent>
-                </Tooltip>
-            </TooltipProvider>
-        </div>
-      </CardHeader>
-      
-      <CardContent className="pt-6">
-        {showGovView && (
-            <div className="mb-6 p-3 rounded-md bg-yellow-500/10 border border-yellow-500/30 text-yellow-300 text-[10px] font-black uppercase tracking-sovereign flex items-center gap-3">
-                <AlertTriangle className="h-4 w-4" />
-                <span>RESTRICTED: Government Auditor Simulation • Actions Logged</span>
-            </div>
-        )}
+    <div className="relative min-h-[800px]">
+      <GlobalRoutingMap />
 
-        <div className="grid grid-cols-1 lg:grid-cols-12 gap-8">
-            <div className="lg:col-span-7 space-y-8">
-                <div>
-                    <h3 className="text-[10px] font-black uppercase tracking-institutional text-muted-foreground mb-4 flex items-center gap-2">
-                        <Landmark className="h-4 w-4 text-primary" /> Income Intelligence
-                    </h3>
-                    <Table>
-                        <TableHeader className="bg-secondary/20">
-                            <TableRow className="h-10 hover:bg-transparent border-b">
-                                <TableHead className="text-[10px] uppercase font-black py-2">Source</TableHead>
-                                <TableHead className="text-[10px] uppercase font-black text-center py-2">Audit</TableHead>
-                                <TableHead className="text-right text-[10px] uppercase font-black py-2">Amount</TableHead>
-                            </TableRow>
-                        </TableHeader>
-                        <TableBody>
-                            {autoCapturedIncome.sources.map(item => (
-                                <TableRow key={item.source} className="h-12 hover:bg-secondary/10 border-b last:border-0 group">
-                                    <TableCell className="py-2.5 text-xs font-bold">{item.source}</TableCell>
-                                    <TableCell className="py-2.5 text-center">
-                                        <div className="flex justify-center">
-                                            {item.verified ? (
-                                                <Badge className="bg-green-500/10 text-green-400 border-green-500/20 h-5 px-2 text-[9px] uppercase font-black tracking-widest">Verified</Badge>
-                                            ) : (
-                                                <Badge variant="outline" className="text-yellow-400 border-yellow-500/30 h-5 px-2 text-[9px] uppercase font-black tracking-widest">Pending</Badge>
-                                            )}
-                                        </div>
-                                    </TableCell>
-                                    <TableCell className="py-2.5 text-right font-mono text-xs tabular-nums font-bold">{formatCurrency(item.amount)}</TableCell>
-                                </TableRow>
-                            ))}
-                        </TableBody>
-                        <TableFooter className="bg-transparent border-t-2">
-                            <TableRow className="h-12 hover:bg-transparent">
-                                <TableHead colSpan={2} className="text-[10px] uppercase font-black">Gross Revenue</TableHead>
-                                <TableHead className="text-right font-mono text-xs tabular-nums text-foreground font-black">{formatCurrency(totalIncome)}</TableHead>
-                            </TableRow>
-                        </TableFooter>
-                    </Table>
+      <div className="relative z-10 p-4 md:p-8">
+        <Card className="glass-panel shadow-2xl max-w-6xl mx-auto rounded-3xl border-white/60">
+            <CardHeader className="pb-6 border-b border-white/50">
+            <div className="flex flex-col md:flex-row justify-between items-start gap-4">
+                <div className="flex-1">
+                    <CardTitle className="flex items-center gap-3 text-xl font-bold uppercase tracking-[0.2em] text-slate-900">
+                    <div className="p-2 bg-white/70 rounded-xl backdrop-blur-md shadow-sm border border-white/60"><FileText className="h-6 w-6 text-slate-900" /></div>
+                    Tax Statement (FY 2026-27)
+                    </CardTitle>
+                    <CardDescription className="max-w-2xl mt-3 text-[11px] uppercase font-semibold tracking-widest text-slate-900/60">
+                    Auto-calculated from your connected accounts and investments.
+                    </CardDescription>
                 </div>
-                 <div>
-                    <h3 className="text-[10px] font-black uppercase tracking-institutional text-muted-foreground mb-4 flex items-center gap-2">
-                        <ShieldCheck className="h-4 w-4 text-accent" /> Flow Deductions
-                    </h3>
-                    <Table>
-                        <TableHeader className="bg-secondary/20">
-                            <TableRow className="h-10 hover:bg-transparent border-b">
-                                <TableHead className="text-[10px] uppercase font-black py-2">Section</TableHead>
-                                <TableHead className="text-[10px] uppercase font-black text-center py-2">Protocol</TableHead>
-                                <TableHead className="text-right text-[10px] uppercase font-black py-2">Amount</TableHead>
-                            </TableRow>
-                        </TableHeader>
-                        <TableBody>
-                            {autoCapturedIncome.deductions.map(item => (
-                                <TableRow key={item.section} className="h-12 hover:bg-secondary/10 border-b last:border-0 group">
-                                    <TableCell className="py-2.5 text-xs font-bold">{item.section}</TableCell>
-                                    <TableCell className="py-2.5 text-center">
-                                        <Badge className="bg-primary/10 text-primary border-primary/20 h-5 px-2 text-[9px] uppercase font-black tracking-widest">Auto-Routed</Badge>
-                                    </TableCell>
-                                    <TableCell className="py-2.5 text-right font-mono text-xs tabular-nums text-red-400 font-bold">-{formatCurrency(item.amount)}</TableCell>
-                                </TableRow>
-                            ))}
-                        </TableBody>
-                         <TableFooter className="bg-transparent border-t-2">
-                            <TableRow className="h-12 hover:bg-transparent">
-                                <TableHead colSpan={2} className="text-[10px] uppercase font-black">Total Deductions</TableHead>
-                                <TableHead className="text-right font-mono text-xs tabular-nums text-foreground font-black">{formatCurrency(totalDeductions)}</TableHead>
-                            </TableRow>
-                        </TableFooter>
-                    </Table>
+                <TooltipProvider>
+                    <Tooltip>
+                        <TooltipTrigger asChild>
+                            <Button variant="outline" size="sm" className="h-10 font-bold text-[10px] uppercase tracking-widest bg-white/70 border-white/60 text-slate-900 hover:bg-white/80 hover:text-slate-900 transition-all shadow-sm rounded-xl backdrop-blur-md" onClick={() => setShowGovView(!showGovView)}>
+                                <Eye className="mr-2 h-4 w-4" />
+                                {showGovView ? "EXIT OFFICIAL VIEW" : "VIEW OFFICIAL FORMAT"}
+                            </Button>
+                        </TooltipTrigger>
+                        <TooltipContent className="text-[10px] bg-white/70 backdrop-blur-2xl border-white/60 text-slate-900 rounded-lg p-3">Read-only view of the official tax department layout.</TooltipContent>
+                    </Tooltip>
+                </TooltipProvider>
+            </div>
+            </CardHeader>
+            
+            <CardContent className="pt-8">
+            {showGovView && (
+                <div className="mb-8 p-4 rounded-xl bg-slate-100 border border-slate-200 text-slate-600 text-[11px] font-bold uppercase tracking-[0.2em] flex items-center gap-3 backdrop-blur-md shadow-inner">
+                    <AlertTriangle className="h-5 w-5 text-slate-500" />
+                    <span>Official Format View • Read-Only • Formatted for Tax Authority</span>
+                </div>
+            )}
+
+            <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-12">
+                <div className="lg:col-span-7 space-y-10">
+                    <div>
+                        <h3 className="text-[12px] font-bold uppercase tracking-[0.2em] text-slate-900 mb-4 flex items-center gap-2">
+                            <Landmark className="h-4 w-4 text-slate-900/80" /> Income Intelligence
+                        </h3>
+                        <div className="border border-white/50 rounded-2xl overflow-x-auto bg-white/60 shadow-inner backdrop-blur-sm">
+                            <Table>
+                                <TableHeader>
+                                    <TableRow className="border-b border-white/50 hover:bg-transparent">
+                                        <TableHead className="text-[10px] uppercase font-bold tracking-widest text-slate-900/50 py-4">Source</TableHead>
+                                        <TableHead className="text-[10px] uppercase font-bold tracking-widest text-slate-900/50 text-center py-4">Audit</TableHead>
+                                        <TableHead className="text-right text-[10px] uppercase font-bold tracking-widest text-slate-900/50 py-4">Amount</TableHead>
+                                    </TableRow>
+                                </TableHeader>
+                                <TableBody>
+                                    {autoCapturedIncome.sources.map(item => (
+                                        <TableRow key={item.source} className="border-b border-white/40 hover:bg-white/60 transition-colors">
+                                            <TableCell className="py-4 text-sm font-semibold text-slate-900/90">{item.source}</TableCell>
+                                            <TableCell className="py-4 text-center">
+                                                <div className="flex justify-center">
+                                                    {item.verified ? (
+                                                        <Badge className="bg-emerald-100 text-emerald-700 border-emerald-200 h-6 px-3 text-[9px] uppercase font-bold tracking-widest shadow-sm">Verified</Badge>
+                                                    ) : (
+                                                        <Badge variant="outline" className="text-slate-900/60 border-white/60 bg-white/60 h-6 px-3 text-[9px] uppercase font-bold tracking-widest shadow-sm">Pending</Badge>
+                                                    )}
+                                                </div>
+                                            </TableCell>
+                                            <TableCell className="py-4 text-right font-headline text-sm tabular-nums font-bold text-slate-900">{formatCurrency(item.amount)}</TableCell>
+                                        </TableRow>
+                                    ))}
+                                </TableBody>
+                                <TableFooter className="bg-white/60">
+                                    <TableRow className="hover:bg-transparent border-t border-white/50">
+                                        <TableHead colSpan={2} className="text-[11px] uppercase font-bold tracking-widest text-slate-900/80 py-4">Gross Revenue</TableHead>
+                                        <TableHead className="text-right font-headline text-base tabular-nums text-slate-900 font-bold py-4 ">{formatCurrency(totalIncome)}</TableHead>
+                                    </TableRow>
+                                </TableFooter>
+                            </Table>
+                        </div>
+                    </div>
+                    
+                    <div>
+                        <h3 className="text-[12px] font-bold uppercase tracking-[0.2em] text-slate-900 mb-4 flex items-center gap-2">
+                            <ShieldCheck className="h-4 w-4 text-emerald-700" /> Flow Deductions
+                        </h3>
+                        <div className="border border-white/50 rounded-2xl overflow-x-auto bg-white/60 shadow-inner backdrop-blur-sm">
+                            <Table>
+                                <TableHeader>
+                                    <TableRow className="border-b border-white/50 hover:bg-transparent">
+                                        <TableHead className="text-[10px] uppercase font-bold tracking-widest text-slate-900/50 py-4">Section</TableHead>
+                                        <TableHead className="text-[10px] uppercase font-bold tracking-widest text-slate-900/50 text-center py-4">Protocol</TableHead>
+                                        <TableHead className="text-right text-[10px] uppercase font-bold tracking-widest text-slate-900/50 py-4">Amount</TableHead>
+                                    </TableRow>
+                                </TableHeader>
+                                <TableBody>
+                                    {autoCapturedIncome.deductions.map(item => (
+                                        <TableRow key={item.section} className="border-b border-white/40 hover:bg-white/60 transition-colors">
+                                            <TableCell className="py-4 text-sm font-semibold text-slate-900/90">{item.section}</TableCell>
+                                            <TableCell className="py-4 text-center">
+                                                <Badge className="bg-white/70 text-slate-900/80 border-white/60 h-6 px-3 text-[9px] uppercase font-bold tracking-widest shadow-sm">Auto-Routed</Badge>
+                                            </TableCell>
+                                            <TableCell className="py-4 text-right font-headline text-sm tabular-nums text-emerald-700 font-bold">-{formatCurrency(item.amount)}</TableCell>
+                                        </TableRow>
+                                    ))}
+                                </TableBody>
+                                <TableFooter className="bg-emerald-50/50">
+                                    <TableRow className="hover:bg-transparent border-t border-emerald-200">
+                                        <TableHead colSpan={2} className="text-[11px] uppercase font-bold tracking-widest text-emerald-700 py-4">Total Deductions</TableHead>
+                                        <TableHead className="text-right font-headline text-base tabular-nums text-emerald-700 font-bold py-4 ">{formatCurrency(totalDeductions)}</TableHead>
+                                    </TableRow>
+                                </TableFooter>
+                            </Table>
+                        </div>
+                    </div>
+                </div>
+                
+                <div className="lg:col-span-5 flex flex-col gap-8">
+                    <Card className="glass-panel h-fit sticky top-24 shadow-2xl rounded-3xl border-white/60">
+                        <CardHeader className="pb-4 border-b border-white/50">
+                            <div className="flex items-center justify-between mb-2">
+                                <CardTitle className="text-xs font-bold uppercase tracking-[0.2em] text-slate-900">Tax Compliance</CardTitle>
+                                <Badge className="bg-emerald-100 text-emerald-700 border-emerald-200 h-7 px-3 text-[10px] uppercase font-bold tracking-widest shadow-[0_0_10px_rgba(16,185,129,0.3)]">SECURE</Badge>
+                            </div>
+                        </CardHeader>
+                        <CardContent className="space-y-6 pt-6">
+                            <div className="space-y-4 bg-white/60 p-6 rounded-2xl border border-white/50 shadow-inner">
+                                <div className="flex justify-between items-center">
+                                    <span className="text-[11px] text-slate-900/50 uppercase font-bold tracking-widest">Taxable Net</span>
+                                    <span className="font-headline text-base font-bold tabular-nums text-slate-900/90">{formatCurrency(taxableIncome)}</span>
+                                </div>
+                                <Separator className="bg-white/70" />
+                                <div className="flex flex-col items-center py-6 text-center">
+                                    <p className="text-[10px] font-bold uppercase tracking-[0.3em] text-slate-900/50 mb-4">Estimated Liability (FY26-27)</p>
+                                    <p className="text-4xl md:text-5xl font-headline font-bold tracking-tighter tabular-nums text-slate-900 ">{formatCurrency(estimatedTax)}</p>
+                                    <p className="text-[9px] text-slate-900/70 mt-8 font-bold uppercase tracking-[0.2em] bg-white/70 px-4 py-2 rounded-full border border-white/60 shadow-sm text-center">Auto-calculated • Ready for e-filing</p>
+                                </div>
+                            </div>
+                            <Button className="w-full h-14 rounded-2xl font-bold uppercase tracking-[0.2em] text-[11px] bg-slate-900 text-white hover:bg-slate-800 border-none shadow-xl transition-all">
+                                Authorize Settlement <ArrowRight className="ml-2 h-4 w-4" />
+                            </Button>
+                        </CardContent>
+                    </Card>
                 </div>
             </div>
-            <div className="lg:col-span-5">
-                <Card className="bg-secondary/30 border-primary/20 h-fit sticky top-24">
-                    <CardHeader className="pb-4">
-                        <div className="flex items-center justify-between mb-2">
-                            <CardTitle className="text-sm font-black uppercase tracking-institutional">Tax Compliance</CardTitle>
-                            <Badge className="bg-green-500/10 text-green-400 border-green-500/30 h-6 px-3 text-[10px] uppercase font-black tracking-widest">SECURE</Badge>
-                        </div>
-                    </CardHeader>
-                    <CardContent className="space-y-6">
-                        <div className="space-y-4 bg-background/40 p-5 rounded-md border border-border/30">
-                            <div className="flex justify-between items-center text-xs">
-                                <span className="text-muted-foreground uppercase font-black tracking-widest opacity-60">Taxable Net</span>
-                                <span className="font-mono font-black tabular-nums">{formatCurrency(taxableIncome)}</span>
-                            </div>
-                             <Separator className="bg-border/30" />
-                             <div className="flex flex-col items-center py-6 text-center">
-                                <p className="text-[10px] font-black uppercase tracking-sovereign text-primary mb-3">Estimated Liability (FY26-27)</p>
-                                <p className="text-5xl font-black font-mono tracking-tighter tabular-nums text-primary">{formatCurrency(estimatedTax)}</p>
-                                <p className="text-[9px] text-muted-foreground mt-6 font-bold uppercase tracking-institutional italic">Institutional assessment — No filing required</p>
-                            </div>
-                        </div>
-                        <Button className="w-full h-11 font-black uppercase tracking-institutional text-[11px] group shadow-xl shadow-primary/10">
-                            Authorize Settlement <ArrowRight className="ml-2 h-4 w-4 transition-transform group-hover:translate-x-1" />
-                        </Button>
-                    </CardContent>
-                </Card>
-            </div>
-        </div>
-      </CardContent>
-    </Card>
+            </CardContent>
+        </Card>
+      </div>
+    </div>
   );
 }

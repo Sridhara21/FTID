@@ -1,239 +1,254 @@
-
-
 "use client";
 
-import { Card, CardContent, CardHeader, CardTitle, CardDescription } from "@/components/ui/card";
-import {
-  ChartContainer,
-  ChartTooltip,
-  ChartTooltipContent,
-} from "@/components/ui/chart";
-import { flowScoreData } from "@/lib/placeholder-data";
-import { Lightbulb, HeartPulse, TrendingUp, CheckCircle, HelpCircle } from "lucide-react";
-import { Label, Pie, PieChart, Cell, LineChart, Line, XAxis, YAxis, Tooltip, ResponsiveContainer, CartesianGrid } from "recharts";
-import {
-    Table,
-    TableBody,
-    TableCell,
-    TableHead,
-    TableHeader,
-    TableRow,
-} from "@/components/ui/table";
-import { Badge } from "@/components/ui/badge";
-import {
-  Tooltip as ShadTooltip,
-  TooltipContent,
-  TooltipProvider,
-  TooltipTrigger,
-} from "@/components/ui/tooltip"
+import { useState } from "react";
+import { HeartPulse, TrendingUp, Activity, CheckCircle2, ShieldCheck, FileText, AlertTriangle, ShieldAlert } from "lucide-react";
+import { Card, CardHeader, CardTitle, CardContent } from "@/components/ui/card";
+import { AreaChart, Area, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer } from "recharts";
 
-const chartData = [{ value: flowScoreData.score }];
-const chartConfig = {
-  score: {
-    label: "Score",
-    color: "hsl(var(--primary))",
-  },
-};
-const maxScore = 900;
+const creditHistory = [
+  { month: 'Jan', score: 720 },
+  { month: 'Feb', score: 725 },
+  { month: 'Mar', score: 740 },
+  { month: 'Apr', score: 745 },
+  { month: 'May', score: 735 },
+  { month: 'Jun', score: 780 },
+];
 
-const historyChartConfig = {
-  score: {
-    label: "Score",
-    color: "hsl(var(--primary))",
-  },
-};
+export default function CitizenCreditScore() {
+  // Simulator States
+  const [utilization, setUtilization] = useState(12);
+  const [paymentOnTime, setPaymentOnTime] = useState(100);
+  
+  // Checklist States
+  const [task1, setTask1] = useState(false);
+  const [task2, setTask2] = useState(false);
+  const [task3, setTask3] = useState(false);
 
-export default function CreditScorePage() {
-    const score = chartData[0].value;
-    const rating = flowScoreData.rating;
+  // Recalculate credit score based on inputs
+  const getSimulatedScore = () => {
+    let score = 750;
+    
+    // Utilization effect (optimal is <30%, high utilization hurts score)
+    if (utilization > 30) {
+      score -= Math.round((utilization - 30) * 1.5);
+    } else {
+      score += Math.round((30 - utilization) * 0.8);
+    }
 
-    return (
-        <div className="grid gap-6 md:gap-8">
-            <div className="flex flex-col gap-2">
-                 <div className="flex items-center gap-2">
-                    <h1 className="text-3xl font-bold tracking-tight">FTID Flow Score</h1>
-                     <TooltipProvider>
-                        <ShadTooltip>
-                            <TooltipTrigger>
-                                <HelpCircle className="h-5 w-5 text-muted-foreground" />
-                            </TooltipTrigger>
-                            <TooltipContent>
-                                <p className="max-w-xs">The FTID Flow Score is a dynamic measure of financial reliability based on real-time cash flow analysis, not just past credit history. It enables more accurate and fair underwriting.</p>
-                            </TooltipContent>
-                        </ShadTooltip>
-                    </TooltipProvider>
-                </div>
-                <p className="text-muted-foreground">
-                    A dynamic analysis of your financial reliability based on transaction flows.
-                </p>
-            </div>
-            <div className="grid grid-cols-1 lg:grid-cols-3 gap-6 lg:gap-8">
-                <div className="lg:col-span-1">
-                     <Card className="flex flex-col h-full">
-                        <CardHeader>
-                            <CardTitle className="flex items-center gap-2">
-                                <HeartPulse className="h-6 w-6 text-primary" />
-                                Current Flow Score
-                            </CardTitle>
-                        </CardHeader>
-                        <CardContent className="flex-1 flex flex-col items-center justify-center">
-                            <ChartContainer
-                            config={chartConfig}
-                            className="mx-auto aspect-square h-full max-h-[250px]"
-                            >
-                            <PieChart>
-                                <ChartTooltip
-                                cursor={false}
-                                content={<ChartTooltipContent hideLabel />}
-                                />
-                                <Pie
-                                    data={chartData}
-                                    dataKey="value"
-                                    nameKey="name"
-                                    innerRadius="70%"
-                                    outerRadius="100%"
-                                    startAngle={210}
-                                    endAngle={-30}
-                                    cy="50%"
-                                >
-                                    <Cell fill={chartConfig.score.color} />
-                                    <Cell fill="hsl(var(--muted))" />
-                                    <Label
-                                        content={({ viewBox }) => {
-                                        if (viewBox && "cx" in viewBox && "cy" in viewBox) {
-                                            return (
-                                            <>
-                                                <text
-                                                x={viewBox.cx}
-                                                y={viewBox.cy}
-                                                textAnchor="middle"
-                                                dominantBaseline="middle"
-                                                className="fill-foreground text-4xl font-bold"
-                                                >
-                                                {score.toString()}
-                                                </text>
-                                                <text
-                                                x={viewBox.cx}
-                                                y={(viewBox.cy || 0) + 20}
-                                                textAnchor="middle"
-                                                dominantBaseline="middle"
-                                                className="fill-muted-foreground text-sm"
-                                                >
-                                                {rating}
-                                                </text>
-                                            </>
-                                            );
-                                        }
-                                        }}
-                                    />
-                                </Pie>
-                                <Pie
-                                    data={[{ value: 1 }]}
-                                    dataKey="value"
-                                    stroke="none"
-                                    innerRadius="70%"
-                                    outerRadius="100%"
-                                    startAngle={210}
-                                    endAngle={210 + (300 * score) / maxScore}
-                                    cy="50%"
-                                >
-                                    <Cell fill={chartConfig.score.color} />
-                                </Pie>
-                            </PieChart>
-                            </ChartContainer>
-                            <div className="mt-4 text-center w-full">
-                                <p className="text-sm text-muted-foreground">{flowScoreData.summary}</p>
-                            </div>
-                        </CardContent>
-                    </Card>
-                </div>
-                <div className="lg:col-span-2">
-                    <Card>
-                        <CardHeader>
-                            <CardTitle className="flex items-center gap-2">
-                                <TrendingUp />
-                                Score History
-                            </CardTitle>
-                            <CardDescription>Your score trend over the last 6 months.</CardDescription>
-                        </CardHeader>
-                        <CardContent className="h-[300px]">
-                             <ChartContainer config={historyChartConfig} className="h-full w-full">
-                                <ResponsiveContainer width="100%" height="100%">
-                                    <LineChart data={flowScoreData.history} margin={{ top: 5, right: 20, left: -10, bottom: 5 }}>
-                                        <CartesianGrid strokeDasharray="3 3" vertical={false} />
-                                        <XAxis dataKey="month" stroke="hsl(var(--muted-foreground))" tickLine={false} axisLine={false}/>
-                                        <YAxis domain={['dataMin - 10', 'dataMax + 10']} stroke="hsl(var(--muted-foreground))" tickLine={false} axisLine={false}/>
-                                        <Tooltip
-                                            content={<ChartTooltipContent indicator="dot" />}
-                                            cursor={{
-                                                stroke: "hsl(var(--muted-foreground))",
-                                                strokeWidth: 1,
-                                                strokeDasharray: "3 3",
-                                            }}
-                                        />
-                                        <Line type="monotone" dataKey="score" stroke={historyChartConfig.score.color} strokeWidth={2} dot={{r: 4, fill: historyChartConfig.score.color}} activeDot={{ r: 6 }}/>
-                                    </LineChart>
-                                </ResponsiveContainer>
-                            </ChartContainer>
-                        </CardContent>
-                    </Card>
-                </div>
-            </div>
+    // Payment on time effect (100% is perfect, drops hurt heavily)
+    score += Math.round((paymentOnTime - 90) * 4);
 
-            <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 lg:gap-8">
-                 <Card>
-                    <CardHeader>
-                        <CardTitle>Flow Score Factors</CardTitle>
-                        <CardDescription>What's affecting your financial reliability score.</CardDescription>
-                    </CardHeader>
-                    <CardContent>
-                        <Table>
-                             <TableHeader>
-                                <TableRow>
-                                    <TableHead>Factor</TableHead>
-                                    <TableHead>Status</TableHead>
-                                    <TableHead>Impact</TableHead>
-                                </TableRow>
-                            </TableHeader>
-                            <TableBody>
-                                {flowScoreData.factors.map((factor) => (
-                                <TableRow key={factor.name}>
-                                    <TableCell className="font-medium flex items-center gap-2">
-                                        <factor.icon className={`h-4 w-4 ${factor.color}`} />
-                                        {factor.name}
-                                    </TableCell>
-                                    <TableCell>
-                                        <Badge variant={factor.status === 'Excellent' || factor.status === 'Good' ? 'default' : 'secondary'}
-                                            className={factor.status === 'Excellent' || factor.status === 'Good' ? 'bg-green-500/20 text-green-400 border-green-500/20' : 'bg-red-500/20 text-red-400 border-red-500/20'}
-                                        >
-                                            {factor.status}
-                                        </Badge>
-                                    </TableCell>
-                                    <TableCell>{factor.impact}</TableCell>
-                                </TableRow>
-                                ))}
-                            </TableBody>
-                        </Table>
-                    </CardContent>
-                </Card>
-                 <Card>
-                    <CardHeader>
-                        <CardTitle>Data Sources</CardTitle>
-                        <CardDescription>Data streams used for Flow Score calculation.</CardDescription>
-                    </CardHeader>
-                    <CardContent className="space-y-3">
-                        {flowScoreData.dataSources.map((source, index) => (
-                            <div key={index} className="flex items-center justify-between p-3 rounded-lg bg-secondary/50">
-                                <span className="text-sm font-medium">{source.name}</span>
-                                <div className="flex items-center gap-2 text-sm text-green-400">
-                                    <CheckCircle className="h-4 w-4" />
-                                    Verified
-                                </div>
-                            </div>
-                        ))}
-                    </CardContent>
-                </Card>
-            </div>
+    // Checklist increments
+    if (task1) score += 15;
+    if (task2) score += 10;
+    if (task3) score += 5;
+
+    return Math.min(900, Math.max(300, score));
+  };
+
+  const simulatedScore = getSimulatedScore();
+
+  return (
+    <div className="grid gap-6 md:gap-8 pb-8 pt-4 max-w-[1200px] mx-auto text-slate-100">
+      <div className="flex flex-col md:flex-row md:items-end justify-between gap-4 mb-2">
+        <div>
+          <h1 className="text-3xl font-bold tracking-tight text-white mb-2 flex items-center gap-3">
+              <HeartPulse className="h-8 w-8 text-cyan-400" />
+              Financial Health & Credit
+          </h1>
+          <p className="text-cyan-500/70 text-[10px] font-bold uppercase tracking-[0.2em]">
+            CIBIL / EQUIFAX SYNC • AI CREDIT OPTIMIZATION
+          </p>
         </div>
-    );
+        <div className="flex items-center gap-2 px-3 py-1.5 bg-[#0a1520] border border-cyan-900/50 rounded-full">
+            <ShieldCheck className="h-4 w-4 text-emerald-500/60" />
+            <span className="text-[10px] font-bold uppercase tracking-widest text-emerald-500/60">
+              Credit Profile: {simulatedScore >= 750 ? "Healthy" : simulatedScore >= 650 ? "Medium Risk" : "High Risk"}
+            </span>
+        </div>
+      </div>
+
+      {/* Top Metrics */}
+      <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+          <Card className="bg-[#0a1520] border-cyan-900/30">
+            <CardContent className="p-6">
+              <div className="flex justify-between items-start">
+                  <div>
+                      <p className="text-[10px] font-bold uppercase tracking-widest text-cyan-500/60 mb-2">Simulated Credit Score</p>
+                      <p className="text-4xl font-bold text-white mb-3">{simulatedScore}</p>
+                      <div className="flex items-center gap-2 text-[10px] font-bold tracking-wider text-emerald-400">
+                          <TrendingUp className="h-3 w-3" /> +{simulatedScore - 720} Points <span className="text-cyan-500/40 ml-1">VS BASELINE</span>
+                      </div>
+                  </div>
+                  <div className="p-3 bg-cyan-900/20 rounded-xl border border-cyan-900/50">
+                      <HeartPulse className="h-5 w-5 text-cyan-400" />
+                  </div>
+              </div>
+            </CardContent>
+          </Card>
+          
+          <Card className="bg-[#0a1520] border-cyan-900/30">
+            <CardContent className="p-6">
+              <div className="flex justify-between items-start">
+                  <div>
+                      <p className="text-[10px] font-bold uppercase tracking-widest text-cyan-500/60 mb-2">Credit Utilization</p>
+                      <p className={`text-4xl font-bold mb-3 ${utilization > 30 ? "text-rose-400" : "text-emerald-400"}`}>{utilization}%</p>
+                      <div className="flex items-center gap-2 text-[10px] font-bold tracking-wider text-emerald-400">
+                          <CheckCircle2 className="h-3 w-3" /> <span className="text-cyan-500/40 ml-1">{utilization > 30 ? "WARNING: LIMIT EXCEEDED" : "OPTIMAL RANGE (< 30%)"}</span>
+                      </div>
+                  </div>
+                  <div className="p-3 bg-cyan-900/20 rounded-xl border border-cyan-900/50">
+                      <Activity className="h-5 w-5 text-cyan-400" />
+                  </div>
+              </div>
+            </CardContent>
+          </Card>
+
+          <Card className="bg-[#0a1520] border-cyan-900/30">
+            <CardContent className="p-6">
+              <div className="flex justify-between items-start">
+                  <div>
+                      <p className="text-[10px] font-bold uppercase tracking-widest text-cyan-500/60 mb-2">On-time Payments</p>
+                      <p className="text-4xl font-bold text-white mb-3">{paymentOnTime}%</p>
+                      <div className="flex items-center gap-2 text-[10px] font-bold tracking-wider text-cyan-400">
+                          <FileText className="h-3 w-3" /> <span className="text-cyan-500/40 ml-1">RBI LEDGER RECONCILED</span>
+                      </div>
+                  </div>
+                  <div className="p-3 bg-cyan-900/20 rounded-xl border border-cyan-900/50">
+                      <FileText className="h-5 w-5 text-cyan-400" />
+                  </div>
+              </div>
+            </CardContent>
+          </Card>
+      </div>
+
+      {/* Interactive Simulator and Checklist */}
+      <div className="grid grid-cols-1 lg:grid-cols-12 gap-6">
+          <Card className="lg:col-span-6 bg-[#0a1520] border-cyan-900/30">
+            <CardHeader className="pb-2">
+                <CardTitle className="text-sm font-bold uppercase tracking-widest text-white flex items-center gap-2">
+                    <Activity className="h-4 w-4 text-cyan-500/70" /> Credit Factor Simulator Sandbox
+                </CardTitle>
+            </CardHeader>
+            <CardContent className="space-y-6 pt-4">
+                <div>
+                    <div className="flex justify-between text-xs mb-2 font-mono">
+                        <span>Simulate Credit Card Utilization</span>
+                        <span className={utilization > 30 ? "text-rose-400 font-bold" : "text-cyan-400"}>{utilization}%</span>
+                    </div>
+                    <input
+                        type="range"
+                        min="0"
+                        max="100"
+                        step="1"
+                        value={utilization}
+                        onChange={(e) => setUtilization(Number(e.target.value))}
+                        className="w-full h-1 bg-cyan-950 rounded-lg appearance-none cursor-pointer accent-cyan-500"
+                    />
+                    {utilization > 30 && (
+                        <p className="text-[10px] text-rose-400 mt-2 flex items-center gap-1"><AlertTriangle className="h-3 w-3" /> High utilization drops credit scores due to elevated leverage risk.</p>
+                    )}
+                </div>
+
+                <div>
+                    <div className="flex justify-between text-xs mb-2 font-mono">
+                        <span>Simulate On-time Payment Ratio</span>
+                        <span className={paymentOnTime < 95 ? "text-rose-400 font-bold" : "text-cyan-400"}>{paymentOnTime}%</span>
+                    </div>
+                    <input
+                        type="range"
+                        min="50"
+                        max="100"
+                        step="1"
+                        value={paymentOnTime}
+                        onChange={(e) => setPaymentOnTime(Number(e.target.value))}
+                        className="w-full h-1 bg-cyan-950 rounded-lg appearance-none cursor-pointer accent-cyan-500"
+                    />
+                    {paymentOnTime < 100 && (
+                        <p className="text-[10px] text-amber-500 mt-2 flex items-center gap-1"><ShieldAlert className="h-3 w-3" /> A single missed payment heavily impacts credit history.</p>
+                    )}
+                </div>
+            </CardContent>
+          </Card>
+
+          <Card className="lg:col-span-6 bg-[#0a1520] border-cyan-900/30">
+            <CardHeader className="pb-2">
+                <CardTitle className="text-sm font-bold uppercase tracking-widest text-white flex items-center gap-2">
+                    <CheckCircle2 className="h-4 w-4 text-cyan-500/70" /> AI Credit Builder Planner
+                </CardTitle>
+            </CardHeader>
+            <CardContent className="space-y-4 pt-4 text-xs">
+                <div className="flex items-center justify-between p-3 bg-[#020810] border border-cyan-900/30 rounded-lg">
+                    <div className="flex flex-col gap-0.5">
+                        <span className="font-bold text-white">Pay off active card balance</span>
+                        <span className="text-[9px] text-cyan-500/60 uppercase tracking-widest">+15 Points Potential</span>
+                    </div>
+                    <input
+                        type="checkbox"
+                        checked={task1}
+                        onChange={() => setTask1(!task1)}
+                        className="w-4 h-4 rounded text-cyan-600 bg-cyan-950 border-cyan-900 focus:ring-cyan-500 focus:ring-2 accent-cyan-500"
+                    />
+                </div>
+
+                <div className="flex items-center justify-between p-3 bg-[#020810] border border-cyan-900/30 rounded-lg">
+                    <div className="flex flex-col gap-0.5">
+                        <span className="font-bold text-white">Link utility autopay to FTID Ledger</span>
+                        <span className="text-[9px] text-cyan-500/60 uppercase tracking-widest">+10 Points Potential</span>
+                    </div>
+                    <input
+                        type="checkbox"
+                        checked={task2}
+                        onChange={() => setTask2(!task2)}
+                        className="w-4 h-4 rounded text-cyan-600 bg-cyan-950 border-cyan-900 focus:ring-cyan-500 focus:ring-2 accent-cyan-500"
+                    />
+                </div>
+
+                <div className="flex items-center justify-between p-3 bg-[#020810] border border-cyan-900/30 rounded-lg">
+                    <div className="flex flex-col gap-0.5">
+                        <span className="font-bold text-white">Request HDFC credit limit increase</span>
+                        <span className="text-[9px] text-cyan-500/60 uppercase tracking-widest">+5 Points Potential</span>
+                    </div>
+                    <input
+                        type="checkbox"
+                        checked={task3}
+                        onChange={() => setTask3(!task3)}
+                        className="w-4 h-4 rounded text-cyan-600 bg-cyan-950 border-cyan-900 focus:ring-cyan-500 focus:ring-2 accent-cyan-500"
+                    />
+                </div>
+            </CardContent>
+          </Card>
+      </div>
+
+      {/* Credit Trajectory */}
+      <Card className="bg-[#0a1520] border-cyan-900/30 mt-6 h-[350px]">
+        <CardHeader className="flex flex-row items-center justify-between pb-2">
+            <div>
+                <CardTitle className="text-lg flex items-center gap-2 text-white">
+                    <TrendingUp className="h-5 w-5 text-cyan-500/70" /> Credit Score Trajectory
+                </CardTitle>
+                <p className="text-xs text-cyan-100/50">Aggregated from 4 primary bureaus via Account Aggregator.</p>
+            </div>
+        </CardHeader>
+        <CardContent className="h-[230px]">
+            <ResponsiveContainer width="100%" height="100%">
+                <AreaChart data={creditHistory} margin={{ top: 20, right: 0, left: -20, bottom: 0 }}>
+                    <defs>
+                        <linearGradient id="colorScore" x1="0" y1="0" x2="0" y2="1">
+                            <stop offset="5%" stopColor="#06b6d4" stopOpacity={0.3}/>
+                            <stop offset="95%" stopColor="#06b6d4" stopOpacity={0}/>
+                        </linearGradient>
+                    </defs>
+                    <CartesianGrid strokeDasharray="3 3" stroke="#164e63" vertical={false} />
+                    <XAxis dataKey="month" stroke="#06b6d4" fontSize={12} tickLine={false} axisLine={false} />
+                    <YAxis domain={[600, 900]} stroke="#06b6d4" fontSize={12} tickLine={false} axisLine={false} />
+                    <Tooltip cursor={{stroke: '#164e63'}} contentStyle={{backgroundColor: '#020810', borderColor: '#164e63'}} />
+                    <Area type="monotone" dataKey="score" name="Credit Score" stroke="#06b6d4" strokeWidth={3} fillOpacity={1} fill="url(#colorScore)" />
+                </AreaChart>
+            </ResponsiveContainer>
+        </CardContent>
+      </Card>
+    </div>
+  );
 }
+

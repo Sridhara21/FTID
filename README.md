@@ -15,69 +15,13 @@ git remote add origin git@github.com:Sridhara21/II2026-FTID.git
 git push -u origin main
 ```
 
-## The 8-Portal Ecosystem
-
-The FTID ecosystem is a massive, interconnected intelligence network consisting of 8 distinct portals, all with a unified UI:
-
-### 1. Citizen Portal (`/citizen`)
-- **Control Center:** Overview of personal finance.
-- **Identity Hub:** Verified sovereign identity.
-- **Advanced Consent Manager:** Granular control over data sharing.
-- **CBDC Wallet:** Secure digital wallet for e-Rupee transactions.
-- **Investments & Portfolio:** Personal investment tracking.
-- **Financial Health Engine:** Personal credit scoring and well-being.
-- **Tax & Compliance:** Real-time tax estimation and compliance.
-- **Subsidies & Welfare:** DBTs and welfare tracking.
-- **Personal Balance Sheet:** Comprehensive view of personal net worth.
-
-### 2. Government Portal (`/government`)
-- **National Economic Observatory:** Real-time macroeconomic heatmaps and sectoral performance.
-- **Subsidy Intelligence:** End-to-end tracking of welfare disbursements and leakage detection.
-- **Informal Economy Analysis:** AI-driven estimation of unorganized sector activity and tax gap.
-- **Policy Simulation Hub:** Test macroeconomic changes and visualize economic impact before deployment.
-- **Registry Audit:** Master registry records.
-- **GDP Tracking & Revenue:** Real-time macro indicators derived from aggregated transaction flows.
-- **Fraud Heatmaps & System Architecture:** Top-level oversight of national infrastructure.
-
-### 3. Regulator Portal (`/regulator`)
-- **Regulator Core:** National Macro-Financial Intelligence Terminal.
-- **National Financial Graph:** Citizen-business-bank maps and shell entity clustering.
-- **Early Warning System (EWS):** Predictive alerts for fraud outbreaks and liquidity collapse.
-- **Systemic Risk Observatory:** Contagion analysis and macro-financial stability monitoring.
-- **Financial Trust Index:** National aggregate trust metric and institutional compliance scoring.
-- **AML Intelligence Layer:** Layering detection and chain tracing engine.
-
-### 4. Enterprise Hub (`/business`)
-- **Enterprise Command Center:** Corporate overview.
-- **Vendor Intelligence Network:** AI-driven vendor risk scoring and supply chain mapping.
-- **AI Cashflow Engine:** Predictive liquidity and treasury management.
-- **Invoice Intelligence:** Automated invoice factoring and fraud detection.
-- **Supply Chain Intelligence:** End-to-end logistics tracking.
-- **Compliance Risk Engine:** Corporate governance and regulatory standing.
-
-### 5. Institution Hub (`/institution`)
-- **Banking & Underwriting Control:** Macro-level operations.
-- **Smart Underwriting Engine:** Real-time loan approvals powered by AI.
-- **Portfolio Risk Observatory:** Macro-level lending risk monitoring.
-- **Institutional Fraud Shield:** Bank-level AML and transaction filtering.
-
-### 6. Gateway Node (`/gateway`)
-- **National Settlement Infrastructure:** Main gateway control.
-- **CBDC Settlement Layer:** Programmable fiat and atomic settlements.
-- **Velocity Monitoring Engine:** Real-time capital flow tracking.
-- **AML Interceptor:** Cross-border transaction firewall.
-
-### 7. Audit Terminal (`/auditor`)
-- **RegTech Verification Hub:** Central audit dashboard.
-- **AI Audit Copilot:** Automated ledger anomaly detection.
-- **Immutable Ledger Verification:** Cryptographic proof of reserves.
-- **Audit Risk Engine:** Automated sampling and risk identification.
-
-### 8. Developer Hub (`/developer`)
-- **Developer Command Center:** Core dev environment.
-- **API Marketplace:** Integrate national financial primitives.
-- **Sandbox Simulator:** Test applications against mock networks.
-- **SDK Hub:** Libraries and tools for FTID integration.
+## Core Features
+- **Citizen FTID Wallet**: Secure digital wallet for managing CBDC (e-Rupee) transactions.
+- **Dual-Party Logging**: Verified transaction flows between citizens and government entities.
+- **AI Financial Advisor**: Personalized budgeting and savings tips based on transaction history.
+- **Auto-Tax Calculator**: Real-time tax estimation using FY 2026-27 New Tax Regime logic.
+- **Sovereign GDP Tracking**: Real-time macro indicators derived from aggregated transaction flows.
+- **Identity Hub**: Verified sovereign identity and institutional KYC management.
 
 ## UI Principles
 - **Institutional Tone**: Deep Navy (#070E1A) background with Sky Blue (#67B9FF) primary accents.

@@ -1,43 +1,78 @@
 'use client';
 
+// Completely mocked authentication to avoid Supabase "Failed to fetch" errors
+// We use localStorage to persist a mock session.
+
 type User = { uid: string; email?: string };
+
 let currentUser: User | null = null;
-const listeners: ((u: User | null) => void)[] = [];
+let listeners: Array<(u: User | null) => void> = [];
+
+export const mockAuth = {
+    get currentUser(): User | null { return currentUser; }
+};
+
+const persistSession = (user: User | null) => {
+    currentUser = user;
+    if (typeof window !== 'undefined') {
+        if (user) {
+            localStorage.setItem('ftid_mock_auth', JSON.stringify(user));
+        } else {
+            localStorage.removeItem('ftid_mock_auth');
+        }
+    }
+    listeners.forEach(cb => cb(user));
+};
+
+const loadSession = () => {
+    if (typeof window !== 'undefined') {
+        const stored = localStorage.getItem('ftid_mock_auth');
+        if (stored) {
+            try {
+                currentUser = JSON.parse(stored);
+            } catch (e) {
+                currentUser = null;
+            }
+        }
+    }
+    return currentUser;
+};
+
+// Initialize
+loadSession();
 
 export const onAuthStateChanged = (auth: any, cb: (u: User | null) => void, errorCb?: (e: any) => void) => {
   listeners.push(cb);
-  cb(currentUser);
+  
+  // Return current state immediately
+  setTimeout(() => cb(currentUser), 0);
+
   return () => {
-    const i = listeners.indexOf(cb);
-    if (i >= 0) listeners.splice(i, 1);
+    listeners = listeners.filter(l => l !== cb);
   };
 };
 
-const notify = () => listeners.forEach((c) => c(currentUser));
-
 export const signInAnonymously = async (auth: any) => {
-  currentUser = { uid: crypto.randomUUID() };
-  notify();
-  return { user: currentUser };
+  const user = { uid: `mock-anon-${Math.floor(Math.random() * 10000)}` };
+  persistSession(user);
+  return { user };
 };
 
 export const signInWithEmail = async (auth: any, email: string, password?: string) => {
-  currentUser = { uid: crypto.randomUUID(), email };
-  notify();
-  return { user: currentUser };
+  const emailToUse = email.includes('@') ? email : `${email}@ftid.local`;
+  // Mock successful sign in
+  const user = { uid: `mock-user-${Date.now()}`, email: emailToUse };
+  persistSession(user);
+  return { user };
+};
+
+export const signUpWithEmail = async (auth: any, email: string, password?: string) => {
+  const emailToUse = email.includes('@') ? email : `${email}@ftid.local`;
+  const user = { uid: `mock-new-user-${Date.now()}`, email: emailToUse };
+  persistSession(user);
+  return { user };
 };
 
 export const signOut = async (auth: any) => {
-  currentUser = null;
-  notify();
+  persistSession(null);
 };
-
-export const getCurrentUser = () => currentUser;
-
-// Mock Auth object
-export const mockAuth = {
-    currentUser: null as User | null
-};
-
-// Keep it updated
-onAuthStateChanged(mockAuth, (u) => { mockAuth.currentUser = u; });

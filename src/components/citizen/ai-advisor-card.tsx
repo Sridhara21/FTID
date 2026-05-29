@@ -1,9 +1,6 @@
 "use client";
 
 import { useState } from "react";
-import { useForm } from "react-hook-form";
-import { zodResolver } from "@hookform/resolvers/zod";
-import * as z from "zod";
 import {
   Card,
   CardContent,
@@ -12,130 +9,116 @@ import {
   CardTitle,
 } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
-import { Input } from "@/components/ui/input";
-import {
-  Form,
-  FormControl,
-  FormField,
-  FormItem,
-  FormLabel,
-  FormMessage,
-} from "@/components/ui/form";
-import { getFinancialAdvice, FinancialAdviceOutput } from "@/ai/flows/ai-financial-advisor-citizen";
-import { Bot, Loader2, PiggyBank, Wallet } from "lucide-react";
-import { Separator } from "@/components/ui/separator";
-import { transactions } from "@/lib/placeholder-data";
-import { Skeleton } from "@/components/ui/skeleton";
-
-const formSchema = z.object({
-  income: z.coerce.number().positive("Income must be a positive number."),
-  expenses: z.coerce.number().positive("Expenses must be a positive number."),
-});
+import { Bot, Loader2, Sparkles, ShieldAlert, GlobeLock, ArrowRight } from "lucide-react";
+import { useCitizen } from "@/hooks/use-citizen";
+import { useToast } from "@/hooks/use-toast";
 
 export function AiAdvisorCard() {
-  const [advice, setAdvice] = useState<FinancialAdviceOutput | null>(null);
-  const [isLoading, setIsLoading] = useState(false);
+  const [isScanning, setIsScanning] = useState(false);
+  const [loopholesFound, setLoopholesFound] = useState(false);
+  const [isExecuting, setIsExecuting] = useState(false);
+  
+  const { citizenData } = useCitizen();
+  const { toast } = useToast();
 
-  const form = useForm<z.infer<typeof formSchema>>({
-    resolver: zodResolver(formSchema),
-    defaultValues: {
-      income: 50000,
-      expenses: 35000,
-    },
-  });
+  const isElite = citizenData?.tier === 'Black';
 
-  async function onSubmit(values: z.infer<typeof formSchema>) {
-    setIsLoading(true);
-    setAdvice(null);
-    try {
-      const result = await getFinancialAdvice({
-        ...values,
-        transactionHistory: JSON.stringify(transactions),
+  async function handleScan() {
+    setIsScanning(true);
+    setLoopholesFound(false);
+    
+    // Simulate deep scanning of global jurisdictions
+    setTimeout(() => {
+      setIsScanning(false);
+      setLoopholesFound(true);
+      toast({
+        title: "Jurisdictional Scan Complete",
+        description: "3 Tax Loopholes identified in Cayman and Swiss nodes.",
       });
-      setAdvice(result);
-    } catch (error) {
-        // Handled centrally
-    }
-    setIsLoading(false);
+    }, 2500);
+  }
+
+  async function handleExecute() {
+    setIsExecuting(true);
+    setTimeout(() => {
+      setIsExecuting(false);
+      setLoopholesFound(false);
+      toast({
+        title: "Smart Contract Executed",
+        description: "₹1,450,000 legally shielded via Sovereign Route 7.",
+      });
+    }, 2000);
   }
 
   return (
-    <Card className="flex flex-col h-full border-primary/20">
-      <CardHeader className="pb-4">
-        <CardTitle className="flex items-center gap-2 text-lg">
-          <Bot className="h-5 w-5 text-primary" />
-          AI Financial Advisor
+    <Card className={`flex flex-col h-full border-primary/20 shadow-[0_0_15px_rgba(var(--primary),0.05)] glass-panel relative overflow-hidden ${isScanning ? 'cyber-scanner' : ''}`}>
+      <div className="absolute top-0 right-0 w-32 h-32 bg-primary/10 rounded-full blur-3xl -mr-16 -mt-16 pointer-events-none"></div>
+      <CardHeader className="pb-4 border-b border-primary/10">
+        <CardTitle className="flex items-center gap-2 text-lg text-primary uppercase font-black tracking-institutional">
+          <Bot className="h-5 w-5" />
+          Autonomous Tax Loophole AI
         </CardTitle>
-        <CardDescription className="text-xs uppercase tracking-wider font-bold">
-          Flow-Based Intelligent Advice
+        <CardDescription className="text-[10px] uppercase tracking-widest font-bold text-primary/70">
+          Global Jurisdictional Arbitrage Agent
         </CardDescription>
       </CardHeader>
-      <Form {...form}>
-        <form onSubmit={form.handleSubmit(onSubmit)}>
-          <CardContent className="space-y-4">
-            <div className="grid grid-cols-2 gap-4">
-              <FormField
-                control={form.control}
-                name="income"
-                render={({ field }) => (
-                  <FormItem>
-                    <FormLabel className="text-[10px] font-bold uppercase tracking-widest text-muted-foreground">Monthly Income</FormLabel>
-                    <FormControl>
-                      <Input type="number" className="h-8 font-mono text-xs tabular-nums" {...field} />
-                    </FormControl>
-                    <FormMessage />
-                  </FormItem>
-                )}
-              />
-              <FormField
-                control={form.control}
-                name="expenses"
-                render={({ field }) => (
-                  <FormItem>
-                    <FormLabel className="text-[10px] font-bold uppercase tracking-widest text-muted-foreground">Monthly Expenses</FormLabel>
-                    <FormControl>
-                      <Input type="number" className="h-8 font-mono text-xs tabular-nums" {...field} />
-                    </FormControl>
-                    <FormMessage />
-                  </FormItem>
-                )}
-              />
+      
+      <CardContent className="space-y-4 pt-6 flex-grow flex flex-col">
+        {!loopholesFound && !isScanning && (
+          <div className="text-center py-4 space-y-6 flex-grow flex flex-col justify-center">
+            <div className="mx-auto w-16 h-16 rounded-full bg-primary/10 flex items-center justify-center border border-primary/30 relative">
+               <div className="absolute inset-0 rounded-full border-2 border-primary/50 animate-ping"></div>
+               <Sparkles className="h-8 w-8 text-primary" />
             </div>
-             <Button type="submit" disabled={isLoading} className="w-full h-9 font-bold uppercase tracking-widest text-[11px]">
-              {isLoading ? (
-                <>
-                  <Loader2 className="mr-2 h-3 w-3 animate-spin" />
-                  Generating...
-                </>
-              ) : (
-                "Request AI Advice"
-              )}
+            <div className="space-y-2">
+                <p className="text-sm font-black uppercase text-primary tracking-widest">Awaiting Command</p>
+                <p className="text-[10px] text-muted-foreground font-mono px-4">
+                  Deploy AI Agent to scan 194 global tax codes for legal evasion vectors and automated offshore routing.
+                </p>
+            </div>
+            <Button onClick={handleScan} disabled={!isElite} className="w-full h-11 font-black uppercase tracking-institutional text-[11px] bg-primary text-white hover:bg-primary/90 shadow-[0_0_20px_rgba(255,215,0,0.3)]">
+              {isElite ? "Initialize Global Scan" : "FTID Black Required"}
             </Button>
-            
-            {(isLoading || advice) && <Separator />}
+          </div>
+        )}
 
-            {isLoading && (
-              <div className="space-y-4 pt-4">
-                <Skeleton className="h-12 w-full" />
-                <Skeleton className="h-12 w-full" />
+        {isScanning && (
+          <div className="space-y-6 py-8 text-center flex-grow flex flex-col justify-center">
+            <div className="relative mx-auto w-16 h-16">
+              <Loader2 className="absolute inset-0 h-16 w-16 animate-spin text-primary opacity-20" />
+              <GlobeLock className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 h-8 w-8 text-primary animate-pulse" />
+            </div>
+            <div className="space-y-2">
+                <p className="text-xs font-black uppercase text-primary tracking-widest animate-pulse">Scanning Jurisdictions</p>
+                <p className="text-[10px] font-mono text-muted-foreground uppercase tracking-widest">Analyzing Cayman Islands corporate tax code sec 4.2...</p>
+            </div>
+          </div>
+        )}
+        
+        {loopholesFound && !isScanning && (
+          <div className="space-y-4 text-xs flex-grow flex flex-col">
+            <div className="p-4 bg-secondary/30 backdrop-blur-sm rounded-xl border border-primary/30 shadow-sm relative overflow-hidden group">
+              <h3 className="font-black flex items-center gap-2 mb-2 uppercase tracking-widest text-primary">
+                <ShieldAlert className="h-4 w-4" /> Vector 1: Swiss Node Arbitrage
+              </h3>
+              <p className="text-muted-foreground font-mono text-[10px] mb-3">By routing ₹1,450,000 through a temporary Geneva corporate shell, you can legally bypass the upcoming 12% domestic flow tax.</p>
+              <div className="flex justify-between items-center bg-slate-50/50 p-2 rounded border border-border/50">
+                  <span className="text-[9px] uppercase tracking-widest font-bold">Projected Savings</span>
+                  <span className="text-green-400 font-mono font-black">+₹174,000</span>
               </div>
-            )}
+            </div>
             
-            {advice && (
-              <div className="space-y-4 text-xs pt-4">
-                <div className="p-3 bg-secondary/30 rounded-md border border-border/30">
-                  <h3 className="font-bold flex items-center gap-2 mb-1 uppercase tracking-widest text-primary"><Wallet className="h-3 w-3" /> Budgeting</h3>
-                  <p className="text-muted-foreground leading-relaxed">{advice.budgetingAdvice}</p>
-                </div>
-                <div className="p-3 bg-secondary/30 rounded-md border border-border/30">
-                  <h3 className="font-bold flex items-center gap-2 mb-1 uppercase tracking-widest text-primary"><PiggyBank className="h-3 w-3" /> Savings</h3>
-                  <p className="text-muted-foreground leading-relaxed">{advice.savingsTips}</p>
-                </div>
-              </div>
-            )}
-          </CardContent>
-        </form>
-      </Form>
+            <div className="mt-auto space-y-2 pt-4">
+                <Button onClick={handleExecute} disabled={isExecuting} className="w-full h-11 bg-primary hover:bg-primary/90 text-white font-black uppercase tracking-institutional text-[11px]">
+                {isExecuting ? <Loader2 className="h-4 w-4 animate-spin" /> : <><ArrowRight className="h-4 w-4 mr-2" /> Execute Smart Contract</>}
+                </Button>
+                <Button onClick={() => setLoopholesFound(false)} variant="ghost" className="w-full h-8 text-[9px] uppercase tracking-widest text-muted-foreground hover:text-primary">
+                Abort
+                </Button>
+            </div>
+          </div>
+        )}
+      </CardContent>
     </Card>
   );
 }
