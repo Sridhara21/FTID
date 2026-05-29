@@ -1,215 +1,97 @@
+
 "use client";
+import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import { ShieldAlert, Activity, Target, Network, AlertTriangle, BrainCircuit, ShieldCheck, TrendingUp, BarChart3, Fingerprint, Lock, Zap } from "lucide-react";
+import { AIPulseIntelligence } from "@/components/shared/observability/AIPulseIntelligence";
+import { TrustScoreWidget } from "@/components/shared/observability/TrustScoreWidget";
+import { LiveTransactionStream } from "@/components/shared/observability/LiveTransactionStream";
+import { FinancialNetworkGraph } from "@/components/shared/observability/FinancialNetworkGraph";
+import { BottomIntelligenceRibbon } from "@/components/shared/observability/BottomIntelligenceRibbon";
 
-import { Card, CardContent, CardHeader, CardTitle, CardDescription } from "@/components/ui/card";
-import { AlertTriangle, Globe, Network, Waves, Link, Activity, Play, Zap, ShieldAlert } from "lucide-react";
-import { Badge } from "@/components/ui/badge";
-import { Button } from "@/components/ui/button";
-import { Progress } from "@/components/ui/progress";
-import { useState, useEffect } from "react";
 
-export default function SystemicRiskPage() {
-  const [simulationActive, setSimulationActive] = useState(false);
-  const [shockWave, setShockWave] = useState(0);
-
-  useEffect(() => {
-    let interval: NodeJS.Timeout;
-    if (simulationActive) {
-      interval = setInterval(() => {
-        setShockWave(prev => (prev + 1) % 4);
-      }, 1000);
-    }
-    return () => clearInterval(interval);
-  }, [simulationActive]);
-
+export default function RegulatorsystemicriskPage() {
   return (
-    <div className="flex flex-col gap-6 animate-in fade-in duration-500 pb-10">
-      <div className="flex items-center justify-between">
-        <div>
-          <h1 className="text-3xl font-black tracking-tight text-primary uppercase">Systemic Risk</h1>
-          <p className="text-muted-foreground font-medium tracking-widest uppercase text-xs mt-1 flex items-center gap-2">
-            <ShieldAlert className="h-4 w-4 text-primary" /> Macro-Financial Stability Observatory
-          </p>
-        </div>
-        <Button 
-            variant={simulationActive ? "destructive" : "outline"} 
-            className={`gap-2 uppercase tracking-widest text-[10px] font-bold ${simulationActive ? 'animate-pulse' : 'border-primary/20 text-primary'}`}
-            onClick={() => setSimulationActive(!simulationActive)}
-        >
-          {simulationActive ? <Zap className="h-4 w-4" /> : <Play className="h-4 w-4" />}
-          {simulationActive ? 'Halt Simulation' : 'Run Shock Simulation'}
-        </Button>
-      </div>
-
-      <div className="grid gap-4 md:grid-cols-3">
-        <Card className="border-border/50 bg-secondary/10">
-          <CardHeader className="flex flex-row items-center justify-between pb-2">
-            <CardTitle className="text-[10px] font-black uppercase tracking-widest text-muted-foreground">National Contagion Risk</CardTitle>
-            <Activity className="h-4 w-4 text-primary" />
-          </CardHeader>
-          <CardContent>
-            <div className={`text-3xl font-mono font-black tabular-nums tracking-tighter ${simulationActive ? 'text-red-500' : 'text-green-500'}`}>
-                {simulationActive ? '42.8%' : '12.4%'}
+    <div className="min-h-screen bg-[#020810] text-slate-200 pb-20 relative overflow-hidden">
+      {/* Dynamic Backgrounds */}
+      <div className="absolute top-0 right-0 w-[500px] h-[500px] bg-cyan-900/10 blur-[120px] rounded-full pointer-events-none z-0"></div>
+      
+      <div className="max-w-7xl mx-auto p-6 relative z-10 space-y-6">
+        
+        {/* Header Section */}
+        <header className="flex flex-col md:flex-row md:items-end justify-between gap-4 border-b border-cyan-900/40 pb-6">
+          <div>
+            <div className="flex items-center gap-2 mb-2">
+              <span className="px-2 py-1 bg-cyan-900/30 text-cyan-400 text-[10px] font-bold tracking-widest uppercase rounded">
+                REGULATOR INFRASTRUCTURE
+              </span>
+              <span className="flex items-center gap-1 text-[10px] font-bold text-emerald-500 uppercase tracking-widest animate-pulse">
+                <div className="w-1.5 h-1.5 rounded-full bg-emerald-500"></div>
+                Live Node
+              </span>
             </div>
-            <Progress value={simulationActive ? 42.8 : 12.4} className={`h-1 mt-2 ${simulationActive ? '[&>div]:bg-red-500' : '[&>div]:bg-green-500'}`} />
-          </CardContent>
-        </Card>
-
-        <Card className="border-border/50 bg-secondary/10">
-          <CardHeader className="flex flex-row items-center justify-between pb-2">
-            <CardTitle className="text-[10px] font-black uppercase tracking-widest text-muted-foreground">Shadow Banking Exposure</CardTitle>
-            <Link className="h-4 w-4 text-orange-500" />
-          </CardHeader>
-          <CardContent>
-            <div className={`text-3xl font-mono font-black tabular-nums tracking-tighter ${simulationActive ? 'text-orange-500' : 'text-primary'}`}>
-                {simulationActive ? '₹8.4T' : '₹2.1T'}
-            </div>
-             <p className="text-[10px] text-muted-foreground font-bold uppercase tracking-widest mt-1">
-              Estimated interconnectedness
+            <h1 className="text-3xl font-black text-white tracking-tight">Systemic Risk Contagion Modeling</h1>
+            <p className="text-sm text-cyan-100/60 mt-2 max-w-2xl">
+              Advanced observability module rendering real-time telemetry for: <span className="text-cyan-400 font-medium">contagion simulation, sector interconnectedness</span>.
             </p>
-          </CardContent>
-        </Card>
+          </div>
+        </header>
 
-        <Card className="border-border/50 bg-secondary/10">
-          <CardHeader className="flex flex-row items-center justify-between pb-2">
-            <CardTitle className="text-[10px] font-black uppercase tracking-widest text-muted-foreground">Liquidity Chain Integrity</CardTitle>
-            <Waves className="h-4 w-4 text-blue-500" />
-          </CardHeader>
-          <CardContent>
-             <div className={`text-3xl font-mono font-black tabular-nums tracking-tighter ${simulationActive ? 'text-yellow-500' : 'text-blue-500'}`}>
-                {simulationActive ? 'Degraded' : 'Nominal'}
-            </div>
-            <p className="text-[10px] text-muted-foreground font-bold uppercase tracking-widest mt-1">
-              Interbank lending flow
-            </p>
-          </CardContent>
-        </Card>
-      </div>
-
-      <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
-        {/* Contagion Simulation Engine / Graph */}
-        <Card className="lg:col-span-2 border-primary/20 bg-card/40 flex flex-col h-[500px]">
-          <CardHeader className="pb-2 border-b border-white/5 flex flex-row items-center justify-between">
-            <CardTitle className="text-xs font-black uppercase tracking-widest flex items-center gap-2">
-              <Network className="h-4 w-4 text-primary" /> Sectoral Interconnectedness & Shock Propagation
-            </CardTitle>
-             {simulationActive && (
-                 <Badge variant="destructive" className="animate-pulse text-[9px] uppercase font-mono">
-                     Simulating 40% Housing Crash
-                 </Badge>
-             )}
-          </CardHeader>
-          <CardContent className="flex-1 relative overflow-hidden bg-[radial-gradient(ellipse_at_center,_var(--tw-gradient-stops))] from-primary/5 via-background to-background p-0">
-            <div className="absolute inset-0 flex items-center justify-center p-8">
-               {/* Core Node: Real Estate */}
-               <div className="absolute top-[40%] left-[30%] flex flex-col items-center z-20">
-                   <div className={`w-16 h-16 rounded-full border-4 flex items-center justify-center relative shadow-[0_0_20px_rgba(0,0,0,0.5)] transition-colors duration-500
-                       ${simulationActive ? 'border-red-500 bg-red-500/20 shadow-red-500/50 animate-pulse' : 'border-orange-500 bg-orange-500/20 shadow-orange-500/20'}`}>
-                       <span className="font-bold text-xs uppercase tracking-widest">REAL</span>
-                   </div>
-                   {simulationActive && shockWave > 0 && <div className="absolute inset-0 border-2 border-red-500 rounded-full animate-ping opacity-50"></div>}
-               </div>
-
-               {/* Connected Node: NBFCs */}
-               <div className="absolute top-[30%] left-[60%] flex flex-col items-center z-20">
-                   <div className={`w-14 h-14 rounded-full border-4 flex items-center justify-center relative shadow-[0_0_20px_rgba(0,0,0,0.5)] transition-colors duration-500
-                       ${simulationActive && shockWave >= 1 ? 'border-red-400 bg-red-500/20 shadow-red-500/50' : 'border-yellow-500 bg-yellow-500/20'}`}>
-                       <span className="font-bold text-xs uppercase tracking-widest">NBFC</span>
-                   </div>
-               </div>
-
-               {/* Connected Node: Retail Banks */}
-               <div className="absolute top-[70%] left-[45%] flex flex-col items-center z-20">
-                   <div className={`w-20 h-20 rounded-full border-4 flex items-center justify-center relative shadow-[0_0_20px_rgba(0,0,0,0.5)] transition-colors duration-500
-                       ${simulationActive && shockWave >= 2 ? 'border-orange-500 bg-orange-500/20 shadow-orange-500/50' : 'border-green-500 bg-green-500/20'}`}>
-                       <span className="font-bold text-xs uppercase tracking-widest">BANK</span>
-                   </div>
-               </div>
-
-               {/* Connected Node: MSME */}
-               <div className="absolute top-[60%] left-[80%] flex flex-col items-center z-20">
-                   <div className={`w-12 h-12 rounded-full border-4 flex items-center justify-center relative shadow-[0_0_20px_rgba(0,0,0,0.5)] transition-colors duration-500
-                       ${simulationActive && shockWave >= 3 ? 'border-red-500 bg-red-500/20 shadow-red-500/50' : 'border-primary bg-primary/20'}`}>
-                       <span className="font-bold text-xs uppercase tracking-widest">MSME</span>
-                   </div>
-               </div>
-
-               {/* Edges */}
-               <svg className="absolute inset-0 w-full h-full z-10" style={{ pointerEvents: 'none' }}>
-                  {/* Real Estate to NBFC */}
-                  <line x1="30%" y1="40%" x2="60%" y2="30%" stroke={simulationActive && shockWave >= 0 ? "rgba(239,68,68,0.8)" : "rgba(249,115,22,0.4)"} strokeWidth={simulationActive ? 4 : 2} className={simulationActive ? "animate-[dash_1s_linear_infinite]" : ""} strokeDasharray={simulationActive ? "8" : "0"} />
-                  {/* NBFC to Bank */}
-                  <line x1="60%" y1="30%" x2="45%" y2="70%" stroke={simulationActive && shockWave >= 1 ? "rgba(249,115,22,0.8)" : "rgba(168,162,158,0.3)"} strokeWidth={simulationActive ? 3 : 1} className={simulationActive ? "animate-[dash_1s_linear_infinite]" : ""} strokeDasharray={simulationActive ? "8" : "0"} />
-                  {/* Real Estate to Bank */}
-                  <line x1="30%" y1="40%" x2="45%" y2="70%" stroke={simulationActive && shockWave >= 1 ? "rgba(249,115,22,0.8)" : "rgba(168,162,158,0.3)"} strokeWidth={simulationActive ? 3 : 1} />
-                  {/* NBFC to MSME */}
-                  <line x1="60%" y1="30%" x2="80%" y2="60%" stroke={simulationActive && shockWave >= 2 ? "rgba(239,68,68,0.8)" : "rgba(59,130,246,0.4)"} strokeWidth={simulationActive ? 4 : 2} className={simulationActive ? "animate-[dash_1s_linear_infinite]" : ""} strokeDasharray={simulationActive ? "8" : "0"} />
-                   {/* Bank to MSME */}
-                  <line x1="45%" y1="70%" x2="80%" y2="60%" stroke={simulationActive && shockWave >= 3 ? "rgba(249,115,22,0.8)" : "rgba(59,130,246,0.4)"} strokeWidth={simulationActive ? 3 : 2} />
-               </svg>
-            </div>
+        {/* Core Observability Grid */}
+        <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
+          <div className="lg:col-span-2 space-y-6">
+            <FinancialNetworkGraph className="h-[350px]" />
             
-            <div className="absolute bottom-4 left-4 bg-background/80 backdrop-blur border border-border/50 p-2 rounded text-[9px] font-mono uppercase text-muted-foreground">
-                Dependency Graph: Weights represent exposure liquidity.
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+              <AIPulseIntelligence 
+                title="AI Operations Reasoning"
+                primaryInsight="System detects active operations related to contagion simulation."
+                secondaryInsights={[
+                  "Behavioral analysis indicates expected usage patterns.",
+                  "Anomaly detection engine running at 99.9% confidence."
+                ]}
+                riskLevel="HIGH"
+              />
+              <Card className="bg-[#0a1520] border-cyan-900/30">
+                <CardHeader>
+                  <CardTitle className="text-xs font-bold uppercase tracking-widest text-white flex justify-between">
+                    <span>Active Telemetry</span>
+                    <Activity className="h-4 w-4 text-cyan-400" />
+                  </CardTitle>
+                </CardHeader>
+                <CardContent className="space-y-4">
+                  " + specItems.map(item => '<div className="space-y-1"><div className="flex justify-between text-xs"><span className="text-slate-400 capitalize">' + item + '</span><span className="text-cyan-400 font-mono">{(Math.random() * 100).toFixed(1)}%</span></div><div className="h-1 bg-cyan-900/30 rounded-full overflow-hidden"><div className="h-full bg-cyan-500 rounded-full" style={{ width: (Math.random() * 100) + "%" }}></div></div></div>').join('') + "
+                </CardContent>
+              </Card>
             </div>
-          </CardContent>
-        </Card>
+          </div>
 
-        {/* Breakdown Panel */}
-        <Card className="lg:col-span-1 flex flex-col h-[500px]">
-          <CardHeader className="pb-2 border-b border-border/50">
-            <CardTitle className="text-xs font-black uppercase tracking-widest flex items-center gap-2">
-                <AlertTriangle className="h-4 w-4 text-muted-foreground" /> Liquidity Chain Breakdowns
+          <div className="space-y-6">
+            <TrustScoreWidget 
+              score={66} 
+              entityName="Module Trust Index"
+            />
+            <LiveTransactionStream className="h-[400px]" />
+          </div>
+        </div>
+        
+        {/* Module Specific Mocks */}
+        <Card className="bg-[#0a1520] border-cyan-900/30">
+          <CardHeader>
+            <CardTitle className="text-xs font-bold uppercase tracking-widest text-slate-300 flex items-center gap-2">
+              <ShieldCheck className="h-4 w-4 text-emerald-400" />
+              Institutional Security Verification
             </CardTitle>
           </CardHeader>
-          <CardContent className="flex-1 overflow-auto pt-4 space-y-4">
-              <div className="space-y-4">
-                <div className="space-y-2">
-                    <div className="flex items-center justify-between text-[10px] font-bold uppercase tracking-widest">
-                        <span>Tier-2 NBFC Solvency</span>
-                        <span className={simulationActive ? "text-red-500" : "text-green-500"}>{simulationActive ? "CRITICAL" : "STABLE"}</span>
-                    </div>
-                    <Progress value={simulationActive ? 15 : 85} className={`h-1 ${simulationActive ? '[&>div]:bg-red-500' : '[&>div]:bg-green-500'}`} />
-                    {simulationActive && <p className="text-[9px] font-mono text-red-400">Capital buffers depleting rapidly.</p>}
-                </div>
-
-                <div className="space-y-2">
-                    <div className="flex items-center justify-between text-[10px] font-bold uppercase tracking-widest">
-                        <span>Retail Bank LCR</span>
-                        <span className={simulationActive ? "text-orange-500" : "text-primary"}>{simulationActive ? "105% (Falling)" : "135%"}</span>
-                    </div>
-                    <Progress value={simulationActive ? 40 : 85} className={`h-1 ${simulationActive ? '[&>div]:bg-orange-500' : '[&>div]:bg-primary'}`} />
-                </div>
-
-                <div className="space-y-2">
-                    <div className="flex items-center justify-between text-[10px] font-bold uppercase tracking-widest">
-                        <span>MSME Credit Flow</span>
-                        <span className={simulationActive ? "text-red-500" : "text-primary"}>{simulationActive ? "FROZEN" : "OPTIMAL"}</span>
-                    </div>
-                    <Progress value={simulationActive ? 5 : 90} className={`h-1 ${simulationActive ? '[&>div]:bg-red-500' : '[&>div]:bg-primary'}`} />
-                    {simulationActive && <p className="text-[9px] font-mono text-red-400">Interbank lending freeze cascading to SME tier.</p>}
-                </div>
-                
-                <div className="space-y-2">
-                    <div className="flex items-center justify-between text-[10px] font-bold uppercase tracking-widest">
-                        <span>Sovereign Bond Yields</span>
-                        <span className={simulationActive ? "text-yellow-500" : "text-green-500"}>{simulationActive ? "+45 bps" : "Stable"}</span>
-                    </div>
-                    <Progress value={simulationActive ? 60 : 20} className={`h-1 ${simulationActive ? '[&>div]:bg-yellow-500' : '[&>div]:bg-green-500'}`} />
-                </div>
-              </div>
-
-              {simulationActive && (
-                  <div className="mt-8 p-3 bg-red-500/10 border border-red-500/30 rounded-md animate-in slide-in-from-bottom-2">
-                      <h4 className="text-[10px] font-black uppercase tracking-widest text-red-500 mb-1">Recommended Action</h4>
-                      <p className="text-[9px] font-mono text-muted-foreground">Inject ₹1.2T liquidity into Repo window immediately to prevent NBFC defaults.</p>
-                      <Button variant="outline" size="sm" className="w-full mt-3 h-6 text-[9px] uppercase tracking-widest border-red-500/50 text-red-400 hover:bg-red-500/20">
-                          Deploy Liquidity
-                      </Button>
-                  </div>
-              )}
+          <CardContent>
+            <p className="text-sm text-slate-400 leading-relaxed">
+              This node operates under the strict guidelines of the FTID RegTech framework. All data is cryptographically secured, immutable, and subject to continuous automated audit trails. The Unified Trust Engine validates all internal pathways.
+            </p>
           </CardContent>
         </Card>
+
       </div>
+      
+      {/* <BottomIntelligenceRibbon /> */}
     </div>
   );
 }

@@ -1,5 +1,6 @@
 import Link from "next/link";
-import { Bot, User, Building2, Landmark, ShieldCheck, Scale, Terminal, ArrowRight, ArrowRightLeft } from "lucide-react";
+import { Bot, User, Building2, Landmark, ShieldCheck, Scale, Terminal, ArrowRight, ArrowRightLeft, Activity } from "lucide-react";
+import { BottomIntelligenceRibbon } from "@/components/shared/observability/BottomIntelligenceRibbon";
 
 const portals = [
   {
@@ -23,7 +24,7 @@ const portals = [
   {
     name: "Institutional Risk Node",
     desc: "SME underwriting intelligence, fraud detection, and dynamic risk engine.",
-    href: "/bank",
+    href: "/institution",
     icon: Landmark,
     color: "text-blue-400",
     bg: "bg-blue-500/10",
@@ -78,18 +79,7 @@ const portals = [
 
 function FileSignatureIcon(props: any) {
   return (
-    <svg
-      {...props}
-      xmlns="http://www.w3.org/2000/svg"
-      width="24"
-      height="24"
-      viewBox="0 0 24 24"
-      fill="none"
-      stroke="currentColor"
-      strokeWidth="2"
-      strokeLinecap="round"
-      strokeLinejoin="round"
-    >
+    <svg {...props} xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
       <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z" />
       <polyline points="14 2 14 8 20 8" />
       <path d="m20.5 13-1.5 1.5" />
@@ -102,33 +92,66 @@ function FileSignatureIcon(props: any) {
 
 export default function LandingEcosystem() {
   return (
-    <div className="min-h-screen bg-[#020810] text-slate-100 flex flex-col items-center pt-24 pb-20 px-4 relative overflow-hidden">
-        {/* Background Gradients */}
-        <div className="absolute top-0 left-1/2 -translate-x-1/2 w-[800px] h-[400px] bg-cyan-900/20 blur-[120px] rounded-full pointer-events-none"></div>
-        <div className="absolute bottom-0 right-0 w-[600px] h-[600px] bg-emerald-900/10 blur-[150px] rounded-full pointer-events-none"></div>
+    <div className="min-h-screen bg-[#020810] text-slate-100 flex flex-col items-center pt-20 pb-24 px-4 relative overflow-hidden">
+        {/* Animated Network Background */}
+        <div className="absolute inset-0 z-0 opacity-20 pointer-events-none">
+          <svg className="w-full h-full" xmlns="http://www.w3.org/2000/svg">
+            <defs>
+              <pattern id="grid" width="40" height="40" patternUnits="userSpaceOnUse">
+                <path d="M 40 0 L 0 0 0 40" fill="none" stroke="rgba(34,211,238,0.1)" strokeWidth="1"/>
+              </pattern>
+            </defs>
+            <rect width="100%" height="100%" fill="url(#grid)" />
+          </svg>
+        </div>
+        <div className="absolute top-0 left-1/2 -translate-x-1/2 w-[800px] h-[400px] bg-cyan-900/20 blur-[120px] rounded-full pointer-events-none z-0"></div>
 
-        <div className="max-w-6xl w-full relative z-10 flex flex-col items-center text-center mb-16">
-            <div className="p-4 bg-[#0a1520] rounded-2xl border border-cyan-900/50 mb-6 shadow-[0_0_30px_rgba(0,255,255,0.1)]">
+        {/* Global Live Counters */}
+        <div className="absolute top-6 right-6 z-20 flex flex-col items-end gap-2">
+          <div className="px-3 py-1.5 bg-[#05101a] border border-emerald-500/30 rounded-md flex items-center gap-2">
+            <Activity className="h-3 w-3 text-emerald-400 animate-pulse" />
+            <span className="text-[10px] font-mono text-emerald-400">LIQUIDITY: OPTIMAL</span>
+          </div>
+          <div className="text-right">
+            <p className="text-[10px] text-cyan-500/60 uppercase tracking-widest font-bold">Live Daily Volume</p>
+            <p className="text-lg font-mono font-bold text-white">₹4,892.4 <span className="text-sm text-cyan-400">Cr</span></p>
+          </div>
+        </div>
+
+        <div className="max-w-6xl w-full relative z-10 flex flex-col items-center text-center mb-12">
+            <div className="p-4 bg-[#0a1520] rounded-2xl border border-cyan-900/50 mb-6 shadow-[0_0_30px_rgba(0,255,255,0.1)] relative">
+               <div className="absolute -top-1 -right-1 w-3 h-3 bg-rose-500 rounded-full animate-ping"></div>
                <Bot className="h-12 w-12 text-cyan-400" />
             </div>
             
-            <h1 className="text-4xl md:text-6xl font-bold tracking-tighter text-white mb-4">
+            <h1 className="text-4xl md:text-6xl font-black tracking-tighter text-white mb-4">
                 FTID Core
             </h1>
             
-            <p className="text-xl md:text-2xl text-cyan-100/70 max-w-3xl font-light mb-8">
+            <p className="text-xl md:text-2xl text-cyan-100/70 max-w-3xl font-light mb-6">
                 India’s Real-Time Financial Intelligence Infrastructure.
             </p>
             
-            <p className="text-sm text-cyan-500/60 max-w-2xl mx-auto uppercase tracking-widest font-bold leading-relaxed">
+            <p className="text-sm text-cyan-500/60 max-w-2xl mx-auto uppercase tracking-widest font-bold leading-relaxed mb-6">
                 A RegTech-powered national ecosystem designed to enable real-time compliance, fraud detection, transaction verification, structured financial interoperability, and economic observability.
             </p>
+
+            {/* National Economic Pulse AI Block */}
+            <div className="w-full max-w-3xl p-4 bg-[#05101a]/80 border border-cyan-900/40 rounded-xl flex items-center gap-4 text-left">
+              <div className="p-2 bg-emerald-500/10 rounded-lg shrink-0">
+                <ShieldCheck className="h-6 w-6 text-emerald-400" />
+              </div>
+              <div>
+                <p className="text-[10px] font-bold uppercase tracking-widest text-emerald-500 mb-1">Systemic Trust Engine • Active</p>
+                <p className="text-sm text-slate-300 leading-snug">National systemic stability is <span className="text-emerald-400 font-bold">Optimal (94.2/100)</span>. Processing 4.3M simulated nodes across 8 distinct institutional intelligence layers. 17 localized anomalies isolated by EWS.</p>
+              </div>
+            </div>
         </div>
 
         <div className="max-w-6xl w-full grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6 relative z-10">
             {portals.map((portal) => (
                 <Link key={portal.name} href={portal.href} className="group">
-                    <div className={`h-full p-6 bg-[#0a1520] border ${portal.border} rounded-2xl transition-all duration-300 hover:bg-[#0f1d2b] hover:-translate-y-1 shadow-lg relative overflow-hidden flex flex-col`}>
+                    <div className={`h-full p-6 bg-[#0a1520] border ${portal.border} rounded-2xl transition-all duration-300 hover:bg-[#0f1d2b] hover:-translate-y-1 shadow-[0_8px_30px_rgba(0,0,0,0.4)] relative overflow-hidden flex flex-col`}>
                         <div className="absolute top-0 right-0 w-32 h-32 bg-white opacity-0 group-hover:opacity-5 transition-opacity rounded-full blur-2xl -mr-10 -mt-10"></div>
                         
                         <div className={`p-3 rounded-xl ${portal.bg} w-fit mb-4`}>
@@ -138,24 +161,25 @@ export default function LandingEcosystem() {
                         <h2 className="text-lg font-bold text-white mb-2">{portal.name}</h2>
                         <p className="text-xs text-slate-400 leading-relaxed mb-6 flex-grow">{portal.desc}</p>
                         
-                        <div className={`mt-auto flex items-center text-[10px] font-bold uppercase tracking-widest ${portal.color}`}>
-                            Access Portal <ArrowRight className="ml-2 h-3 w-3 group-hover:translate-x-1 transition-transform" />
+                        <div className={`mt-auto flex items-center justify-between text-[10px] font-bold uppercase tracking-widest ${portal.color}`}>
+                            <span className="flex items-center">Access Portal <ArrowRight className="ml-2 h-3 w-3 group-hover:translate-x-1 transition-transform" /></span>
+                            <span className="flex items-center gap-1 opacity-50"><Activity className="h-3 w-3" /> Live</span>
                         </div>
                     </div>
                 </Link>
             ))}
             
-            {/* Empty space filler for nice grid (since we have 7 items) */}
-            <div className="hidden xl:flex h-full p-6 bg-transparent border border-dashed border-cyan-900/30 rounded-2xl flex-col items-center justify-center text-center opacity-50">
-               <p className="text-[10px] font-bold uppercase tracking-widest text-cyan-500/40">Infrastructure Node Expansion</p>
-            </div>
+            {/* Added Commercial Banking explicitly if needed, but keeping grid to 8 items */}
         </div>
         
-        <div className="mt-20 text-center relative z-10">
+        <div className="mt-16 text-center relative z-10">
             <p className="text-[10px] font-bold uppercase tracking-[0.3em] text-cyan-500/30">
                 Authorized Access Only • National Security Protocol Active
             </p>
         </div>
+
+        {/* Global Intelligence Ribbon injected at layout level or here */}
+        <BottomIntelligenceRibbon />
     </div>
   );
 }

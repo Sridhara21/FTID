@@ -1,89 +1,97 @@
+
 "use client";
+import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import { ShieldAlert, Activity, Target, Network, AlertTriangle, BrainCircuit, ShieldCheck, TrendingUp, BarChart3, Fingerprint, Lock, Zap } from "lucide-react";
+import { AIPulseIntelligence } from "@/components/shared/observability/AIPulseIntelligence";
+import { TrustScoreWidget } from "@/components/shared/observability/TrustScoreWidget";
+import { LiveTransactionStream } from "@/components/shared/observability/LiveTransactionStream";
+import { FinancialNetworkGraph } from "@/components/shared/observability/FinancialNetworkGraph";
+import { BottomIntelligenceRibbon } from "@/components/shared/observability/BottomIntelligenceRibbon";
 
-import Link from "next/link";
-import { useParams } from "next/navigation";
-import { Landmark, ArrowLeft, ShieldCheck, FileText, Database, Settings } from "lucide-react";
-import { Card, CardHeader, CardTitle, CardContent } from "@/components/ui/card";
 
-export default function InstitutionPage() {
-  const params = useParams();
-  const id = params.id as string;
-  
-  // Format the ID for display
-  const nameMap: Record<string, string> = {
-    'hdfcbank': 'HDFC Bank',
-    'icicibank': 'ICICI Bank',
-    'incometaxdept': 'Income Tax Dept.'
-  };
-  
-  const displayName = nameMap[id] || id?.toUpperCase();
-
+export default function InstitutionidPage() {
   return (
-    <div className="grid gap-6 md:gap-8 pb-8 pt-4 max-w-[1000px] mx-auto text-slate-100">
-      <div className="flex items-center gap-4 mb-4">
-          <Link href="/citizen">
-             <div className="p-2 bg-[#05101a] border border-cyan-900/50 rounded-lg hover:bg-cyan-900/30 transition-colors">
-                 <ArrowLeft className="h-5 w-5 text-cyan-400" />
-             </div>
-          </Link>
+    <div className="min-h-screen bg-[#020810] text-slate-200 pb-20 relative overflow-hidden">
+      {/* Dynamic Backgrounds */}
+      <div className="absolute top-0 right-0 w-[500px] h-[500px] bg-cyan-900/10 blur-[120px] rounded-full pointer-events-none z-0"></div>
+      
+      <div className="max-w-7xl mx-auto p-6 relative z-10 space-y-6">
+        
+        {/* Header Section */}
+        <header className="flex flex-col md:flex-row md:items-end justify-between gap-4 border-b border-cyan-900/40 pb-6">
           <div>
-            <h1 className="text-2xl font-bold tracking-tight text-white flex items-center gap-3">
-                <Landmark className="h-6 w-6 text-cyan-500" /> {displayName}
-            </h1>
-            <p className="text-cyan-500/70 text-[10px] font-bold uppercase tracking-[0.2em] mt-1">
-              INSTITUTIONAL INTEGRATION PORTAL
+            <div className="flex items-center gap-2 mb-2">
+              <span className="px-2 py-1 bg-cyan-900/30 text-cyan-400 text-[10px] font-bold tracking-widest uppercase rounded">
+                INSTITUTION INFRASTRUCTURE
+              </span>
+              <span className="flex items-center gap-1 text-[10px] font-bold text-emerald-500 uppercase tracking-widest animate-pulse">
+                <div className="w-1.5 h-1.5 rounded-full bg-emerald-500"></div>
+                Live Node
+              </span>
+            </div>
+            <h1 className="text-3xl font-black text-white tracking-tight">Dynamic Institution Profile</h1>
+            <p className="text-sm text-cyan-100/60 mt-2 max-w-2xl">
+              Advanced observability module rendering real-time telemetry for: <span className="text-cyan-400 font-medium">institution level trust, active nodes</span>.
             </p>
           </div>
-      </div>
+        </header>
 
-      <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-          <Card className="bg-[#0a1520] border-cyan-900/30">
-              <CardHeader className="pb-2">
-                  <CardTitle className="text-sm font-bold uppercase tracking-widest text-cyan-500/60 flex items-center gap-2">
-                      <ShieldCheck className="h-4 w-4" /> Connection Status
+        {/* Core Observability Grid */}
+        <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
+          <div className="lg:col-span-2 space-y-6">
+            <FinancialNetworkGraph className="h-[350px]" />
+            
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+              <AIPulseIntelligence 
+                title="AI Operations Reasoning"
+                primaryInsight="System detects active operations related to institution level trust."
+                secondaryInsights={[
+                  "Behavioral analysis indicates expected usage patterns.",
+                  "Anomaly detection engine running at 99.9% confidence."
+                ]}
+                riskLevel="HIGH"
+              />
+              <Card className="bg-[#0a1520] border-cyan-900/30">
+                <CardHeader>
+                  <CardTitle className="text-xs font-bold uppercase tracking-widest text-white flex justify-between">
+                    <span>Active Telemetry</span>
+                    <Activity className="h-4 w-4 text-cyan-400" />
                   </CardTitle>
-              </CardHeader>
-              <CardContent>
-                  <p className="text-2xl font-bold text-emerald-400">ACTIVE</p>
-                  <p className="text-[10px] text-cyan-100/50 uppercase tracking-widest mt-1">Last synced 2 mins ago</p>
-              </CardContent>
-          </Card>
-          
-          <Card className="bg-[#0a1520] border-cyan-900/30 md:col-span-2">
-              <CardHeader className="pb-2">
-                  <CardTitle className="text-sm font-bold uppercase tracking-widest text-cyan-500/60 flex items-center gap-2">
-                      <Database className="h-4 w-4" /> Data Streams
-                  </CardTitle>
-              </CardHeader>
-              <CardContent>
-                  <div className="grid grid-cols-2 gap-4">
-                      <div className="p-3 bg-[#05101a] rounded-lg border border-cyan-900/20">
-                          <p className="text-[10px] font-bold uppercase tracking-widest text-cyan-400 mb-1">Accounts</p>
-                          <p className="text-sm text-white">2 Linked Accounts</p>
-                      </div>
-                      <div className="p-3 bg-[#05101a] rounded-lg border border-cyan-900/20">
-                          <p className="text-[10px] font-bold uppercase tracking-widest text-cyan-400 mb-1">Transactions</p>
-                          <p className="text-sm text-white">Real-time Sync On</p>
-                      </div>
-                  </div>
-              </CardContent>
-          </Card>
-      </div>
-      
-      <Card className="bg-[#0a1520] border-cyan-900/30">
+                </CardHeader>
+                <CardContent className="space-y-4">
+                  " + specItems.map(item => '<div className="space-y-1"><div className="flex justify-between text-xs"><span className="text-slate-400 capitalize">' + item + '</span><span className="text-cyan-400 font-mono">{(Math.random() * 100).toFixed(1)}%</span></div><div className="h-1 bg-cyan-900/30 rounded-full overflow-hidden"><div className="h-full bg-cyan-500 rounded-full" style={{ width: (Math.random() * 100) + "%" }}></div></div></div>').join('') + "
+                </CardContent>
+              </Card>
+            </div>
+          </div>
+
+          <div className="space-y-6">
+            <TrustScoreWidget 
+              score={62} 
+              entityName="Module Trust Index"
+            />
+            <LiveTransactionStream className="h-[400px]" />
+          </div>
+        </div>
+        
+        {/* Module Specific Mocks */}
+        <Card className="bg-[#0a1520] border-cyan-900/30">
           <CardHeader>
-              <CardTitle className="text-sm font-bold uppercase tracking-widest text-white flex items-center gap-2">
-                  <FileText className="h-4 w-4 text-cyan-500/70" /> Recent Activity
-              </CardTitle>
+            <CardTitle className="text-xs font-bold uppercase tracking-widest text-slate-300 flex items-center gap-2">
+              <ShieldCheck className="h-4 w-4 text-emerald-400" />
+              Institutional Security Verification
+            </CardTitle>
           </CardHeader>
           <CardContent>
-              <div className="flex flex-col items-center justify-center py-12 text-center">
-                  <Settings className="h-8 w-8 text-cyan-900 animate-spin-slow mb-4" />
-                  <p className="text-sm font-semibold text-cyan-100">Fetching institutional ledger...</p>
-                  <p className="text-[10px] text-cyan-500/60 uppercase tracking-widest mt-2">End-to-end encrypted connection established</p>
-              </div>
+            <p className="text-sm text-slate-400 leading-relaxed">
+              This node operates under the strict guidelines of the FTID RegTech framework. All data is cryptographically secured, immutable, and subject to continuous automated audit trails. The Unified Trust Engine validates all internal pathways.
+            </p>
           </CardContent>
-      </Card>
+        </Card>
+
+      </div>
+      
+      {/* <BottomIntelligenceRibbon /> */}
     </div>
   );
 }

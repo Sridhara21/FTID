@@ -1,132 +1,97 @@
+
 "use client";
+import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import { ShieldAlert, Activity, Target, Network, AlertTriangle, BrainCircuit, ShieldCheck, TrendingUp, BarChart3, Fingerprint, Lock, Zap } from "lucide-react";
+import { AIPulseIntelligence } from "@/components/shared/observability/AIPulseIntelligence";
+import { TrustScoreWidget } from "@/components/shared/observability/TrustScoreWidget";
+import { LiveTransactionStream } from "@/components/shared/observability/LiveTransactionStream";
+import { FinancialNetworkGraph } from "@/components/shared/observability/FinancialNetworkGraph";
+import { BottomIntelligenceRibbon } from "@/components/shared/observability/BottomIntelligenceRibbon";
 
-import { Card, CardContent, CardHeader, CardTitle, CardDescription } from "@/components/ui/card";
-import { GitBranch, Link, AlertTriangle, Route, ArrowRightLeft, ShieldCheck, TrendingUp } from "lucide-react";
-import { Badge } from "@/components/ui/badge";
-import { Progress } from "@/components/ui/progress";
 
-export default function BusinessSupplyChainPage() {
+export default function BusinesssupplychainPage() {
   return (
-    <div className="flex flex-col gap-6 animate-in fade-in duration-500 pb-10">
+    <div className="min-h-screen bg-[#020810] text-slate-200 pb-20 relative overflow-hidden">
+      {/* Dynamic Backgrounds */}
+      <div className="absolute top-0 right-0 w-[500px] h-[500px] bg-cyan-900/10 blur-[120px] rounded-full pointer-events-none z-0"></div>
       
-      <div className="flex flex-col md:flex-row md:items-end justify-between gap-4 mb-2">
-        <div>
-          <h1 className="text-3xl font-black tracking-tight text-emerald-500 uppercase flex items-center gap-3">
-              <Route className="h-8 w-8" />
-              Supply Chain Finance
-          </h1>
-          <p className="text-muted-foreground font-medium tracking-widest uppercase text-xs mt-1 flex items-center gap-2">
-            Multi-tier supplier intelligence & liquidity mapping
-          </p>
+      <div className="max-w-7xl mx-auto p-6 relative z-10 space-y-6">
+        
+        {/* Header Section */}
+        <header className="flex flex-col md:flex-row md:items-end justify-between gap-4 border-b border-cyan-900/40 pb-6">
+          <div>
+            <div className="flex items-center gap-2 mb-2">
+              <span className="px-2 py-1 bg-cyan-900/30 text-cyan-400 text-[10px] font-bold tracking-widest uppercase rounded">
+                BUSINESS INFRASTRUCTURE
+              </span>
+              <span className="flex items-center gap-1 text-[10px] font-bold text-emerald-500 uppercase tracking-widest animate-pulse">
+                <div className="w-1.5 h-1.5 rounded-full bg-emerald-500"></div>
+                Live Node
+              </span>
+            </div>
+            <h1 className="text-3xl font-black text-white tracking-tight">Supply Chain Intelligence Layer</h1>
+            <p className="text-sm text-cyan-100/60 mt-2 max-w-2xl">
+              Advanced observability module rendering real-time telemetry for: <span className="text-cyan-400 font-medium">dependency mapping, cascading disruption</span>.
+            </p>
+          </div>
+        </header>
+
+        {/* Core Observability Grid */}
+        <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
+          <div className="lg:col-span-2 space-y-6">
+            <FinancialNetworkGraph className="h-[350px]" />
+            
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+              <AIPulseIntelligence 
+                title="AI Operations Reasoning"
+                primaryInsight="System detects active operations related to dependency mapping."
+                secondaryInsights={[
+                  "Behavioral analysis indicates expected usage patterns.",
+                  "Anomaly detection engine running at 99.9% confidence."
+                ]}
+                riskLevel="HIGH"
+              />
+              <Card className="bg-[#0a1520] border-cyan-900/30">
+                <CardHeader>
+                  <CardTitle className="text-xs font-bold uppercase tracking-widest text-white flex justify-between">
+                    <span>Active Telemetry</span>
+                    <Activity className="h-4 w-4 text-cyan-400" />
+                  </CardTitle>
+                </CardHeader>
+                <CardContent className="space-y-4">
+                  " + specItems.map(item => '<div className="space-y-1"><div className="flex justify-between text-xs"><span className="text-slate-400 capitalize">' + item + '</span><span className="text-cyan-400 font-mono">{(Math.random() * 100).toFixed(1)}%</span></div><div className="h-1 bg-cyan-900/30 rounded-full overflow-hidden"><div className="h-full bg-cyan-500 rounded-full" style={{ width: (Math.random() * 100) + "%" }}></div></div></div>').join('') + "
+                </CardContent>
+              </Card>
+            </div>
+          </div>
+
+          <div className="space-y-6">
+            <TrustScoreWidget 
+              score={94} 
+              entityName="Module Trust Index"
+            />
+            <LiveTransactionStream className="h-[400px]" />
+          </div>
         </div>
+        
+        {/* Module Specific Mocks */}
+        <Card className="bg-[#0a1520] border-cyan-900/30">
+          <CardHeader>
+            <CardTitle className="text-xs font-bold uppercase tracking-widest text-slate-300 flex items-center gap-2">
+              <ShieldCheck className="h-4 w-4 text-emerald-400" />
+              Institutional Security Verification
+            </CardTitle>
+          </CardHeader>
+          <CardContent>
+            <p className="text-sm text-slate-400 leading-relaxed">
+              This node operates under the strict guidelines of the FTID RegTech framework. All data is cryptographically secured, immutable, and subject to continuous automated audit trails. The Unified Trust Engine validates all internal pathways.
+            </p>
+          </CardContent>
+        </Card>
+
       </div>
-
-      <div className="grid grid-cols-1 md:grid-cols-4 gap-4">
-          <Card className="bg-secondary/10 border-border/50">
-            <CardHeader className="flex flex-row items-center justify-between pb-2">
-                <CardTitle className="text-[10px] font-black uppercase tracking-widest text-muted-foreground">Network Depth</CardTitle>
-                <GitBranch className="h-4 w-4 text-emerald-500" />
-            </CardHeader>
-            <CardContent>
-               <div className="text-3xl font-mono font-black tabular-nums tracking-tighter text-emerald-500">Tier 3</div>
-               <p className="text-[10px] font-bold uppercase tracking-widest mt-1 text-emerald-500/80">
-                   Visibility unlocked
-               </p>
-            </CardContent>
-          </Card>
-
-          <Card className="bg-secondary/10 border-border/50">
-            <CardHeader className="flex flex-row items-center justify-between pb-2">
-                <CardTitle className="text-[10px] font-black uppercase tracking-widest text-muted-foreground">Concentration Risk</CardTitle>
-                <AlertTriangle className="h-4 w-4 text-amber-500" />
-            </CardHeader>
-            <CardContent>
-               <div className="text-3xl font-mono font-black tabular-nums tracking-tighter text-amber-500">24%</div>
-               <p className="text-[10px] font-bold uppercase tracking-widest mt-1 text-amber-500/80">
-                   Reliance on single vendor
-               </p>
-            </CardContent>
-          </Card>
-
-          <Card className="bg-secondary/10 border-border/50">
-            <CardHeader className="flex flex-row items-center justify-between pb-2">
-                <CardTitle className="text-[10px] font-black uppercase tracking-widest text-muted-foreground">SCF Limit</CardTitle>
-                <TrendingUp className="h-4 w-4 text-blue-500" />
-            </CardHeader>
-            <CardContent>
-               <div className="text-3xl font-mono font-black tabular-nums tracking-tighter text-blue-500">₹8 Cr</div>
-               <p className="text-[10px] font-bold uppercase tracking-widest mt-1 text-blue-500/80">
-                   Approved by Partner Bank
-               </p>
-            </CardContent>
-          </Card>
-
-          <Card className="bg-secondary/10 border-border/50">
-            <CardHeader className="flex flex-row items-center justify-between pb-2">
-                <CardTitle className="text-[10px] font-black uppercase tracking-widest text-muted-foreground">Active Discounting</CardTitle>
-                <ArrowRightLeft className="h-4 w-4 text-purple-500" />
-            </CardHeader>
-            <CardContent>
-               <div className="text-3xl font-mono font-black tabular-nums tracking-tighter text-purple-500">₹1.2 Cr</div>
-               <p className="text-[10px] font-bold uppercase tracking-widest mt-1 text-purple-500/80">
-                   Liquidity injected
-               </p>
-            </CardContent>
-          </Card>
-      </div>
-
-      <Card className="bg-secondary/10 border-border/50 h-[450px] flex flex-col relative overflow-hidden group">
-         <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_center,_var(--tw-gradient-stops))] from-emerald-500/5 via-transparent to-transparent opacity-50"></div>
-         <CardHeader className="pb-4 border-b border-border/50 relative z-10">
-             <CardTitle className="text-xs font-black uppercase tracking-widest flex items-center gap-2">
-                <Link className="h-4 w-4 text-emerald-500" /> End-to-End Supply Chain Mapping
-             </CardTitle>
-             <CardDescription className="text-[10px] font-mono text-muted-foreground mt-1">
-                 Visualizing Tier 1 and Tier 2 dependencies via E-Way Bill and GST data intersections.
-             </CardDescription>
-         </CardHeader>
-         <CardContent className="flex-1 overflow-auto pt-6 space-y-6 relative z-10 flex items-center justify-center">
-             
-             {/* Mock visual supply chain graph layout */}
-             <div className="w-full max-w-4xl flex items-center justify-between">
-                
-                {/* TIER 2 */}
-                <div className="flex flex-col gap-4">
-                    <div className="p-3 border border-border/50 bg-background/50 rounded-lg text-center w-32 relative">
-                        <div className="absolute right-0 top-1/2 w-8 border-t-2 border-dashed border-emerald-500/50 translate-x-full"></div>
-                        <p className="text-[9px] font-bold text-muted-foreground uppercase">Tier 2</p>
-                        <p className="text-[10px] font-bold text-emerald-400 mt-1">Steel Works Ltd</p>
-                    </div>
-                    <div className="p-3 border border-border/50 bg-background/50 rounded-lg text-center w-32 relative">
-                        <div className="absolute right-0 top-1/2 w-8 border-t-2 border-dashed border-emerald-500/50 translate-x-full"></div>
-                        <p className="text-[9px] font-bold text-muted-foreground uppercase">Tier 2</p>
-                        <p className="text-[10px] font-bold text-emerald-400 mt-1">Polymer Supply</p>
-                    </div>
-                </div>
-
-                {/* TIER 1 */}
-                <div className="flex flex-col gap-6 ml-8">
-                    <div className="p-4 border border-emerald-500/30 bg-emerald-500/10 rounded-lg text-center w-40 relative">
-                        <div className="absolute right-0 top-1/2 w-12 border-t-2 border-solid border-emerald-500 translate-x-full"></div>
-                        <ShieldCheck className="h-4 w-4 text-emerald-500 mx-auto mb-1" />
-                        <p className="text-[9px] font-bold text-emerald-500/80 uppercase">Tier 1 Supplier</p>
-                        <p className="text-xs font-bold text-emerald-500 mt-1">Delta Manufacturing</p>
-                    </div>
-                </div>
-
-                {/* ANCHOR */}
-                <div className="ml-12">
-                    <div className="p-6 border-2 border-emerald-500 bg-[#0a1520] rounded-xl text-center w-48 shadow-[0_0_20px_rgba(16,185,129,0.2)]">
-                        <p className="text-[10px] font-black uppercase tracking-widest text-emerald-500/80 mb-2">Anchor Corporate</p>
-                        <p className="text-lg font-black text-white">FTID Node</p>
-                        <p className="text-[10px] font-mono text-emerald-400 mt-2">Treasury Active</p>
-                    </div>
-                </div>
-
-             </div>
-
-         </CardContent>
-      </Card>
+      
+      {/* <BottomIntelligenceRibbon /> */}
     </div>
   );
 }
