@@ -89,7 +89,8 @@ const PORTALS = {
       { href: "/government/tax", icon: Database, label: "Tax Intelligence" },
       { href: "/government/stress", icon: Activity, label: "Stress Detection" },
       { href: "/government/policy", icon: HandCoins, label: "Policy Analytics" },
-      { href: "/government/departments", icon: Building2, label: "Departmental Funds" }
+      { href: "/government/departments", icon: Building2, label: "Departmental Funds" },
+      { href: "/government/informal", icon: PieChart, label: "Formalization Index" }
     ]
   },
   regulator: {
@@ -104,7 +105,10 @@ const PORTALS = {
     menuActiveBg: "bg-rose-900/30",
     menuActiveBorder: "border-rose-500",
     navItems: [
+      { href: "/regulator/national-dashboard", icon: ShieldCheck, label: "National Dashboard" },
       { href: "/regulator", icon: LayoutGrid, label: "Stability Engine" },
+      { href: "/regulator/graph", icon: Network, label: "Financial Graph" },
+      { href: "/regulator/ews", icon: Activity, label: "Early Warning Engine" },
       { href: "/regulator/fraud", icon: AlertTriangle, label: "Systemic Fraud" },
       { href: "/regulator/heatmap", icon: PieChart, label: "Compliance Heatmap" },
       { href: "/regulator/trust", icon: Layers, label: "Digital Trust Index" }

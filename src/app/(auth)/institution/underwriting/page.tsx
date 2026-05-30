@@ -1,97 +1,57 @@
-
 "use client";
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { ShieldAlert, Activity, Target, Network, AlertTriangle, BrainCircuit, ShieldCheck, TrendingUp, BarChart3, Fingerprint, Lock, Zap } from "lucide-react";
-import { AIPulseIntelligence } from "@/components/shared/observability/AIPulseIntelligence";
-import { TrustScoreWidget } from "@/components/shared/observability/TrustScoreWidget";
-import { LiveTransactionStream } from "@/components/shared/observability/LiveTransactionStream";
-import { FinancialNetworkGraph } from "@/components/shared/observability/FinancialNetworkGraph";
-import { BottomIntelligenceRibbon } from "@/components/shared/observability/BottomIntelligenceRibbon";
+import { Calculator, Target, Zap, FileSpreadsheet } from "lucide-react";
 
-
-export default function InstitutionunderwritingPage() {
+export default function AlternativeCreditEngine() {
   return (
-    <div className="min-h-screen bg-[#020810] text-slate-200 pb-20 relative overflow-hidden">
-      {/* Dynamic Backgrounds */}
-      <div className="absolute top-0 right-0 w-[500px] h-[500px] bg-cyan-900/10 blur-[120px] rounded-full pointer-events-none z-0"></div>
-      
-      <div className="max-w-7xl mx-auto p-6 relative z-10 space-y-6">
-        
-        {/* Header Section */}
-        <header className="flex flex-col md:flex-row md:items-end justify-between gap-4 border-b border-cyan-900/40 pb-6">
-          <div>
-            <div className="flex items-center gap-2 mb-2">
-              <span className="px-2 py-1 bg-cyan-900/30 text-cyan-400 text-[10px] font-bold tracking-widest uppercase rounded">
-                INSTITUTION INFRASTRUCTURE
-              </span>
-              <span className="flex items-center gap-1 text-[10px] font-bold text-emerald-500 uppercase tracking-widest animate-pulse">
-                <div className="w-1.5 h-1.5 rounded-full bg-emerald-500"></div>
-                Live Node
-              </span>
-            </div>
-            <h1 className="text-3xl font-black text-white tracking-tight">Loan Underwriting Engine</h1>
-            <p className="text-sm text-cyan-100/60 mt-2 max-w-2xl">
-              Advanced observability module rendering real-time telemetry for: <span className="text-cyan-400 font-medium">b2b underwriting, SME health</span>.
-            </p>
-          </div>
-        </header>
+    <div className="flex-1 p-8 overflow-y-auto">
+      <h1 className="text-3xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-violet-400 to-fuchsia-600 mb-2 font-sans">Alternative Credit Engine</h1>
+      <p className="text-slate-400 mb-8 font-mono text-sm">Collateral-free underwriting via transaction & GST behavioral intelligence.</p>
 
-        {/* Core Observability Grid */}
-        <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
-          <div className="lg:col-span-2 space-y-6">
-            <FinancialNetworkGraph className="h-[350px]" />
-            
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-              <AIPulseIntelligence 
-                title="AI Operations Reasoning"
-                primaryInsight="System detects active operations related to b2b underwriting."
-                secondaryInsights={[
-                  "Behavioral analysis indicates expected usage patterns.",
-                  "Anomaly detection engine running at 99.9% confidence."
-                ]}
-                riskLevel="CRITICAL"
-              />
-              <Card className="bg-[#0a1520] border-cyan-900/30">
-                <CardHeader>
-                  <CardTitle className="text-xs font-bold uppercase tracking-widest text-white flex justify-between">
-                    <span>Active Telemetry</span>
-                    <Activity className="h-4 w-4 text-cyan-400" />
-                  </CardTitle>
-                </CardHeader>
-                <CardContent className="space-y-4">
-                  " + specItems.map(item => '<div className="space-y-1"><div className="flex justify-between text-xs"><span className="text-slate-400 capitalize">' + item + '</span><span className="text-cyan-400 font-mono">{(Math.random() * 100).toFixed(1)}%</span></div><div className="h-1 bg-cyan-900/30 rounded-full overflow-hidden"><div className="h-full bg-cyan-500 rounded-full" style={{ width: (Math.random() * 100) + "%" }}></div></div></div>').join('') + "
-                </CardContent>
-              </Card>
+      <div className="grid grid-cols-12 gap-6">
+        <div className="col-span-4 bg-[#020810]/50 border border-violet-900/40 rounded-xl p-6 backdrop-blur-md">
+          <h3 className="text-violet-400 font-mono text-sm mb-6 flex items-center gap-2"><Target className="w-4 h-4"/> Input Parameters</h3>
+          <div className="space-y-4">
+            <div className="p-3 bg-violet-950/20 border border-violet-900/30 rounded-lg">
+              <label className="text-xs text-slate-500 uppercase mb-1 block">Target MSME GSTIN</label>
+              <input type="text" className="w-full bg-transparent border-b border-violet-700 text-white font-mono text-sm py-1 outline-none" defaultValue="29AABCU9603R1ZN" />
             </div>
-          </div>
-
-          <div className="space-y-6">
-            <TrustScoreWidget 
-              score={99} 
-              entityName="Module Trust Index"
-            />
-            <LiveTransactionStream className="h-[400px]" />
+            <button className="w-full py-3 mt-4 bg-gradient-to-r from-violet-900 to-fuchsia-900 rounded-lg text-white font-medium flex justify-center items-center gap-2 hover:shadow-[0_0_15px_rgba(139,92,246,0.3)] transition-all">
+              <Zap className="w-4 h-4" /> Generate Alternative Score
+            </button>
           </div>
         </div>
-        
-        {/* Module Specific Mocks */}
-        <Card className="bg-[#0a1520] border-cyan-900/30">
-          <CardHeader>
-            <CardTitle className="text-xs font-bold uppercase tracking-widest text-slate-300 flex items-center gap-2">
-              <ShieldCheck className="h-4 w-4 text-emerald-400" />
-              Institutional Security Verification
-            </CardTitle>
-          </CardHeader>
-          <CardContent>
-            <p className="text-sm text-slate-400 leading-relaxed">
-              This node operates under the strict guidelines of the FTID RegTech framework. All data is cryptographically secured, immutable, and subject to continuous automated audit trails. The Unified Trust Engine validates all internal pathways.
-            </p>
-          </CardContent>
-        </Card>
 
+        <div className="col-span-8 bg-[#020810]/50 border border-violet-900/40 rounded-xl p-6 backdrop-blur-md relative">
+          <div className="flex items-center justify-between mb-8 pb-4 border-b border-violet-900/40">
+            <div>
+              <h2 className="text-2xl font-bold text-white">Dynamic Credit Assessment</h2>
+              <p className="text-emerald-400 text-sm font-mono mt-1">Status: High Confidence Match</p>
+            </div>
+            <div className="text-right">
+              <p className="text-xs text-slate-500 uppercase mb-1">Alt-Credit Score</p>
+              <p className="text-4xl font-bold text-violet-400 font-mono">812</p>
+            </div>
+          </div>
+
+          <div className="grid grid-cols-3 gap-4 mb-6">
+            <div className="p-4 border border-white/5 rounded-lg bg-white/[0.02]">
+              <FileSpreadsheet className="w-5 h-5 text-slate-400 mb-2" />
+              <p className="text-xs text-slate-500 mb-1">GST Cashflow Proxy</p>
+              <p className="text-lg text-slate-200 font-mono">₹14.2L / mo</p>
+            </div>
+            <div className="p-4 border border-white/5 rounded-lg bg-white/[0.02]">
+              <Activity className="w-5 h-5 text-emerald-400 mb-2" />
+              <p className="text-xs text-slate-500 mb-1">Behavioral Trust</p>
+              <p className="text-lg text-emerald-400 font-mono">Excellent</p>
+            </div>
+            <div className="p-4 border border-white/5 rounded-lg bg-white/[0.02]">
+              <Calculator className="w-5 h-5 text-cyan-400 mb-2" />
+              <p className="text-xs text-slate-500 mb-1">Recommended Max Limit</p>
+              <p className="text-lg text-cyan-400 font-mono">₹5,00,000</p>
+            </div>
+          </div>
+        </div>
       </div>
-      
-      {/* <BottomIntelligenceRibbon /> */}
     </div>
   );
 }

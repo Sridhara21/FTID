@@ -1,97 +1,63 @@
-
 "use client";
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { ShieldAlert, Activity, Target, Network, AlertTriangle, BrainCircuit, ShieldCheck, TrendingUp, BarChart3, Fingerprint, Lock, Zap } from "lucide-react";
-import { AIPulseIntelligence } from "@/components/shared/observability/AIPulseIntelligence";
-import { TrustScoreWidget } from "@/components/shared/observability/TrustScoreWidget";
-import { LiveTransactionStream } from "@/components/shared/observability/LiveTransactionStream";
-import { FinancialNetworkGraph } from "@/components/shared/observability/FinancialNetworkGraph";
-import { BottomIntelligenceRibbon } from "@/components/shared/observability/BottomIntelligenceRibbon";
+import { Bot, Terminal, ShieldAlert, CheckCircle2 } from "lucide-react";
 
-
-export default function AuditorassistantPage() {
+export default function AuditExplainability() {
   return (
-    <div className="min-h-screen bg-[#020810] text-slate-200 pb-20 relative overflow-hidden">
-      {/* Dynamic Backgrounds */}
-      <div className="absolute top-0 right-0 w-[500px] h-[500px] bg-cyan-900/10 blur-[120px] rounded-full pointer-events-none z-0"></div>
-      
-      <div className="max-w-7xl mx-auto p-6 relative z-10 space-y-6">
-        
-        {/* Header Section */}
-        <header className="flex flex-col md:flex-row md:items-end justify-between gap-4 border-b border-cyan-900/40 pb-6">
-          <div>
-            <div className="flex items-center gap-2 mb-2">
-              <span className="px-2 py-1 bg-cyan-900/30 text-cyan-400 text-[10px] font-bold tracking-widest uppercase rounded">
-                AUDITOR INFRASTRUCTURE
-              </span>
-              <span className="flex items-center gap-1 text-[10px] font-bold text-emerald-500 uppercase tracking-widest animate-pulse">
-                <div className="w-1.5 h-1.5 rounded-full bg-emerald-500"></div>
-                Live Node
-              </span>
-            </div>
-            <h1 className="text-3xl font-black text-white tracking-tight">AI Audit Copilot</h1>
-            <p className="text-sm text-cyan-100/60 mt-2 max-w-2xl">
-              Advanced observability module rendering real-time telemetry for: <span className="text-cyan-400 font-medium">anomaly explanations, suspicious bookkeeping</span>.
-            </p>
-          </div>
-        </header>
+    <div className="flex-1 p-8 overflow-y-auto">
+      <h1 className="text-3xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-zinc-400 to-slate-200 mb-2 font-sans">Audit Explainability AI</h1>
+      <p className="text-slate-400 mb-8 font-mono text-sm">Deep natural language reasoning for flagged network anomalies.</p>
 
-        {/* Core Observability Grid */}
-        <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
-          <div className="lg:col-span-2 space-y-6">
-            <FinancialNetworkGraph className="h-[350px]" />
-            
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-              <AIPulseIntelligence 
-                title="AI Operations Reasoning"
-                primaryInsight="System detects active operations related to anomaly explanations."
-                secondaryInsights={[
-                  "Behavioral analysis indicates expected usage patterns.",
-                  "Anomaly detection engine running at 99.9% confidence."
-                ]}
-                riskLevel="MEDIUM"
-              />
-              <Card className="bg-[#0a1520] border-cyan-900/30">
-                <CardHeader>
-                  <CardTitle className="text-xs font-bold uppercase tracking-widest text-white flex justify-between">
-                    <span>Active Telemetry</span>
-                    <Activity className="h-4 w-4 text-cyan-400" />
-                  </CardTitle>
-                </CardHeader>
-                <CardContent className="space-y-4">
-                  " + specItems.map(item => '<div className="space-y-1"><div className="flex justify-between text-xs"><span className="text-slate-400 capitalize">' + item + '</span><span className="text-cyan-400 font-mono">{(Math.random() * 100).toFixed(1)}%</span></div><div className="h-1 bg-cyan-900/30 rounded-full overflow-hidden"><div className="h-full bg-cyan-500 rounded-full" style={{ width: (Math.random() * 100) + "%" }}></div></div></div>').join('') + "
-                </CardContent>
-              </Card>
+      <div className="grid grid-cols-12 gap-6 h-[600px]">
+        <div className="col-span-4 bg-[#020810]/50 border border-zinc-700/40 rounded-xl p-6 backdrop-blur-md flex flex-col">
+          <h3 className="text-zinc-400 font-mono text-sm mb-4 border-b border-zinc-800 pb-2">Flagged Queue</h3>
+          <div className="space-y-2 flex-1 overflow-y-auto pr-2">
+            <div className="p-3 bg-rose-950/20 border border-rose-900/50 rounded-lg cursor-pointer border-l-2 border-l-rose-500">
+              <p className="text-xs font-mono text-slate-300 mb-1">INV-9821-X</p>
+              <p className="text-[10px] text-rose-400">High Risk • ₹4.2L</p>
             </div>
-          </div>
-
-          <div className="space-y-6">
-            <TrustScoreWidget 
-              score={70} 
-              entityName="Module Trust Index"
-            />
-            <LiveTransactionStream className="h-[400px]" />
+            <div className="p-3 bg-zinc-900/30 border border-zinc-800/50 rounded-lg cursor-pointer hover:bg-zinc-800/50 transition-colors">
+              <p className="text-xs font-mono text-slate-400 mb-1">TXN-4412-Y</p>
+              <p className="text-[10px] text-amber-400">Medium Risk • ₹1.1L</p>
+            </div>
           </div>
         </div>
-        
-        {/* Module Specific Mocks */}
-        <Card className="bg-[#0a1520] border-cyan-900/30">
-          <CardHeader>
-            <CardTitle className="text-xs font-bold uppercase tracking-widest text-slate-300 flex items-center gap-2">
-              <ShieldCheck className="h-4 w-4 text-emerald-400" />
-              Institutional Security Verification
-            </CardTitle>
-          </CardHeader>
-          <CardContent>
-            <p className="text-sm text-slate-400 leading-relaxed">
-              This node operates under the strict guidelines of the FTID RegTech framework. All data is cryptographically secured, immutable, and subject to continuous automated audit trails. The Unified Trust Engine validates all internal pathways.
-            </p>
-          </CardContent>
-        </Card>
 
+        <div className="col-span-8 bg-[#020810]/50 border border-zinc-700/40 rounded-xl p-0 backdrop-blur-md flex flex-col overflow-hidden">
+          <div className="p-4 border-b border-zinc-800 bg-zinc-900/20 flex items-center gap-3">
+            <Bot className="w-5 h-5 text-zinc-400" />
+            <span className="text-sm font-mono text-slate-300">AI Analysis: INV-9821-X</span>
+          </div>
+          
+          <div className="flex-1 p-6 space-y-6">
+            <div className="flex items-start gap-4">
+              <div className="w-8 h-8 rounded bg-rose-950/50 border border-rose-900/50 flex items-center justify-center shrink-0">
+                <ShieldAlert className="w-4 h-4 text-rose-500" />
+              </div>
+              <div>
+                <p className="text-sm text-slate-300 leading-relaxed font-mono">
+                  <span className="text-rose-400">Flagged because:</span> Vendor risk increased 42% in the last 7 days due to two associated entities being deregistered for GST. Additionally, this invoice value is 3.6× the historical average between these two counterparties.
+                </p>
+              </div>
+            </div>
+            
+            <div className="flex items-start gap-4">
+              <div className="w-8 h-8 rounded bg-zinc-900/50 border border-zinc-800/50 flex items-center justify-center shrink-0">
+                <Terminal className="w-4 h-4 text-cyan-500" />
+              </div>
+              <div className="w-full">
+                <div className="bg-black/50 p-4 rounded-lg border border-zinc-800/50 font-mono text-xs text-slate-400">
+                  <p className="text-emerald-400 mb-2">// Trace Output</p>
+                  <p>&gt; Evaluating entity: 27AADCB... (Vendor)</p>
+                  <p>&gt; Checking network graph depth=2...</p>
+                  <p className="text-rose-400">&gt; ALERT: Linked entity 07BBEP... status == DEREGISTERED</p>
+                  <p>&gt; Calculating historical baseline: Avg = ₹1.16L</p>
+                  <p className="text-amber-400">&gt; WARNING: Current = ₹4.20L (Deviation: 3.6x)</p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
       </div>
-      
-      {/* <BottomIntelligenceRibbon /> */}
     </div>
   );
 }

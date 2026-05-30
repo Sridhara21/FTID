@@ -1,97 +1,57 @@
-
 "use client";
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { ShieldAlert, Activity, Target, Network, AlertTriangle, BrainCircuit, ShieldCheck, TrendingUp, BarChart3, Fingerprint, Lock, Zap } from "lucide-react";
-import { AIPulseIntelligence } from "@/components/shared/observability/AIPulseIntelligence";
-import { TrustScoreWidget } from "@/components/shared/observability/TrustScoreWidget";
-import { LiveTransactionStream } from "@/components/shared/observability/LiveTransactionStream";
-import { FinancialNetworkGraph } from "@/components/shared/observability/FinancialNetworkGraph";
-import { BottomIntelligenceRibbon } from "@/components/shared/observability/BottomIntelligenceRibbon";
+import { FileText, AlertOctagon, CheckCircle2 } from "lucide-react";
 
-
-export default function BusinessinvoicesPage() {
+export default function InvoiceRiskIntelligence() {
   return (
-    <div className="min-h-screen bg-[#020810] text-slate-200 pb-20 relative overflow-hidden">
-      {/* Dynamic Backgrounds */}
-      <div className="absolute top-0 right-0 w-[500px] h-[500px] bg-cyan-900/10 blur-[120px] rounded-full pointer-events-none z-0"></div>
-      
-      <div className="max-w-7xl mx-auto p-6 relative z-10 space-y-6">
-        
-        {/* Header Section */}
-        <header className="flex flex-col md:flex-row md:items-end justify-between gap-4 border-b border-cyan-900/40 pb-6">
-          <div>
-            <div className="flex items-center gap-2 mb-2">
-              <span className="px-2 py-1 bg-cyan-900/30 text-cyan-400 text-[10px] font-bold tracking-widest uppercase rounded">
-                BUSINESS INFRASTRUCTURE
-              </span>
-              <span className="flex items-center gap-1 text-[10px] font-bold text-emerald-500 uppercase tracking-widest animate-pulse">
-                <div className="w-1.5 h-1.5 rounded-full bg-emerald-500"></div>
-                Live Node
-              </span>
-            </div>
-            <h1 className="text-3xl font-black text-white tracking-tight">Smart Invoice Intelligence Engine</h1>
-            <p className="text-sm text-cyan-100/60 mt-2 max-w-2xl">
-              Advanced observability module rendering real-time telemetry for: <span className="text-cyan-400 font-medium">duplicate detection, forged invoice probability</span>.
-            </p>
-          </div>
-        </header>
+    <div className="flex-1 p-8 overflow-y-auto">
+      <h1 className="text-3xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-blue-400 to-indigo-600 mb-2 font-sans">Invoice Risk Intelligence</h1>
+      <p className="text-slate-400 mb-8 font-mono text-sm">Automated fraud detection and anomaly scoring for B2B transactions.</p>
 
-        {/* Core Observability Grid */}
-        <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
-          <div className="lg:col-span-2 space-y-6">
-            <FinancialNetworkGraph className="h-[350px]" />
-            
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-              <AIPulseIntelligence 
-                title="AI Operations Reasoning"
-                primaryInsight="System detects active operations related to duplicate detection."
-                secondaryInsights={[
-                  "Behavioral analysis indicates expected usage patterns.",
-                  "Anomaly detection engine running at 99.9% confidence."
-                ]}
-                riskLevel="HIGH"
-              />
-              <Card className="bg-[#0a1520] border-cyan-900/30">
-                <CardHeader>
-                  <CardTitle className="text-xs font-bold uppercase tracking-widest text-white flex justify-between">
-                    <span>Active Telemetry</span>
-                    <Activity className="h-4 w-4 text-cyan-400" />
-                  </CardTitle>
-                </CardHeader>
-                <CardContent className="space-y-4">
-                  " + specItems.map(item => '<div className="space-y-1"><div className="flex justify-between text-xs"><span className="text-slate-400 capitalize">' + item + '</span><span className="text-cyan-400 font-mono">{(Math.random() * 100).toFixed(1)}%</span></div><div className="h-1 bg-cyan-900/30 rounded-full overflow-hidden"><div className="h-full bg-cyan-500 rounded-full" style={{ width: (Math.random() * 100) + "%" }}></div></div></div>').join('') + "
-                </CardContent>
-              </Card>
-            </div>
-          </div>
-
-          <div className="space-y-6">
-            <TrustScoreWidget 
-              score={89} 
-              entityName="Module Trust Index"
-            />
-            <LiveTransactionStream className="h-[400px]" />
-          </div>
-        </div>
-        
-        {/* Module Specific Mocks */}
-        <Card className="bg-[#0a1520] border-cyan-900/30">
-          <CardHeader>
-            <CardTitle className="text-xs font-bold uppercase tracking-widest text-slate-300 flex items-center gap-2">
-              <ShieldCheck className="h-4 w-4 text-emerald-400" />
-              Institutional Security Verification
-            </CardTitle>
-          </CardHeader>
-          <CardContent>
-            <p className="text-sm text-slate-400 leading-relaxed">
-              This node operates under the strict guidelines of the FTID RegTech framework. All data is cryptographically secured, immutable, and subject to continuous automated audit trails. The Unified Trust Engine validates all internal pathways.
-            </p>
-          </CardContent>
-        </Card>
-
+      <div className="bg-[#020810]/50 border border-blue-900/40 rounded-xl p-6 backdrop-blur-md mb-6">
+        <table className="w-full text-left border-collapse">
+          <thead>
+            <tr className="border-b border-blue-900/40">
+              <th className="py-3 text-xs text-slate-500 uppercase tracking-widest">Invoice ID</th>
+              <th className="py-3 text-xs text-slate-500 uppercase tracking-widest">Vendor GSTIN</th>
+              <th className="py-3 text-xs text-slate-500 uppercase tracking-widest">Amount</th>
+              <th className="py-3 text-xs text-slate-500 uppercase tracking-widest">Anomaly Score</th>
+              <th className="py-3 text-xs text-slate-500 uppercase tracking-widest">Status</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr className="border-b border-blue-900/20 hover:bg-blue-950/20 transition-colors">
+              <td className="py-4 text-sm text-slate-300 font-mono">INV-2023-891</td>
+              <td className="py-4 text-sm text-slate-300 font-mono">27AADCB2230M1Z2</td>
+              <td className="py-4 text-sm text-slate-300 font-mono">₹1,24,500</td>
+              <td className="py-4">
+                <span className="px-2 py-1 bg-emerald-950/50 text-emerald-400 text-xs font-mono rounded">1.2 (Low)</span>
+              </td>
+              <td className="py-4"><CheckCircle2 className="w-5 h-5 text-emerald-500" /></td>
+            </tr>
+            <tr className="border-b border-blue-900/20 hover:bg-blue-950/20 transition-colors bg-rose-950/10">
+              <td className="py-4 text-sm text-slate-300 font-mono">INV-2023-892</td>
+              <td className="py-4 text-sm text-slate-300 font-mono">07BBEPC4451N1Z5</td>
+              <td className="py-4 text-sm text-slate-300 font-mono">₹8,90,000</td>
+              <td className="py-4">
+                <span className="px-2 py-1 bg-rose-950/50 text-rose-400 text-xs font-mono rounded border border-rose-900/50">89.4 (Critical)</span>
+              </td>
+              <td className="py-4 flex items-center gap-2">
+                <AlertOctagon className="w-5 h-5 text-rose-500" />
+                <span className="text-xs text-rose-400">GST Mismatch + Duplicate Value</span>
+              </td>
+            </tr>
+            <tr className="border-b border-blue-900/20 hover:bg-blue-950/20 transition-colors">
+              <td className="py-4 text-sm text-slate-300 font-mono">INV-2023-893</td>
+              <td className="py-4 text-sm text-slate-300 font-mono">29AAACG4321P1Z1</td>
+              <td className="py-4 text-sm text-slate-300 font-mono">₹45,200</td>
+              <td className="py-4">
+                <span className="px-2 py-1 bg-emerald-950/50 text-emerald-400 text-xs font-mono rounded">0.4 (Low)</span>
+              </td>
+              <td className="py-4"><CheckCircle2 className="w-5 h-5 text-emerald-500" /></td>
+            </tr>
+          </tbody>
+        </table>
       </div>
-      
-      {/* <BottomIntelligenceRibbon /> */}
     </div>
   );
 }
