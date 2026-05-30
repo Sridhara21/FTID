@@ -6,7 +6,8 @@ import { cn } from "@/lib/utils";
 import {
   Bot, LayoutGrid, HeartPulse, Landmark, ShieldCheck, User, Wallet, Scale,
   FileText, HandCoins, ArrowRightLeft, Briefcase, Lock, Database, Target,
-  Building2, PieChart, Network, Terminal, Settings, Activity, Layers, Receipt
+  Building2, PieChart, Network, Terminal, Settings, Activity, Layers, Receipt,
+  Sparkles, List, FileKey, Server, Zap, Globe, AlertTriangle
 } from "lucide-react";
 import {
   SidebarHeader, SidebarContent, SidebarMenu, SidebarMenuItem, SidebarMenuButton, SidebarFooter,
@@ -29,12 +30,15 @@ const PORTALS = {
     menuActiveBorder: "border-cyan-500",
     navItems: [
       { href: "/citizen", icon: LayoutGrid, label: "Control Center" },
-      { href: "/citizen/profile", icon: User, label: "Identity Hub" },
+      { href: "/citizen/ai-advisor", icon: Sparkles, label: "AI Advisor" },
+      { href: "/citizen/balance-sheet", icon: List, label: "Balance Sheet" },
       { href: "/citizen/consent", icon: Lock, label: "Consent Management" },
-      { href: "/citizen/wallet", icon: Wallet, label: "CBDC Wallet" },
-      { href: "/citizen/portfolio", icon: Briefcase, label: "Investments" },
       { href: "/citizen/credit-score", icon: HeartPulse, label: "Financial Health" },
-      { href: "/citizen/tax", icon: FileText, label: "Tax & Compliance" }
+      { href: "/citizen/portfolio", icon: Briefcase, label: "Investments" },
+      { href: "/citizen/profile", icon: User, label: "Identity Hub" },
+      { href: "/citizen/subsidies", icon: HandCoins, label: "Subsidies (DBT)" },
+      { href: "/citizen/tax", icon: FileText, label: "Tax & Compliance" },
+      { href: "/citizen/wallet", icon: Wallet, label: "CBDC Wallet" }
     ]
   },
   business: {
@@ -50,10 +54,12 @@ const PORTALS = {
     menuActiveBorder: "border-emerald-500",
     navItems: [
       { href: "/business", icon: LayoutGrid, label: "Enterprise Command" },
-      { href: "/business/invoices", icon: Receipt, label: "Smart Invoices" },
+      { href: "/business/cashflow", icon: Activity, label: "Cashflow Monitor" },
       { href: "/business/compliance", icon: ShieldCheck, label: "Real-Time Compliance" },
-      { href: "/business/vendors", icon: Network, label: "Vendor Trust Network" },
-      { href: "/business/credit", icon: Target, label: "Credit Readiness" }
+      { href: "/business/credit", icon: Target, label: "Credit Readiness" },
+      { href: "/business/invoices", icon: Receipt, label: "Smart Invoices" },
+      { href: "/business/supply-chain", icon: Network, label: "Supply Chain" },
+      { href: "/business/vendors", icon: Building2, label: "Vendor Trust Network" }
     ]
   },
   bank: {
@@ -69,9 +75,27 @@ const PORTALS = {
     menuActiveBorder: "border-blue-500",
     navItems: [
       { href: "/bank", icon: LayoutGrid, label: "Risk Command" },
-      { href: "/bank/underwriting", icon: FileText, label: "SME Underwriting" },
       { href: "/bank/fraud", icon: AlertTriangle, label: "Fraud Intelligence" },
-      { href: "/bank/network", icon: Network, label: "Network Analysis" }
+      { href: "/bank/network", icon: Network, label: "Lending Exposure Map" },
+      { href: "/bank/underwriting", icon: FileText, label: "SME Underwriting" }
+    ]
+  },
+  institution: {
+    title: "FTID",
+    subtitle: "Alternative Inst.",
+    headerIcon: Landmark,
+    headerColor: "text-violet-400",
+    headerBg: "bg-violet-900/30",
+    headerBorder: "border-violet-500/20",
+    sectionTitle: "Institution Portal",
+    menuColor: "text-violet-400",
+    menuActiveBg: "bg-violet-900/30",
+    menuActiveBorder: "border-violet-500",
+    navItems: [
+      { href: "/institution", icon: LayoutGrid, label: "Command Center" },
+      { href: "/institution/fraud", icon: AlertTriangle, label: "Fraud Intelligence" },
+      { href: "/institution/risk", icon: Target, label: "Systemic Risk" },
+      { href: "/institution/underwriting", icon: FileText, label: "Alt Credit Engine" }
     ]
   },
   government: {
@@ -87,11 +111,15 @@ const PORTALS = {
     menuActiveBorder: "border-amber-500",
     navItems: [
       { href: "/government", icon: LayoutGrid, label: "Economic Monitor" },
-      { href: "/government/tax", icon: Database, label: "Tax Intelligence" },
-      { href: "/government/stress", icon: Activity, label: "Stress Detection" },
-      { href: "/government/policy", icon: HandCoins, label: "Policy Analytics" },
       { href: "/government/departments", icon: Building2, label: "Departmental Funds" },
-      { href: "/government/informal", icon: PieChart, label: "Formalization Index" }
+      { href: "/government/fraud-heatmaps", icon: PieChart, label: "Fraud Heatmaps" },
+      { href: "/government/gdp", icon: LineChart, label: "GDP Tracker" },
+      { href: "/government/informal", icon: PieChart, label: "Formalization Index" },
+      { href: "/government/policy", icon: HandCoins, label: "Policy Digital Twin" },
+      { href: "/government/revenue", icon: FileText, label: "Revenue Monitor" },
+      { href: "/government/stress", icon: Activity, label: "Stress Detection" },
+      { href: "/government/subsidies", icon: Target, label: "Subsidy Allocation" },
+      { href: "/government/tax", icon: Database, label: "Tax Intelligence" }
     ]
   },
   regulator: {
@@ -108,10 +136,11 @@ const PORTALS = {
     navItems: [
       { href: "/regulator/national-dashboard", icon: ShieldCheck, label: "National Dashboard" },
       { href: "/regulator", icon: LayoutGrid, label: "Stability Engine" },
-      { href: "/regulator/graph", icon: Network, label: "Financial Graph" },
       { href: "/regulator/ews", icon: Activity, label: "Early Warning Engine" },
       { href: "/regulator/fraud", icon: AlertTriangle, label: "Systemic Fraud" },
+      { href: "/regulator/graph", icon: Network, label: "Financial Graph" },
       { href: "/regulator/heatmap", icon: PieChart, label: "Compliance Heatmap" },
+      { href: "/regulator/systemic-risk", icon: Target, label: "Systemic Risk" },
       { href: "/regulator/trust", icon: Layers, label: "Digital Trust Index" }
     ]
   },
@@ -128,9 +157,11 @@ const PORTALS = {
     menuActiveBorder: "border-indigo-500",
     navItems: [
       { href: "/auditor", icon: LayoutGrid, label: "Audit Intelligence" },
+      { href: "/auditor/assistant", icon: Sparkles, label: "AI Assistant" },
+      { href: "/auditor/ledger", icon: Database, label: "Distributed Ledger" },
       { href: "/auditor/reconciliation", icon: ArrowRightLeft, label: "Smart Recon" },
-      { href: "/auditor/trails", icon: Database, label: "Automated Trails" },
-      { href: "/auditor/risk", icon: Target, label: "Risk Scoring" }
+      { href: "/auditor/risk", icon: Target, label: "Risk Scoring" },
+      { href: "/auditor/trails", icon: Database, label: "Automated Trails" }
     ]
   },
   developer: {
@@ -146,9 +177,12 @@ const PORTALS = {
     menuActiveBorder: "border-purple-500",
     navItems: [
       { href: "/developer", icon: Terminal, label: "API Dashboard" },
-      { href: "/developer/keys", icon: Lock, label: "Secure Keys" },
-      { href: "/developer/verification", icon: ShieldCheck, label: "Verification APIs" },
-      { href: "/developer/consent", icon: Database, label: "Consent Infrastructure" }
+      { href: "/developer/apis", icon: Server, label: "API Reference" },
+      { href: "/developer/consent", icon: Database, label: "Consent Infrastructure" },
+      { href: "/developer/keys", icon: FileKey, label: "Secure Keys" },
+      { href: "/developer/sandbox", icon: Zap, label: "Sandbox Env" },
+      { href: "/developer/sdk", icon: Terminal, label: "SDK Downloads" },
+      { href: "/developer/verification", icon: ShieldCheck, label: "Verification APIs" }
     ]
   },
   gateway: {
@@ -164,21 +198,13 @@ const PORTALS = {
     menuActiveBorder: "border-sky-500",
     navItems: [
       { href: "/gateway", icon: LayoutGrid, label: "Gateway Command" },
+      { href: "/gateway/cbdc", icon: Wallet, label: "CBDC Rails" },
+      { href: "/gateway/compliance", icon: ShieldCheck, label: "Rule Enforcer" },
       { href: "/gateway/transactions", icon: Activity, label: "Live Settlements" },
-      { href: "/gateway/compliance", icon: ShieldCheck, label: "Rule Enforcer" }
+      { href: "/gateway/velocity", icon: Zap, label: "Velocity Checks" }
     ]
   }
 };
-
-function AlertTriangle(props: any) {
-  return (
-    <svg {...props} xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-      <path d="m21.73 18-8-14a2 2 0 0 0-3.48 0l-8 14A2 2 0 0 0 4 21h16a2 2 0 0 0 1.73-3Z" />
-      <path d="M12 9v4" />
-      <path d="M12 17h.01" />
-    </svg>
-  );
-}
 
 export function DashboardSidebar() {
   const pathname = usePathname();
@@ -226,8 +252,8 @@ export function DashboardSidebar() {
         </div>
         <SidebarMenu className="gap-0.5">
           {config.navItems.map((item) => {
-            // Check exact or sub-route match
-            const isActive = pathname === item.href || (item.href !== `/${currentContext}` && pathname.startsWith(item.href));
+            // Check exact match to prevent highlighting main dashboard on subpages
+            const isActive = pathname === item.href;
             
             return (
               <SidebarMenuItem key={item.label}>
