@@ -1,92 +1,103 @@
 "use client";
-import { AlertTriangle, TrendingDown, Activity, ShieldAlert, Zap } from "lucide-react";
 
-export default function EarlyWarningEngine() {
+import { useState, useEffect } from "react";
+import { Activity, AlertTriangle, Crosshair, Radar, Loader2, ArrowRight } from "lucide-react";
+
+export default function EWSEngine() {
+  const [alerts, setAlerts] = useState<any[]>([]);
+  const [isLoading, setIsLoading] = useState(true);
+
+  useEffect(() => {
+    const fetchEWS = async () => {
+      try {
+        const res = await fetch('/api/v1/regulator/ews');
+        const json = await res.json();
+        if (json.success) {
+          setAlerts(json.data.alerts);
+        }
+      } catch (e) {
+        console.error(e);
+      } finally {
+        setIsLoading(false);
+      }
+    };
+    fetchEWS();
+  }, []);
+
   return (
-    <div className="flex-1 p-8 overflow-y-auto">
-      <div className="mb-8">
-        <h1 className="text-3xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-rose-400 to-orange-600 mb-2 font-sans tracking-tight">
-          National Early Warning Engine
-        </h1>
-        <p className="text-slate-400 font-mono text-sm">Predictive Risk & Stress Forecasting Matrix</p>
+    <div className="flex flex-col gap-6">
+      <div className="flex flex-col gap-2">
+        <div className="flex items-center gap-2">
+          <Activity className="h-6 w-6 text-rose-400" />
+          <h1 className="text-2xl font-black text-white uppercase tracking-tight">National Early Warning Engine</h1>
+        </div>
+        <p className="text-slate-400 font-mono text-sm max-w-2xl">
+          Predictive systemic risk matrix. Scanning millions of micro-transactions to forecast macro-level stress fractures before they occur.
+        </p>
       </div>
 
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-        {/* Card 1 */}
-        <div className="bg-[#020810]/50 border border-rose-900/40 rounded-xl p-6 backdrop-blur-md relative overflow-hidden group">
-          <div className="absolute top-0 right-0 p-4">
-            <span className="px-2 py-1 bg-rose-950/50 text-rose-400 text-[10px] font-mono rounded border border-rose-900/50 uppercase tracking-wider">Critical</span>
-          </div>
-          <AlertTriangle className="w-8 h-8 text-rose-500 mb-4" />
-          <h3 className="text-lg font-medium text-slate-200 mb-1">MSME Liquidity Stress</h3>
-          <p className="text-sm text-slate-400 mb-4">Textile sector MSMEs in Gujarat showing severe cashflow deterioration over trailing 30 days.</p>
-          
-          <div className="space-y-2 mb-6">
-            <div className="flex justify-between text-xs font-mono">
-              <span className="text-slate-500">Confidence</span>
-              <span className="text-cyan-400">94.2%</span>
-            </div>
-            <div className="flex justify-between text-xs font-mono">
-              <span className="text-slate-500">Impact Radius</span>
-              <span className="text-rose-400">₹850 Cr Exposure</span>
-            </div>
-          </div>
-          
-          <button className="w-full py-2 bg-rose-950/30 hover:bg-rose-900/50 border border-rose-900/50 rounded-lg text-rose-300 text-sm font-mono transition-colors">
-            Trigger Credit Intervention
-          </button>
+      {isLoading ? (
+        <div className="w-full flex flex-col items-center justify-center p-24 border border-rose-900/30 bg-rose-950/10 rounded-xl gap-4">
+          <Radar className="w-12 h-12 text-rose-500 animate-spin-slow" />
+          <span className="text-rose-400 font-mono text-xs uppercase tracking-widest flex items-center gap-2">
+            <Loader2 className="w-3 h-3 animate-spin" /> Fetching real-time telemetry from EWS backend...
+          </span>
         </div>
+      ) : (
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
+          {alerts.map((alert, idx) => (
+            <div key={idx} className="bg-[#0a1520] border border-rose-900/30 p-6 rounded-xl flex flex-col gap-4 relative overflow-hidden group">
+              <div className="absolute top-0 right-0 w-32 h-32 bg-rose-500/5 blur-3xl -mr-10 -mt-10 pointer-events-none"></div>
+              
+              <div className="flex justify-between items-start">
+                <div className="flex items-center gap-3">
+                  <div className="w-10 h-10 rounded-full bg-rose-950/50 border border-rose-500/20 flex items-center justify-center">
+                    <AlertTriangle className="w-5 h-5 text-rose-500" />
+                  </div>
+                  <div className="flex flex-col">
+                    <span className="text-sm font-black text-white uppercase tracking-tight">{alert.type}</span>
+                    <span className="text-[10px] font-mono text-rose-400 uppercase tracking-widest">{alert.id}</span>
+                  </div>
+                </div>
+                <div className="flex flex-col items-end">
+                  <span className="text-[10px] text-slate-500 font-bold uppercase tracking-widest">Confidence</span>
+                  <span className="text-lg font-black text-white tabular-nums">{alert.confidence}%</span>
+                </div>
+              </div>
 
-        {/* Card 2 */}
-        <div className="bg-[#020810]/50 border border-amber-900/40 rounded-xl p-6 backdrop-blur-md relative overflow-hidden">
-          <div className="absolute top-0 right-0 p-4">
-            <span className="px-2 py-1 bg-amber-950/50 text-amber-400 text-[10px] font-mono rounded border border-amber-900/50 uppercase tracking-wider">Warning</span>
-          </div>
-          <TrendingDown className="w-8 h-8 text-amber-500 mb-4" />
-          <h3 className="text-lg font-medium text-slate-200 mb-1">Tax Compliance Deterioration</h3>
-          <p className="text-sm text-slate-400 mb-4">Tier-2 construction vendors showing 40% drop in timely GST filings in Q3.</p>
-          
-          <div className="space-y-2 mb-6">
-            <div className="flex justify-between text-xs font-mono">
-              <span className="text-slate-500">Confidence</span>
-              <span className="text-cyan-400">88.5%</span>
-            </div>
-            <div className="flex justify-between text-xs font-mono">
-              <span className="text-slate-500">Impact Radius</span>
-              <span className="text-amber-400">High Deficit Risk</span>
-            </div>
-          </div>
-          
-          <button className="w-full py-2 bg-amber-950/30 hover:bg-amber-900/50 border border-amber-900/50 rounded-lg text-amber-300 text-sm font-mono transition-colors">
-            Dispatch Audit Notices
-          </button>
-        </div>
+              <div className="grid grid-cols-2 gap-4 mt-2">
+                <div className="flex flex-col gap-1 p-3 bg-slate-900/50 rounded border border-white/5">
+                  <span className="text-[10px] text-slate-500 font-bold uppercase tracking-widest">Impact Region</span>
+                  <span className="text-xs text-slate-300 font-mono">{alert.region}</span>
+                </div>
+                <div className="flex flex-col gap-1 p-3 bg-slate-900/50 rounded border border-white/5">
+                  <span className="text-[10px] text-slate-500 font-bold uppercase tracking-widest">Vector Sector</span>
+                  <span className="text-xs text-slate-300 font-mono">{alert.sector}</span>
+                </div>
+              </div>
 
-        {/* Card 3 */}
-        <div className="bg-[#020810]/50 border border-rose-900/40 rounded-xl p-6 backdrop-blur-md relative overflow-hidden">
-          <div className="absolute top-0 right-0 p-4">
-            <span className="px-2 py-1 bg-rose-950/50 text-rose-400 text-[10px] font-mono rounded border border-rose-900/50 uppercase tracking-wider">Critical</span>
-          </div>
-          <ShieldAlert className="w-8 h-8 text-rose-500 mb-4" />
-          <h3 className="text-lg font-medium text-slate-200 mb-1">Mule Account Outbreak</h3>
-          <p className="text-sm text-slate-400 mb-4">Predictive detection of mass-account creation exhibiting classic mule topology.</p>
-          
-          <div className="space-y-2 mb-6">
-            <div className="flex justify-between text-xs font-mono">
-              <span className="text-slate-500">Confidence</span>
-              <span className="text-cyan-400">99.1%</span>
+              <div className="flex flex-col gap-2 mt-2">
+                <span className="text-[10px] text-slate-500 font-bold uppercase tracking-widest">AI Threat Analysis</span>
+                <p className="text-sm text-slate-400 leading-relaxed font-mono">
+                  {alert.description}
+                </p>
+              </div>
+
+              <div className="mt-4 p-4 border border-rose-500/20 bg-rose-950/20 rounded flex items-center justify-between">
+                <div className="flex flex-col gap-1">
+                  <span className="text-[10px] text-rose-500 font-bold uppercase tracking-widest flex items-center gap-1">
+                    <Crosshair className="w-3 h-3" /> Recommended Action
+                  </span>
+                  <span className="text-xs text-rose-100 font-mono">{alert.action}</span>
+                </div>
+                <button className="h-8 px-3 bg-rose-600 hover:bg-rose-500 text-white rounded text-[10px] font-bold uppercase tracking-widest transition-colors flex items-center gap-1">
+                  Execute <ArrowRight className="w-3 h-3" />
+                </button>
+              </div>
             </div>
-            <div className="flex justify-between text-xs font-mono">
-              <span className="text-slate-500">Impact Radius</span>
-              <span className="text-rose-400">12,000+ Accounts</span>
-            </div>
-          </div>
-          
-          <button className="w-full py-2 bg-rose-950/30 hover:bg-rose-900/50 border border-rose-900/50 rounded-lg text-rose-300 text-sm font-mono transition-colors">
-            Freeze Sub-Network
-          </button>
+          ))}
         </div>
-      </div>
+      )}
     </div>
   );
 }

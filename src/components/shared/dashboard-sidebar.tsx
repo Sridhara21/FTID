@@ -12,6 +12,7 @@ import {
   SidebarHeader, SidebarContent, SidebarMenu, SidebarMenuItem, SidebarMenuButton, SidebarFooter,
 } from "@/components/ui/sidebar";
 import { Button } from "@/components/ui/button";
+import { useAuth } from "@/lib/auth-context";
 
 // --- Configuration for Portals ---
 const PORTALS = {
@@ -181,6 +182,7 @@ function AlertTriangle(props: any) {
 
 export function DashboardSidebar() {
   const pathname = usePathname();
+  const { role, logout } = useAuth();
   
   // Determine context based on the root path
   const currentContext = pathname.split('/')[1] || 'citizen';
@@ -204,14 +206,16 @@ export function DashboardSidebar() {
               </span>
             </div>
           </div>
-          <div className="px-2">
-            <Link href="/">
-              <Button variant="outline" className="w-full justify-start text-[10px] font-bold tracking-widest uppercase border-slate-800 bg-[#0a1520] hover:bg-slate-800 text-slate-400 hover:text-white">
-                 <ArrowRightLeft className="h-3 w-3 mr-2" />
-                 Switch Node
-              </Button>
-            </Link>
-          </div>
+          {role === 'regulator' && (
+            <div className="px-2">
+              <Link href="/">
+                <Button variant="outline" className="w-full justify-start text-[10px] font-bold tracking-widest uppercase border-slate-800 bg-[#0a1520] hover:bg-slate-800 text-slate-400 hover:text-white">
+                   <ArrowRightLeft className="h-3 w-3 mr-2" />
+                   Switch Node
+                </Button>
+              </Link>
+            </div>
+          )}
         </div>
       </SidebarHeader>
       <SidebarContent className="px-3">
@@ -246,7 +250,7 @@ export function DashboardSidebar() {
           })}
         </SidebarMenu>
       </SidebarContent>
-      <SidebarFooter className="border-t border-white/5 p-4">
+      <SidebarFooter className="border-t border-white/5 p-4 flex flex-col gap-2">
         <div className="rounded-md border bg-[#0a1520] border-slate-800 p-3">
           <div className="flex items-center gap-3">
             <Settings className="h-5 w-5 text-slate-500" />
@@ -256,6 +260,9 @@ export function DashboardSidebar() {
             </div>
           </div>
         </div>
+        <Button onClick={logout} variant="ghost" className="w-full justify-start text-xs text-rose-400 hover:text-rose-300 hover:bg-rose-950/20 h-8">
+          Disconnect Session
+        </Button>
       </SidebarFooter>
     </>
   );

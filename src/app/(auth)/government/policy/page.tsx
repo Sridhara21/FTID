@@ -1,102 +1,153 @@
 "use client";
-import { SlidersHorizontal, Activity, ArrowRight, Zap, Target } from "lucide-react";
 
-export default function PolicyDigitalTwin() {
+import { useState, useEffect } from "react";
+import { HandCoins, Activity, BarChart3, Settings2, Loader2 } from "lucide-react";
+import { PolicyInputs, PolicyOutputs } from "@/lib/engines";
+
+export default function PolicyTwin() {
+  const [inputs, setInputs] = useState<PolicyInputs>({
+    gstRate: 18,
+    corporateTax: 25,
+    subsidyAllocation: 50000,
+    msmeCredit: 100000,
+    infraSpending: 200000
+  });
+
+  const [outputs, setOutputs] = useState<PolicyOutputs | null>(null);
+  const [isLoading, setIsLoading] = useState(false);
+
+  // Use a debounce for calling API
+  useEffect(() => {
+    const timer = setTimeout(() => {
+      fetchData();
+    }, 500);
+    return () => clearTimeout(timer);
+  }, [inputs]);
+
+  const fetchData = async () => {
+    setIsLoading(true);
+    try {
+      const res = await fetch('/api/v1/government/policy', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(inputs)
+      });
+      const json = await res.json();
+      if (json.success) setOutputs(json.data);
+    } catch (e) {
+      console.error(e);
+    } finally {
+      setIsLoading(false);
+    }
+  };
+
+  const handleSlider = (key: keyof PolicyInputs, value: number) => {
+    setInputs(prev => ({ ...prev, [key]: value }));
+  };
+
   return (
-    <div className="flex-1 p-8 overflow-y-auto">
-      <div className="mb-8">
-        <h1 className="text-3xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-emerald-400 to-cyan-600 mb-2 font-sans tracking-tight">
-          Policy Digital Twin
-        </h1>
-        <p className="text-slate-400 font-mono text-sm">Macroeconomic Simulation & Predictive Impact Modeling</p>
+    <div className="flex flex-col gap-6">
+      <div className="flex flex-col gap-2">
+        <div className="flex items-center gap-2">
+          <HandCoins className="h-6 w-6 text-amber-400" />
+          <h1 className="text-2xl font-black text-white uppercase tracking-tight">Policy Digital Twin</h1>
+        </div>
+        <p className="text-slate-400 font-mono text-sm max-w-2xl">
+          Macroeconomic Simulator. Adjust policy levers below to predict systemic impact on growth and formalization.
+        </p>
       </div>
 
-      <div className="grid grid-cols-12 gap-8">
-        {/* Left Pane: Policy Levers */}
-        <div className="col-span-5 flex flex-col gap-6">
-          <div className="bg-[#020810]/50 border border-cyan-900/40 rounded-xl p-6 backdrop-blur-md">
-            <h3 className="text-cyan-400 font-mono text-sm mb-6 flex items-center gap-2">
-              <SlidersHorizontal className="w-4 h-4" /> Policy Levers
-            </h3>
-            
-            <div className="space-y-8">
-              <div>
-                <div className="flex justify-between mb-2">
-                  <label className="text-sm font-medium text-slate-300">GST Base Rate Revision</label>
-                  <span className="text-cyan-400 font-mono">16.5%</span>
-                </div>
-                <input type="range" className="w-full accent-cyan-500 bg-cyan-950" min="10" max="25" defaultValue="16.5" />
+      <div className="grid grid-cols-1 lg:grid-cols-12 gap-6">
+        {/* Left Column: Inputs */}
+        <div className="lg:col-span-4 flex flex-col gap-4">
+          <div className="p-5 border border-slate-800 bg-[#0a1520] rounded-xl flex flex-col gap-6 relative">
+            <h2 className="text-sm font-bold text-slate-300 uppercase tracking-widest flex items-center gap-2">
+              <Settings2 className="h-4 w-4 text-amber-500" /> Policy Levers
+            </h2>
+
+            <div className="flex flex-col gap-2">
+              <div className="flex justify-between text-xs font-mono">
+                <span className="text-slate-400">Mean GST Rate</span>
+                <span className="text-amber-400">{inputs.gstRate}%</span>
               </div>
-              
-              <div>
-                <div className="flex justify-between mb-2">
-                  <label className="text-sm font-medium text-slate-300">MSME Lending Subsidy</label>
-                  <span className="text-emerald-400 font-mono">+1.2%</span>
-                </div>
-                <input type="range" className="w-full accent-emerald-500 bg-emerald-950" min="0" max="5" defaultValue="1.2" />
+              <input type="range" min="5" max="28" value={inputs.gstRate} onChange={e => handleSlider('gstRate', Number(e.target.value))} className="w-full accent-amber-500" />
+            </div>
+
+            <div className="flex flex-col gap-2">
+              <div className="flex justify-between text-xs font-mono">
+                <span className="text-slate-400">Corporate Tax</span>
+                <span className="text-amber-400">{inputs.corporateTax}%</span>
               </div>
-              
-              <div>
-                <div className="flex justify-between mb-2">
-                  <label className="text-sm font-medium text-slate-300">Repo Rate (Simulated)</label>
-                  <span className="text-rose-400 font-mono">6.25%</span>
-                </div>
-                <input type="range" className="w-full accent-rose-500 bg-rose-950" min="4" max="9" defaultValue="6.25" />
+              <input type="range" min="15" max="35" value={inputs.corporateTax} onChange={e => handleSlider('corporateTax', Number(e.target.value))} className="w-full accent-amber-500" />
+            </div>
+
+            <div className="flex flex-col gap-2">
+              <div className="flex justify-between text-xs font-mono">
+                <span className="text-slate-400">Subsidy Allocation (Cr)</span>
+                <span className="text-amber-400">₹{inputs.subsidyAllocation}</span>
               </div>
+              <input type="range" min="10000" max="100000" step="5000" value={inputs.subsidyAllocation} onChange={e => handleSlider('subsidyAllocation', Number(e.target.value))} className="w-full accent-amber-500" />
             </div>
             
-            <button className="mt-8 w-full py-3 bg-gradient-to-r from-cyan-900 to-emerald-900 hover:from-cyan-800 hover:to-emerald-800 rounded-lg text-white font-medium flex justify-center items-center gap-2 transition-all shadow-[0_0_20px_rgba(34,211,238,0.2)]">
-              <Zap className="w-4 h-4" /> Run Simulation
-            </button>
+            <div className="flex flex-col gap-2">
+              <div className="flex justify-between text-xs font-mono">
+                <span className="text-slate-400">MSME Credit Target (Cr)</span>
+                <span className="text-amber-400">₹{inputs.msmeCredit}</span>
+              </div>
+              <input type="range" min="50000" max="200000" step="10000" value={inputs.msmeCredit} onChange={e => handleSlider('msmeCredit', Number(e.target.value))} className="w-full accent-amber-500" />
+            </div>
           </div>
         </div>
 
-        {/* Right Pane: Simulated Impact */}
-        <div className="col-span-7 bg-[#020810]/50 border border-emerald-900/40 rounded-xl p-6 backdrop-blur-md relative">
-          <h3 className="text-emerald-400 font-mono text-sm mb-6 flex items-center gap-2">
-            <Target className="w-4 h-4" /> Projected Macro Impact (T+12 Months)
-          </h3>
+        {/* Right Column: Outputs */}
+        <div className="lg:col-span-8 grid grid-cols-1 sm:grid-cols-2 gap-4 relative">
           
-          <div className="grid grid-cols-2 gap-4 mb-8">
-            <div className="p-4 border border-cyan-900/30 bg-cyan-950/10 rounded-lg">
-              <p className="text-xs text-slate-400 font-mono mb-1">GDP Growth Rate</p>
-              <div className="flex items-end gap-2">
-                <span className="text-2xl font-bold text-slate-200">7.2%</span>
-                <span className="text-emerald-400 text-sm font-medium flex items-center"><ArrowRight className="w-3 h-3 rotate-[-45deg]" /> +0.4%</span>
-              </div>
+          {/* Loading Overlay */}
+          {isLoading && (
+            <div className="absolute inset-0 bg-[#020810]/60 backdrop-blur-sm z-10 flex flex-col items-center justify-center rounded-xl border border-amber-900/30">
+              <Loader2 className="w-8 h-8 text-amber-500 animate-spin mb-2" />
+              <span className="text-amber-400 font-mono text-xs uppercase tracking-widest">Running Simulation...</span>
             </div>
-            <div className="p-4 border border-cyan-900/30 bg-cyan-950/10 rounded-lg">
-              <p className="text-xs text-slate-400 font-mono mb-1">Tax Revenue Collection</p>
-              <div className="flex items-end gap-2">
-                <span className="text-2xl font-bold text-slate-200">₹1.84L Cr</span>
-                <span className="text-rose-400 text-sm font-medium flex items-center"><ArrowRight className="w-3 h-3 rotate-[45deg]" /> -1.2%</span>
-              </div>
-            </div>
-            <div className="p-4 border border-cyan-900/30 bg-cyan-950/10 rounded-lg">
-              <p className="text-xs text-slate-400 font-mono mb-1">MSME Survival Rate</p>
-              <div className="flex items-end gap-2">
-                <span className="text-2xl font-bold text-slate-200">92.4%</span>
-                <span className="text-emerald-400 text-sm font-medium flex items-center"><ArrowRight className="w-3 h-3 rotate-[-45deg]" /> +3.1%</span>
-              </div>
-            </div>
-            <div className="p-4 border border-cyan-900/30 bg-cyan-950/10 rounded-lg">
-              <p className="text-xs text-slate-400 font-mono mb-1">Economy Formalization</p>
-              <div className="flex items-end gap-2">
-                <span className="text-2xl font-bold text-slate-200">68.5%</span>
-                <span className="text-emerald-400 text-sm font-medium flex items-center"><ArrowRight className="w-3 h-3 rotate-[-45deg]" /> +1.8%</span>
-              </div>
+          )}
+
+          <div className="p-5 border border-slate-800 bg-[#0a1520] rounded-xl flex flex-col justify-between group">
+            <span className="text-xs font-bold text-slate-500 uppercase tracking-widest">GDP Growth Prediction</span>
+            <div className="flex items-end gap-2 mt-4">
+              <span className="text-4xl font-black text-amber-400 tabular-nums">
+                {outputs ? outputs.gdpGrowth.toFixed(2) : '--'}%
+              </span>
+              {outputs && outputs.gdpGrowth > 6.5 ? <span className="text-emerald-500 text-sm font-bold mb-1">+Acc</span> : <span className="text-rose-500 text-sm font-bold mb-1">-Dec</span>}
             </div>
           </div>
           
-          <div className="h-48 bg-gradient-to-t from-emerald-900/20 to-transparent border-b border-emerald-500/50 flex items-end relative overflow-hidden">
-             {/* Simulated Chart */}
-             <svg width="100%" height="100%" viewBox="0 0 100 100" preserveAspectRatio="none">
-               <path d="M0,80 Q25,60 50,70 T100,20 L100,100 L0,100 Z" fill="rgba(16,185,129,0.1)" stroke="#10b981" strokeWidth="2" />
-               <path d="M0,70 Q25,80 50,50 T100,40" stroke="rgba(239,68,68,0.5)" strokeWidth="2" fill="none" strokeDasharray="2,2"/>
-             </svg>
-             <span className="absolute bottom-2 left-2 text-[10px] text-emerald-500 font-mono">Formalization Curve</span>
-             <span className="absolute top-2 right-2 text-[10px] text-rose-500 font-mono">Informal Sector Decay</span>
+          <div className="p-5 border border-slate-800 bg-[#0a1520] rounded-xl flex flex-col justify-between">
+            <span className="text-xs font-bold text-slate-500 uppercase tracking-widest">Formalization Index</span>
+            <div className="flex items-end gap-2 mt-4">
+              <span className="text-4xl font-black text-emerald-400 tabular-nums">
+                {outputs ? outputs.formalization.toFixed(1) : '--'}%
+              </span>
+              <span className="text-slate-400 text-sm font-bold mb-1 font-mono">of GDP</span>
+            </div>
           </div>
+
+          <div className="p-5 border border-slate-800 bg-[#0a1520] rounded-xl flex flex-col justify-between">
+            <span className="text-xs font-bold text-slate-500 uppercase tracking-widest">Gov Revenue (Lakh Cr)</span>
+            <div className="flex items-end gap-2 mt-4">
+              <span className="text-4xl font-black text-white tabular-nums">
+                ₹{outputs ? outputs.govRevenue.toFixed(2) : '--'}
+              </span>
+            </div>
+          </div>
+
+          <div className="p-5 border border-slate-800 bg-[#0a1520] rounded-xl flex flex-col justify-between">
+            <span className="text-xs font-bold text-slate-500 uppercase tracking-widest">Predicted Inflation</span>
+            <div className="flex items-end gap-2 mt-4">
+              <span className="text-4xl font-black text-rose-400 tabular-nums">
+                {outputs ? outputs.inflation.toFixed(2) : '--'}%
+              </span>
+            </div>
+          </div>
+
         </div>
       </div>
     </div>
