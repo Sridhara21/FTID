@@ -1,0 +1,51 @@
+{
+  "openapi": "3.0.0",
+  "info": {
+    "title": "FTID Core API",
+    "version": "1.0.0",
+    "description": "API infrastructure for the FTID Network"
+  },
+  "servers": [
+    {
+      "url": "https://api.ftid.gov.in/v1"
+    }
+  ],
+  "paths": {
+    "/events": {
+      "post": {
+        "summary": "Dispatch a systemic event",
+        "operationId": "dispatchSystemEvent",
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "eventType": { "type": "string" },
+                  "payload": { "type": "object" }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Event dispatched successfully"
+          }
+        }
+      }
+    },
+    "/graph": {
+      "get": {
+        "summary": "Fetch live national graph state",
+        "operationId": "getNationalGraph",
+        "responses": {
+          "200": {
+            "description": "Graph topology representation"
+          }
+        }
+      }
+    }
+  }
+}
