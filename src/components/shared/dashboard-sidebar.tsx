@@ -7,7 +7,7 @@ import {
   Bot, LayoutGrid, HeartPulse, Landmark, ShieldCheck, User, Wallet, Scale,
   FileText, HandCoins, ArrowRightLeft, Briefcase, Lock, Database, Target,
   Building2, PieChart, Network, Terminal, Settings, Activity, Layers, Receipt,
-  Sparkles, List, FileKey, Server, Zap, Globe, AlertTriangle
+  Sparkles, List, FileKey, Server, Zap, Globe, AlertTriangle, LineChart
 } from "lucide-react";
 import {
   SidebarHeader, SidebarContent, SidebarMenu, SidebarMenuItem, SidebarMenuButton, SidebarFooter,

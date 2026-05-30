@@ -1,0 +1,109 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "sqlite"
+  url      = env("DATABASE_URL")
+}
+
+model User {
+  id             String    @id @default(cuid())
+  name           String
+  role           String    // citizen, business, bank, institution, auditor, government, regulator, developer
+  pan            String?   @unique
+  aadhaar        String?   @unique
+  trustScore     Float     @default(50.0)
+  createdAt      DateTime  @default(now())
+  
+  // Relations
+  wallets        Wallet[]
+  subsidies      Subsidy[]
+  sentTx         Transaction[] @relation("SentTransactions")
+  receivedTx     Transaction[] @relation("ReceivedTransactions")
+  invoicesIssued Invoice[] @relation("IssuedInvoices")
+  invoicesRecv   Invoice[] @relation("ReceivedInvoices")
+  loans          Loan[]
+}
+
+model Wallet {
+  id             String    @id @default(cuid())
+  ownerId        String
+  balance        Float     @default(0.0)
+  walletType     String    // CBDC, FIAT
+  lastUpdated    DateTime  @updatedAt
+  
+  owner          User      @relation(fields: [ownerId], references: [id])
+}
+
+model Transaction {
+  id             String    @id @default(cuid())
+  senderId       String
+  receiverId     String
+  amount         Float
+  category       String
+  channel        String    // CBDC, RTGS, NEFT
+  riskScore      Float     @default(0.0)
+  status         String    // PENDING, COMPLETED, FLAGGED, BLOCKED
+  timestamp      DateTime  @default(now())
+  
+  sender         User      @relation("SentTransactions", fields: [senderId], references: [id])
+  receiver       User      @relation("ReceivedTransactions", fields: [receiverId], references: [id])
+}
+
+model Subsidy {
+  id             String    @id @default(cuid())
+  citizenId      String
+  scheme         String
+  amount         Float
+  status         String    // INITIATED, DISBURSED
+  issuedAt       DateTime  @default(now())
+  
+  citizen        User      @relation(fields: [citizenId], references: [id])
+}
+
+model Invoice {
+  id             String    @id @default(cuid())
+  invoiceNumber  String    @unique
+  vendorId       String
+  businessId     String
+  amount         Float
+  gstAmount      Float
+  riskScore      Float     @default(0.0)
+  status         String    // PENDING, CLEARED, FLAGGED
+  createdAt      DateTime  @default(now())
+  
+  vendor         User      @relation("IssuedInvoices", fields: [vendorId], references: [id])
+  business       User      @relation("ReceivedInvoices", fields: [businessId], references: [id])
+}
+
+model Loan {
+  id                 String    @id @default(cuid())
+  applicantId        String
+  loanAmount         Float
+  trustScore         Float
+  approvalStatus     String    // PENDING, APPROVED, REJECTED
+  defaultProbability Float
+  createdAt          DateTime  @default(now())
+  
+  applicant          User      @relation(fields: [applicantId], references: [id])
+}
+
+model Alert {
+  id             String    @id @default(cuid())
+  source         String    // INVOICE_ENGINE, TRANSACTION_GATEWAY, EWS
+  severity       String    // LOW, MEDIUM, HIGH, CRITICAL
+  description    String
+  affectedEntity String?
+  status         String    // ACTIVE, RESOLVED
+  createdAt      DateTime  @default(now())
+}
+
+model AuditTrail {
+  id             String    @id @default(cuid())
+  eventType      String
+  entity         String
+  actor          String
+  metadata       String?   // JSON payload stored as string for sqlite
+  timestamp      DateTime  @default(now())
+}
