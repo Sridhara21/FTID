@@ -4,11 +4,11 @@ import { useEffect, useState } from "react";
 import { AlertTriangle, TrendingUp, ShieldAlert, Activity, RefreshCw } from "lucide-react";
 
 const ALERTS = [
-  { text: "17 suspicious transaction clusters detected in western grid", icon: AlertTriangle, color: "text-amber-400" },
-  { text: "MSME liquidity stress rising in Karnataka (+4.2%)", icon: TrendingUp, color: "text-rose-400" },
-  { text: "Institutional trust index stable at 94.2/100", icon: ShieldAlert, color: "text-emerald-400" },
-  { text: "CBDC transaction throughput: 4.3M/min simulated", icon: Activity, color: "text-cyan-400" },
-  { text: "Automated reconciliation complete for 12,400 SME ledgers", icon: RefreshCw, color: "text-indigo-400" }
+  { text: "17 suspicious transaction clusters detected in western grid", icon: AlertTriangle, color: "text-amber-400", nodeId: "U6JFCK" },
+  { text: "MSME liquidity stress rising in Karnataka (+4.2%)", icon: TrendingUp, color: "text-rose-400", nodeId: "8M4LSJ" },
+  { text: "Institutional trust index stable at 94.2/100", icon: ShieldAlert, color: "text-emerald-400", nodeId: "9K2PQM" },
+  { text: "CBDC transaction throughput: 4.3M/min simulated", icon: Activity, color: "text-cyan-400", nodeId: "7R5NBT" },
+  { text: "Automated reconciliation complete for 12,400 SME ledgers", icon: RefreshCw, color: "text-indigo-400", nodeId: "4X9VYW" }
 ];
 
 export function BottomIntelligenceRibbon() {
@@ -41,7 +41,7 @@ export function BottomIntelligenceRibbon() {
                   {alert.text}
                 </span>
                 <span className="text-[9px] text-slate-500 ml-4 font-mono">
-                  [NODE_ID: {Math.random().toString(36).substring(2, 8).toUpperCase()}]
+                  [NODE_ID: {alert.nodeId}]
                 </span>
               </div>
             ))}

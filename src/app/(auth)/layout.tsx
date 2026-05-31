@@ -1,23 +1,55 @@
-import { Bell, Search } from "lucide-react";
-import { Button } from "@/components/ui/button";
-import { Input } from "@/components/ui/input";
+"use client";
+
+import { useEffect } from "react";
+import { useRouter, usePathname } from "next/navigation";
+import { useAuth } from "@/lib/auth-context";
 import {
   SidebarProvider,
   Sidebar,
-  SidebarTrigger,
   SidebarInset,
 } from "@/components/ui/sidebar";
-import { UserNav } from "@/components/shared/user-nav";
 import { DashboardSidebar } from "@/components/shared/dashboard-sidebar";
-import { FtidStatusLayer } from "@/components/shared/ftid-status-layer";
-import { MobileNav } from "@/components/shared/mobile-nav";
 import { DynamicHeader } from "@/components/shared/dynamic-header";
+import { MobileNav } from "@/components/shared/mobile-nav";
 
 export default function DashboardLayout({
   children,
 }: {
   children: React.ReactNode;
 }) {
+  const { role, isLoading } = useAuth();
+  const router = useRouter();
+  const pathname = usePathname();
+
+  useEffect(() => {
+    if (isLoading) return;
+    
+    if (!role) {
+      // router.push("/login"); // Login removed for unrestricted demonstration
+      return;
+    }
+
+    // Role-Based Access Control logic
+    const pathRoot = pathname.split('/')[1];
+    
+    // Regulator can see everything
+    if (role === "regulator") return;
+
+    // Normal roles can only see their own portal
+    if (pathRoot !== role && pathRoot !== "") {
+      router.push(`/${role}`);
+    }
+  }, [role, isLoading, pathname, router]);
+
+  if (isLoading || !role) {
+    return <div className="min-h-screen bg-[#020810] flex items-center justify-center">
+      <div className="w-8 h-8 rounded-full border-2 border-cyan-500 border-t-transparent animate-spin"></div>
+    </div>;
+  }
+
+  // Ensure normal roles can't see other options in the sidebar
+  // This will be handled inside DashboardSidebar by looking at the role!
+
   return (
     <SidebarProvider>
       <Sidebar className="hidden md:flex">

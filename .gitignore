@@ -50,3 +50,6 @@ next-env.d.ts
 Persona_Registration_Credentials.csv
 waka-keepalive.js
 barran.js
+stress.js
+get_size.js
+/src/generated/prisma

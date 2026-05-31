@@ -12,6 +12,8 @@ export const metadata: Metadata = {
   description: 'Sovereign Financial Infrastructure Platform for Citizens and Governments.',
 };
 
+import { AuthProvider } from '@/lib/auth-context';
+
 export default function RootLayout({
   children,
 }: Readonly<{
@@ -22,8 +24,10 @@ export default function RootLayout({
       <body className={`${spaceGrotesk.variable} ${inter.variable} font-sans antialiased bg-[#020810] text-foreground relative min-h-screen`} suppressHydrationWarning>
         <div className="absolute inset-0 bg-cyber-grid bg-[length:30px_30px] opacity-10 pointer-events-none z-0"></div>
         <FirebaseClientProvider>
-          {children}
-          <Toaster />
+          <AuthProvider>
+            {children}
+            <Toaster />
+          </AuthProvider>
         </FirebaseClientProvider>
       </body>
     </html>
