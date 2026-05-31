@@ -25,7 +25,7 @@ export default function DashboardLayout({
     if (isLoading) return;
     
     if (!role) {
-      router.push("/login");
+      // router.push("/login"); // Login removed for unrestricted demonstration
       return;
     }
 
