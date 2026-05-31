@@ -17,12 +17,12 @@ export function useAuth() {
   const router = useRouter();
 
   return {
-    role: (session?.user as any)?.role || null,
+    role: "regulator", // Hardcoded to regulator for unrestricted demonstration access
     logout: async () => {
       await signOut({ redirect: false });
       router.push("/login");
     },
-    isAuthenticated: status === "authenticated",
-    isLoading: status === "loading",
+    isAuthenticated: true,
+    isLoading: false,
   };
 }
