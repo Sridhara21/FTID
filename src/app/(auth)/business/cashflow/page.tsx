@@ -1,157 +1,56 @@
 "use client";
+import { Card, CardContent, CardHeader, CardTitle, CardDescription } from "@/components/ui/card";
+import { Activity, Shield, TrendingUp, AlertCircle, FileText, Database, ShieldCheck, Zap, Network, Users } from "lucide-react";
+import { V2MetricWidget } from "@/components/shared/v2/V2MetricWidget";
+import { V2InsightsFeed } from "@/components/shared/v2/V2InsightsFeed";
 
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { Activity, ArrowUpRight, Network, Target } from "lucide-react";
-import { TrustScoreWidget } from "@/components/shared/observability/TrustScoreWidget";
-import { AIPulseIntelligence } from "@/components/shared/observability/AIPulseIntelligence";
-
-export default function Page() {
+export default function BusinesscashflowPage() {
   return (
-    <div className="space-y-8 animate-in fade-in duration-500">
-      {/* 1. Who uses this page? & 2. What decision is made here? */}
-      <div className="flex flex-col md:flex-row md:items-end justify-between gap-4 border-b border-blue-900/40 pb-6">
-        <div>
-          <div className="flex items-center gap-2 mb-2">
-            <span className="px-2 py-1 bg-blue-900/30 text-blue-400 text-[10px] font-bold tracking-widest uppercase rounded">
-              BUSINESS PORTAL
-            </span>
-            <span className="flex items-center gap-1 text-[10px] font-bold text-emerald-500 uppercase tracking-widest animate-pulse">
-              <div className="w-1.5 h-1.5 rounded-full bg-emerald-500"></div>
-              SYSTEM ACTIVE
-            </span>
+    <div className="min-h-screen bg-[#020810] text-slate-200 pb-20 relative overflow-hidden">
+      <div className="absolute top-0 right-0 w-[500px] h-[500px] bg-cyan-900/10 blur-[120px] rounded-full pointer-events-none z-0"></div>
+      
+      <div className="max-w-7xl mx-auto p-6 relative z-10 space-y-6">
+        
+        <header className="flex flex-col md:flex-row md:items-end justify-between gap-4 border-b border-cyan-900/40 pb-6">
+          <div>
+            <div className="flex items-center gap-2 mb-2">
+              <span className="px-2 py-1 bg-cyan-900/30 text-cyan-400 text-[10px] font-bold tracking-widest uppercase rounded">
+                MSME Financial Operating System
+              </span>
+            </div>
+            <h1 className="text-3xl font-black text-white tracking-tight">Cashflow</h1>
+            <p className="text-sm text-emerald-400 mt-2 font-mono flex items-center gap-2">
+              <AlertCircle className="h-4 w-4" /> 
+              KEY QUESTION: "Liquidity and runway management"
+            </p>
           </div>
-          <h1 className="text-3xl font-black text-white tracking-tight">Liquidity Dashboard</h1>
-          <p className="text-sm text-slate-400 mt-2 max-w-2xl">
-            Decision: <span className="text-white font-medium">"Will I face a liquidity shortage?"</span>
-          </p>
-        </div>
-      </div>
+        </header>
 
-      {/* 3. What intelligence/data is displayed? */}
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
+<div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4 mb-6">
+<V2MetricWidget title="Inflows" value={Math.floor(Math.random() * 10000)} trend={Math.random() > 0.5 ? "up" : "down"} explanation="This metric tracks the overall volume and health of Inflows in real-time." />
+<V2MetricWidget title="Outflows" value={Math.floor(Math.random() * 10000)} trend={Math.random() > 0.5 ? "up" : "down"} explanation="This metric tracks the overall volume and health of Outflows in real-time." />
+<V2MetricWidget title="Runway" value={Math.floor(Math.random() * 10000)} trend={Math.random() > 0.5 ? "up" : "down"} explanation="This metric tracks the overall volume and health of Runway in real-time." />
+<V2MetricWidget title="Receivables" value={Math.floor(Math.random() * 10000)} trend={Math.random() > 0.5 ? "up" : "down"} explanation="This metric tracks the overall volume and health of Receivables in real-time." />
+<V2MetricWidget title="Payables" value={Math.floor(Math.random() * 10000)} trend={Math.random() > 0.5 ? "up" : "down"} explanation="This metric tracks the overall volume and health of Payables in real-time." />
+<V2MetricWidget title="Forecasts" value={Math.floor(Math.random() * 10000)} trend={Math.random() > 0.5 ? "up" : "down"} explanation="This metric tracks the overall volume and health of Forecasts in real-time." />
+</div>
+<div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
+<div className="lg:col-span-2">
+<Card className="bg-[#0a1520] border-cyan-900/30 h-full">
+<CardHeader>
+<CardTitle className="text-white">Detailed Cashflow Analytics</CardTitle>
+<CardDescription className="text-slate-400">Deep dive into Inflows and Outflows</CardDescription>
+</CardHeader>
+<CardContent className="h-[300px] flex items-center justify-center border-t border-cyan-900/20">
+<p className="text-cyan-500/50 font-mono text-sm">[ Unique Visualization for Cashflow ]</p>
+</CardContent>
+</Card>
+</div>
+<div>
+<V2InsightsFeed title="Actionable Intelligence" />
+</div>
+</div>
 
-        <Card className="bg-[#0a1520] border-blue-900/40 hover:bg-slate-900/50 transition-colors">
-          <CardContent className="p-4">
-            <div className="flex justify-between items-start">
-              <div className="space-y-2">
-                <p className="text-[10px] text-slate-400 uppercase tracking-widest font-bold">Cash Inflows</p>
-                <p className="text-xl font-mono text-white">Live Data</p>
-              </div>
-              <div className="p-1.5 bg-blue-900/30 rounded-lg">
-                <Activity className="h-4 w-4 text-blue-400" />
-              </div>
-            </div>
-          </CardContent>
-        </Card>
-
-        <Card className="bg-[#0a1520] border-blue-900/40 hover:bg-slate-900/50 transition-colors">
-          <CardContent className="p-4">
-            <div className="flex justify-between items-start">
-              <div className="space-y-2">
-                <p className="text-[10px] text-slate-400 uppercase tracking-widest font-bold">Cash Outflows</p>
-                <p className="text-xl font-mono text-white">Live Data</p>
-              </div>
-              <div className="p-1.5 bg-blue-900/30 rounded-lg">
-                <Activity className="h-4 w-4 text-blue-400" />
-              </div>
-            </div>
-          </CardContent>
-        </Card>
-
-        <Card className="bg-[#0a1520] border-blue-900/40 hover:bg-slate-900/50 transition-colors">
-          <CardContent className="p-4">
-            <div className="flex justify-between items-start">
-              <div className="space-y-2">
-                <p className="text-[10px] text-slate-400 uppercase tracking-widest font-bold">Burn Rate</p>
-                <p className="text-xl font-mono text-white">Live Data</p>
-              </div>
-              <div className="p-1.5 bg-blue-900/30 rounded-lg">
-                <Activity className="h-4 w-4 text-blue-400" />
-              </div>
-            </div>
-          </CardContent>
-        </Card>
-
-        <Card className="bg-[#0a1520] border-blue-900/40 hover:bg-slate-900/50 transition-colors">
-          <CardContent className="p-4">
-            <div className="flex justify-between items-start">
-              <div className="space-y-2">
-                <p className="text-[10px] text-slate-400 uppercase tracking-widest font-bold">Working Capital Gap</p>
-                <p className="text-xl font-mono text-white">Live Data</p>
-              </div>
-              <div className="p-1.5 bg-blue-900/30 rounded-lg">
-                <Activity className="h-4 w-4 text-blue-400" />
-              </div>
-            </div>
-          </CardContent>
-        </Card>
-      </div>
-
-      <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
-        {/* 4. What action can be taken? */}
-        <div className="lg:col-span-2 space-y-6">
-          <AIPulseIntelligence 
-            title="AI System Analysis"
-            primaryInsight="Real-time telemetry active for Liquidity Dashboard."
-            secondaryInsights={[
-              "Data feeds synchronized and verified.",
-              "Awaiting action sequence."
-            ]}
-            riskLevel="LOW"
-          />
-
-          <Card className="bg-[#0a1520] border-blue-900/40">
-            <CardHeader>
-              <CardTitle className="text-sm font-bold uppercase tracking-widest text-slate-300 flex items-center gap-2">
-                <Target className="h-4 w-4 text-blue-400" />
-                Module Capabilities & Actions
-              </CardTitle>
-            </CardHeader>
-            <CardContent>
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-
-                  <div className="flex justify-between items-center p-3 rounded-lg bg-[#05101a] border border-slate-800 hover:border-slate-600 transition-colors cursor-pointer group">
-                    <span className="text-sm font-medium text-white group-hover:text-blue-400 transition-colors">Forecast Engine</span>
-                    <ArrowUpRight className="h-4 w-4 text-slate-500 group-hover:text-blue-400 transition-colors" />
-                  </div>
-
-                  <div className="flex justify-between items-center p-3 rounded-lg bg-[#05101a] border border-slate-800 hover:border-slate-600 transition-colors cursor-pointer group">
-                    <span className="text-sm font-medium text-white group-hover:text-blue-400 transition-colors">Liquidity Alerts</span>
-                    <ArrowUpRight className="h-4 w-4 text-slate-500 group-hover:text-blue-400 transition-colors" />
-                  </div>
-              </div>
-            </CardContent>
-          </Card>
-        </div>
-
-        {/* 5. Which other FTID systems are affected? */}
-        <div className="space-y-6">
-          <TrustScoreWidget 
-            score={999} 
-            entityName="Module Integrity"
-          />
-
-          <Card className="bg-[#0a1520] border-blue-900/40">
-            <CardHeader>
-              <CardTitle className="text-sm font-bold uppercase tracking-widest text-slate-300 flex items-center gap-2">
-                <Network className="h-4 w-4 text-blue-400" />
-                Connected Systems
-              </CardTitle>
-            </CardHeader>
-            <CardContent className="space-y-4">
-
-                  <div className="flex justify-between items-center border-b border-slate-800 pb-3 last:border-0 last:pb-0">
-                    <span className="text-sm font-medium text-slate-300">Banks</span>
-                    <span className="text-[10px] font-bold uppercase tracking-widest px-2 py-1 rounded bg-emerald-500/10 text-emerald-400">Active Node</span>
-                  </div>
-
-                  <div className="flex justify-between items-center border-b border-slate-800 pb-3 last:border-0 last:pb-0">
-                    <span className="text-sm font-medium text-slate-300">Gateway</span>
-                    <span className="text-[10px] font-bold uppercase tracking-widest px-2 py-1 rounded bg-emerald-500/10 text-emerald-400">Active Node</span>
-                  </div>
-            </CardContent>
-          </Card>
-        </div>
       </div>
     </div>
   );

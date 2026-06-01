@@ -1,249 +1,42 @@
 "use client";
-<<<<<<< HEAD
+import { Card, CardContent, CardHeader, CardTitle, CardDescription } from "@/components/ui/card";
+import { Activity, Shield, TrendingUp, AlertCircle, FileText, Database, ShieldCheck, Zap, Network, Users } from "lucide-react";
+import { AuditLedgerExplorer } from "@/components/shared/v2/AuditLedgerExplorer";
 
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { Activity, ArrowUpRight, Network, Target } from "lucide-react";
-import { TrustScoreWidget } from "@/components/shared/observability/TrustScoreWidget";
-import { AIPulseIntelligence } from "@/components/shared/observability/AIPulseIntelligence";
-
-export default function Page() {
+export default function BusinessinvoicesPage() {
   return (
-    <div className="space-y-8 animate-in fade-in duration-500">
-      {/* 1. Who uses this page? & 2. What decision is made here? */}
-      <div className="flex flex-col md:flex-row md:items-end justify-between gap-4 border-b border-blue-900/40 pb-6">
-        <div>
-          <div className="flex items-center gap-2 mb-2">
-            <span className="px-2 py-1 bg-blue-900/30 text-blue-400 text-[10px] font-bold tracking-widest uppercase rounded">
-              BUSINESS PORTAL
-            </span>
-            <span className="flex items-center gap-1 text-[10px] font-bold text-emerald-500 uppercase tracking-widest animate-pulse">
-              <div className="w-1.5 h-1.5 rounded-full bg-emerald-500"></div>
-              SYSTEM ACTIVE
-            </span>
-          </div>
-          <h1 className="text-3xl font-black text-white tracking-tight">Invoice Ledger</h1>
-          <p className="text-sm text-slate-400 mt-2 max-w-2xl">
-            Decision: <span className="text-white font-medium">"Are invoices affecting liquidity?"</span>
-          </p>
-        </div>
-      </div>
-
-      {/* 3. What intelligence/data is displayed? */}
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
-
-        <Card className="bg-[#0a1520] border-blue-900/40 hover:bg-slate-900/50 transition-colors">
-          <CardContent className="p-4">
-            <div className="flex justify-between items-start">
-              <div className="space-y-2">
-                <p className="text-[10px] text-slate-400 uppercase tracking-widest font-bold">Delayed Payments</p>
-                <p className="text-xl font-mono text-white">Live Data</p>
-              </div>
-              <div className="p-1.5 bg-blue-900/30 rounded-lg">
-                <Activity className="h-4 w-4 text-blue-400" />
-              </div>
+    <div className="min-h-screen bg-[#020810] text-slate-200 pb-20 relative overflow-hidden">
+      <div className="absolute top-0 right-0 w-[500px] h-[500px] bg-cyan-900/10 blur-[120px] rounded-full pointer-events-none z-0"></div>
+      
+      <div className="max-w-7xl mx-auto p-6 relative z-10 space-y-6">
+        
+        <header className="flex flex-col md:flex-row md:items-end justify-between gap-4 border-b border-cyan-900/40 pb-6">
+          <div>
+            <div className="flex items-center gap-2 mb-2">
+              <span className="px-2 py-1 bg-cyan-900/30 text-cyan-400 text-[10px] font-bold tracking-widest uppercase rounded">
+                MSME Financial Operating System
+              </span>
             </div>
-          </CardContent>
-        </Card>
-
-        <Card className="bg-[#0a1520] border-blue-900/40 hover:bg-slate-900/50 transition-colors">
-          <CardContent className="p-4">
-            <div className="flex justify-between items-start">
-              <div className="space-y-2">
-                <p className="text-[10px] text-slate-400 uppercase tracking-widest font-bold">Fraud Detection</p>
-                <p className="text-xl font-mono text-white">Live Data</p>
-              </div>
-              <div className="p-1.5 bg-blue-900/30 rounded-lg">
-                <Activity className="h-4 w-4 text-blue-400" />
-              </div>
-            </div>
-          </CardContent>
-        </Card>
-      </div>
-
-      <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
-        {/* 4. What action can be taken? */}
-        <div className="lg:col-span-2 space-y-6">
-          <AIPulseIntelligence 
-            title="AI System Analysis"
-            primaryInsight="Real-time telemetry active for Invoice Ledger."
-            secondaryInsights={[
-              "Data feeds synchronized and verified.",
-              "Awaiting action sequence."
-            ]}
-            riskLevel="LOW"
-          />
-
-          <Card className="bg-[#0a1520] border-blue-900/40">
-            <CardHeader>
-              <CardTitle className="text-sm font-bold uppercase tracking-widest text-slate-300 flex items-center gap-2">
-                <Target className="h-4 w-4 text-blue-400" />
-                Module Capabilities & Actions
-              </CardTitle>
-            </CardHeader>
-            <CardContent>
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-
-                  <div className="flex justify-between items-center p-3 rounded-lg bg-[#05101a] border border-slate-800 hover:border-slate-600 transition-colors cursor-pointer group">
-                    <span className="text-sm font-medium text-white group-hover:text-blue-400 transition-colors">Invoice Ledger</span>
-                    <ArrowUpRight className="h-4 w-4 text-slate-500 group-hover:text-blue-400 transition-colors" />
-                  </div>
-
-                  <div className="flex justify-between items-center p-3 rounded-lg bg-[#05101a] border border-slate-800 hover:border-slate-600 transition-colors cursor-pointer group">
-                    <span className="text-sm font-medium text-white group-hover:text-blue-400 transition-colors">OCR Processing</span>
-                    <ArrowUpRight className="h-4 w-4 text-slate-500 group-hover:text-blue-400 transition-colors" />
-                  </div>
-
-                  <div className="flex justify-between items-center p-3 rounded-lg bg-[#05101a] border border-slate-800 hover:border-slate-600 transition-colors cursor-pointer group">
-                    <span className="text-sm font-medium text-white group-hover:text-blue-400 transition-colors">Invoice Financing</span>
-                    <ArrowUpRight className="h-4 w-4 text-slate-500 group-hover:text-blue-400 transition-colors" />
-                  </div>
-              </div>
-            </CardContent>
-          </Card>
-        </div>
-
-        {/* 5. Which other FTID systems are affected? */}
-        <div className="space-y-6">
-          <TrustScoreWidget 
-            score={999} 
-            entityName="Module Integrity"
-          />
-
-          <Card className="bg-[#0a1520] border-blue-900/40">
-            <CardHeader>
-              <CardTitle className="text-sm font-bold uppercase tracking-widest text-slate-300 flex items-center gap-2">
-                <Network className="h-4 w-4 text-blue-400" />
-                Connected Systems
-              </CardTitle>
-            </CardHeader>
-            <CardContent className="space-y-4">
-
-                  <div className="flex justify-between items-center border-b border-slate-800 pb-3 last:border-0 last:pb-0">
-                    <span className="text-sm font-medium text-slate-300">Institutions</span>
-                    <span className="text-[10px] font-bold uppercase tracking-widest px-2 py-1 rounded bg-emerald-500/10 text-emerald-400">Active Node</span>
-                  </div>
-
-                  <div className="flex justify-between items-center border-b border-slate-800 pb-3 last:border-0 last:pb-0">
-                    <span className="text-sm font-medium text-slate-300">Supply Chain</span>
-                    <span className="text-[10px] font-bold uppercase tracking-widest px-2 py-1 rounded bg-emerald-500/10 text-emerald-400">Active Node</span>
-                  </div>
-            </CardContent>
-          </Card>
-        </div>
-=======
-
-import { useState, useEffect } from "react";
-import { Receipt, Search, Filter, AlertCircle, CheckCircle2, Loader2, Sparkles } from "lucide-react";
-
-export default function SmartInvoices() {
-  const [invoices, setInvoices] = useState<any[]>([]);
-  const [isLoading, setIsLoading] = useState(true);
-
-  useEffect(() => {
-    const fetchInvoices = async () => {
-      try {
-        const res = await fetch('/api/v1/business/invoices');
-        const json = await res.json();
-        if (json.success) {
-          setInvoices(json.data.invoices);
-        }
-      } catch (e) {
-        console.error(e);
-      } finally {
-        setIsLoading(false);
-      }
-    };
-    fetchInvoices();
-  }, []);
-
-  return (
-    <div className="flex flex-col gap-6">
-      <div className="flex flex-col gap-2">
-        <div className="flex items-center gap-2">
-          <Receipt className="h-6 w-6 text-emerald-400" />
-          <h1 className="text-2xl font-black text-white uppercase tracking-tight">Invoice Intelligence</h1>
-        </div>
-        <p className="text-slate-400 font-mono text-sm max-w-2xl">
-          AI-powered invoice monitoring. Detects GST mismatches, circular trading, and over-invoicing anomalies before clearing payments.
-        </p>
-      </div>
-
-      <div className="flex flex-col gap-4 bg-[#0a1520] border border-slate-800 rounded-xl p-6">
-        <div className="flex items-center justify-between mb-4">
-          <div className="flex items-center gap-4 w-full max-w-md">
-            <div className="relative flex-1">
-              <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-slate-500" />
-              <input type="text" placeholder="Search by Vendor or ID..." className="w-full bg-slate-900 border border-slate-700 rounded-lg pl-10 pr-4 py-2 text-sm text-white font-mono focus:border-emerald-500 focus:outline-none" />
-            </div>
-            <button className="p-2 bg-slate-900 border border-slate-700 rounded-lg text-slate-400 hover:text-white transition-colors">
-              <Filter className="h-4 w-4" />
-            </button>
+            <h1 className="text-3xl font-black text-white tracking-tight">Invoices</h1>
+            <p className="text-sm text-emerald-400 mt-2 font-mono flex items-center gap-2">
+              <AlertCircle className="h-4 w-4" /> 
+              KEY QUESTION: "B2B payment health"
+            </p>
           </div>
-          <span className="text-[10px] text-slate-500 font-bold uppercase tracking-widest hidden md:block">Connected to FTID Trust Network</span>
-        </div>
+        </header>
 
-        {isLoading ? (
-          <div className="w-full h-64 flex flex-col items-center justify-center border border-emerald-900/20 bg-emerald-950/10 rounded-lg border-dashed gap-3">
-            <Loader2 className="w-8 h-8 text-emerald-500 animate-spin" />
-            <span className="text-emerald-400 font-mono text-xs uppercase tracking-widest">Running ML Anomaly Detection...</span>
-          </div>
-        ) : (
-          <div className="overflow-x-auto">
-            <table className="w-full text-sm text-left">
-              <thead className="text-[10px] text-slate-400 uppercase tracking-widest bg-slate-900/50 border-y border-slate-800">
-                <tr>
-                  <th className="px-4 py-3 font-medium">Invoice ID</th>
-                  <th className="px-4 py-3 font-medium">Vendor</th>
-                  <th className="px-4 py-3 font-medium">Value (₹)</th>
-                  <th className="px-4 py-3 font-medium">Date</th>
-                  <th className="px-4 py-3 font-medium text-center">Risk Score</th>
-                  <th className="px-4 py-3 font-medium">Status</th>
-                </tr>
-              </thead>
-              <tbody className="divide-y divide-slate-800/50">
-                {invoices.map((inv) => (
-                  <tr key={inv.id} className="hover:bg-slate-900/50 transition-colors">
-                    <td className="px-4 py-4 font-mono text-white">{inv.id}</td>
-                    <td className="px-4 py-4 text-slate-300 font-medium">{inv.vendor}</td>
-                    <td className="px-4 py-4 font-mono text-emerald-400 tabular-nums">{inv.value.toLocaleString()}</td>
-                    <td className="px-4 py-4 font-mono text-slate-500">{inv.date}</td>
-                    <td className="px-4 py-4 text-center">
-                      <span className={`px-2.5 py-1 rounded-full text-[10px] font-bold tracking-widest font-mono ${inv.riskScore > 50 ? 'bg-rose-950/50 text-rose-400 border border-rose-500/20' : 'bg-emerald-950/50 text-emerald-400 border border-emerald-500/20'}`}>
-                        {inv.riskScore}/100
-                      </span>
-                    </td>
-                    <td className="px-4 py-4">
-                      {inv.status === 'Flagged' ? (
-                        <span className="flex items-center gap-1.5 text-rose-400 font-bold text-xs uppercase tracking-wide">
-                          <AlertCircle className="w-4 h-4" /> Flagged
-                        </span>
-                      ) : (
-                        <span className="flex items-center gap-1.5 text-emerald-400 font-bold text-xs uppercase tracking-wide">
-                          <CheckCircle2 className="w-4 h-4" /> Cleared
-                        </span>
-                      )}
-                    </td>
-                  </tr>
-                ))}
-              </tbody>
-            </table>
-            
-            <div className="mt-6 flex flex-col gap-4">
-              <h3 className="text-[10px] font-bold text-slate-500 uppercase tracking-widest flex items-center gap-2">
-                <Sparkles className="w-3 h-3 text-violet-400" /> AI Explanations
-              </h3>
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                {invoices.map((inv) => (
-                  <div key={inv.id} className={`p-4 rounded-lg border ${inv.status === 'Flagged' ? 'border-rose-900/30 bg-rose-950/10' : 'border-emerald-900/30 bg-emerald-950/10'}`}>
-                    <span className="text-[10px] font-mono font-bold uppercase tracking-widest block mb-2" style={{ color: inv.status === 'Flagged' ? '#fb7185' : '#34d399' }}>{inv.id} Analysis</span>
-                    <p className="text-xs text-slate-400 font-mono leading-relaxed">{inv.aiSummary}</p>
-                  </div>
-                ))}
-              </div>
-            </div>
-          </div>
-        )}
->>>>>>> 90ce4baaf6ae78fb544f5305ef97fc98895aed59
+<div className="grid grid-cols-1 gap-6">
+<Card className="bg-[#0a1520] border-cyan-900/30">
+<CardHeader>
+<CardTitle className="text-white">Invoices Records</CardTitle>
+<CardDescription className="text-slate-400">Tracking: Invoice repository, Aging analysis, Duplicate detection, Fraud probability, Outstanding payments</CardDescription>
+</CardHeader>
+<CardContent>
+<AuditLedgerExplorer columns={["Invoice repository","Aging analysis","Duplicate detection","Fraud probability","Outstanding payments"]} />
+</CardContent>
+</Card>
+</div>
+
       </div>
     </div>
   );

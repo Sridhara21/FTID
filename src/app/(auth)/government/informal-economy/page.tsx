@@ -4,7 +4,7 @@ import { Activity, Shield, TrendingUp, AlertCircle, FileText, Database, ShieldCh
 import { V2MetricWidget } from "@/components/shared/v2/V2MetricWidget";
 import { V2InsightsFeed } from "@/components/shared/v2/V2InsightsFeed";
 
-export default function AuditorMainPage() {
+export default function GovernmentinformaleconomyPage() {
   return (
     <div className="min-h-screen bg-[#020810] text-slate-200 pb-20 relative overflow-hidden">
       <div className="absolute top-0 right-0 w-[500px] h-[500px] bg-cyan-900/10 blur-[120px] rounded-full pointer-events-none z-0"></div>
@@ -15,32 +15,32 @@ export default function AuditorMainPage() {
           <div>
             <div className="flex items-center gap-2 mb-2">
               <span className="px-2 py-1 bg-cyan-900/30 text-cyan-400 text-[10px] font-bold tracking-widest uppercase rounded">
-                Verification & Traceability
+                Economic Intelligence Layer
               </span>
             </div>
-            <h1 className="text-3xl font-black text-white tracking-tight">Dashboard</h1>
+            <h1 className="text-3xl font-black text-white tracking-tight">Informal Economy</h1>
             <p className="text-sm text-emerald-400 mt-2 font-mono flex items-center gap-2">
               <AlertCircle className="h-4 w-4" /> 
-              KEY QUESTION: "Can this activity be verified?"
+              KEY QUESTION: "Shadow economy tracking"
             </p>
           </div>
         </header>
 
 <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4 mb-6">
-<V2MetricWidget title="Audit Risk" value={Math.floor(Math.random() * 10000)} trend={Math.random() > 0.5 ? "up" : "down"} explanation="This metric tracks the overall volume and health of Audit Risk in real-time." />
-<V2MetricWidget title="Reconciliation Health" value={Math.floor(Math.random() * 10000)} trend={Math.random() > 0.5 ? "up" : "down"} explanation="This metric tracks the overall volume and health of Reconciliation Health in real-time." />
-<V2MetricWidget title="Active Investigations" value={Math.floor(Math.random() * 10000)} trend={Math.random() > 0.5 ? "up" : "down"} explanation="This metric tracks the overall volume and health of Active Investigations in real-time." />
-<V2MetricWidget title="Compliance Overview" value={Math.floor(Math.random() * 10000)} trend={Math.random() > 0.5 ? "up" : "down"} explanation="This metric tracks the overall volume and health of Compliance Overview in real-time." />
+<V2MetricWidget title="Cash dependency" value={Math.floor(Math.random() * 10000)} trend={Math.random() > 0.5 ? "up" : "down"} explanation="This metric tracks the overall volume and health of Cash dependency in real-time." />
+<V2MetricWidget title="Digital adoption" value={Math.floor(Math.random() * 10000)} trend={Math.random() > 0.5 ? "up" : "down"} explanation="This metric tracks the overall volume and health of Digital adoption in real-time." />
+<V2MetricWidget title="Formalization score" value={Math.floor(Math.random() * 10000)} trend={Math.random() > 0.5 ? "up" : "down"} explanation="This metric tracks the overall volume and health of Formalization score in real-time." />
+<V2MetricWidget title="Regional comparison" value={Math.floor(Math.random() * 10000)} trend={Math.random() > 0.5 ? "up" : "down"} explanation="This metric tracks the overall volume and health of Regional comparison in real-time." />
 </div>
 <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
 <div className="lg:col-span-2">
 <Card className="bg-[#0a1520] border-cyan-900/30 h-full">
 <CardHeader>
-<CardTitle className="text-white">Detailed Dashboard Analytics</CardTitle>
-<CardDescription className="text-slate-400">Deep dive into Audit Risk and Reconciliation Health</CardDescription>
+<CardTitle className="text-white">Detailed Informal Economy Analytics</CardTitle>
+<CardDescription className="text-slate-400">Deep dive into Cash dependency and Digital adoption</CardDescription>
 </CardHeader>
 <CardContent className="h-[300px] flex items-center justify-center border-t border-cyan-900/20">
-<p className="text-cyan-500/50 font-mono text-sm">[ Unique Visualization for Dashboard ]</p>
+<p className="text-cyan-500/50 font-mono text-sm">[ Unique Visualization for Informal Economy ]</p>
 </CardContent>
 </Card>
 </div>
