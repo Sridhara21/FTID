@@ -1,142 +1,96 @@
 "use client";
 
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { Activity, ArrowUpRight, Network, Target } from "lucide-react";
-import { TrustScoreWidget } from "@/components/shared/observability/TrustScoreWidget";
-import { AIPulseIntelligence } from "@/components/shared/observability/AIPulseIntelligence";
+import { ShieldCheck, ArrowUpRight, AlertTriangle, Building2 } from "lucide-react";
+import { EcosystemImpactPanel } from "@/components/shared/observability/EcosystemImpactPanel";
+import { DecisionEnginePanel } from "@/components/shared/observability/DecisionEnginePanel";
 
-export default function Page() {
+export default function RegulatorTrustPage() {
   return (
-    <div className="space-y-8 animate-in fade-in duration-500">
-      {/* 1. Who uses this page? & 2. What decision is made here? */}
-      <div className="flex flex-col md:flex-row md:items-end justify-between gap-4 border-b border-rose-900/40 pb-6">
-        <div>
-          <div className="flex items-center gap-2 mb-2">
-            <span className="px-2 py-1 bg-rose-900/30 text-rose-400 text-[10px] font-bold tracking-widest uppercase rounded">
-              REGULATOR PORTAL
-            </span>
-            <span className="flex items-center gap-1 text-[10px] font-bold text-emerald-500 uppercase tracking-widest animate-pulse">
-              <div className="w-1.5 h-1.5 rounded-full bg-emerald-500"></div>
-              SYSTEM ACTIVE
-            </span>
+    <div className="min-h-screen bg-[#020810] text-slate-200 pb-20 relative overflow-hidden">
+      <div className="absolute top-0 right-0 w-[500px] h-[500px] bg-cyan-900/10 blur-[120px] rounded-full pointer-events-none z-0"></div>
+      
+      <div className="max-w-7xl mx-auto p-6 relative z-10 space-y-6">
+        
+        <header className="flex flex-col md:flex-row md:items-end justify-between gap-4 border-b border-cyan-900/40 pb-6">
+          <div>
+            <div className="flex items-center gap-2 mb-2">
+              <span className="px-2 py-1 bg-cyan-900/30 text-cyan-400 text-[10px] font-bold tracking-widest uppercase rounded">
+                REGULATOR PORTAL
+              </span>
+              <span className="flex items-center gap-1 text-[10px] font-bold text-emerald-500 uppercase tracking-widest animate-pulse">
+                <div className="w-1.5 h-1.5 rounded-full bg-emerald-500"></div>
+                Live Node
+              </span>
+            </div>
+            <h1 className="text-3xl font-black text-white tracking-tight">National Financial Trust Engine</h1>
+            <p className="text-sm text-cyan-100/60 mt-2 max-w-2xl">
+              Real-time monitoring of institutional reliability, fintech trust scores, and network integrity.
+            </p>
           </div>
-          <h1 className="text-3xl font-black text-white tracking-tight">Institutional Trust</h1>
-          <p className="text-sm text-slate-400 mt-2 max-w-2xl">
-            Decision: <span className="text-white font-medium">"Which institutions can be trusted?"</span>
-          </p>
-        </div>
-      </div>
+        </header>
 
-      {/* 3. What intelligence/data is displayed? */}
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
+        <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
+          <div className="lg:col-span-2 space-y-6">
+            
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+              <Card className="bg-[#0a1520] border-cyan-900/30">
+                <CardHeader className="pb-2">
+                  <CardTitle className="text-[10px] font-bold uppercase tracking-widest text-slate-400">Avg Institution Trust</CardTitle>
+                </CardHeader>
+                <CardContent>
+                  <div className="text-2xl font-black text-emerald-400 flex items-center gap-2">
+                    <ShieldCheck className="h-5 w-5" />
+                    92/100
+                  </div>
+                  <p className="text-xs text-emerald-400/80 mt-1">System-wide integrity is stable</p>
+                </CardContent>
+              </Card>
 
-        <Card className="bg-[#0a1520] border-rose-900/40 hover:bg-slate-900/50 transition-colors">
-          <CardContent className="p-4">
-            <div className="flex justify-between items-start">
-              <div className="space-y-2">
-                <p className="text-[10px] text-slate-400 uppercase tracking-widest font-bold">Institution Rankings</p>
-                <p className="text-xl font-mono text-white">Live Data</p>
-              </div>
-              <div className="p-1.5 bg-rose-900/30 rounded-lg">
-                <Activity className="h-4 w-4 text-rose-400" />
-              </div>
+              <Card className="bg-[#0a1520] border-cyan-900/30">
+                <CardHeader className="pb-2">
+                  <CardTitle className="text-[10px] font-bold uppercase tracking-widest text-slate-400">Fintech Upgrade</CardTitle>
+                </CardHeader>
+                <CardContent>
+                  <div className="text-2xl font-black text-cyan-400 flex items-center gap-2">
+                    <ArrowUpRight className="h-5 w-5" />
+                    +12 Entities
+                  </div>
+                  <p className="text-xs text-cyan-400/80 mt-1">Moved to L1 Trust Tier</p>
+                </CardContent>
+              </Card>
+
+              <Card className="bg-[#0a1520] border-cyan-900/30">
+                <CardHeader className="pb-2">
+                  <CardTitle className="text-[10px] font-bold uppercase tracking-widest text-slate-400">License Revocations</CardTitle>
+                </CardHeader>
+                <CardContent>
+                  <div className="text-2xl font-black text-amber-400 flex items-center gap-2">
+                    <AlertTriangle className="h-5 w-5" />
+                    2 Pending
+                  </div>
+                  <p className="text-xs text-amber-400/80 mt-1">Due to severe compliance failure</p>
+                </CardContent>
+              </Card>
             </div>
-          </CardContent>
-        </Card>
 
-        <Card className="bg-[#0a1520] border-rose-900/40 hover:bg-slate-900/50 transition-colors">
-          <CardContent className="p-4">
-            <div className="flex justify-between items-start">
-              <div className="space-y-2">
-                <p className="text-[10px] text-slate-400 uppercase tracking-widest font-bold">Sector Rankings</p>
-                <p className="text-xl font-mono text-white">Live Data</p>
-              </div>
-              <div className="p-1.5 bg-rose-900/30 rounded-lg">
-                <Activity className="h-4 w-4 text-rose-400" />
-              </div>
-            </div>
-          </CardContent>
-        </Card>
+            <DecisionEnginePanel 
+              primaryQuestion="Should 'Fintech-Omega' be downgraded from L1 to L2 Trust Tier?"
+              recommendation="Entity has demonstrated repeated data consent violations and higher-than-average API failure rates in the Developer Sandbox."
+              impact="Downgrade revokes direct CBDC settlement privileges, protecting consumer funds and maintaining ecosystem integrity."
+              confidence={97}
+              actionText="Execute Automated Trust Downgrade"
+            />
+            
+          </div>
 
-        <Card className="bg-[#0a1520] border-rose-900/40 hover:bg-slate-900/50 transition-colors">
-          <CardContent className="p-4">
-            <div className="flex justify-between items-start">
-              <div className="space-y-2">
-                <p className="text-[10px] text-slate-400 uppercase tracking-widest font-bold">Trust Trends</p>
-                <p className="text-xl font-mono text-white">Live Data</p>
-              </div>
-              <div className="p-1.5 bg-rose-900/30 rounded-lg">
-                <Activity className="h-4 w-4 text-rose-400" />
-              </div>
-            </div>
-          </CardContent>
-        </Card>
-      </div>
-
-      <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
-        {/* 4. What action can be taken? */}
-        <div className="lg:col-span-2 space-y-6">
-          <AIPulseIntelligence 
-            title="AI System Analysis"
-            primaryInsight="Real-time telemetry active for Institutional Trust."
-            secondaryInsights={[
-              "Data feeds synchronized and verified.",
-              "Awaiting action sequence."
-            ]}
-            riskLevel="LOW"
-          />
-
-          <Card className="bg-[#0a1520] border-rose-900/40">
-            <CardHeader>
-              <CardTitle className="text-sm font-bold uppercase tracking-widest text-slate-300 flex items-center gap-2">
-                <Target className="h-4 w-4 text-rose-400" />
-                Module Capabilities & Actions
-              </CardTitle>
-            </CardHeader>
-            <CardContent>
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-
-                  <div className="flex justify-between items-center p-3 rounded-lg bg-[#05101a] border border-slate-800 hover:border-slate-600 transition-colors cursor-pointer group">
-                    <span className="text-sm font-medium text-white group-hover:text-rose-400 transition-colors">Audit Triggers</span>
-                    <ArrowUpRight className="h-4 w-4 text-slate-500 group-hover:text-rose-400 transition-colors" />
-                  </div>
-
-                  <div className="flex justify-between items-center p-3 rounded-lg bg-[#05101a] border border-slate-800 hover:border-slate-600 transition-colors cursor-pointer group">
-                    <span className="text-sm font-medium text-white group-hover:text-rose-400 transition-colors">Penalty Enforcement</span>
-                    <ArrowUpRight className="h-4 w-4 text-slate-500 group-hover:text-rose-400 transition-colors" />
-                  </div>
-              </div>
-            </CardContent>
-          </Card>
-        </div>
-
-        {/* 5. Which other FTID systems are affected? */}
-        <div className="space-y-6">
-          <TrustScoreWidget 
-            score={999} 
-            entityName="Module Integrity"
-          />
-
-          <Card className="bg-[#0a1520] border-rose-900/40">
-            <CardHeader>
-              <CardTitle className="text-sm font-bold uppercase tracking-widest text-slate-300 flex items-center gap-2">
-                <Network className="h-4 w-4 text-rose-400" />
-                Connected Systems
-              </CardTitle>
-            </CardHeader>
-            <CardContent className="space-y-4">
-
-                  <div className="flex justify-between items-center border-b border-slate-800 pb-3 last:border-0 last:pb-0">
-                    <span className="text-sm font-medium text-slate-300">Banks</span>
-                    <span className="text-[10px] font-bold uppercase tracking-widest px-2 py-1 rounded bg-emerald-500/10 text-emerald-400">Active Node</span>
-                  </div>
-
-                  <div className="flex justify-between items-center border-b border-slate-800 pb-3 last:border-0 last:pb-0">
-                    <span className="text-sm font-medium text-slate-300">Auditor</span>
-                    <span className="text-[10px] font-bold uppercase tracking-widest px-2 py-1 rounded bg-emerald-500/10 text-emerald-400">Active Node</span>
-                  </div>
-            </CardContent>
-          </Card>
+          <div className="space-y-6">
+            <EcosystemImpactPanel 
+              upstream={["Developer Portal Compliance", "Auditor Recon Reports"]}
+              dataSources={["Consent Manager Logs", "API Gateway Metrics", "Consumer Grievance DB"]}
+              downstream={["Bank Lending Networks", "Citizen App Visibility", "Gateway API Access"]}
+            />
+          </div>
         </div>
       </div>
     </div>

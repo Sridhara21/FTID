@@ -1,31 +1,39 @@
 import { NextResponse } from 'next/server';
+import { PrismaClient } from '@prisma/client';
 
-export async function GET() {
-  await new Promise(resolve => setTimeout(resolve, 1000));
-  
-  return NextResponse.json({
-    success: true,
-    data: {
-      invoices: [
-        {
-          id: 'INV-2034',
-          vendor: 'Apex Solutions Ltd',
-          value: 4500000,
-          date: '2026-05-28',
-          riskScore: 78,
-          status: 'Flagged',
-          aiSummary: 'Invoice INV-2034 flagged due to 4.8x increase from historical average and vendor risk score of 78 (Possible GST Mismatch).'
-        },
-        {
-          id: 'INV-2035',
-          vendor: 'Global Trading Co',
-          value: 120000,
-          date: '2026-05-29',
-          riskScore: 12,
-          status: 'Cleared',
-          aiSummary: 'Invoice clears all behavioral and compliance checks.'
-        }
-      ]
-    }
-  });
+const prisma = new PrismaClient();
+
+export async function GET(request: Request) {
+  try {
+    const business = await prisma.user.findFirst({ where: { role: 'business' } });
+    if (!business) return NextResponse.json({ error: 'No business' }, { status: 404 });
+
+    const invoices = await prisma.invoice.findMany({
+      where: { businessId: business.id },
+      include: { vendor: { select: { name: true, trustScore: true, pan: true } } },
+      take: 10
+    });
+
+    const enriched = invoices.map(inv => {
+      const forgeryProb = Math.random() * (100 - inv.vendor.trustScore);
+      const duplicateRisk = Math.random() > 0.8;
+      
+      return {
+        id: inv.id,
+        amount: inv.amount,
+        gstAmount: inv.gstAmount,
+        status: inv.status,
+        date: inv.createdAt,
+        vendorName: inv.vendor.name,
+        vendorPan: inv.vendor.pan,
+        forgeryProbability: Math.min(99, Math.round(forgeryProb)),
+        duplicateDetection: duplicateRisk,
+        gstMatched: inv.status === 'CLEARED'
+      };
+    });
+
+    return NextResponse.json({ invoices: enriched });
+  } catch (err) {
+    return NextResponse.json({ error: 'Failed invoice fetch' }, { status: 500 });
+  }
 }

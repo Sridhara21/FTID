@@ -4,8 +4,9 @@ const fs = require('fs');
 const path = require('path');
 
 const routes = [
-  '/',
-  '/auditor',
+  { url: 'http://localhost:3001/', name: 'landing' },
+  { url: 'http://localhost:3000/', name: 'home' },
+  { url: 'http://localhost:3000/auditor', name: 'auditor' },
   '/auditor/ledger',
   '/auditor/reconciliation',
   '/auditor/risk',
@@ -77,15 +78,16 @@ const routes = [
 
   for (let i = 0; i < routes.length; i++) {
     const route = routes[i];
-    console.log(`Taking screenshot for ${route}...`);
+    const url = typeof route === 'string' ? `http://localhost:3000${route}` : route.url;
+    console.log(`Taking screenshot for ${url}...`);
     try {
-      await page.goto(`http://localhost:3000${route}`, { waitUntil: 'load', timeout: 30000 });
+      await page.goto(url, { waitUntil: 'load', timeout: 90000 });
       await new Promise(r => setTimeout(r, 1000)); // wait for fade-in animations to finish
       const imgPath = path.join(__dirname, `screenshot_${i}.png`);
       await page.screenshot({ path: imgPath, fullPage: true });
       images.push(imgPath);
     } catch(err) {
-      console.log(`Failed to screenshot ${route}: ${err.message}`);
+      console.log(`Failed to screenshot ${url}: ${err.message}`);
     }
   }
 
@@ -93,7 +95,7 @@ const routes = [
 
   console.log('Generating PDF...');
   const doc = new PDFDocument({ autoFirstPage: false });
-  const outPath = path.join(__dirname, 'FTID_V4_Redesign_Complete.pdf');
+  const outPath = path.join(__dirname, 'FTID_V6_Showcase_Edition.pdf');
   
   const stream = fs.createWriteStream(outPath);
   doc.pipe(stream);
@@ -109,7 +111,7 @@ const routes = [
   doc.end();
 
   stream.on('finish', () => {
-    console.log('PDF generated successfully at FTID_V4_Redesign_Complete.pdf!');
+    console.log('PDF generated successfully at FTID_V6_Showcase_Edition.pdf!');
     // Cleanup images
     console.log('Cleaning up temporary images...');
     for (let imgPath of images) {

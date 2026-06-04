@@ -1,131 +1,132 @@
 "use client";
-
+import { useState } from "react";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { Activity, ArrowUpRight, Network, Target } from "lucide-react";
-import { TrustScoreWidget } from "@/components/shared/observability/TrustScoreWidget";
-import { AIPulseIntelligence } from "@/components/shared/observability/AIPulseIntelligence";
+import { ShieldCheck, ArrowRight, Activity, Building2, FileCheck, Landmark, CheckCircle2, AlertCircle } from "lucide-react";
 
-export default function Page() {
+export default function DeveloperVerificationPage() {
+  const [verified, setVerified] = useState(false);
+
+  const handleVerify = () => {
+    setVerified(true);
+    fetch('/api/events', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({
+        type: 'FINTECH_ENTITY_VERIFIED',
+        entity: 'FINTECH_DEVELOPER',
+        msg: 'Corporate identity verified via MCA/GST MCA-21 integration. Production tier unlocked.',
+        impact: ['API Gateway', 'Trust Registry'],
+        risk: 'LOW'
+      })
+    }).catch(() => {});
+  };
+
   return (
-    <div className="space-y-8 animate-in fade-in duration-500">
-      {/* 1. Who uses this page? & 2. What decision is made here? */}
-      <div className="flex flex-col md:flex-row md:items-end justify-between gap-4 border-b border-slate-800/40 pb-6">
+    <div className="space-y-8 animate-in fade-in duration-500 pb-20">
+      <div className="border-b border-purple-900/40 pb-6 flex justify-between items-end">
         <div>
-          <div className="flex items-center gap-2 mb-2">
-            <span className="px-2 py-1 bg-slate-800/30 text-slate-400 text-[10px] font-bold tracking-widest uppercase rounded">
-              DEVELOPER PORTAL
-            </span>
-            <span className="flex items-center gap-1 text-[10px] font-bold text-emerald-500 uppercase tracking-widest animate-pulse">
-              <div className="w-1.5 h-1.5 rounded-full bg-emerald-500"></div>
-              SYSTEM ACTIVE
-            </span>
-          </div>
-          <h1 className="text-3xl font-black text-white tracking-tight">Verification APIs</h1>
+          <span className="px-2 py-1 bg-purple-900/30 text-purple-400 text-[10px] font-bold tracking-widest uppercase rounded mb-2 flex items-center gap-2 w-max">
+            <Building2 className="h-3 w-3" />
+            DEVELOPER PORTAL
+          </span>
+          <h1 className="text-3xl font-black text-white tracking-tight">Entity Verification</h1>
           <p className="text-sm text-slate-400 mt-2 max-w-2xl">
-            Decision: <span className="text-white font-medium">"How do I verify users?"</span>
+            Decision: <span className="text-white font-medium">"Am I ready to link my corporate bank account to verify my Fintech's legal identity?"</span>
           </p>
+        </div>
+        <div className="flex gap-4">
+          <div className="text-right p-3 rounded-lg bg-amber-950/40 border border-amber-900/50">
+            <div className="text-[10px] font-bold uppercase tracking-widest text-amber-500 mb-1">Trust Tier</div>
+            <div className="text-2xl font-black text-white">L0 (Sandbox)</div>
+          </div>
         </div>
       </div>
 
-      {/* 3. What intelligence/data is displayed? */}
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
-
-        <Card className="bg-[#0a1520] border-slate-800/40 hover:bg-slate-900/50 transition-colors">
-          <CardContent className="p-4">
-            <div className="flex justify-between items-start">
-              <div className="space-y-2">
-                <p className="text-[10px] text-slate-400 uppercase tracking-widest font-bold">KYC Success Rate</p>
-                <p className="text-xl font-mono text-white">Live Data</p>
-              </div>
-              <div className="p-1.5 bg-slate-800/30 rounded-lg">
-                <Activity className="h-4 w-4 text-slate-400" />
-              </div>
-            </div>
-          </CardContent>
-        </Card>
-
-        <Card className="bg-[#0a1520] border-slate-800/40 hover:bg-slate-900/50 transition-colors">
-          <CardContent className="p-4">
-            <div className="flex justify-between items-start">
-              <div className="space-y-2">
-                <p className="text-[10px] text-slate-400 uppercase tracking-widest font-bold">AML Check Latency</p>
-                <p className="text-xl font-mono text-white">Live Data</p>
-              </div>
-              <div className="p-1.5 bg-slate-800/30 rounded-lg">
-                <Activity className="h-4 w-4 text-slate-400" />
-              </div>
-            </div>
-          </CardContent>
-        </Card>
-      </div>
-
       <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
-        {/* 4. What action can be taken? */}
+        
+        {/* Verification Checks */}
         <div className="lg:col-span-2 space-y-6">
-          <AIPulseIntelligence 
-            title="AI System Analysis"
-            primaryInsight="Real-time telemetry active for Verification APIs."
-            secondaryInsights={[
-              "Data feeds synchronized and verified.",
-              "Awaiting action sequence."
-            ]}
-            riskLevel="LOW"
-          />
-
-          <Card className="bg-[#0a1520] border-slate-800/40">
-            <CardHeader>
-              <CardTitle className="text-sm font-bold uppercase tracking-widest text-slate-300 flex items-center gap-2">
-                <Target className="h-4 w-4 text-slate-400" />
-                Module Capabilities & Actions
+          <Card className="bg-[#05101a] border-slate-800">
+            <CardHeader className="border-b border-slate-800 pb-4">
+              <CardTitle className="text-sm font-bold uppercase tracking-widest text-slate-400 flex items-center gap-2">
+                <FileCheck className="h-4 w-4" />
+                Compliance Checklist
               </CardTitle>
             </CardHeader>
-            <CardContent>
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-
-                  <div className="flex justify-between items-center p-3 rounded-lg bg-[#05101a] border border-slate-800 hover:border-slate-600 transition-colors cursor-pointer group">
-                    <span className="text-sm font-medium text-white group-hover:text-slate-400 transition-colors">KYC APIs</span>
-                    <ArrowUpRight className="h-4 w-4 text-slate-500 group-hover:text-slate-400 transition-colors" />
+            <CardContent className="pt-6 space-y-4">
+              
+              <div className="p-4 bg-slate-900/50 rounded-lg border border-slate-800 flex justify-between items-center">
+                <div className="flex items-center gap-4">
+                  <div className="text-emerald-500"><CheckCircle2 className="h-5 w-5" /></div>
+                  <div>
+                    <div className="text-white font-bold mb-1">MCA Corporate Registration (CIN)</div>
+                    <div className="text-xs text-slate-400">Verified against Ministry of Corporate Affairs database.</div>
                   </div>
-
-                  <div className="flex justify-between items-center p-3 rounded-lg bg-[#05101a] border border-slate-800 hover:border-slate-600 transition-colors cursor-pointer group">
-                    <span className="text-sm font-medium text-white group-hover:text-slate-400 transition-colors">AML APIs</span>
-                    <ArrowUpRight className="h-4 w-4 text-slate-500 group-hover:text-slate-400 transition-colors" />
-                  </div>
-
-                  <div className="flex justify-between items-center p-3 rounded-lg bg-[#05101a] border border-slate-800 hover:border-slate-600 transition-colors cursor-pointer group">
-                    <span className="text-sm font-medium text-white group-hover:text-slate-400 transition-colors">Trust APIs</span>
-                    <ArrowUpRight className="h-4 w-4 text-slate-500 group-hover:text-slate-400 transition-colors" />
-                  </div>
+                </div>
+                <div className="text-emerald-500 font-mono text-sm">U72900KA2023PTC144892</div>
               </div>
+
+              <div className="p-4 bg-slate-900/50 rounded-lg border border-slate-800 flex justify-between items-center">
+                <div className="flex items-center gap-4">
+                  <div className="text-emerald-500"><CheckCircle2 className="h-5 w-5" /></div>
+                  <div>
+                    <div className="text-white font-bold mb-1">Director DIN & KYC</div>
+                    <div className="text-xs text-slate-400">Board of Directors Aadhaar/PAN mapping complete.</div>
+                  </div>
+                </div>
+                <div className="text-emerald-500 font-mono text-sm">2/2 Verified</div>
+              </div>
+
+              <div className={`p-4 rounded-lg border flex justify-between items-center transition-all ${!verified ? 'bg-amber-950/20 border-amber-900/50' : 'bg-slate-900/50 border-slate-800'}`}>
+                <div className="flex items-center gap-4">
+                  <div className={!verified ? "text-amber-500" : "text-emerald-500"}>
+                    {!verified ? <AlertCircle className="h-5 w-5" /> : <CheckCircle2 className="h-5 w-5" />}
+                  </div>
+                  <div>
+                    <div className="text-white font-bold mb-1">Corporate Bank Account (Penny Drop)</div>
+                    <div className="text-xs text-slate-400">Verify operational bank account matching CIN.</div>
+                  </div>
+                </div>
+                {!verified ? (
+                  <div className="text-amber-500 font-mono text-sm uppercase tracking-widest font-bold text-[10px]">Pending</div>
+                ) : (
+                  <div className="text-emerald-500 font-mono text-sm">HDFC****8892</div>
+                )}
+              </div>
+
             </CardContent>
           </Card>
         </div>
 
-        {/* 5. Which other FTID systems are affected? */}
-        <div className="space-y-6">
-          <TrustScoreWidget 
-            score={999} 
-            entityName="Module Integrity"
-          />
-
-          <Card className="bg-[#0a1520] border-slate-800/40">
-            <CardHeader>
-              <CardTitle className="text-sm font-bold uppercase tracking-widest text-slate-300 flex items-center gap-2">
-                <Network className="h-4 w-4 text-slate-400" />
-                Connected Systems
+        {/* Action Pane */}
+        <div className="lg:col-span-1 space-y-6">
+          <Card className="bg-[#05101a] border-purple-900/50">
+            <CardHeader className="border-b border-slate-800 pb-4">
+              <CardTitle className="text-sm font-bold uppercase tracking-widest text-purple-400 flex items-center gap-2">
+                <Landmark className="h-4 w-4" />
+                Identity Verification
               </CardTitle>
             </CardHeader>
-            <CardContent className="space-y-4">
+            <CardContent className="pt-6 space-y-6">
+              <div>
+                <p className="text-[10px] uppercase tracking-widest text-slate-500 font-bold mb-1">Status</p>
+                <p className="text-sm text-slate-300">Basic corporate identity verified. To unlock Production API access (L1 Trust Tier), you must complete a Penny Drop verification on your corporate bank account.</p>
+              </div>
 
-                  <div className="flex justify-between items-center border-b border-slate-800 pb-3 last:border-0 last:pb-0">
-                    <span className="text-sm font-medium text-slate-300">Citizen</span>
-                    <span className="text-[10px] font-bold uppercase tracking-widest px-2 py-1 rounded bg-emerald-500/10 text-emerald-400">Active Node</span>
-                  </div>
+              <div className="pt-4 border-t border-slate-800">
+                <p className="text-[10px] uppercase tracking-widest text-slate-500 font-bold mb-1">Recommended Action</p>
+                <p className="text-sm text-white font-medium">Initiate Penny Drop verification via IMPS to confirm account ownership.</p>
+              </div>
 
-                  <div className="flex justify-between items-center border-b border-slate-800 pb-3 last:border-0 last:pb-0">
-                    <span className="text-sm font-medium text-slate-300">Business</span>
-                    <span className="text-[10px] font-bold uppercase tracking-widest px-2 py-1 rounded bg-emerald-500/10 text-emerald-400">Active Node</span>
-                  </div>
+              {!verified ? (
+                <button onClick={handleVerify} className="w-full py-3 bg-purple-600 hover:bg-purple-700 text-white font-bold tracking-widest uppercase text-xs rounded-lg transition-colors flex items-center justify-center gap-2 shadow-[0_0_15px_rgba(147,51,234,0.3)]">
+                  Verify Bank Account <ArrowRight className="h-4 w-4" />
+                </button>
+              ) : (
+                <div className="w-full py-3 bg-emerald-950/40 border border-emerald-900/50 text-emerald-500 font-bold tracking-widest uppercase text-xs rounded-lg flex items-center justify-center gap-2">
+                  <ShieldCheck className="h-4 w-4" /> Verified (Prod Unlocked)
+                </div>
+              )}
             </CardContent>
           </Card>
         </div>

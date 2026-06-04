@@ -13,6 +13,8 @@ export const metadata: Metadata = {
 };
 
 import { AuthProvider } from '@/lib/auth-context';
+import { ScenarioTrigger } from '@/components/shared/ScenarioTrigger';
+import { ScenarioProvider } from '@/components/ScenarioContext';
 
 export default function RootLayout({
   children,
@@ -25,8 +27,11 @@ export default function RootLayout({
         <div className="absolute inset-0 bg-cyber-grid bg-[length:30px_30px] opacity-10 pointer-events-none z-0"></div>
         <FirebaseClientProvider>
           <AuthProvider>
-            {children}
-            <Toaster />
+            <ScenarioProvider>
+              {children}
+              
+              <Toaster />
+            </ScenarioProvider>
           </AuthProvider>
         </FirebaseClientProvider>
       </body>

@@ -1,53 +1,64 @@
 import { NextResponse } from 'next/server';
-import { prisma } from '@/lib/eventBus';
+import { PrismaClient } from '@prisma/client';
+
+const prisma = new PrismaClient();
 
 export async function GET() {
   try {
-    // 1. Fetch all users for nodes
     const users = await prisma.user.findMany({
       select: { id: true, name: true, role: true, trustScore: true }
     });
 
-    // 2. Fetch all transactions for links
     const transactions = await prisma.transaction.findMany({
-      select: { senderId: true, receiverId: true, amount: true, riskScore: true }
+      select: { senderId: true, receiverId: true, amount: true, riskScore: true, category: true }
+    });
+    
+    const loans = await prisma.loan.findMany({
+      select: { applicantId: true, loanAmount: true, approvalStatus: true }
     });
 
-    const nodes = users.map(user => {
-      // Determine color and size based on role and trust score
-      let color = "#22d3ee"; // default cyan
-      let val = 10;
-      
-      if (user.role === 'bank') { color = "#3b82f6"; val = 20; }
-      if (user.role === 'business') { color = "#10b981"; val = 15; }
-      if (user.role === 'citizen') { color = "#a855f7"; val = 8; }
-      if (user.trustScore < 40) { color = "#ef4444"; } // red for low trust
-
-      return {
-        id: user.id,
-        name: user.name,
-        role: user.role,
-        trustScore: user.trustScore,
-        val,
-        color
-      };
+    // In a real scenario, loans need a sender (the bank). In our schema, we only stored the applicant. 
+    // For visualization, we'll connect loans to RBI or Govt if no bank is specified, or just map transactions.
+    
+    // Subsidies
+    const subsidies = await prisma.subsidy.findMany({
+      select: { citizenId: true, amount: true, scheme: true }
     });
 
-    const links = transactions.map((t, idx) => ({
-      source: t.senderId,
-      target: t.receiverId,
-      value: t.amount,
-      risk: t.riskScore
+    const govtId = users.find(u => u.role === 'government')?.id || 'govt_hq';
+
+    const nodes = users.map(u => ({
+      id: u.id,
+      name: u.name,
+      group: u.role,
+      val: u.trustScore / 10
     }));
 
-    return NextResponse.json({
-      success: true,
-      data: {
-        nodes,
-        links
-      }
+    const links: any[] = [];
+
+    transactions.forEach(t => {
+      links.push({
+        source: t.senderId,
+        target: t.receiverId,
+        type: 'transaction',
+        value: t.amount / 1000,
+        risk: t.riskScore
+      });
     });
-  } catch (error: any) {
-    return NextResponse.json({ success: false, error: error.message }, { status: 500 });
+
+    subsidies.forEach(s => {
+      links.push({
+        source: govtId,
+        target: s.citizenId,
+        type: 'subsidy',
+        value: s.amount / 1000,
+        risk: 0
+      });
+    });
+
+    return NextResponse.json({ nodes, links });
+  } catch (error) {
+    console.error(error);
+    return NextResponse.json({ error: 'Failed to fetch graph data' }, { status: 500 });
   }
 }

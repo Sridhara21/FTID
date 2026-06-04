@@ -1,10 +1,11 @@
 "use client";
-import { Card, CardContent, CardHeader, CardTitle, CardDescription } from "@/components/ui/card";
-import { Activity, Shield, TrendingUp, AlertCircle, FileText, Database, ShieldCheck, Zap, Network, Users } from "lucide-react";
-import { V2MetricWidget } from "@/components/shared/v2/V2MetricWidget";
-import { V2InsightsFeed } from "@/components/shared/v2/V2InsightsFeed";
 
-export default function BusinesscashflowPage() {
+import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import { Activity, ShieldAlert, TrendingDown, ArrowRightLeft, DollarSign } from "lucide-react";
+import { EcosystemImpactPanel } from "@/components/shared/observability/EcosystemImpactPanel";
+import { DecisionEnginePanel } from "@/components/shared/observability/DecisionEnginePanel";
+
+export default function BusinessCashflowPage() {
   return (
     <div className="min-h-screen bg-[#020810] text-slate-200 pb-20 relative overflow-hidden">
       <div className="absolute top-0 right-0 w-[500px] h-[500px] bg-cyan-900/10 blur-[120px] rounded-full pointer-events-none z-0"></div>
@@ -15,42 +16,81 @@ export default function BusinesscashflowPage() {
           <div>
             <div className="flex items-center gap-2 mb-2">
               <span className="px-2 py-1 bg-cyan-900/30 text-cyan-400 text-[10px] font-bold tracking-widest uppercase rounded">
-                MSME Financial Operating System
+                BUSINESS PORTAL
+              </span>
+              <span className="flex items-center gap-1 text-[10px] font-bold text-emerald-500 uppercase tracking-widest animate-pulse">
+                <div className="w-1.5 h-1.5 rounded-full bg-emerald-500"></div>
+                Live Node
               </span>
             </div>
-            <h1 className="text-3xl font-black text-white tracking-tight">Cashflow</h1>
-            <p className="text-sm text-emerald-400 mt-2 font-mono flex items-center gap-2">
-              <AlertCircle className="h-4 w-4" /> 
-              KEY QUESTION: "Liquidity and runway management"
+            <h1 className="text-3xl font-black text-white tracking-tight">AI Cashflow Observatory</h1>
+            <p className="text-sm text-cyan-100/60 mt-2 max-w-2xl">
+              Predictive insolvency monitoring and liquidity runway analysis for MSME health tracking.
             </p>
           </div>
         </header>
 
-<div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4 mb-6">
-<V2MetricWidget title="Inflows" value={Math.floor(Math.random() * 10000)} trend={Math.random() > 0.5 ? "up" : "down"} explanation="This metric tracks the overall volume and health of Inflows in real-time." />
-<V2MetricWidget title="Outflows" value={Math.floor(Math.random() * 10000)} trend={Math.random() > 0.5 ? "up" : "down"} explanation="This metric tracks the overall volume and health of Outflows in real-time." />
-<V2MetricWidget title="Runway" value={Math.floor(Math.random() * 10000)} trend={Math.random() > 0.5 ? "up" : "down"} explanation="This metric tracks the overall volume and health of Runway in real-time." />
-<V2MetricWidget title="Receivables" value={Math.floor(Math.random() * 10000)} trend={Math.random() > 0.5 ? "up" : "down"} explanation="This metric tracks the overall volume and health of Receivables in real-time." />
-<V2MetricWidget title="Payables" value={Math.floor(Math.random() * 10000)} trend={Math.random() > 0.5 ? "up" : "down"} explanation="This metric tracks the overall volume and health of Payables in real-time." />
-<V2MetricWidget title="Forecasts" value={Math.floor(Math.random() * 10000)} trend={Math.random() > 0.5 ? "up" : "down"} explanation="This metric tracks the overall volume and health of Forecasts in real-time." />
-</div>
-<div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
-<div className="lg:col-span-2">
-<Card className="bg-[#0a1520] border-cyan-900/30 h-full">
-<CardHeader>
-<CardTitle className="text-white">Detailed Cashflow Analytics</CardTitle>
-<CardDescription className="text-slate-400">Deep dive into Inflows and Outflows</CardDescription>
-</CardHeader>
-<CardContent className="h-[300px] flex items-center justify-center border-t border-cyan-900/20">
-<p className="text-cyan-500/50 font-mono text-sm">[ Unique Visualization for Cashflow ]</p>
-</CardContent>
-</Card>
-</div>
-<div>
-<V2InsightsFeed title="Actionable Intelligence" />
-</div>
-</div>
+        <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
+          <div className="lg:col-span-2 space-y-6">
+            
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+              <Card className="bg-[#0a1520] border-cyan-900/30">
+                <CardHeader className="pb-2">
+                  <CardTitle className="text-[10px] font-bold uppercase tracking-widest text-slate-400">Liquidity Runway</CardTitle>
+                </CardHeader>
+                <CardContent>
+                  <div className="text-2xl font-black text-rose-400 flex items-center gap-2">
+                    <TrendingDown className="h-5 w-5" />
+                    14 Days
+                  </div>
+                  <p className="text-xs text-rose-400/80 mt-1">Critical threshold breached</p>
+                </CardContent>
+              </Card>
 
+              <Card className="bg-[#0a1520] border-cyan-900/30">
+                <CardHeader className="pb-2">
+                  <CardTitle className="text-[10px] font-bold uppercase tracking-widest text-slate-400">Revenue Forecast</CardTitle>
+                </CardHeader>
+                <CardContent>
+                  <div className="text-2xl font-black text-emerald-400">
+                    ₹1.4 Cr
+                  </div>
+                  <p className="text-xs text-emerald-400/80 mt-1">Expected Q3 Earnings</p>
+                </CardContent>
+              </Card>
+
+              <Card className="bg-[#0a1520] border-cyan-900/30">
+                <CardHeader className="pb-2">
+                  <CardTitle className="text-[10px] font-bold uppercase tracking-widest text-slate-400">Collection Delay</CardTitle>
+                </CardHeader>
+                <CardContent>
+                  <div className="text-2xl font-black text-cyan-400 flex items-center gap-2">
+                    <ArrowRightLeft className="h-5 w-5" />
+                    DSO 45
+                  </div>
+                  <p className="text-xs text-cyan-400/80 mt-1">Industry avg: 30 days</p>
+                </CardContent>
+              </Card>
+            </div>
+
+            <DecisionEnginePanel 
+              primaryQuestion="Can this business survive the next 30 days without external liquidity injection?"
+              recommendation="Cash reserves are critically low due to delayed receivables from upstream vendors. Recommend immediate short-term working capital approval."
+              impact="Prevents default on upcoming tax obligations and preserves 45 dependent supply chain nodes."
+              confidence={92}
+              actionText="Approve Emergency Liquidity Bridge"
+            />
+            
+          </div>
+
+          <div className="space-y-6">
+            <EcosystemImpactPanel 
+              upstream={["Vendor Payment Delays", "Raw Material Price Spikes"]}
+              dataSources={["GST API (e-Invoices)", "Banking Account Aggregator (AA)", "CBDC Wallet Feed"]}
+              downstream={["Bank NPA Risk", "Tax Revenue Shortfall", "Supplier Defaults"]}
+            />
+          </div>
+        </div>
       </div>
     </div>
   );
