@@ -45,7 +45,7 @@ export default function GovernmentMainPage() {
 
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4 mb-6">
           <V2MetricWidget 
-            title="Real GDP Growth Estimate" 
+            title="GDP Activity Index" 
             value={gdpGrowth} 
             trend={isImpacted ? "up" : "down"} 
             trendValue={isImpacted ? 1.3 : 0.2}
@@ -53,7 +53,7 @@ export default function GovernmentMainPage() {
             explanation="Live macroeconomic output proxy based on UPI + GSTN velocity." 
           />
           <V2MetricWidget 
-            title="Tax Compliance Score" 
+            title="Tax Participation Rate" 
             value={taxCompliance} 
             trend={isImpacted ? "up" : "up"} 
             trendValue={isImpacted ? 8.7 : 1.1}
@@ -61,7 +61,7 @@ export default function GovernmentMainPage() {
             explanation="Percentage of corporate entities matching expected advance tax outflows." 
           />
           <V2MetricWidget 
-            title="MSME Activity Index" 
+            title="MSME Growth Indicator" 
             value={msmeActivity} 
             trend={isImpacted ? "up" : "down"} 
             trendValue={isImpacted ? 36.5 : 4.2}
@@ -69,12 +69,12 @@ export default function GovernmentMainPage() {
             explanation="Relative index of B2B transactions in the micro and small sector (Baseline=100)." 
           />
           <V2MetricWidget 
-            title="Economic Formalization" 
+            title="Subsidy Efficiency Index" 
             value={formalization} 
             trend="up" 
             trendValue={isImpacted ? 4.2 : 0.5}
             progress={formalization}
-            explanation="Transition rate of undocumented labor/sales entering the formal digital grid." 
+            explanation="Precision targeting metric for DBT (Direct Benefit Transfers) based on leakages." 
           />
         </div>
 

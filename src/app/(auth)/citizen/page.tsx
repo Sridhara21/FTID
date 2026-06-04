@@ -37,7 +37,7 @@ export default function CitizenMainPage() {
           </div>
         </header>
 
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4 mb-6">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-4 mb-6">
           <V2MetricWidget 
             title="Financial Health Score" 
             value={healthScore} 
@@ -47,28 +47,36 @@ export default function CitizenMainPage() {
             explanation="Aggregate score of savings rate, debt-to-income, and transaction stability." 
           />
           <V2MetricWidget 
-            title="Liquid Assets (₹)" 
+            title="Economic Participation Index" 
+            value={isImpacted ? 92 : 85} 
+            trend={isImpacted ? "up" : "up"} 
+            trendValue={isImpacted ? 8.2 : 1.1}
+            progress={isImpacted ? 92 : 85}
+            explanation="Measures active involvement in formal digital economy services." 
+          />
+          <V2MetricWidget 
+            title="Debt Burden Ratio" 
+            value={isImpacted ? 32 : 45} 
+            trend={isImpacted ? "down" : "up"} 
+            trendValue={isImpacted ? 13.0 : 2.5}
+            progress={isImpacted ? 32 : 45}
+            explanation="Proportion of monthly income committed to debt obligations." 
+          />
+          <V2MetricWidget 
+            title="Savings Resilience Score" 
             value={liquidAssets} 
             trend={isImpacted ? "up" : "down"} 
             trendValue={isImpacted ? 18.4 : 1.2}
             progress={liquidAssets / 1000}
-            explanation="Total instantly available funds across linked accounts and wallets." 
+            explanation="Ability to withstand financial shocks based on liquid reserves." 
           />
           <V2MetricWidget 
-            title="Credit Readiness" 
-            value={creditReadiness} 
-            trend={isImpacted ? "up" : "down"} 
-            trendValue={isImpacted ? 3.8 : 0.5}
-            progress={creditReadiness}
-            explanation="Proprietary probability of approval for unsecured retail credit." 
-          />
-          <V2MetricWidget 
-            title="Fraud Exposure" 
+            title="Scam Exposure Risk" 
             value={isImpacted ? 2.1 : 4.5} 
             trend={isImpacted ? "down" : "up"} 
             trendValue={isImpacted ? 53.3 : 12.0}
             progress={(isImpacted ? 2.1 : 4.5) * 10}
-            explanation="Risk of current digital footprint encountering malicious nodes." 
+            explanation="Risk of current digital footprint encountering malicious network nodes." 
           />
         </div>
 

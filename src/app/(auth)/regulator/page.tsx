@@ -16,7 +16,7 @@ export default function RegulatorMainPage() {
   const stabilityIndex = isImpacted ? 94.2 : 89.4;
   const fraudExposure = isImpacted ? 12.1 : 18.5;
   const economicTrust = isImpacted ? 88.7 : 81.2;
-  const liquidityIndex = isImpacted ? 96.5 : 85.0;
+  const systemicRisk = isImpacted ? 2.5 : 14.2;
 
   return (
     <div className="min-h-screen bg-[#020810] text-slate-200 pb-20 relative overflow-hidden">
@@ -68,12 +68,12 @@ export default function RegulatorMainPage() {
             explanation="Sentiment and reliability score based on inter-bank and citizen activity." 
           />
           <V2MetricWidget 
-            title="Liquidity Index" 
-            value={liquidityIndex} 
-            trend={isImpacted ? "up" : "down"} 
-            trendValue={isImpacted ? 11.5 : 3.4}
-            progress={liquidityIndex}
-            explanation="Market-wide liquidity coverage ratio vs required thresholds." 
+            title="Systemic Risk Score" 
+            value={systemicRisk} 
+            trend={isImpacted ? "down" : "up"} 
+            trendValue={isImpacted ? 11.7 : 2.1}
+            progress={systemicRisk * 5}
+            explanation="Calculated vulnerability to cascading defaults across interconnected institutions." 
           />
         </div>
 

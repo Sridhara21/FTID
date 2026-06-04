@@ -33,43 +33,35 @@ export default function GatewayMainPage() {
             </h1>
             <p className="text-sm text-emerald-400 mt-2 font-mono flex items-center gap-2">
               <AlertCircle className="h-4 w-4" /> 
-              KEY QUESTION: "Is the payment infrastructure healthy?"
+              KEY QUESTION: "Is the payment network healthy?"
             </p>
           </div>
         </header>
 
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4 mb-6">
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-4 mb-6">
           <V2MetricWidget 
-            title="Transactions Per Second (TPS)" 
-            value={throughput} 
-            trend={isImpacted ? "up" : "up"} 
-            trendValue={isImpacted ? 67.0 : 4.5}
-            progress={throughput / 150}
-            explanation="Live packet volume clearing through the sovereign switch." 
-          />
-          <V2MetricWidget 
-            title="Success Rate" 
-            value={successRate} 
-            trend={isImpacted ? "down" : "up"} 
-            trendValue={isImpacted ? 0.7 : 0.1}
-            progress={successRate}
-            explanation="Percentage of transactions clearing without technical drops." 
-          />
-          <V2MetricWidget 
-            title="Settlement Vol (Cr/hr)" 
-            value={settlementVol} 
-            trend={isImpacted ? "up" : "down"} 
-            trendValue={isImpacted ? 164.0 : 2.4}
-            progress={settlementVol / 100}
-            explanation="Total monetary value currently moving through the ledger." 
-          />
-          <V2MetricWidget 
-            title="Network Health Score" 
+            title="Settlement Health Score" 
             value={networkHealth} 
             trend={isImpacted ? "down" : "up"} 
             trendValue={isImpacted ? 14.1 : 0.5}
             progress={networkHealth}
-            explanation="Aggregate infrastructure stability and API response latency." 
+            explanation="Real-time aggregation of successful inter-bank clearings via the central switch." 
+          />
+          <V2MetricWidget 
+            title="Transaction Throughput" 
+            value={throughput} 
+            trend={isImpacted ? "up" : "up"} 
+            trendValue={isImpacted ? 67.0 : 4.5}
+            progress={throughput / 150}
+            explanation="Live packet volume clearing through the sovereign infrastructure (TPS)." 
+          />
+          <V2MetricWidget 
+            title="Network Latency Index" 
+            value={isImpacted ? 145 : 32} 
+            trend={isImpacted ? "up" : "down"} 
+            trendValue={isImpacted ? 113.0 : 2.1}
+            progress={(isImpacted ? 145 : 32) / 2}
+            explanation="Average millisecond response time across all connected financial nodes." 
           />
         </div>
 
@@ -88,13 +80,18 @@ export default function GatewayMainPage() {
                     <p className="text-sm font-mono text-amber-500/70">Massive concurrent API calls resulting from macro injection</p>
                   </div>
                 ) : (
-                  <div className="w-full h-full flex flex-col justify-end px-4 pb-4 gap-2">
-                     {/* Static Line Mock */}
-                     <div className="flex items-end gap-1 h-32">
-                       {[20, 25, 22, 28, 24, 21, 26, 23, 27, 25, 22, 26].map((h, i) => (
-                         <div key={i} className="flex-1 bg-purple-500/30 rounded-t-sm" style={{ height: `${h}%` }}></div>
-                       ))}
+                  <div className="w-full h-full flex flex-col items-center justify-center relative">
+                     <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-16 h-16 bg-purple-500/20 border-2 border-purple-400 rounded-full flex items-center justify-center animate-pulse z-10">
+                        <Network className="w-6 h-6 text-purple-400" />
                      </div>
+                     <svg className="w-full h-full absolute inset-0 z-0">
+                       <circle cx="50%" cy="50%" r="80" stroke="rgba(168, 85, 247, 0.3)" strokeWidth="1" fill="none" strokeDasharray="4 4" className="animate-[spin_10s_linear_infinite]" />
+                       <circle cx="50%" cy="50%" r="120" stroke="rgba(168, 85, 247, 0.1)" strokeWidth="1" fill="none" />
+                     </svg>
+                     <div className="absolute top-[20%] left-[20%] w-3 h-3 bg-emerald-400 rounded-full shadow-[0_0_10px_#34d399]"></div>
+                     <div className="absolute top-[30%] right-[25%] w-2 h-2 bg-emerald-400 rounded-full shadow-[0_0_10px_#34d399]"></div>
+                     <div className="absolute bottom-[25%] left-[30%] w-2 h-2 bg-emerald-400 rounded-full shadow-[0_0_10px_#34d399]"></div>
+                     <div className="absolute bottom-[20%] right-[20%] w-3 h-3 bg-emerald-400 rounded-full shadow-[0_0_10px_#34d399]"></div>
                   </div>
                 )}
               </CardContent>

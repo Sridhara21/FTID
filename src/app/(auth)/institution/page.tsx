@@ -21,26 +21,42 @@ export default function InstitutionMainPage() {
             <h1 className="text-3xl font-black text-white tracking-tight">Institution Dashboard</h1>
             <p className="text-sm text-emerald-400 mt-2 font-mono flex items-center gap-2">
               <AlertCircle className="h-4 w-4" /> 
-              KEY QUESTION: "How risky is my portfolio?"
+              KEY QUESTION: "What is my portfolio risk?"
             </p>
           </div>
         </header>
 
-<div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4 mb-6">
-<V2MetricWidget title="Overall Portfolio Risk" value={Math.floor(Math.random() * 10000)} trend={Math.random() > 0.5 ? "up" : "down"} explanation="This metric tracks the overall volume and health of Overall Portfolio Risk in real-time." />
-<V2MetricWidget title="NPA Metrics" value={Math.floor(Math.random() * 10000)} trend={Math.random() > 0.5 ? "up" : "down"} explanation="This metric tracks the overall volume and health of NPA Metrics in real-time." />
-<V2MetricWidget title="Total AUM" value={Math.floor(Math.random() * 10000)} trend={Math.random() > 0.5 ? "up" : "down"} explanation="This metric tracks the overall volume and health of Total AUM in real-time." />
-<V2MetricWidget title="Active Facilities" value={Math.floor(Math.random() * 10000)} trend={Math.random() > 0.5 ? "up" : "down"} explanation="This metric tracks the overall volume and health of Active Facilities in real-time." />
+<div className="grid grid-cols-1 md:grid-cols-3 gap-4 mb-6">
+<V2MetricWidget title="Institutional Trust Score" value={842} trend="up" explanation="Cryptographically verified trust score derived from historical NPA data, capital adequacy, and regulatory compliance." />
+<V2MetricWidget title="Portfolio Stress Index" value={14.2} trend="down" explanation="Real-time macro stress test indicator modeling the resilience of your current outstanding credit facilities." />
+<V2MetricWidget title="NPA Risk Projection" value={2.1} trend="down" explanation="Forward-looking AI model predicting the 90-day probability of default across the MSME portfolio." />
 </div>
 <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
 <div className="lg:col-span-2">
 <Card className="bg-[#0a1520] border-cyan-900/30 h-full">
 <CardHeader>
-<CardTitle className="text-white">Detailed Institution Dashboard Analytics</CardTitle>
-<CardDescription className="text-slate-400">Deep dive into Overall Portfolio Risk and NPA Metrics</CardDescription>
+<CardTitle className="text-white">Portfolio Stress Distribution</CardTitle>
+<CardDescription className="text-slate-400">Sector-wise breakdown of emerging credit risk</CardDescription>
 </CardHeader>
-<CardContent className="h-[300px] flex items-center justify-center border-t border-cyan-900/20">
-<p className="text-cyan-500/50 font-mono text-sm">[ Unique Visualization for Institution Dashboard ]</p>
+<CardContent className="border-t border-cyan-900/20 pt-6">
+  <div className="space-y-4">
+    {[
+      { sector: "Retail & Consumer", exposure: "₹450 Cr", risk: "Low", color: "text-emerald-400" },
+      { sector: "MSME Manufacturing", exposure: "₹820 Cr", risk: "Moderate", color: "text-amber-400" },
+      { sector: "Commercial Real Estate", exposure: "₹1,200 Cr", risk: "High", color: "text-rose-400" },
+      { sector: "Agri-Tech & Supply", exposure: "₹340 Cr", risk: "Low", color: "text-emerald-400" }
+    ].map((item, i) => (
+      <div key={i} className="flex justify-between items-center p-3 bg-cyan-950/20 rounded border border-cyan-900/30">
+        <div>
+          <div className="text-white font-medium">{item.sector}</div>
+          <div className="text-xs text-slate-400">Exposure: {item.exposure}</div>
+        </div>
+        <div className={`text-sm font-bold ${item.color}`}>
+          {item.risk} Risk
+        </div>
+      </div>
+    ))}
+  </div>
 </CardContent>
 </Card>
 </div>

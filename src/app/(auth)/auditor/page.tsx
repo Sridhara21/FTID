@@ -21,26 +21,41 @@ export default function AuditorMainPage() {
             <h1 className="text-3xl font-black text-white tracking-tight">Dashboard</h1>
             <p className="text-sm text-emerald-400 mt-2 font-mono flex items-center gap-2">
               <AlertCircle className="h-4 w-4" /> 
-              KEY QUESTION: "Can this activity be verified?"
+              KEY QUESTION: "What requires investigation?"
             </p>
           </div>
         </header>
 
-<div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4 mb-6">
-<V2MetricWidget title="Audit Risk" value={Math.floor(Math.random() * 10000)} trend={Math.random() > 0.5 ? "up" : "down"} explanation="This metric tracks the overall volume and health of Audit Risk in real-time." />
-<V2MetricWidget title="Reconciliation Health" value={Math.floor(Math.random() * 10000)} trend={Math.random() > 0.5 ? "up" : "down"} explanation="This metric tracks the overall volume and health of Reconciliation Health in real-time." />
-<V2MetricWidget title="Active Investigations" value={Math.floor(Math.random() * 10000)} trend={Math.random() > 0.5 ? "up" : "down"} explanation="This metric tracks the overall volume and health of Active Investigations in real-time." />
-<V2MetricWidget title="Compliance Overview" value={Math.floor(Math.random() * 10000)} trend={Math.random() > 0.5 ? "up" : "down"} explanation="This metric tracks the overall volume and health of Compliance Overview in real-time." />
+<div className="grid grid-cols-1 md:grid-cols-3 gap-4 mb-6">
+<V2MetricWidget title="Audit Confidence Score" value={98.7} trend="up" explanation="Cryptographic certainty that reported ledgers match underlying CBDC and UPI flows." />
+<V2MetricWidget title="Reconciliation Accuracy" value={99.9} trend="up" explanation="Real-time match rate between institutional balance sheets and national tax filings." />
+<V2MetricWidget title="Hidden Liability Indicator" value={1.2} trend="down" explanation="Detected probability of off-balance-sheet exposures or informal debt servicing." />
 </div>
 <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
 <div className="lg:col-span-2">
 <Card className="bg-[#0a1520] border-cyan-900/30 h-full">
 <CardHeader>
-<CardTitle className="text-white">Detailed Dashboard Analytics</CardTitle>
-<CardDescription className="text-slate-400">Deep dive into Audit Risk and Reconciliation Health</CardDescription>
+<CardTitle className="text-white">Live Audit Exceptions</CardTitle>
+<CardDescription className="text-slate-400">Anomalies detected across institutional filings</CardDescription>
 </CardHeader>
-<CardContent className="h-[300px] flex items-center justify-center border-t border-cyan-900/20">
-<p className="text-cyan-500/50 font-mono text-sm">[ Unique Visualization for Dashboard ]</p>
+<CardContent className="border-t border-cyan-900/20 pt-6">
+  <div className="space-y-4">
+    {[
+      { id: "AUD-9912", issue: "GST vs Inventory Mismatch", impact: "High", color: "text-amber-400" },
+      { id: "AUD-9913", issue: "Unverified Capital Injection", impact: "Critical", color: "text-rose-400" },
+      { id: "AUD-9914", issue: "Cross-border Settlement Delay", impact: "Medium", color: "text-cyan-400" }
+    ].map((item, i) => (
+      <div key={i} className="flex justify-between items-center p-3 bg-cyan-950/20 rounded border border-cyan-900/30">
+        <div>
+          <div className="text-white font-mono text-sm">{item.id}</div>
+          <div className="text-xs text-slate-400">{item.issue}</div>
+        </div>
+        <div className={`text-sm font-bold ${item.color}`}>
+          {item.impact}
+        </div>
+      </div>
+    ))}
+  </div>
 </CardContent>
 </Card>
 </div>

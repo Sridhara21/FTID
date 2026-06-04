@@ -69,56 +69,95 @@ const routes = [
 ];
 
 (async () => {
-  console.log('Launching browser...');
-  const browser = await puppeteer.launch();
-  const page = await browser.newPage();
-  await page.setViewport({ width: 1920, height: 1080 });
+  let browser;
+  let images = [];
+  try {
+    console.log('Launching browser...');
+    browser = await puppeteer.launch({
+      args: ['--no-sandbox', '--disable-setuid-sandbox', '--disable-dev-shm-usage']
+    });
+    const page = await browser.newPage();
+    await page.setViewport({ width: 1920, height: 1080 });
 
-  const images = [];
-
-  for (let i = 0; i < routes.length; i++) {
-    const route = routes[i];
-    const url = typeof route === 'string' ? `http://localhost:3000${route}` : route.url;
-    console.log(`Taking screenshot for ${url}...`);
-    try {
-      await page.goto(url, { waitUntil: 'load', timeout: 90000 });
-      await new Promise(r => setTimeout(r, 1000)); // wait for fade-in animations to finish
-      const imgPath = path.join(__dirname, `screenshot_${i}.png`);
-      await page.screenshot({ path: imgPath, fullPage: true });
-      images.push(imgPath);
-    } catch(err) {
-      console.log(`Failed to screenshot ${url}: ${err.message}`);
-    }
-  }
-
-  await browser.close();
-
-  console.log('Generating PDF...');
-  const doc = new PDFDocument({ autoFirstPage: false });
-  const outPath = path.join(__dirname, 'FTID_V6_Showcase_Edition.pdf');
-  
-  const stream = fs.createWriteStream(outPath);
-  doc.pipe(stream);
-
-  for (let imgPath of images) {
-    if (fs.existsSync(imgPath)) {
-      const img = doc.openImage(imgPath);
-      doc.addPage({ size: [img.width, img.height] });
-      doc.image(imgPath, 0, 0);
-    }
-  }
-
-  doc.end();
-
-  stream.on('finish', () => {
-    console.log('PDF generated successfully at FTID_V6_Showcase_Edition.pdf!');
-    // Cleanup images
-    console.log('Cleaning up temporary images...');
-    for (let imgPath of images) {
-      if (fs.existsSync(imgPath)) {
-        fs.unlinkSync(imgPath);
+    for (let i = 0; i < routes.length; i++) {
+      const route = routes[i];
+      const url = typeof route === 'string' ? `http://localhost:3000${route}` : route.url;
+      console.log(`Taking screenshot for ${url}...`);
+      try {
+        await page.goto(url, { waitUntil: 'networkidle2', timeout: 60000 });
+        await new Promise(r => setTimeout(r, 1000)); // wait for fade-in animations to finish
+        const imgPath = path.join(__dirname, `screenshot_${i}.png`);
+        await page.screenshot({ path: imgPath, fullPage: true });
+        images.push(imgPath);
+      } catch (err) {
+        console.error(`Failed to screenshot ${url}: ${err.message}`);
       }
     }
-    console.log('Done.');
-  });
+  } catch (error) {
+    console.error('Fatal error during Puppeteer execution:', error);
+  } finally {
+    if (browser) {
+      try {
+        await browser.close();
+      } catch (closeErr) {
+        console.error('Error closing browser:', closeErr);
+      }
+    }
+  }
+
+  if (images.length === 0) {
+    console.error('No screenshots were taken. Aborting PDF generation.');
+    return;
+  }
+
+  console.log('Generating PDF...');
+  try {
+    const doc = new PDFDocument({ autoFirstPage: false });
+    const outPath = path.join(__dirname, 'FTID_V6.5_Showcase_Edition.pdf');
+    
+    const stream = fs.createWriteStream(outPath);
+    
+    stream.on('error', (err) => {
+      console.error('Error writing PDF stream:', err);
+      cleanupImages(images);
+    });
+
+    stream.on('finish', () => {
+      console.log('PDF generated successfully at FTID_V6.5_Showcase_Edition.pdf!');
+      cleanupImages(images);
+      console.log('Done.');
+    });
+
+    doc.pipe(stream);
+
+    for (let imgPath of images) {
+      if (fs.existsSync(imgPath)) {
+        try {
+          const img = doc.openImage(imgPath);
+          doc.addPage({ size: [img.width, img.height] });
+          doc.image(imgPath, 0, 0);
+        } catch (imgErr) {
+          console.error(`Failed to add image ${imgPath} to PDF:`, imgErr);
+        }
+      }
+    }
+
+    doc.end();
+  } catch (pdfErr) {
+    console.error('Error during PDF generation:', pdfErr);
+    cleanupImages(images);
+  }
 })();
+
+function cleanupImages(images) {
+  console.log('Cleaning up temporary images...');
+  for (let imgPath of images) {
+    if (fs.existsSync(imgPath)) {
+      try {
+        fs.unlinkSync(imgPath);
+      } catch (err) {
+        console.error(`Failed to delete temporary image ${imgPath}:`, err);
+      }
+    }
+  }
+}

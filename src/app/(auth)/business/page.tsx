@@ -38,22 +38,38 @@ export default function BusinessMainPage() {
           </div>
         </header>
 
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4 mb-6">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-4 mb-6">
           <V2MetricWidget 
-            title="Monthly Revenue (₹)" 
-            value={revenue} 
+            title="Business Trust Score" 
+            value={isImpacted ? 912 : 845} 
             trend={isImpacted ? "up" : "up"} 
-            trendValue={isImpacted ? 18.4 : 3.2}
-            progress={revenue / 10000}
-            explanation="Real-time aggregation of inward GSTN invoices and payment gateway settlements." 
+            trendValue={isImpacted ? 12.4 : 3.2}
+            progress={(isImpacted ? 912 : 845) / 10}
+            explanation="Cryptographically verifiable trust score derived from GST filings and timely loan repayments." 
           />
           <V2MetricWidget 
-            title="Cash Position (₹)" 
-            value={cashPosition} 
+            title="Compliance Health Index" 
+            value={isImpacted ? 98 : 95} 
             trend={isImpacted ? "up" : "down"} 
-            trendValue={isImpacted ? 41.1 : 2.5}
-            progress={cashPosition / 2000}
-            explanation="Total liquidity available across current accounts and short-term deposits." 
+            trendValue={isImpacted ? 3.1 : 1.2}
+            progress={isImpacted ? 98 : 95}
+            explanation="Real-time adherence to statutory obligations, tax remittances, and corporate governance." 
+          />
+          <V2MetricWidget 
+            title="Liquidity Runway" 
+            value={isImpacted ? 6.2 : 4.5} 
+            trend={isImpacted ? "up" : "down"} 
+            trendValue={isImpacted ? 1.7 : 0.5}
+            progress={(isImpacted ? 6.2 : 4.5) * 10}
+            explanation="Estimated months of operational runway based on current cash position and burn rate." 
+          />
+          <V2MetricWidget 
+            title="Vendor Reliability Score" 
+            value={isImpacted ? 88 : 82} 
+            trend={isImpacted ? "up" : "up"} 
+            trendValue={isImpacted ? 5.2 : 1.1}
+            progress={isImpacted ? 88 : 82}
+            explanation="Aggregated reliability metric of your supply chain partners based on the national ledger." 
           />
           <V2MetricWidget 
             title="Credit Readiness Score" 
@@ -62,14 +78,6 @@ export default function BusinessMainPage() {
             trendValue={isImpacted ? 24.3 : 1.1}
             progress={creditReadiness}
             explanation="Institutional likelihood of immediate loan approval based on verified cash flow." 
-          />
-          <V2MetricWidget 
-            title="Growth Forecast" 
-            value={growthForecast} 
-            trend={isImpacted ? "up" : "down"} 
-            trendValue={isImpacted ? 5.2 : 1.1}
-            progress={growthForecast * 4}
-            explanation="Predictive YoY growth based on current macro-economic velocity and order book." 
           />
         </div>
 
