@@ -7,6 +7,7 @@ import { DemoGuide } from "@/components/shared/DemoGuide";
 
 export default function AuditorTrailsPage() {
   const [signed, setSigned] = useState(false);
+  const [zkVerified, setZkVerified] = useState(false);
   const { scenario } = useScenario();
   const isImpacted = scenario.isActive && scenario.currentStep >= 9;
 
@@ -104,6 +105,28 @@ export default function AuditorTrailsPage() {
                 <p className="text-sm text-slate-300">
                   {isImpacted ? "The evidentiary trail TR-9904-X captures a sophisticated attempt to divert subsidy funds. Cryptographic integrity is verified across all hops." : "The evidentiary trail TR-4091-B demonstrates continuous cryptographic integrity. No tampering detected across the GST, e-Way, and CBDT node data hashes."}
                 </p>
+              </div>
+
+              <div className="pt-4 border-t border-slate-800">
+                <p className="text-[10px] uppercase tracking-widest text-slate-500 font-bold mb-1">Cryptographic Proof</p>
+                <div className="bg-[#020509] border border-cyan-900/40 p-3 rounded-lg mb-3">
+                  <div className="text-xs text-slate-400 mb-1">State Merkle Root:</div>
+                  <div className="text-[10px] font-mono text-cyan-400 break-all">
+                    0x8a7f9b23e1c4d5a6b7c8d9e0f1a2b3c4d5e6f7a8b9c0d1e2f3a4b5c6d7e8f9a0
+                  </div>
+                </div>
+                {!zkVerified ? (
+                  <button 
+                    onClick={() => setZkVerified(true)}
+                    className="w-full py-2 bg-slate-800 hover:bg-slate-700 text-slate-200 text-xs font-bold uppercase tracking-widest rounded border border-slate-700 transition-colors flex items-center justify-center gap-2"
+                  >
+                    Verify ZK-Proof <Search className="w-3 h-3" />
+                  </button>
+                ) : (
+                  <div className="w-full py-2 bg-emerald-900/20 text-emerald-400 text-xs font-bold uppercase tracking-widest rounded border border-emerald-500/30 flex items-center justify-center gap-2">
+                    <CheckCircle2 className="w-3 h-3" /> Proof Validated (O(1))
+                  </div>
+                )}
               </div>
 
               <div className="pt-4 border-t border-slate-800">

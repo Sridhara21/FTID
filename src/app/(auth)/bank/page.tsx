@@ -62,7 +62,14 @@ export default function BankMainPage() {
 </Card>
 </div>
 <div>
-<V2InsightsFeed title="Actionable Intelligence" />
+<V2InsightsFeed 
+  title="Actionable Intelligence" 
+  items={[
+    { icon: AlertCircle, color: "text-amber-400", bg: "bg-amber-400/10", text: "Warning: High correlation detected between MSME Working Capital defaults and regional GST revenue drops in Maharashtra." },
+    { icon: ShieldCheck, color: "text-emerald-400", bg: "bg-emerald-400/10", text: "Auto-underwriting models adjusted. Risk limits increased for Tier-1 supply chain vendors based on new FTID deterministic score." },
+    { icon: Activity, color: "text-cyan-400", bg: "bg-cyan-400/10", text: "New RBI mandate received: Cap sectoral exposure to commercial real estate at 18.5% within next 48 hours." }
+  ]}
+/>
 </div>
 </div>
 

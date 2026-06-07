@@ -1,6 +1,6 @@
 "use client";
 import { Card, CardContent, CardHeader, CardTitle, CardDescription } from "@/components/ui/card";
-import { AlertCircle, User, Wallet } from "lucide-react";
+import { AlertCircle, User, Wallet, Building2, Fingerprint, ShieldCheck } from "lucide-react";
 import { V2MetricWidget } from "@/components/shared/v2/V2MetricWidget";
 import { V2InsightsFeed } from "@/components/shared/v2/V2InsightsFeed";
 import { useScenario } from "@/components/ScenarioContext";
@@ -81,28 +81,80 @@ export default function CitizenMainPage() {
         </div>
 
         <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
-          <div className="lg:col-span-2">
-            <Card className="bg-[#0a1520] border-emerald-900/30 h-full">
-              <CardHeader>
-                <CardTitle className="text-white">Live Transaction Graph</CardTitle>
-                <CardDescription className="text-slate-400">Real-time observability of your personal cashflow network</CardDescription>
+          <div className="lg:col-span-2 space-y-6">
+            <Card className="bg-[#0a1520] border-emerald-900/30">
+              <CardHeader className="flex flex-row items-center justify-between pb-2">
+                <div>
+                  <CardTitle className="text-white">Account Aggregator Consent Hub</CardTitle>
+                  <CardDescription className="text-slate-400">Manage who has access to your financial state</CardDescription>
+                </div>
+                <div className="px-2 py-1 bg-amber-500/10 border border-amber-500/30 text-amber-400 text-xs font-bold rounded flex items-center gap-2">
+                  <span className="w-2 h-2 rounded-full bg-amber-400 animate-pulse"></span>
+                  1 Pending Request
+                </div>
               </CardHeader>
-              <CardContent className="h-[300px] flex items-center justify-center border-t border-emerald-900/20 relative">
-                {isImpacted && (
-                  <div className="absolute inset-0 bg-emerald-900/10 flex flex-col items-center justify-center">
-                    <Wallet className="w-12 h-12 text-emerald-400 mb-4 animate-bounce" />
-                    <p className="text-lg font-bold text-emerald-400">Direct Benefit Transfer Received</p>
-                    <p className="text-sm font-mono text-emerald-500/70">₹7,000 Credited via Sovereign UPI Route</p>
+              <CardContent className="border-t border-emerald-900/20 pt-6">
+                
+                {/* Pending Consent Request */}
+                <div className="bg-[#050c14] border border-slate-800 rounded-xl overflow-hidden relative">
+                  <div className="absolute top-0 left-0 w-1 h-full bg-amber-500"></div>
+                  <div className="p-5">
+                    <div className="flex justify-between items-start mb-4">
+                      <div>
+                        <h4 className="font-bold text-white text-lg flex items-center gap-2">
+                          <Building2 className="w-5 h-5 text-slate-400" />
+                          HDFC Bank Ltd.
+                        </h4>
+                        <p className="text-sm text-slate-400 mt-1">Requesting access to your GST returns and CIBIL data for <strong className="text-white">MSME Working Capital Loan Assessment</strong>.</p>
+                      </div>
+                      <div className="text-right">
+                        <div className="text-xs text-slate-500 uppercase font-bold tracking-wider mb-1">Duration</div>
+                        <div className="text-sm font-mono text-cyan-400">One-Time Pull</div>
+                      </div>
+                    </div>
+                    
+                    <div className="flex gap-3 mt-6">
+                       <button className="flex-1 bg-emerald-600 hover:bg-emerald-500 text-white py-2 rounded font-bold transition-colors shadow-[0_0_15px_rgba(16,185,129,0.3)] flex justify-center items-center gap-2">
+                         <Fingerprint className="w-4 h-4" /> Cryptographically Approve
+                       </button>
+                       <button className="px-6 py-2 border border-slate-700 hover:bg-slate-800 text-slate-300 rounded font-bold transition-colors">
+                         Deny
+                       </button>
+                    </div>
                   </div>
-                )}
-                {!isImpacted && (
-                  <p className="text-emerald-500/50 font-mono text-sm">Awaiting Inbound Transactions...</p>
-                )}
+                </div>
+
+                {/* Active Consents */}
+                <div className="mt-8">
+                  <h4 className="text-sm font-bold text-slate-400 uppercase tracking-widest mb-4">Active Data Flows</h4>
+                  <div className="space-y-3">
+                    <div className="flex items-center justify-between p-3 bg-slate-900/50 rounded border border-slate-800">
+                      <div className="flex items-center gap-3">
+                        <div className="w-8 h-8 rounded-full bg-emerald-500/20 flex items-center justify-center text-emerald-400">
+                          <ShieldCheck className="w-4 h-4" />
+                        </div>
+                        <div>
+                          <div className="text-sm font-bold text-white">Income Tax Department</div>
+                          <div className="text-xs text-slate-500">Continuous Monitoring • Auto-Filing</div>
+                        </div>
+                      </div>
+                      <button className="text-xs text-rose-400 hover:text-rose-300 font-bold px-3 py-1 bg-rose-500/10 rounded">Revoke</button>
+                    </div>
+                  </div>
+                </div>
+
               </CardContent>
             </Card>
           </div>
           <div>
-            <V2InsightsFeed title="Actionable Financial Advice" />
+            <V2InsightsFeed 
+              title="Actionable Financial Advice" 
+              items={[
+                { icon: ShieldCheck, color: "text-emerald-400", bg: "bg-emerald-400/10", text: "Your Aadhaar footprint is secure. No unauthorized authentication requests detected in the last 30 days." },
+                { icon: AlertCircle, color: "text-amber-400", bg: "bg-amber-400/10", text: "Subscription alert: 3 new recurring UPI mandates detected. Review your active auto-pays." },
+                { icon: TrendingUp, color: "text-cyan-400", bg: "bg-cyan-400/10", text: "Based on your steady savings rate, you are pre-approved for a sovereign-backed micro-investment plan." }
+              ]}
+            />
           </div>
         </div>
 

@@ -1,5 +1,6 @@
 import { Card, CardContent } from "@/components/ui/card";
-import { TrendingUp, TrendingDown, Info } from "lucide-react";
+import { TrendingUp, TrendingDown, Info, ArrowRight } from "lucide-react";
+import Link from "next/link";
 
 export interface V2MetricWidgetProps {
   title: string;
@@ -8,21 +9,25 @@ export interface V2MetricWidgetProps {
   explanation: string;
   trendValue?: number;
   progress?: number;
+  href?: string;
 }
 
-export function V2MetricWidget({ title, value, trend, explanation, trendValue, progress }: V2MetricWidgetProps) {
+export function V2MetricWidget({ title, value, trend, explanation, trendValue, progress, href }: V2MetricWidgetProps) {
   // Use provided values or fallback to deterministic mock values based on string length to avoid hydration mismatches
   const tValue = trendValue ?? (title.length % 5) + 1.2;
   const pValue = progress ?? (title.length * 5 % 60) + 20;
 
-  return (
-    <Card className="bg-[#0a1520] border-cyan-900/30 overflow-hidden relative group">
+  const innerContent = (
+    <Card className={`bg-[#0a1520] border-cyan-900/30 overflow-hidden relative group transition-all ${href ? 'hover:border-cyan-500/50 hover:shadow-[0_0_20px_rgba(8,145,178,0.2)] hover:-translate-y-1' : ''}`}>
       <div className="absolute top-0 right-0 w-24 h-24 bg-cyan-900/10 rounded-bl-full pointer-events-none transition-all group-hover:scale-110"></div>
       <CardContent className="p-4 flex flex-col justify-between h-full z-10 relative">
         <div className="flex justify-between items-start mb-2">
           <p className="text-xs font-bold uppercase tracking-wider text-slate-400">{title}</p>
-          <div className="text-cyan-500/50 hover:text-cyan-400 cursor-help" title={explanation}>
-            <Info className="h-3 w-3" />
+          <div className="flex items-center gap-2">
+            {href && <ArrowRight className="h-3 w-3 text-cyan-500 opacity-0 group-hover:opacity-100 transition-opacity" />}
+            <div className="text-cyan-500/50 hover:text-cyan-400 cursor-help" title={explanation}>
+              <Info className="h-3 w-3" />
+            </div>
           </div>
         </div>
         <div className="flex items-end gap-3 mt-4">
@@ -38,4 +43,10 @@ export function V2MetricWidget({ title, value, trend, explanation, trendValue, p
       </CardContent>
     </Card>
   );
+
+  if (href) {
+    return <Link href={href} className="block h-full">{innerContent}</Link>;
+  }
+
+  return innerContent;
 }

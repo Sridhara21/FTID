@@ -73,7 +73,8 @@ export default function RegulatorMainPage() {
             trend={isImpacted ? "down" : "up"} 
             trendValue={isImpacted ? 11.7 : 2.1}
             progress={systemicRisk * 5}
-            explanation="Calculated vulnerability to cascading defaults across interconnected institutions." 
+            explanation="Calculated vulnerability to cascading defaults across interconnected institutions. Click for detailed forensic breakdown." 
+            href="/regulator/systemic-risk"
           />
         </div>
 
@@ -106,7 +107,14 @@ export default function RegulatorMainPage() {
             </Card>
           </div>
           <div>
-            <V2InsightsFeed title="Supervisory Alerts" />
+            <V2InsightsFeed 
+              title="Supervisory Alerts" 
+              items={[
+                { icon: AlertCircle, color: "text-rose-400", bg: "bg-rose-400/10", text: "CRITICAL: Shadow banking liquidity gap expanding. 3 NBFCs showing coordinated stress signals." },
+                { icon: ShieldCheck, color: "text-emerald-400", bg: "bg-emerald-400/10", text: "Inter-bank settlement queue cleared successfully within 8ms tolerance." },
+                { icon: Activity, color: "text-cyan-400", bg: "bg-cyan-400/10", text: "New node integration: 'FinTech Corp X' successfully onboarded to the Account Aggregator framework." }
+              ]}
+            />
           </div>
         </div>
       </div>

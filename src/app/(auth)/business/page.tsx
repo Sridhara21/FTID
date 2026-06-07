@@ -107,7 +107,14 @@ export default function BusinessMainPage() {
             </Card>
           </div>
           <div>
-            <V2InsightsFeed title="Actionable Intelligence" />
+            <V2InsightsFeed 
+  title="Actionable Intelligence" 
+  items={[
+    { icon: TrendingUp, color: "text-emerald-400", bg: "bg-emerald-400/10", text: "Your Deterministic Trust Score improved by 12 points. You are now eligible for a 1.5% interest rate reduction on working capital." },
+    { icon: AlertCircle, color: "text-amber-400", bg: "bg-amber-400/10", text: "Pending GST mismatch detected with Vendor 'SuperTech Logistics'. Reconcile to prevent score penalty." },
+    { icon: Building2, color: "text-cyan-400", bg: "bg-cyan-400/10", text: "Supply chain network stability is high. Primary buyers have strong liquidity runways." }
+  ]}
+/>
           </div>
         </div>
 

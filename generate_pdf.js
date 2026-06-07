@@ -113,7 +113,7 @@ const routes = [
   console.log('Generating PDF...');
   try {
     const doc = new PDFDocument({ autoFirstPage: false });
-    const outPath = path.join(__dirname, 'FTID_V6.5_Showcase_Edition.pdf');
+    const outPath = path.join(__dirname, 'FTID_V8_Showcase_Edition.pdf');
     
     const stream = fs.createWriteStream(outPath);
     
@@ -123,7 +123,7 @@ const routes = [
     });
 
     stream.on('finish', () => {
-      console.log('PDF generated successfully at FTID_V6.5_Showcase_Edition.pdf!');
+      console.log('PDF generated successfully at FTID_V8_Showcase_Edition.pdf!');
       cleanupImages(images);
       console.log('Done.');
     });

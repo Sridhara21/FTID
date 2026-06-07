@@ -11,6 +11,7 @@ import {
 import { DashboardSidebar } from "@/components/shared/dashboard-sidebar";
 import { DynamicHeader } from "@/components/shared/dynamic-header";
 import { MobileNav } from "@/components/shared/mobile-nav";
+import { ScenarioController } from "@/components/shared/v2/ScenarioController";
 
 export default function DashboardLayout({
   children,
@@ -66,6 +67,7 @@ export default function DashboardLayout({
         
         <MobileNav />
       </SidebarInset>
+      <ScenarioController />
     </SidebarProvider>
   );
 }

@@ -6,6 +6,7 @@ import { V2InsightsFeed } from "@/components/shared/v2/V2InsightsFeed";
 import { ScenarioRunButton } from "@/components/shared/ScenarioRunButton";
 import { useScenario } from "@/components/ScenarioContext";
 import { DemoGuide } from "@/components/shared/DemoGuide";
+import { IndiaMapSVG } from "@/components/shared/v2/IndiaMapSVG";
 
 export default function GovernmentMainPage() {
   const { scenario } = useScenario();
@@ -81,28 +82,34 @@ export default function GovernmentMainPage() {
         <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
           <div className="lg:col-span-2">
             <Card className="bg-[#0a1520] border-indigo-900/30 h-full">
-              <CardHeader>
-                <CardTitle className="text-white">National Policy Heatmap</CardTitle>
-                <CardDescription className="text-slate-400">Live sectoral impact of current fiscal and monetary regimes</CardDescription>
-              </CardHeader>
-              <CardContent className="h-[300px] flex flex-col justify-center border-t border-indigo-900/20 p-6 space-y-4 relative">
-                {/* Simulated Chart/Heatmap */}
-                <div className="w-full flex items-end h-40 gap-2 border-b border-indigo-900/50 pb-2">
-                   {['Agri', 'Tech', 'Retail', 'Mfg', 'Export', 'Real Estate'].map((sector, i) => (
-                     <div key={sector} className="flex-1 flex flex-col justify-end items-center group relative">
-                       <div 
-                         className={`w-full rounded-t-sm transition-all duration-1000 ${isImpacted && (i===0 || i===2) ? 'bg-emerald-500 shadow-[0_0_10px_rgba(16,185,129,0.5)]' : 'bg-indigo-500/50'}`} 
-                         style={{ height: `${(i % 3 + 1) * 20 + (isImpacted ? (i === 0 || i === 2 ? 40 : 10) : 0)}%` }}
-                       ></div>
-                       <span className="text-[10px] uppercase font-bold text-slate-500 mt-2">{sector}</span>
-                     </div>
-                   ))}
+              <CardHeader className="flex flex-row items-start justify-between pb-2">
+                <div>
+                  <CardTitle className="text-white">National Policy Heatmap</CardTitle>
+                  <CardDescription className="text-slate-400">Live sectoral impact of current fiscal and monetary regimes</CardDescription>
                 </div>
+                <div className="flex gap-2">
+                  <div className="px-2 py-1 rounded bg-indigo-900/30 border border-indigo-500/30 text-xs text-indigo-300 font-mono flex items-center gap-2 cursor-pointer hover:bg-indigo-900/50">
+                    <span className="w-1.5 h-1.5 rounded-full bg-emerald-400"></span> Tier 3 Cities
+                  </div>
+                  <div className="px-2 py-1 rounded bg-slate-800/50 border border-slate-700 text-xs text-slate-400 font-mono cursor-pointer hover:bg-slate-800">
+                    Target: MSME
+                  </div>
+                </div>
+              </CardHeader>
+              <CardContent className="h-[300px] flex items-center justify-center border-t border-indigo-900/20 p-6 relative">
+                <IndiaMapSVG />
               </CardContent>
             </Card>
           </div>
           <div>
-            <V2InsightsFeed title="Fiscal Intelligence" />
+            <V2InsightsFeed 
+              title="Fiscal Intelligence" 
+              items={[
+                { icon: Landmark, color: "text-emerald-400", bg: "bg-emerald-400/10", text: "Direct Benefit Transfer (DBT) leakage reduced by 14% this quarter due to precise Aadhar-UPI routing." },
+                { icon: AlertCircle, color: "text-amber-400", bg: "bg-amber-400/10", text: "Advance Tax collection lagging by 4% in Tier-2 manufacturing zones. Recommend targeted stimulus." },
+                { icon: TrendingUp, color: "text-cyan-400", bg: "bg-cyan-400/10", text: "GST compliance rate hit an all-time high of 94.2% following the deployment of automated e-invoicing reconciliation." }
+              ]}
+            />
           </div>
         </div>
       </div>
