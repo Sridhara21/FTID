@@ -23,7 +23,7 @@ const scenarioNetWorthData = [
 export default function CitizenBalanceSheetPage() {
   const [assetReallocated, setAssetReallocated] = useState(false);
   const { scenario } = useScenario();
-  const isScenarioActive = scenario.isActive && scenario.type === "NATIONAL_SUBSIDY_RELEASED";
+  const isScenarioActive = scenario.isActive && scenario.activeEvent === "LIQUIDITY_INJECTION";
 
   const netWorthData = isScenarioActive ? scenarioNetWorthData : baseNetWorthData;
 

@@ -1,6 +1,6 @@
 "use client";
 import { Card, CardContent, CardHeader, CardTitle, CardDescription } from "@/components/ui/card";
-import { AlertCircle, Landmark } from "lucide-react";
+import { AlertCircle, Landmark, TrendingUp } from "lucide-react";
 import { V2MetricWidget } from "@/components/shared/v2/V2MetricWidget";
 import { V2InsightsFeed } from "@/components/shared/v2/V2InsightsFeed";
 import { ScenarioRunButton } from "@/components/shared/ScenarioRunButton";

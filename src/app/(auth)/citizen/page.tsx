@@ -1,6 +1,6 @@
 "use client";
 import { Card, CardContent, CardHeader, CardTitle, CardDescription } from "@/components/ui/card";
-import { AlertCircle, User, Wallet, Building2, Fingerprint, ShieldCheck } from "lucide-react";
+import { AlertCircle, User, Wallet, Building2, Fingerprint, ShieldCheck, TrendingUp } from "lucide-react";
 import { V2MetricWidget } from "@/components/shared/v2/V2MetricWidget";
 import { V2InsightsFeed } from "@/components/shared/v2/V2InsightsFeed";
 import { useScenario } from "@/components/ScenarioContext";

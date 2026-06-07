@@ -9,11 +9,11 @@ import { useScenario } from "@/components/ScenarioContext";
 export function ScenarioTrigger() {
   const [isRunning, setIsRunning] = useState(false);
   const { toast } = useToast();
-  const { triggerScenario, resetScenario } = useScenario();
+  const { triggerEvent, resetScenario } = useScenario();
 
   const triggerNationalScenario = async () => {
     setIsRunning(true);
-    triggerScenario("NATIONAL_SUBSIDY_RELEASED", "high");
+    triggerEvent("LIQUIDITY_INJECTION");
     
     // Simulate a complex multi-step scenario
     const steps = [
