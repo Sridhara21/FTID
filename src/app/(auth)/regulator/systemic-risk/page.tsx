@@ -9,7 +9,7 @@ export default function RegulatorSystemicRiskPage() {
   const { scenario } = useScenario();
   
   // Dynamic risk score based on scenario
-  const isImpacted = scenario.isActive && scenario.currentStep >= 8;
+  const isImpacted = scenario.isActive && scenario.demoStep >= 5;
   const currentRiskScore = isImpacted ? 2.5 : 74.2;
 
   const riskFactors = [

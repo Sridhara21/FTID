@@ -9,7 +9,7 @@ export default function AuditorTrailsPage() {
   const [signed, setSigned] = useState(false);
   const [zkVerified, setZkVerified] = useState(false);
   const { scenario } = useScenario();
-  const isImpacted = scenario.isActive && scenario.currentStep >= 9;
+  const isImpacted = scenario.isActive && scenario.demoStep >= 6;
 
   const handleSign = () => {
     setSigned(true);

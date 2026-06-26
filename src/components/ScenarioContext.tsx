@@ -5,21 +5,24 @@ import React, { createContext, useContext, useState, ReactNode } from "react";
 export type ScenarioEvent = 
   | "NONE"
   | "MSME_DEFAULT_SPIKE"
+  | "SUBSIDY_EXPANSION"
+  | "FRAUD_OUTBREAK"
   | "LIQUIDITY_INJECTION"
-  | "SYSTEM_STRESS_TEST"
-  | "POLICY_RATE_CUT";
+  | "ECONOMIC_SLOWDOWN"
+  | "DEMO_SEQUENCE";
+
+export type DemoStep = 0 | 1 | 2 | 3 | 4 | 5 | 6;
 
 interface ScenarioState {
   isActive: boolean;
   activeEvent: ScenarioEvent;
-  // Kept for backward compatibility with some existing components
-  currentStep: number; 
+  demoStep: DemoStep; 
 }
 
 interface ScenarioContextType {
   scenario: ScenarioState;
-  triggerNationalScenario: () => void;
   triggerEvent: (event: ScenarioEvent) => void;
+  advanceDemoStep: () => void;
   clearEvent: () => void;
   resetScenario: () => void;
 }
@@ -30,33 +33,36 @@ export function ScenarioProvider({ children }: { children: ReactNode }) {
   const [scenario, setScenario] = useState<ScenarioState>({
     isActive: false,
     activeEvent: "NONE",
-    currentStep: 0,
+    demoStep: 0,
   });
 
-  const triggerNationalScenario = () => {
-    setScenario({ isActive: true, activeEvent: "NONE", currentStep: 1 });
-  };
-
   const triggerEvent = (event: ScenarioEvent) => {
-    setScenario(prev => ({ 
-      ...prev, 
+    setScenario({ 
       isActive: true, 
       activeEvent: event,
-      // Mapping events to a currentStep roughly to maintain compatibility with Phase 1 components
-      currentStep: event === "MSME_DEFAULT_SPIKE" ? 4 : event === "LIQUIDITY_INJECTION" ? 7 : 5 
-    }));
+      demoStep: event === "DEMO_SEQUENCE" ? 1 : 0 
+    });
+  };
+
+  const advanceDemoStep = () => {
+    setScenario(prev => {
+      if (prev.activeEvent === "DEMO_SEQUENCE" && prev.demoStep < 6) {
+        return { ...prev, demoStep: (prev.demoStep + 1) as DemoStep };
+      }
+      return prev;
+    });
   };
 
   const clearEvent = () => {
-    setScenario(prev => ({ ...prev, activeEvent: "NONE", currentStep: 1 }));
+    setScenario({ isActive: false, activeEvent: "NONE", demoStep: 0 });
   };
 
   const resetScenario = () => {
-    setScenario({ isActive: false, activeEvent: "NONE", currentStep: 0 });
+    setScenario({ isActive: false, activeEvent: "NONE", demoStep: 0 });
   };
 
   return (
-    <ScenarioContext.Provider value={{ scenario, triggerNationalScenario, triggerEvent, clearEvent, resetScenario }}>
+    <ScenarioContext.Provider value={{ scenario, triggerEvent, advanceDemoStep, clearEvent, resetScenario }}>
       {children}
     </ScenarioContext.Provider>
   );

@@ -10,7 +10,7 @@ import { motion } from "framer-motion";
 
 export default function BankUnderwritingPage() {
   const { scenario } = useScenario();
-  const isImpacted = scenario.isActive && scenario.currentStep >= 5;
+  const isImpacted = scenario.isActive && scenario.demoStep >= 3;
 
   return (
     <div className={`min-h-screen ${isImpacted ? "bg-[#051515]" : "bg-[#020810]"} text-slate-200 pb-20 relative overflow-hidden transition-colors duration-1000`}>

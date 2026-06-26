@@ -4,11 +4,11 @@ import { useScenario } from "@/components/ScenarioContext";
 import { Play, Activity } from "lucide-react";
 
 export function ScenarioRunButton() {
-  const { scenario, triggerNationalScenario } = useScenario();
+  const { scenario, triggerEvent } = useScenario();
 
   return (
     <button
-      onClick={triggerNationalScenario}
+      onClick={() => triggerEvent("DEMO_SEQUENCE")}
       disabled={scenario.isActive}
       className={`flex items-center gap-2 px-6 py-3 rounded-lg font-bold text-sm tracking-widest uppercase transition-all shadow-xl ${
         scenario.isActive
@@ -19,7 +19,7 @@ export function ScenarioRunButton() {
       {scenario.isActive ? (
         <>
           <Activity className="w-5 h-5 animate-pulse" />
-          Scenario Running (Step {scenario.currentStep}/9)
+          Scenario Running (Step {scenario.demoStep}/6)
         </>
       ) : (
         <>

@@ -7,7 +7,7 @@ import { DemoGuide } from "@/components/shared/DemoGuide";
 
 export default function RegulatorEWSPage() {
   const { scenario } = useScenario();
-  const isImpacted = scenario.isActive && scenario.currentStep >= 8;
+  const isImpacted = scenario.isActive && scenario.demoStep >= 5;
 
   const threats = [
     {
