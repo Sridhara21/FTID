@@ -5,6 +5,7 @@ import { Bell, Search } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { UserNav } from "@/components/shared/user-nav";
+import { CountrySwitcher } from "@/components/shared/v2/CountrySwitcher";
 
 const PORTALS = {
   citizen: {
@@ -163,6 +164,7 @@ export function DynamicHeader() {
               <Bell className="h-4 w-4" />
               <span className="sr-only">Toggle notifications</span>
             </Button>
+            <CountrySwitcher />
             <UserNav />
           </div>
         </div>
@@ -179,6 +181,7 @@ export function DynamicHeader() {
             <div className={`flex items-center gap-1 text-[9px] font-bold tracking-widest ${config.statusBadgeText} uppercase ${config.statusBadgeBg} px-2 py-0.5 rounded-full`}>
               <span className={config.statusBadgeIcon}>✓</span> {config.statusLabel}
             </div>
+            <CountrySwitcher />
             <UserNav />
           </div>
       </div>

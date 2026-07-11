@@ -8,9 +8,11 @@ import {
 import { useScenario } from "@/components/ScenarioContext";
 import { InstitutionalReadinessBanner } from "@/components/shared/v2/InstitutionalReadinessBanner";
 import { ConnectivityIndicator } from "@/components/shared/v2/ConnectivityIndicator";
+import { useCountry } from "@/components/CountryContext";
 
 export default function ExecutiveShowcasePage() {
   const { scenario } = useScenario();
+  const { country } = useCountry();
   const [activeQuestion, setActiveQuestion] = useState("fraud");
 
   const isDefaultSpike = scenario.activeEvent === "MSME_DEFAULT_SPIKE";
@@ -21,42 +23,42 @@ export default function ExecutiveShowcasePage() {
     fraud: {
       title: "1. Can FTID Reduce Fraud?",
       metrics: [
-        { label: "Sovereign Identity Matches", value: "99.9%", desc: "Direct UIDAI Aadhaar verification" },
-        { label: "Mule Account Incidence", value: "-84% Reduction", desc: "NPCI wallet isolation rules" },
+        { label: "Sovereign Identity Matches", value: "99.9%", desc: `Direct ${country.digital_identity} verification` },
+        { label: "Mule Account Incidence", value: "-84% Reduction", desc: `${country.payment_networks.primary} wallet isolation rules` },
         { label: "Verification Latency", value: "8 ms", desc: "Real-time cryptographically signed assertions" }
       ],
-      body: "Yes. By utilizing real-time cryptographic transaction assertions, FTID binds bank transactions directly to e-invoicing and identity registries. Mule accounts are isolated instantly during the payment gateway step, avoiding retroactive manual tracing.",
-      sources: ["NPCI Central Switch", "UIDAI Aadhaar logs", "FIU Intelligence"]
+      body: `Yes. By utilizing real-time cryptographic transaction assertions, FTID binds bank transactions directly to e-invoicing and identity registries. Mule accounts are isolated instantly during the payment gateway step, avoiding retroactive manual tracing.`,
+      sources: [`${country.payment_networks.primary} Central Switch`, `${country.digital_identity} logs`, "Financial Intelligence Unit"]
     },
     lending: {
       title: "2. Can FTID Improve MSME Lending?",
       metrics: [
         { label: "Credit Approvals Rate", value: "+32% Expansion", desc: "Cashflow-based MSME credit" },
         { label: "Underwriting Time (TAT)", value: "Instant", desc: "Replaced 5-day manual reviews" },
-        { label: "Portfolio Default (NPA)", value: "1.4%", desc: "Real-time GST compliance thresholds" }
+        { label: "Portfolio Default (NPA)", value: "1.4%", desc: `Real-time ${country.tax_system} compliance thresholds` }
       ],
       body: "Yes. Underwriting decisions transition from paper-based retrospective audits to real-time cashflow matching. Proving exact liquidity runway (6.2 Mo verified) and vendor trust loops allows banks to safely finance uncollateralized MSMEs.",
-      sources: ["Account Aggregator", "GSTN e-Invoices", "TReDS Platform"]
+      sources: [country.open_finance_framework, `${country.tax_system} e-Invoices`, "Supply Chain Finance"]
     },
     compliance: {
       title: "3. Can FTID Improve Compliance?",
       metrics: [
-        { label: "Match Reconciliation Accuracy", value: "99.8%", desc: "GST-to-Bank statement matching" },
+        { label: "Match Reconciliation Accuracy", value: "99.8%", desc: `${country.tax_system}-to-Bank statement matching` },
         { label: "Manual Audit Overhead", value: "-90% Savings", desc: "Continuous smart contract audits" },
         { label: "Audit Readiness Speed", value: "Continuous", desc: "Zero post-facto sampling needed" }
       ],
-      body: "Yes. Continuous ZK-proof matching replaces annual auditing sampling. Smart auditor contracts instantly flag GSTR-3B filing mismatch exceptions, capturing off-balance-sheet exposures at transaction time.",
-      sources: ["Sovereign Audit Ledger", "MCA Filings", "GSTN API"]
+      body: `Yes. Continuous ZK-proof matching replaces annual auditing sampling. Smart auditor contracts instantly flag ${country.tax_system} filing mismatch exceptions, capturing off-balance-sheet exposures at transaction time.`,
+      sources: ["Sovereign Audit Ledger", "Corporate Registry", `${country.tax_system} API`]
     },
     inclusion: {
       title: "4. Can FTID Expand Financial Inclusion?",
       metrics: [
         { label: "Rural Credit Reach", value: "2.4x Increase", desc: "Tier-2 & Tier-3 credit exposure" },
         { label: "Sovereign Micro-investments", value: "+4.2M Users", desc: "Small-ticket investment onboarding" },
-        { label: "Cost to Onboard", value: "₹2 / citizen", desc: "DPI-backed digital consent" }
+        { label: "Cost to Onboard", value: `${new Intl.NumberFormat('en-US', { style: 'currency', currency: country.currency, maximumFractionDigits: 2 }).format(0.02)} / citizen`, desc: "DPI-backed digital consent" }
       ],
-      body: "Yes. Digitizing identity verification via Aadhaar consent and tokenizing UPI cash flows lowers credit onboarding costs to near zero, bringing credit-invisible citizens and remote micro-vendors into the formal grid.",
-      sources: ["UIDAI", "NPCI UPI Registry", "NABARD Database"]
+      body: `Yes. Digitizing identity verification via ${country.digital_identity} consent and tokenizing ${country.payment_networks.primary} cash flows lowers credit onboarding costs to near zero, bringing credit-invisible citizens and remote micro-vendors into the formal grid.`,
+      sources: [country.digital_identity, `${country.payment_networks.primary} Registry`, "Agriculture Database"]
     }
   };
 
@@ -69,9 +71,9 @@ export default function ExecutiveShowcasePage() {
       <InstitutionalReadinessBanner
         portalName="Executive Dashboard"
         purpose="How does the FTID protocol reduce fraud, improve lending, automate compliance, and expand inclusion?"
-        dataSources={["Ecosystem aggregate reports", "ZK audit registers", "National UPI switch"]}
+        dataSources={["Ecosystem aggregate reports", "ZK audit registers", `National ${country.payment_networks.primary} switch`]}
         intelligenceGenerated={["Fraud reduction ratios", "MSME credit expansion rates", "Compliance savings indicators"]}
-        decisionEnabled="Bank Executives and RBIH Evaluators review pilot readiness, sandbox path, and deployment outcomes"
+        decisionEnabled="Bank Executives and Sovereign Evaluators review pilot readiness, sandbox path, and deployment outcomes"
         legacyProcess="Executives evaluate ecosystem performance using quarterly surveys and lagging manual data audits."
         ftidProcess="Executives observe real-time consolidated KPIs verified across all previous demo steps."
       />
@@ -87,7 +89,7 @@ export default function ExecutiveShowcasePage() {
         <div>
           <div className="flex items-center gap-2 mb-2">
             <span className="px-2 py-1 bg-indigo-900/30 text-indigo-400 text-[10px] font-bold tracking-widest uppercase rounded flex items-center gap-1.5">
-              <Award className="w-3.5 h-3.5" /> RBIH SHOWCASE DECISION CORE
+              <Award className="w-3.5 h-3.5" /> INSTITUTIONAL SHOWCASE DECISION CORE
             </span>
           </div>
           <h1 className="text-3xl font-black text-white tracking-tight">Executive Dashboard</h1>
@@ -177,7 +179,7 @@ export default function ExecutiveShowcasePage() {
                 Institutional Evidence Panel
               </CardTitle>
               <CardDescription className="text-slate-400">
-                Strategic readiness checklist for India's financial ecosystem
+                Strategic readiness checklist for {country.name}'s financial ecosystem
               </CardDescription>
             </CardHeader>
             <CardContent className="border-t border-indigo-900/20 pt-6 flex-grow flex flex-col justify-between text-xs space-y-6">
@@ -205,7 +207,7 @@ export default function ExecutiveShowcasePage() {
               <div className="bg-indigo-950/20 border border-indigo-900/30 rounded p-4 text-indigo-300 leading-normal flex items-start gap-2">
                 <ShieldCheck className="w-4 h-4 text-indigo-400 shrink-0 mt-0.5" />
                 <span>
-                  FTID acts as a unified Financial Intelligence Infrastructure built directly on top of India's Digital Public Infrastructure, enabling zero-trust credit underwriting and proactive stability monitoring.
+                  FTID acts as a unified Financial Intelligence Infrastructure built directly on top of {country.name}'s Digital Public Infrastructure, enabling zero-trust credit underwriting and proactive stability monitoring.
                 </span>
               </div>
 

@@ -7,9 +7,11 @@ import { V2InsightsFeed } from "@/components/shared/v2/V2InsightsFeed";
 import { useScenario } from "@/components/ScenarioContext";
 import { InstitutionalReadinessBanner } from "@/components/shared/v2/InstitutionalReadinessBanner";
 import { ConnectivityIndicator } from "@/components/shared/v2/ConnectivityIndicator";
+import { useCountry } from "@/components/CountryContext";
 
 export default function AuditorMainPage() {
   const { scenario } = useScenario();
+  const { country } = useCountry();
   const [selectedProof, setSelectedProof] = useState<string | null>(null);
   const [merkleSimulating, setMerkleSimulating] = useState(false);
   const [merkleVerified, setMerkleVerified] = useState<boolean | null>(null);
@@ -37,7 +39,7 @@ export default function AuditorMainPage() {
     {
       txId: "TXN-99120",
       entity: "Vardhaman Electronics",
-      type: "GST-to-Bank Reconciliation",
+      type: `${country.tax_system}-to-Bank Reconciliation`,
       hash: "0x7a8b...3c9d",
       proofStatus: "Cryptographically Verified",
       timestamp: "Just Now",
@@ -46,7 +48,7 @@ export default function AuditorMainPage() {
     {
       txId: "TXN-99118",
       entity: "Apex Automotive Components",
-      type: "TReDS Invoice Verification",
+      type: "Supply Chain Finance Invoice Verification",
       hash: "0xf2e4...a1b8",
       proofStatus: "Signature Validated",
       timestamp: "2 mins ago",
@@ -79,7 +81,7 @@ export default function AuditorMainPage() {
       <InstitutionalReadinessBanner
         portalName="Auditor Portal"
         purpose="Has the sovereign financial ledger been corrupted and do statement reconciliations match underlying transaction flows?"
-        dataSources={["Sovereign ZK Ledger", "Bank Node logs", "GSTN transaction hashes"]}
+        dataSources={["Sovereign ZK Ledger", "Bank Node logs", `${country.tax_system} transaction hashes`]}
         intelligenceGenerated={["Audit Confidence Score", "Merkle Proof Verification states", "Hidden Liability Indicators"]}
         decisionEnabled="Auditor validates balance sheet integrity, flags transaction anomalies, and exports cryptographic proofs"
         legacyProcess="Auditor pulls manual samples 6 to 12 months after the reporting period, failing to identify hidden liabilities or active ledger manipulations."
@@ -115,8 +117,8 @@ export default function AuditorMainPage() {
           trend={confidence >= confidenceBase ? "up" : "down"}
           trendValue={Math.abs(confidence - confidenceBase)}
           progress={confidence}
-          explanation="Cryptographic certainty that reported ledgers match underlying CBDC, UPI, and bank account flows." 
-          dataSources={["Account Aggregator", "NPCI UPI Registry", "RBI CBDC Ledger"]}
+          explanation={`Cryptographic certainty that reported ledgers match underlying digital currency, ${country.payment_networks.primary}, and bank account flows.`} 
+          dataSources={[country.open_finance_framework, `${country.payment_networks.primary} Registry`, `${country.central_bank} Digital Ledger`]}
           contributors={[
             { label: "ZK-Proof Verification streak", type: "positive" },
             { label: "Mule account anomalies", type: isFraudOutbreak ? "negative" : "positive" }
@@ -128,8 +130,8 @@ export default function AuditorMainPage() {
           trend={reconAccuracy >= reconAccuracyBase ? "up" : "down"}
           trendValue={Math.abs(reconAccuracy - reconAccuracyBase)}
           progress={reconAccuracy}
-          explanation="Real-time match rate between institutional balance sheets, bank transfers, and GSTN invoices." 
-          dataSources={["GSTN API", "Core Banking L1"]}
+          explanation={`Real-time match rate between institutional balance sheets, bank transfers, and ${country.tax_system} invoices.`} 
+          dataSources={[`${country.tax_system} API`, "Core Banking L1"]}
           contributors={[
             { label: "Automated invoice matching", type: "positive" },
             { label: "Systemic payment latency", type: isEconomicSlowdown ? "negative" : "positive" }
@@ -142,7 +144,7 @@ export default function AuditorMainPage() {
           trendValue={Math.abs(liability - liabilityBase)}
           progress={liability * 10}
           explanation="Detected probability of off-balance-sheet exposures or informal debt servicing." 
-          dataSources={["Account Aggregator", "Credit Bureau"]}
+          dataSources={[country.open_finance_framework, "Credit Bureau"]}
           contributors={[
             { label: "Closed loop repayment audits", type: "positive" },
             { label: "Informal capital draws", type: isEconomicSlowdown ? "negative" : "positive" }
@@ -261,13 +263,13 @@ export default function AuditorMainPage() {
                   <pre className="text-[10px] font-mono text-slate-300 bg-[#020810] p-3 rounded border border-slate-800/80 overflow-x-auto leading-relaxed">
 {`{
   "traceId": "${selectedProof}",
-  "schema": "in.gov.dpi.reconciliation.v1",
+  "schema": "sovereign.dpi.reconciliation.v1",
   "auditChain": {
     "timestamp": "${new Date().toISOString()}",
     "consentId": "con_88fa7b2a9e102",
-    "verificationSource": "GSTN_GSTR3B_Match",
+    "verificationSource": "${country.tax_system}_Match",
     "crytographicSignatures": [
-      { "actor": "GSTN_NODE_12", "sig": "MEQCIF6x8n9..." },
+      { "actor": "${country.tax_system}_NODE_12", "sig": "MEQCIF6x8n9..." },
       { "actor": "BANK_AA_GATEWAY", "sig": "MD8CAQC..." }
     ],
     "verificationStatus": "${selectedProof === "TXN-98942" && isFraudOutbreak ? "FAIL_HASH_MISMATCH" : "CONFIRMED_MATCH"}"
@@ -289,7 +291,7 @@ export default function AuditorMainPage() {
                 bg: isFraudOutbreak ? "bg-rose-400/10" : "bg-amber-400/10", 
                 text: isFraudOutbreak 
                   ? "Exception detected: Hash mismatch in micro-finance disbursement logs. Trace leads to unrecognized regional wallet gateway." 
-                  : "Warning: High correlation detected between regional GST revenue drops in Maharashtra and automotive parts manufacturing defaults." 
+                  : `Warning: High correlation detected between regional ${country.tax_system} revenue drops and automotive parts manufacturing defaults.` 
               },
               { 
                 icon: ShieldCheck, 

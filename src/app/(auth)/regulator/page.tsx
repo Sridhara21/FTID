@@ -8,9 +8,11 @@ import { ScenarioRunButton } from "@/components/shared/ScenarioRunButton";
 import { useScenario } from "@/components/ScenarioContext";
 import { InstitutionalReadinessBanner } from "@/components/shared/v2/InstitutionalReadinessBanner";
 import { ConnectivityIndicator } from "@/components/shared/v2/ConnectivityIndicator";
+import { useCountry } from "@/components/CountryContext";
 
 export default function RegulatorMainPage() {
   const { scenario } = useScenario();
+  const { country } = useCountry();
 
   const isDefaultSpike = scenario.activeEvent === "MSME_DEFAULT_SPIKE";
   const isLiquidityInjection = scenario.activeEvent === "LIQUIDITY_INJECTION";
@@ -50,7 +52,7 @@ export default function RegulatorMainPage() {
     },
     {
       name: "Indus Micro-Finance",
-      type: "NBFC-MFI",
+      type: "Alternative Micro-Lender",
       npaRatio: isDefaultSpike ? "8.7%" : isEconomicSlowdown ? "6.2%" : "3.2%",
       liquidityBuffer: isEconomicSlowdown ? "95%" : "120%",
       tier1CAR: isDefaultSpike ? "9.8%" : "12.4%",
@@ -75,9 +77,9 @@ export default function RegulatorMainPage() {
       <InstitutionalReadinessBanner
         portalName="Regulator Portal"
         purpose="Where is the next systemic threat emerging and is the banking sector stable?"
-        dataSources={["RBI Core Banking reports", "Gateway Switches", "Credit Bureau Registries", "NBFC Capital reserves"]}
+        dataSources={[`${country.central_bank} Core Banking reports`, "Gateway Switches", "Credit Bureau Registries", "Alternative Lender Capital reserves"]}
         intelligenceGenerated={["National Stability Score", "Systemic Risk Index", "Fraud Exposure Index"]}
-        decisionEnabled="Regulator triggers reserve adjustments, injects liquidity, or flags distressed NBFC nodes"
+        decisionEnabled="Regulator triggers reserve adjustments, injects liquidity, or flags distressed lending nodes"
         legacyProcess="Regulator relies on retrospectively submitted quarterly sheets and post-facto audit reports, leaving them blind to emerging defaults or systemic contagion risks."
         ftidProcess="Regulator monitors live credit performance, triggers stress simulations, and receives automated warning alerts."
       />
@@ -112,9 +114,9 @@ export default function RegulatorMainPage() {
           trendValue={Math.abs(stabilityIndex - baseStability)}
           progress={stabilityIndex}
           explanation="Aggregate measure of macroeconomic resilience and banking sector health." 
-          dataSources={["Account Aggregator", "GSTN", "RBI Reporting"]}
+          dataSources={[country.open_finance_framework, country.tax_system, `${country.central_bank} Reporting`]}
           contributors={[
-            { label: "GST Compliance Velocity", type: "positive" },
+            { label: `${country.tax_system} Compliance Velocity`, type: "positive" },
             { label: "MSME Default Rate Spike", type: isDefaultSpike ? "negative" : "positive" },
             { label: "Liquidity Reserves Health", type: isLiquidityInjection ? "positive" : "negative" }
           ]}
@@ -126,10 +128,10 @@ export default function RegulatorMainPage() {
           trendValue={Math.abs(fraudExposure - fraudExposureBase) * 10}
           progress={fraudExposure * 10}
           explanation="Real-time probability of systemic fraud clusters across financial entities." 
-          dataSources={["NPCI Registry", "FIU Intelligence"]}
+          dataSources={["Payment Gateway Registry", "FIU Intelligence"]}
           contributors={[
             { label: "Coordinated mule account detection", type: isFraudOutbreak ? "negative" : "positive" },
-            { label: "Secure Aadhaar authentication rate", type: "positive" }
+            { label: `Secure ${country.digital_identity} authentication rate`, type: "positive" }
           ]}
         />
         <V2MetricWidget 
@@ -141,7 +143,7 @@ export default function RegulatorMainPage() {
           explanation="Calculated vulnerability to cascading defaults across interconnected institutions." 
           dataSources={["Interbank Settlement Hub", "Core Banking L2"]}
           contributors={[
-            { label: "NBFC-to-Bank credit exposure", type: "negative" },
+            { label: "Alternative Lender-to-Bank credit exposure", type: "negative" },
             { label: "High liquidity buffer coverage", type: "positive" }
           ]}
         />
@@ -152,7 +154,7 @@ export default function RegulatorMainPage() {
           trendValue={Math.abs(liquidityHealth - liquidityHealthBase)}
           progress={liquidityHealth}
           explanation="Aggregated liquidity coverage ratio across all scheduled commercial banks." 
-          dataSources={["RBI Liquidity Window", "Treasury Registry"]}
+          dataSources={[`${country.central_bank} Liquidity Window`, "Treasury Registry"]}
           contributors={[
             { label: "Emergency Repo Facility usage", type: isLiquidityInjection ? "positive" : "positive" },
             { label: "Deposit run rate indicator", type: isEconomicSlowdown ? "negative" : "positive" }
@@ -170,7 +172,7 @@ export default function RegulatorMainPage() {
                 Early Warning System (EWS) Dashboard
               </CardTitle>
               <CardDescription className="text-slate-400">
-                Real-time health markers for monitored commercial institutions and NBFCs
+                Real-time health markers for monitored commercial institutions and alternative lenders
               </CardDescription>
             </CardHeader>
             <CardContent className="border-t border-cyan-900/20 pt-6">
@@ -216,7 +218,7 @@ export default function RegulatorMainPage() {
                 bg: isFraudOutbreak ? "bg-rose-400/10" : "bg-amber-400/10", 
                 text: isFraudOutbreak 
                   ? "CRITICAL: Multiple digital wallet nodes showing coordinated rapid-outflow cycles. Anti-money laundering filters deployed."
-                  : "Warning: High correlation detected between regional GST revenue drops in Maharashtra and cooperative bank watchlist alerts." 
+                  : `Warning: High correlation detected between regional ${country.tax_system} revenue drops and cooperative bank watchlist alerts.` 
               },
               { 
                 icon: ShieldCheck, 

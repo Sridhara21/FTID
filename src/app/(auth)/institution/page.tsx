@@ -7,9 +7,11 @@ import { V2InsightsFeed } from "@/components/shared/v2/V2InsightsFeed";
 import { useScenario } from "@/components/ScenarioContext";
 import { InstitutionalReadinessBanner } from "@/components/shared/v2/InstitutionalReadinessBanner";
 import { ConnectivityIndicator } from "@/components/shared/v2/ConnectivityIndicator";
+import { useCountry } from "@/components/CountryContext";
 
 export default function InstitutionMainPage() {
   const { scenario } = useScenario();
+  const { country } = useCountry();
 
   const isDefaultSpike = scenario.activeEvent === "MSME_DEFAULT_SPIKE";
   const isLiquidityInjection = scenario.activeEvent === "LIQUIDITY_INJECTION";
@@ -32,28 +34,28 @@ export default function InstitutionMainPage() {
   const sectors = [
     { 
       sector: "MSME Manufacturing", 
-      exposure: "₹820 Cr", 
+      exposure: new Intl.NumberFormat('en-US', { style: 'currency', currency: country.currency, maximumFractionDigits: 0 }).format(8200000000), 
       concentration: "26.4%", 
       risk: isDefaultSpike ? "CRITICAL" : isEconomicSlowdown ? "High" : "Moderate", 
       color: isDefaultSpike ? "text-rose-400" : isEconomicSlowdown ? "text-amber-400" : "text-amber-400" 
     },
     { 
       sector: "Commercial Real Estate", 
-      exposure: "₹1,200 Cr", 
+      exposure: new Intl.NumberFormat('en-US', { style: 'currency', currency: country.currency, maximumFractionDigits: 0 }).format(12000000000), 
       concentration: "38.7%", 
       risk: isEconomicSlowdown ? "High" : "Moderate", 
       color: isEconomicSlowdown ? "text-rose-400" : "text-amber-400" 
     },
     { 
       sector: "Retail Unsecured Credit", 
-      exposure: "₹450 Cr", 
+      exposure: new Intl.NumberFormat('en-US', { style: 'currency', currency: country.currency, maximumFractionDigits: 0 }).format(4500000000), 
       concentration: "14.5%", 
       risk: isDefaultSpike ? "Moderate" : "Low", 
       color: isDefaultSpike ? "text-amber-400" : "text-emerald-400" 
     },
     { 
       sector: "Agri-Infrastructure", 
-      exposure: "₹630 Cr", 
+      exposure: new Intl.NumberFormat('en-US', { style: 'currency', currency: country.currency, maximumFractionDigits: 0 }).format(6300000000), 
       concentration: "20.4%", 
       risk: "Low", 
       color: "text-emerald-400" 
@@ -65,13 +67,13 @@ export default function InstitutionMainPage() {
       
       {/* Institutional Readiness Header */}
       <InstitutionalReadinessBanner
-        portalName="NBFC Portal"
+        portalName="Institution Portal"
         purpose="What is my active portfolio risk, stress distribution, and concentration bounds?"
-        dataSources={["NBFC Core Ledger", "RBI Reporting Switch", "TReDS Activity logs"]}
+        dataSources={["Institution Core Ledger", `${country.central_bank} Reporting Switch`, "Supply Chain Finance Activity logs"]}
         intelligenceGenerated={["Institutional Trust Scores", "Portfolio Stress Index", "NPA Projections"]}
-        decisionEnabled="NBFC risk team allocates capital reserves, restricts sector exposure, or hedges portfolio holdings"
-        legacyProcess="NBFC monitors portfolio default signals post-facto with a 30 to 90 day lag, resulting in delayed provisioning and high concentration risks."
-        ftidProcess="NBFC receives real-time stress indicators, simulates liquidity requirements, and dynamically adjust risk-weights."
+        decisionEnabled="Alternative lender risk team allocates capital reserves, restricts sector exposure, or hedges portfolio holdings"
+        legacyProcess="Lender monitors portfolio default signals post-facto with a 30 to 90 day lag, resulting in delayed provisioning and high concentration risks."
+        ftidProcess="Lender receives real-time stress indicators, simulates liquidity requirements, and dynamically adjust risk-weights."
       />
 
       {/* Connectivity Indicator */}
@@ -85,7 +87,7 @@ export default function InstitutionMainPage() {
         <div>
           <div className="flex items-center gap-2 mb-2">
             <span className="px-2 py-1 bg-cyan-900/30 text-cyan-400 text-[10px] font-bold tracking-widest uppercase rounded">
-              NBFC & Alternative Lending Control Center
+              Alternative Lending Control Center
             </span>
           </div>
           <h1 className="text-3xl font-black text-white tracking-tight">Institution Dashboard</h1>
@@ -101,7 +103,7 @@ export default function InstitutionMainPage() {
           trendValue={Math.abs(trustScore - trustScoreBase) / 10}
           progress={trustScore / 10}
           explanation="Cryptographically verified trust score derived from historical NPA data, capital adequacy, and regulatory compliance." 
-          dataSources={["Account Aggregator", "RBI CIBIL", "Auditor Ledger"]}
+          dataSources={[country.open_finance_framework, `${country.central_bank} Legacy Bureau`, "Auditor Ledger"]}
           contributors={[
             { label: "High Tier-1 Capital", type: "positive" },
             { label: "Sector Stress Variance", type: isDefaultSpike ? "negative" : "positive" }
@@ -114,7 +116,7 @@ export default function InstitutionMainPage() {
           trendValue={Math.abs(stressIndex - stressIndexBase)}
           progress={stressIndex * 2}
           explanation="Real-time macro stress test indicator modeling the resilience of your current outstanding credit facilities." 
-          dataSources={["GSTN Signals", "TReDS Activity", "UPI Flow Velocity"]}
+          dataSources={[`${country.tax_system} Signals`, "Supply Chain Finance Activity", `${country.payment_networks.primary} Flow Velocity`]}
           contributors={[
             { label: "Supplier defaults", type: isDefaultSpike ? "negative" : "positive" },
             { label: "Invoice settlement delay", type: isEconomicSlowdown ? "negative" : "positive" }
@@ -127,7 +129,7 @@ export default function InstitutionMainPage() {
           trendValue={Math.abs(npaRisk - npaRiskBase)}
           progress={npaRisk * 10}
           explanation="Forward-looking model predicting the 90-day probability of default across the portfolio." 
-          dataSources={["Credit Bureau", "GSTN Transactions"]}
+          dataSources={["Credit Bureau", `${country.tax_system} Transactions`]}
           contributors={[
             { label: "Macro cash squeeze", type: isEconomicSlowdown ? "negative" : "positive" },
             { label: "Automated recovery setups", type: "positive" }
@@ -181,7 +183,7 @@ export default function InstitutionMainPage() {
                         {item.risk}
                       </div>
                       <span className="text-[10px] text-slate-500 font-mono">
-                        FTID Verified via GSTN
+                        FTID Verified via {country.tax_system}
                       </span>
                     </div>
                   </div>
@@ -200,7 +202,7 @@ export default function InstitutionMainPage() {
                 bg: isDefaultSpike ? "bg-rose-400/10" : "bg-amber-400/10", 
                 text: isDefaultSpike 
                   ? "Warning: MSME concentration limit breached. Automated lending rules have paused new originations in manufacturing."
-                  : "Warning: High correlation detected between automotive parts manufacturing defaults and regional GST revenue drops." 
+                  : `Warning: High correlation detected between automotive parts manufacturing defaults and regional ${country.tax_system} revenue drops.` 
               },
               { 
                 icon: ShieldCheck, 

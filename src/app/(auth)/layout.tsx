@@ -14,6 +14,7 @@ import { MobileNav } from "@/components/shared/mobile-nav";
 import { ScenarioController } from "@/components/shared/v2/ScenarioController";
 import { DemoModeProvider } from "@/components/shared/v2/DemoModeProvider";
 import { DemoJourneyDock } from "@/components/shared/v2/DemoJourneyDock";
+import { CountryProvider } from "@/components/CountryContext";
 
 export default function DashboardLayout({
   children,
@@ -50,8 +51,9 @@ export default function DashboardLayout({
   }
 
   return (
-    <DemoModeProvider>
-      <SidebarProvider>
+    <CountryProvider>
+      <DemoModeProvider>
+        <SidebarProvider>
         <Sidebar className="hidden md:flex">
           <DashboardSidebar />
         </Sidebar>
@@ -70,5 +72,6 @@ export default function DashboardLayout({
         <DemoJourneyDock />
       </SidebarProvider>
     </DemoModeProvider>
+    </CountryProvider>
   );
 }

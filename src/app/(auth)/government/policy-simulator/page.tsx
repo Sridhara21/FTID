@@ -2,28 +2,47 @@
 
 import { useState } from "react";
 import { Card, CardContent, CardHeader, CardTitle, CardDescription } from "@/components/ui/card";
-import { Activity, Landmark, Percent, TrendingUp, TrendingDown, Users } from "lucide-react";
+import { Activity, Landmark, Percent, TrendingUp, TrendingDown, Users, AlertTriangle, CloudRain, ShieldAlert, HeartPulse } from "lucide-react";
 import { DemoGuide } from "@/components/shared/DemoGuide";
 import { ScenarioRunButton } from "@/components/shared/ScenarioRunButton";
 
-export default function PolicySimulatorPage() {
+export default function NationalFinancialDigitalTwinPage() {
+  const [activeScenario, setActiveScenario] = useState<string>("baseline");
+  
+  // Standard Levers
   const [gstRate, setGstRate] = useState(18);
   const [interestRate, setInterestRate] = useState(6.5);
   const [subsidy, setSubsidy] = useState(500);
   const [liquidity, setLiquidity] = useState(2000);
 
-  // Simulated Outputs based on sliders
-  const gdpGrowth = (6.5 + (subsidy / 2000) + (liquidity / 5000) - ((interestRate - 6.5) * 0.8) - ((gstRate - 18) * 0.3)).toFixed(1);
-  const inflation = (5.2 + (subsidy / 1500) + (liquidity / 4000) - ((interestRate - 6.5) * 0.5)).toFixed(1);
-  const msmeActivity = (100 + (subsidy / 50) + (liquidity / 100) - ((interestRate - 6.5) * 5) - ((gstRate - 18) * 2)).toFixed(0);
-  const taxRevenue = (150000 + ((gstRate - 18) * 5000) + ((parseFloat(gdpGrowth) - 6.5) * 2000)).toFixed(0);
+  // Scenario Modifiers
+  const getModifiers = () => {
+    switch(activeScenario) {
+      case "climate_risk": return { gdp: -1.2, inf: +2.1, msme: -15, tax: -12000 };
+      case "pandemic": return { gdp: -4.5, inf: +1.5, msme: -40, tax: -45000 };
+      case "cyber_attack": return { gdp: -0.8, inf: +0.2, msme: -8, tax: -5000 };
+      case "banking_contagion": return { gdp: -2.5, inf: +0.5, msme: -25, tax: -20000 };
+      case "supply_chain": return { gdp: -1.5, inf: +3.0, msme: -12, tax: -10000 };
+      case "capital_flight": return { gdp: -2.0, inf: +4.0, msme: -10, tax: -15000 };
+      default: return { gdp: 0, inf: 0, msme: 0, tax: 0 };
+    }
+  };
 
-  // Deriving Winners and Losers dynamically
+  const mods = getModifiers();
+
+  // Simulated Outputs based on sliders + scenarios
+  const gdpGrowth = (6.5 + (subsidy / 2000) + (liquidity / 5000) - ((interestRate - 6.5) * 0.8) - ((gstRate - 18) * 0.3) + mods.gdp).toFixed(1);
+  const inflation = (5.2 + (subsidy / 1500) + (liquidity / 4000) - ((interestRate - 6.5) * 0.5) + mods.inf).toFixed(1);
+  const msmeActivity = (100 + (subsidy / 50) + (liquidity / 100) - ((interestRate - 6.5) * 5) - ((gstRate - 18) * 2) + mods.msme).toFixed(0);
+  const taxRevenue = (150000 + ((gstRate - 18) * 5000) + ((parseFloat(gdpGrowth) - 6.5) * 2000) + mods.tax).toFixed(0);
+
   const isLoosePolicy = interestRate < 6.5 || liquidity > 2500;
   const isHighTax = gstRate > 18;
 
   const winners = isLoosePolicy ? ["Retail Borrowers", "MSMEs", "Real Estate"] : (isHighTax ? ["Sovereign Treasury"] : ["Savers", "Fixed Income Inst."]);
-  const losers = isLoosePolicy ? ["Fixed Income Inst.", "Currency Valuation"] : (isHighTax ? ["Retail Consumers", "MSME Margins"] : ["Highly Leveraged Corporates"]);
+  const losers = activeScenario !== "baseline" 
+    ? ["Vulnerable MSMEs", "Supply Chain Vendors", "Retail Consumers"] 
+    : (isLoosePolicy ? ["Fixed Income Inst.", "Currency Valuation"] : (isHighTax ? ["Retail Consumers", "MSME Margins"] : ["Highly Leveraged Corporates"]));
 
   return (
     <div className="min-h-screen bg-[#020810] text-slate-200 pb-20 relative overflow-hidden">
@@ -35,14 +54,14 @@ export default function PolicySimulatorPage() {
           <div>
             <div className="flex items-center gap-2 mb-2">
               <span className="px-2 py-1 bg-indigo-900/30 text-indigo-400 text-[10px] font-bold tracking-widest uppercase rounded">
-                ECONOMIC LABORATORY
+                SOVEREIGN INTELLIGENCE KERNEL
               </span>
             </div>
             <h1 className="text-3xl font-black text-white tracking-tight flex items-center gap-3">
-              National Policy Simulator
+              National Financial Digital Twin
             </h1>
             <p className="text-sm text-slate-400 mt-2 max-w-2xl">
-              Live observability of macroeconomic impact. Adjust fiscal and monetary levers to simulate instantaneous ripple effects across the sovereign grid.
+              Live macroeconomic simulation. Inject systemic shocks (Climate, Cyber, Contagion) and adjust fiscal/monetary levers to observe instantaneous ripple effects.
             </p>
           </div>
           <div className="flex gap-4">
@@ -50,19 +69,44 @@ export default function PolicySimulatorPage() {
           </div>
         </header>
 
+        {/* Systemic Shock Scenarios */}
+        <div className="grid grid-cols-2 md:grid-cols-6 gap-3">
+          {[
+            { id: "baseline", icon: Activity, label: "Baseline" },
+            { id: "climate_risk", icon: CloudRain, label: "Climate Shock" },
+            { id: "pandemic", icon: HeartPulse, label: "Pandemic" },
+            { id: "cyber_attack", icon: ShieldAlert, label: "Cyber Attack" },
+            { id: "banking_contagion", icon: Landmark, label: "Bank Contagion" },
+            { id: "supply_chain", icon: AlertTriangle, label: "Supply Shock" }
+          ].map(scenario => (
+             <button
+              key={scenario.id}
+              onClick={() => setActiveScenario(scenario.id)}
+              className={`p-3 rounded-lg flex flex-col items-center justify-center gap-2 border transition-all ${
+                activeScenario === scenario.id 
+                ? "bg-indigo-900/40 border-indigo-500 text-indigo-300" 
+                : "bg-[#0a1520] border-slate-800 text-slate-500 hover:text-slate-300"
+              }`}
+             >
+               <scenario.icon className="w-5 h-5" />
+               <span className="text-[10px] font-bold uppercase">{scenario.label}</span>
+             </button>
+          ))}
+        </div>
+
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-6">
           
           {/* Inputs Section */}
           <div className="lg:col-span-4 space-y-6">
-            <Card className="bg-[#0a1520] border-indigo-900/30">
+            <Card className="bg-[#0a1520] border-indigo-900/30 h-full">
               <CardHeader>
-                <CardTitle className="text-white text-lg">Policy Levers</CardTitle>
-                <CardDescription className="text-slate-400">Adjust macroeconomic inputs</CardDescription>
+                <CardTitle className="text-white text-lg">Macro Levers</CardTitle>
+                <CardDescription className="text-slate-400">Adjust fiscal and monetary policies to counteract shocks.</CardDescription>
               </CardHeader>
               <CardContent className="space-y-6">
                 <div className="space-y-2">
                   <div className="flex justify-between">
-                    <label className="text-xs font-bold uppercase text-slate-400 flex items-center gap-2"><Percent className="w-3 h-3"/> Average GST Rate</label>
+                    <label className="text-xs font-bold uppercase text-slate-400 flex items-center gap-2"><Percent className="w-3 h-3"/> Average Tax Rate</label>
                     <span className="text-indigo-400 font-bold">{gstRate}%</span>
                   </div>
                   <input type="range" min="5" max="28" step="1" value={gstRate} onChange={(e) => setGstRate(Number(e.target.value))} className="w-full accent-indigo-500" />
@@ -70,7 +114,7 @@ export default function PolicySimulatorPage() {
                 
                 <div className="space-y-2">
                   <div className="flex justify-between">
-                    <label className="text-xs font-bold uppercase text-slate-400 flex items-center gap-2"><Landmark className="w-3 h-3"/> Repo / Interest Rate</label>
+                    <label className="text-xs font-bold uppercase text-slate-400 flex items-center gap-2"><Landmark className="w-3 h-3"/> Policy Interest Rate</label>
                     <span className="text-indigo-400 font-bold">{interestRate}%</span>
                   </div>
                   <input type="range" min="4" max="10" step="0.25" value={interestRate} onChange={(e) => setInterestRate(Number(e.target.value))} className="w-full accent-indigo-500" />
@@ -78,16 +122,16 @@ export default function PolicySimulatorPage() {
 
                 <div className="space-y-2">
                   <div className="flex justify-between">
-                    <label className="text-xs font-bold uppercase text-slate-400 flex items-center gap-2"><Activity className="w-3 h-3"/> Subsidy Allocation (Cr)</label>
-                    <span className="text-indigo-400 font-bold">₹{subsidy}</span>
+                    <label className="text-xs font-bold uppercase text-slate-400 flex items-center gap-2"><Activity className="w-3 h-3"/> Subsidy Allocation</label>
+                    <span className="text-indigo-400 font-bold">{subsidy}M</span>
                   </div>
                   <input type="range" min="0" max="5000" step="100" value={subsidy} onChange={(e) => setSubsidy(Number(e.target.value))} className="w-full accent-indigo-500" />
                 </div>
 
                 <div className="space-y-2">
                   <div className="flex justify-between">
-                    <label className="text-xs font-bold uppercase text-slate-400 flex items-center gap-2"><Activity className="w-3 h-3"/> Liquidity Injection (Cr)</label>
-                    <span className="text-indigo-400 font-bold">₹{liquidity}</span>
+                    <label className="text-xs font-bold uppercase text-slate-400 flex items-center gap-2"><Activity className="w-3 h-3"/> Liquidity Injection</label>
+                    <span className="text-indigo-400 font-bold">{liquidity}M</span>
                   </div>
                   <input type="range" min="0" max="10000" step="500" value={liquidity} onChange={(e) => setLiquidity(Number(e.target.value))} className="w-full accent-indigo-500" />
                 </div>
@@ -100,7 +144,7 @@ export default function PolicySimulatorPage() {
             <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
               <div className="bg-[#0a1520] border border-indigo-900/30 rounded-xl p-4 flex flex-col justify-center">
                 <span className="text-[10px] font-bold text-slate-500 uppercase tracking-wider mb-1">GDP Growth</span>
-                <span className="text-2xl font-black text-emerald-400">{gdpGrowth}%</span>
+                <span className={`text-2xl font-black ${parseFloat(gdpGrowth) < 3 ? 'text-rose-400' : 'text-emerald-400'}`}>{gdpGrowth}%</span>
               </div>
               <div className="bg-[#0a1520] border border-indigo-900/30 rounded-xl p-4 flex flex-col justify-center">
                 <span className="text-[10px] font-bold text-slate-500 uppercase tracking-wider mb-1">Inflation Core</span>
@@ -108,11 +152,11 @@ export default function PolicySimulatorPage() {
               </div>
               <div className="bg-[#0a1520] border border-indigo-900/30 rounded-xl p-4 flex flex-col justify-center">
                 <span className="text-[10px] font-bold text-slate-500 uppercase tracking-wider mb-1">MSME Activity</span>
-                <span className="text-2xl font-black text-cyan-400">{msmeActivity}</span>
+                <span className={`text-2xl font-black ${parseFloat(msmeActivity) < 80 ? 'text-rose-400' : 'text-cyan-400'}`}>{msmeActivity}</span>
               </div>
               <div className="bg-[#0a1520] border border-indigo-900/30 rounded-xl p-4 flex flex-col justify-center">
-                <span className="text-[10px] font-bold text-slate-500 uppercase tracking-wider mb-1">Tax Est (Cr)</span>
-                <span className="text-2xl font-black text-emerald-400">₹{parseFloat(taxRevenue).toLocaleString()}</span>
+                <span className="text-[10px] font-bold text-slate-500 uppercase tracking-wider mb-1">Tax Est (M)</span>
+                <span className="text-2xl font-black text-emerald-400">{parseFloat(taxRevenue).toLocaleString()}</span>
               </div>
             </div>
 
@@ -147,17 +191,26 @@ export default function PolicySimulatorPage() {
                 </div>
 
                 <div className="space-y-4">
-                  <div className="bg-[#020810] border border-indigo-900/30 rounded-lg p-4">
+                  <div className="bg-[#020810] border border-indigo-900/30 rounded-lg p-4 h-full flex flex-col">
                     <p className="text-xs font-bold uppercase tracking-wider text-indigo-400 mb-3 flex items-center gap-2">
                       <Users className="w-4 h-4" /> Employment & Regional
                     </p>
-                    <div className="space-y-3">
+                    <div className="space-y-3 flex-grow">
                       <div>
-                        <div className="flex justify-between text-xs text-slate-400 mb-1"><span>Job Creation (Est)</span> <span className="text-cyan-400">+{((parseFloat(gdpGrowth) - 6.0) * 120000).toLocaleString()}</span></div>
-                        <div className="w-full bg-slate-800 rounded-full h-1"><div className="bg-cyan-500 h-1 rounded-full" style={{ width: `${Math.min(100, Math.max(10, (parseFloat(gdpGrowth) - 5)*20))}%` }}></div></div>
+                        <div className="flex justify-between text-xs text-slate-400 mb-1">
+                          <span>Job Creation (Est)</span> 
+                          <span className={parseFloat(gdpGrowth) < 5 ? "text-rose-400" : "text-cyan-400"}>
+                            {((parseFloat(gdpGrowth) - 6.0) * 120000).toLocaleString()}
+                          </span>
+                        </div>
+                        <div className="w-full bg-slate-800 rounded-full h-1">
+                           <div className={`${parseFloat(gdpGrowth) < 5 ? "bg-rose-500" : "bg-cyan-500"} h-1 rounded-full`} style={{ width: `${Math.min(100, Math.max(10, (parseFloat(gdpGrowth) - 2)*15))}%` }}></div>
+                        </div>
                       </div>
                       <p className="text-xs text-slate-400 leading-relaxed mt-4 pt-4 border-t border-indigo-900/30">
-                        {isLoosePolicy ? "Regional disparity dropping. Tier-2 and Tier-3 manufacturing clusters showing highest elasticity to subsidy injections." : "Capital migrating to Tier-1 financial hubs. Regional manufacturing entering consolidation phase."}
+                        {activeScenario !== "baseline" 
+                          ? "Systemic shock detected. Labor force displacing. Immediate subsidy injection required for vulnerable sectors."
+                          : (isLoosePolicy ? "Regional disparity dropping. Tier-2 and Tier-3 manufacturing clusters showing highest elasticity to subsidy injections." : "Capital migrating to Tier-1 financial hubs. Regional manufacturing entering consolidation phase.")}
                       </p>
                     </div>
                   </div>

@@ -9,9 +9,11 @@ import { useScenario } from "@/components/ScenarioContext";
 import { IndiaMapSVG } from "@/components/shared/v2/IndiaMapSVG";
 import { InstitutionalReadinessBanner } from "@/components/shared/v2/InstitutionalReadinessBanner";
 import { ConnectivityIndicator } from "@/components/shared/v2/ConnectivityIndicator";
+import { useCountry } from "@/components/CountryContext";
 
 export default function GovernmentMainPage() {
   const { scenario, triggerEvent, clearEvent } = useScenario();
+  const { country } = useCountry();
   
   // Local simulator controls that override or augment the scenario
   const [selectedSector, setSelectedSector] = useState("All");
@@ -62,11 +64,11 @@ export default function GovernmentMainPage() {
   const getPolicyOutputs = () => {
     switch (activePolicy) {
       case "SUBSIDY":
-        return { gdp: "+1.2%", inflation: "+0.3%", employment: "+4.5%", revenue: "-₹1,200 Cr (Subvention Expense)", msme: "+18.2%" };
+        return { gdp: "+1.2%", inflation: "+0.3%", employment: "+4.5%", revenue: `-${new Intl.NumberFormat('en-US', { style: 'currency', currency: country.currency, maximumFractionDigits: 0 }).format(12000000000)} (Subvention Expense)`, msme: "+18.2%" };
       case "LIQUIDITY":
         return { gdp: "+0.8%", inflation: "+0.6%", employment: "+2.1%", revenue: "Neutral", msme: "+9.5%" };
       case "GST_AUDIT":
-        return { gdp: "-0.2% (Short-term Friction)", inflation: "Neutral", employment: "Neutral", revenue: "+₹4,200 Cr (Compliance Boost)", msme: "-2.4% (Informal Squeeze)" };
+        return { gdp: "-0.2% (Short-term Friction)", inflation: "Neutral", employment: "Neutral", revenue: `+${new Intl.NumberFormat('en-US', { style: 'currency', currency: country.currency, maximumFractionDigits: 0 }).format(42000000000)} (Compliance Boost)`, msme: "-2.4% (Informal Squeeze)" };
       default:
         return { gdp: "Baseline", inflation: "Baseline", employment: "Baseline", revenue: "Baseline", msme: "Baseline" };
     }
@@ -95,11 +97,11 @@ export default function GovernmentMainPage() {
       <InstitutionalReadinessBanner
         portalName="Government Portal"
         purpose="What is happening in the national economy and how do active policy regimes alter growth indicators?"
-        dataSources={["GSTN tax streams", "FASTag Toll Switch", "PFMS Subsidies", "NPCI UPI Volume"]}
-        intelligenceGenerated={["GDP Activity Proxy", "Tax Compliance Index", "MSME Growth Indexes", "DBT Target Precision"]}
+        dataSources={[`${country.tax_system} tax streams`, `${country.payment_networks.secondary} Toll Switch`, "Sovereign Transfer System", `${country.payment_networks.primary} Volume`]}
+        intelligenceGenerated={["GDP Activity Proxy", "Tax Compliance Index", "MSME Growth Indexes", "Direct Subsidy Precision"]}
         decisionEnabled="Ministry of Finance allocates emergency interest subvention schemes or adjusts tax compliance audits"
         legacyProcess="Government relies on quarterly or annual GDP surveys and manual tax reconciliation logs, resulting in delayed fiscal policy interventions."
-        ftidProcess="Government observes live transaction indices, simulates interest/tax policies, and verifies DBT efficiency."
+        ftidProcess="Government observes live transaction indices, simulates interest/tax policies, and verifies subsidy efficiency."
       />
 
       {/* Connectivity Indicator */}
@@ -142,10 +144,10 @@ export default function GovernmentMainPage() {
           trend={gdpGrowth >= gdpBase ? "up" : "down"} 
           trendValue={Math.abs(gdpGrowth - gdpBase)}
           progress={gdpGrowth * 10}
-          explanation="Live macroeconomic output proxy calculated from aggregate UPI, GSTN, and Toll Collection velocity." 
-          dataSources={["UPI Registry", "GSTN", "FASTag Tolls"]}
+          explanation={`Live macroeconomic output proxy calculated from aggregate ${country.payment_networks.primary}, ${country.tax_system}, and ${country.payment_networks.secondary} velocity.`} 
+          dataSources={[`${country.payment_networks.primary} Registry`, country.tax_system, `${country.payment_networks.secondary} Tolls`]}
           contributors={[
-            { label: "B2B UPI Volume", type: "positive" },
+            { label: `B2B ${country.payment_networks.primary} Volume`, type: "positive" },
             { label: "Retail trade slowdown", type: isEconomicSlowdown ? "negative" : "positive" }
           ]}
         />
@@ -156,9 +158,9 @@ export default function GovernmentMainPage() {
           trendValue={Math.abs(taxCompliance - taxBase)}
           progress={taxCompliance}
           explanation="Percentage of registered corporate entities matching forecasted advance tax obligations on time." 
-          dataSources={["GSTN API", "Income Tax Dept"]}
+          dataSources={[`${country.tax_system} API`, "Income Tax Dept"]}
           contributors={[
-            { label: "GST automated matching", type: "positive" },
+            { label: `${country.tax_system} automated matching`, type: "positive" },
             { label: "Liquidity crunch default", type: isEconomicSlowdown ? "negative" : "positive" }
           ]}
         />
@@ -169,7 +171,7 @@ export default function GovernmentMainPage() {
           trendValue={Math.abs(msmeActivity - msmeBase) / 10}
           progress={msmeActivity > 120 ? 100 : msmeActivity}
           explanation="Relative index of verified B2B transactions in the micro and small sector (Baseline=100)." 
-          dataSources={["TReDS Platform", "GSTN Invoices"]}
+          dataSources={["Supply Chain Finance", `${country.tax_system} Invoices`]}
           contributors={[
             { label: "Tier-1 anchor orders", type: "positive" },
             { label: "Supply chain payment locks", type: isDefaultSpike ? "negative" : "positive" }
@@ -177,13 +179,13 @@ export default function GovernmentMainPage() {
           action={isDefaultSpike ? "Deploy Emergency Interest Subvention Scheme." : "Maintain baseline support."}
         />
         <V2MetricWidget 
-          title="DBT Target Precision" 
+          title="Direct Subsidy Precision" 
           value={`${formalization.toFixed(1)}%`} 
           trend={formalization >= formalizationBase ? "up" : "down"} 
           trendValue={Math.abs(formalization - formalizationBase)}
           progress={formalization}
-          explanation="Precision targeting score of Direct Benefit Transfers based on digital profile verification." 
-          dataSources={["Aadhaar Registry", "PFMS", "NPCI Mapping"]}
+          explanation="Precision targeting score of Direct Subsidies based on digital profile verification." 
+          dataSources={[`${country.digital_identity} Registry`, "Sovereign Transfer System", `${country.payment_networks.primary} Mapping`]}
           contributors={[
             { label: "Verification filters", type: "positive" },
             { label: "Regional database lag", type: isDefaultSpike ? "negative" : "positive" }
@@ -211,21 +213,21 @@ export default function GovernmentMainPage() {
                   {
                     id: "SUBSIDY",
                     title: "MSME Interest Subvention",
-                    desc: "Provide 3% interest subsidy to GST-compliant MSMEs.",
-                    impact: "Boosts MSME Index & DBT precision, increases GDP growth.",
+                    desc: `Provide 3% interest subsidy to ${country.tax_system}-compliant MSMEs.`,
+                    impact: "Boosts MSME Index & Subsidy precision, increases GDP growth.",
                     actionText: "Deploy Subsidy"
                   },
                   {
                     id: "LIQUIDITY",
                     title: "Emergency Credit Line",
-                    desc: "Unlock ₹50,000 Crore bank credit guarantee scheme.",
+                    desc: `Unlock ${new Intl.NumberFormat('en-US', { style: 'currency', currency: country.currency, maximumFractionDigits: 0 }).format(500000000000)} bank credit guarantee scheme.`,
                     impact: "Drastically lowers Portfolio Risk, stabilizes cash reserves.",
                     actionText: "Inject Capital"
                   },
                   {
                     id: "GST_AUDIT",
                     title: "Compliance Audit Rate",
-                    desc: "Increase automated invoice matching checks via ONDC.",
+                    desc: "Increase automated invoice matching checks via E-Commerce Ledger.",
                     impact: "Improves Tax Compliance, tightens informal transactions.",
                     actionText: "Optimize Auditing"
                   }
@@ -294,7 +296,7 @@ export default function GovernmentMainPage() {
           <Card className="bg-[#0a1520] border-indigo-900/30">
             <CardHeader className="flex flex-row items-center justify-between pb-2">
               <div>
-                <CardTitle className="text-white">National Activity Heatmap</CardTitle>
+                <CardTitle className="text-white">Sovereign Activity Heatmap</CardTitle>
                 <CardDescription className="text-slate-400">
                   Real-time transaction mapping based on digital public infrastructure (DPI)
                 </CardDescription>
@@ -329,7 +331,7 @@ export default function GovernmentMainPage() {
                 icon: Landmark, 
                 color: "text-emerald-400", 
                 bg: "bg-emerald-400/10", 
-                text: "Direct Benefit Transfer (DBT) target accuracy achieved 99.1% in experimental blocks via Aadhaar profile matching." 
+                text: `Direct Subsidy target accuracy achieved 99.1% in experimental blocks via ${country.digital_identity} profile matching.` 
               },
               { 
                 icon: AlertCircle, 
@@ -337,7 +339,7 @@ export default function GovernmentMainPage() {
                 bg: isDefaultSpike ? "bg-rose-400/10" : "bg-amber-400/10", 
                 text: isDefaultSpike 
                   ? "Alert: Secondary supplier default propagation threatens localized employment rates in electronics hubs." 
-                  : "Warning: High correlation detected between regional GST revenue drops in Maharashtra and automotive parts manufacturing defaults." 
+                  : `Warning: High correlation detected between regional ${country.tax_system} revenue drops and manufacturing defaults.` 
               }
             ]}
           />

@@ -7,9 +7,11 @@ import { V2InsightsFeed } from "@/components/shared/v2/V2InsightsFeed";
 import { useScenario } from "@/components/ScenarioContext";
 import { InstitutionalReadinessBanner } from "@/components/shared/v2/InstitutionalReadinessBanner";
 import { ConnectivityIndicator } from "@/components/shared/v2/ConnectivityIndicator";
+import { useCountry } from "@/components/CountryContext";
 
 export default function BusinessMainPage() {
   const { scenario } = useScenario();
+  const { country } = useCountry();
   
   const isDefaultSpike = scenario.activeEvent === "MSME_DEFAULT_SPIKE";
   const isLiquidityInjection = scenario.activeEvent === "LIQUIDITY_INJECTION";
@@ -34,16 +36,16 @@ export default function BusinessMainPage() {
       <InstitutionalReadinessBanner
         portalName="Business Portal"
         purpose="Can my business survive, grow sustainably, and qualify for credit?"
-        dataSources={["GSTN e-Invoices", "TReDS Platform", "Account Aggregator", "EPFO Filings"]}
+        dataSources={[`${country.tax_system} e-Invoices`, "Supply Chain Finance Platform", country.open_finance_framework, "Corporate Payroll Filings"]}
         intelligenceGenerated={["Liquidity Runway", "Vendor Trust Score", "Invoice Quality Ratings"]}
         decisionEnabled="Business owner checks credit readiness, discounts invoices, and diversifies vendor base"
         legacyProcess="Business relies on lagging audit reports, manual working capital worksheets, and slow offline loan applications requiring physical collateral."
-        ftidProcess="Business monitors real-time cash runway, tracks supply chain trust scores, and automatically discounts verified invoices on TReDS."
+        ftidProcess={`Business monitors real-time cash runway, tracks supply chain trust scores, and automatically discounts verified invoices.`}
       />
 
       {/* Connectivity Indicator */}
       <ConnectivityIndicator
-        upstream={["Citizen Consent Node", "GSTN Transactions"]}
+        upstream={["Citizen Consent Node", `${country.tax_system} Transactions`]}
         downstream={["Bank Underwriting Hub", "Auditor Verification Ledger"]}
       />
 
@@ -71,7 +73,7 @@ export default function BusinessMainPage() {
           trendValue={liquidity > liquidityBase ? 1.7 : 0.5}
           progress={liquidity * 10}
           explanation="Estimated months of operational runway based on cash position and burn rate." 
-          dataSources={["Account Aggregator (Bank)", "GSTN (Receivables)"]}
+          dataSources={[`${country.open_finance_framework} (Bank)`, `${country.tax_system} (Receivables)`]}
           contributors={[
             { label: "High Cash Reserves", type: "positive" },
             { label: "Delayed Outbound Payments", type: "negative" }
@@ -85,12 +87,12 @@ export default function BusinessMainPage() {
           trendValue={compliance >= complianceBase ? 3.1 : 1.2}
           progress={compliance}
           explanation="Real-time adherence to statutory obligations, tax remittances, and corporate governance." 
-          dataSources={["GSTN", "MCA Filings", "EPFO"]}
+          dataSources={[country.tax_system, "Corporate Registry", "Payroll Systems"]}
           contributors={[
-            { label: "On-time GSTR-3B filings", type: "positive" },
-            { label: "EPF remittance latency", type: compliance < 95 ? "negative" : "positive" }
+            { label: `On-time ${country.tax_system} filings`, type: "positive" },
+            { label: "Payroll remittance latency", type: compliance < 95 ? "negative" : "positive" }
           ]}
-          action={compliance < 95 ? "Clear pending EPF dues to restore score." : "Maintain current compliance."}
+          action={compliance < 95 ? "Clear pending payroll dues to restore score." : "Maintain current compliance."}
         />
         <V2MetricWidget 
           title="Vendor Trust Score" 
@@ -99,7 +101,7 @@ export default function BusinessMainPage() {
           trendValue={vendorTrust >= vendorTrustBase ? 12.4 : 5.2}
           progress={vendorTrust / 10}
           explanation="Reliability of your supply chain partners based on the national ledger." 
-          dataSources={["TReDS", "GSTN", "Bank Statements"]}
+          dataSources={["Supply Chain Finance", country.tax_system, "Bank Statements"]}
           contributors={[
             { label: "Reliable Tier-1 Suppliers", type: "positive" },
             { label: "Tier-2 defaults spiking", type: vendorTrust < 800 ? "negative" : "positive" }
@@ -113,12 +115,12 @@ export default function BusinessMainPage() {
           trendValue={isDefaultSpike ? 15.0 : 4.1}
           progress={isDefaultSpike ? 60 : 95}
           explanation="Predictive likelihood of raised invoices settling on time." 
-          dataSources={["E-Invoicing Portal", "Buyer Credit Scores"]}
+          dataSources={[`${country.tax_system} E-Invoicing Portal`, "Buyer Credit Scores"]}
           contributors={[
             { label: "Large corporate buyers", type: "positive" },
             { label: "SME buyer sector stress", type: isDefaultSpike ? "negative" : "positive" }
           ]}
-          action="Discount A+ invoices at 1% rate on TReDS."
+          action="Discount A+ invoices at 1% rate."
         />
         <V2MetricWidget 
           title="Credit Readiness" 
@@ -127,7 +129,7 @@ export default function BusinessMainPage() {
           trendValue={creditReadiness >= creditReadinessBase ? 24.3 : 18.1}
           progress={creditReadiness}
           explanation="Institutional likelihood of immediate loan approval." 
-          dataSources={["Credit Bureau", "AA Cashflow", "GSTN Turnover"]}
+          dataSources={["Credit Bureau", `${country.open_finance_framework} Cashflow`, `${country.tax_system} Turnover`]}
           contributors={[
             { label: "Consistent YoY Growth", type: "positive" },
             { label: "Low DPD (Days Past Due)", type: "positive" }
@@ -172,8 +174,8 @@ export default function BusinessMainPage() {
             title="Operational Decisions" 
             items={[
               { icon: TrendingUp, color: "text-emerald-400", bg: "bg-emerald-400/10", text: "Your Vendor Trust Score improved. You can negotiate 5 days longer payable cycles with suppliers." },
-              { icon: AlertCircle, color: "text-amber-400", bg: "bg-amber-400/10", text: "Pending GST mismatch detected with Vendor 'SuperTech Logistics'. Reconcile to prevent compliance score penalty." },
-              { icon: Building2, color: "text-cyan-400", bg: "bg-cyan-400/10", text: "Based on A+ Invoice Quality, auto-discounting is enabled on the TReDS platform to free up ₹12.5L." }
+              { icon: AlertCircle, color: "text-amber-400", bg: "bg-amber-400/10", text: `Pending ${country.tax_system} mismatch detected with Vendor 'SuperTech Logistics'. Reconcile to prevent compliance score penalty.` },
+              { icon: Building2, color: "text-cyan-400", bg: "bg-cyan-400/10", text: `Based on A+ Invoice Quality, auto-discounting is enabled to free up ${new Intl.NumberFormat('en-US', { style: 'currency', currency: country.currency }).format(125000)}.` }
             ]}
           />
         </div>

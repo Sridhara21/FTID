@@ -1,11 +1,16 @@
 "use client";
 import React, { useState } from "react";
-import { useDemoMode, DEMO_STEPS } from "./DemoModeProvider";
+import { useDemoMode, getDemoSteps } from "./DemoModeProvider";
+import { useCountry } from "@/components/CountryContext";
 import { ChevronRight, ChevronLeft, Lightbulb, Play, BookOpen, AlertCircle } from "lucide-react";
 
 export function DemoJourneyDock() {
-  const { activeStep, currentStepInfo, goToNextStep, goToPrevStep, skipToStep } = useDemoMode();
+  const { activeStep, currentStepInfo, goToNextStep, goToPrevStep, skipToStep, isDemoActive, setIsDemoActive } = useDemoMode();
+  const { country } = useCountry();
+  const DEMO_STEPS = country ? getDemoSteps(country) : [];
   const [showDetails, setShowDetails] = useState(false);
+
+  if (!isDemoActive) return null;
 
   return (
     <div className="fixed bottom-0 left-0 w-full z-[100] bg-[#020509]/95 backdrop-blur-md border-t border-cyan-900/50 p-4 font-sans text-slate-200">
@@ -22,7 +27,7 @@ export function DemoJourneyDock() {
 
           {/* Stepper Dots */}
           <div className="flex items-center gap-2">
-            {DEMO_STEPS.map((s) => (
+            {DEMO_STEPS?.map((s) => (
               <button
                 key={s.step}
                 onClick={() => skipToStep(s.step)}
@@ -98,13 +103,13 @@ export function DemoJourneyDock() {
               <span className="text-[10px] uppercase font-bold text-cyan-400 tracking-wider flex items-center gap-1">
                 <Lightbulb className="w-3.5 h-3.5" /> Key Talking Points
               </span>
-              <ul className="space-y-1.5 text-slate-300">
-                {currentStepInfo.talkingPoints.map((tp, idx) => (
+              <ul className="space-y-2">
+                {currentStepInfo?.talkingPoints?.map((tp, idx) => (
                   <li key={idx} className="flex items-start gap-2">
                     <span className="text-cyan-400 mt-0.5">•</span>
                     <span>{tp}</span>
                   </li>
-                ))}
+                )) ?? []}
               </ul>
             </div>
             

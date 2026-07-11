@@ -122,6 +122,22 @@ const PORTALS = {
       { href: "/government/tax", icon: Database, label: "Tax Intelligence" }
     ]
   },
+  executive: {
+    title: "FTID",
+    subtitle: "National Command",
+    headerIcon: ShieldCheck,
+    headerColor: "text-emerald-400",
+    headerBg: "bg-emerald-900/30",
+    headerBorder: "border-emerald-500/20",
+    sectionTitle: "Executive Portal",
+    menuColor: "text-emerald-400",
+    menuActiveBg: "bg-emerald-900/30",
+    menuActiveBorder: "border-emerald-500",
+    navItems: [
+      { href: "/executive", icon: LayoutGrid, label: "Command Center" },
+      { href: "/executive/ai-config", icon: Server, label: "National AI Control" }
+    ]
+  },
   regulator: {
     title: "FTID",
     subtitle: "RBI Core Command",

@@ -7,9 +7,11 @@ import { V2InsightsFeed } from "@/components/shared/v2/V2InsightsFeed";
 import { useScenario } from "@/components/ScenarioContext";
 import { InstitutionalReadinessBanner } from "@/components/shared/v2/InstitutionalReadinessBanner";
 import { ConnectivityIndicator } from "@/components/shared/v2/ConnectivityIndicator";
+import { useCountry } from "@/components/CountryContext";
 
 export default function CitizenMainPage() {
   const { scenario } = useScenario();
+  const { country } = useCountry();
   
   // Scenarios affect scores
   const isEconomicSlowdown = scenario.activeEvent === "ECONOMIC_SLOWDOWN";
@@ -34,17 +36,17 @@ export default function CitizenMainPage() {
       {/* Institutional Readiness Header */}
       <InstitutionalReadinessBanner
         portalName="Citizen Portal"
-        purpose="Am I financially healthy and are my digital credentials secure?"
-        dataSources={["Account Aggregator", "UPI Registry", "Credit Bureau", "UIDAI Aadhaar logs"]}
+        purpose={`Am I financially healthy and are my digital credentials secure?`}
+        dataSources={[country.open_finance_framework, `${country.payment_networks.primary} Registry`, "Credit Bureau", `${country.digital_identity} logs`]}
         intelligenceGenerated={["Economic Participation Index", "Scam Exposure Risk", "Savings Resilience Index"]}
-        decisionEnabled="Citizen authorizes credit checks, reviews subscription mandates, and secures Aadhaar logs"
-        legacyProcess="Citizen manually gathers physical bank statements, submits paper copies to lenders, and remains unaware of identity usage or subscription leaks."
-        ftidProcess="Citizen manages real-time cryptographic consent requests, instantly proves cash flow health via Account Aggregator, and tracks digital footprint exposure."
+        decisionEnabled={`Citizen authorizes credit checks, reviews subscription mandates, and secures ${country.digital_identity} logs`}
+        legacyProcess={`Citizen manually gathers physical bank statements, submits paper copies to lenders, and remains unaware of identity usage or subscription leaks.`}
+        ftidProcess={`Citizen manages real-time cryptographic consent requests, instantly proves cash flow health via ${country.open_finance_framework}, and tracks digital footprint exposure.`}
       />
 
       {/* Connectivity Indicator */}
       <ConnectivityIndicator
-        upstream={["User Consent Registry", "UPI Payments Switch"]}
+        upstream={["User Consent Registry", `${country.payment_networks.primary} Payments Switch`]}
         downstream={["Business Portal (Vendor Trust)", "Bank Underwriting Node"]}
       />
 
@@ -72,9 +74,9 @@ export default function CitizenMainPage() {
           trendValue={epi > epiBase ? 8.2 : 1.1}
           progress={epi}
           explanation="Measures active involvement in formal digital economy services." 
-          dataSources={["Account Aggregator", "UPI Activity", "Tax Filings"]}
+          dataSources={[country.open_finance_framework, `${country.payment_networks.primary} Activity`, "Tax Filings"]}
           contributors={[
-            { label: "Consistent UPI Savings", type: "positive" },
+            { label: `Consistent ${country.payment_networks.primary} Savings`, type: "positive" },
             { label: "Active Tax Filing", type: "positive" },
             { label: "Limited Credit History", type: "negative" }
           ]}
@@ -96,17 +98,17 @@ export default function CitizenMainPage() {
         />
         <V2MetricWidget 
           title="Savings Resilience" 
-          value={`₹${liquidAssets.toLocaleString()}`} 
+          value={new Intl.NumberFormat('en-US', { style: 'currency', currency: country.currency }).format(liquidAssets)} 
           trend={liquidAssets > liquidAssetsBase ? "up" : "down"} 
           trendValue={liquidAssets > liquidAssetsBase ? 18.4 : 1.2}
           progress={liquidAssets / 1000}
           explanation="Ability to withstand financial shocks based on liquid reserves." 
-          dataSources={["Bank Statement (AA)", "Mutual Fund Central"]}
+          dataSources={[`Bank Statement (${country.open_finance_framework})`, "Investment Holdings"]}
           contributors={[
             { label: "3 Months Emergency Fund", type: "positive" },
             { label: "Recent Medical Outflow", type: "negative" }
           ]}
-          action="Shift ₹5,000 from Savings to Liquid Mutual Fund."
+          action={`Shift ${new Intl.NumberFormat('en-US', { style: 'currency', currency: country.currency }).format(5000)} from Savings to Liquid Investments.`}
         />
         <V2MetricWidget 
           title="Scam Exposure Risk" 
@@ -115,9 +117,9 @@ export default function CitizenMainPage() {
           trendValue={scamRisk > scamRiskBase ? 53.3 : 12.0}
           progress={scamRisk * 10}
           explanation="Risk of current digital footprint encountering malicious network nodes." 
-          dataSources={["Telecom Data", "UPI Fraud Registry"]}
+          dataSources={["Telecom Data", `${country.payment_networks.primary} Fraud Registry`]}
           contributors={[
-            { label: "No risky UPI mandates", type: "positive" },
+            { label: `No risky ${country.payment_networks.primary} mandates`, type: "positive" },
             { label: "Regional Phishing Spike", type: scamRisk > 5 ? "negative" : "positive" }
           ]}
           action={scamRisk > 5 ? "Review recent SMS links and freeze unknown UPI IDs." : "Low risk detected."}
@@ -142,21 +144,21 @@ export default function CitizenMainPage() {
               <div className="grid grid-cols-1 md:grid-cols-2 gap-4 text-xs font-mono">
                 <div className="p-3 bg-[#050c14] border border-slate-800 rounded">
                   <span className="text-emerald-400 font-bold block mb-1">Recommended Budget</span>
-                  <span className="text-slate-300">Allocate 50% basic needs, 30% savings resilience, 20% liquid investments. Keep UPI spending velocity uniform to stabilize trust scoring.</span>
+                  <span className="text-slate-300">Allocate 50% basic needs, 30% savings resilience, 20% liquid investments. Keep {country.payment_networks.primary} spending velocity uniform to stabilize trust scoring.</span>
                 </div>
                 <div className="p-3 bg-[#050c14] border border-slate-800 rounded">
                   <span className="text-emerald-400 font-bold block mb-1">Debt Reduction Plan</span>
-                  <span className="text-slate-300">Consolidate high-interest micro-finance loans into a single prime bank facility (backed by your Account Aggregator flow history).</span>
+                  <span className="text-slate-300">Consolidate high-interest micro-finance loans into a single prime bank facility (backed by your {country.open_finance_framework} flow history).</span>
                 </div>
                 <div className="p-3 bg-[#050c14] border border-slate-800 rounded">
                   <span className="text-emerald-400 font-bold block mb-1">Savings Forecast</span>
-                  <span className="text-slate-300">Projected savings expected to grow to ₹78,000 in Q3, increasing shock resilience to a safe 5.2 months.</span>
+                  <span className="text-slate-300">Projected savings expected to grow to {new Intl.NumberFormat('en-US', { style: 'currency', currency: country.currency }).format(78000)} in Q3, increasing shock resilience to a safe 5.2 months.</span>
                 </div>
                 <div className="p-3 bg-[#050c14] border border-slate-800 rounded">
                   <span className="text-emerald-400 font-bold block mb-1">Subsidy Eligibility</span>
                   <span className="text-slate-300">
                     {isSubsidyExpansion 
-                      ? "Eligible: State Interest Subvention Scheme (3% relief). Application pre-filled via Aadhaar profile." 
+                      ? `Eligible: State Interest Subvention Scheme (3% relief). Application pre-filled via ${country.digital_identity} profile.` 
                       : "Standard criteria met. No new special interest subsidies active."}
                   </span>
                 </div>
@@ -168,7 +170,7 @@ export default function CitizenMainPage() {
           <Card className="bg-[#0a1520] border-emerald-900/30">
             <CardHeader className="flex flex-row items-center justify-between pb-2">
               <div>
-                <CardTitle className="text-white">Account Aggregator Consent Hub</CardTitle>
+                <CardTitle className="text-white">{country.open_finance_framework} Consent Hub</CardTitle>
                 <CardDescription className="text-slate-400">Manage who has access to your financial state</CardDescription>
               </div>
               <div className="px-2 py-1 bg-amber-500/10 border border-amber-500/30 text-amber-400 text-xs font-bold rounded flex items-center gap-2">
@@ -184,9 +186,9 @@ export default function CitizenMainPage() {
                     <div>
                       <h4 className="font-bold text-white text-lg flex items-center gap-2">
                         <Building2 className="w-5 h-5 text-slate-400" />
-                        HDFC Bank Ltd.
+                        National Prime Bank
                       </h4>
-                      <p className="text-sm text-slate-400 mt-1">Requesting access to your <strong className="text-white">GST Returns</strong> and <strong className="text-white">Bank Statements</strong> for <strong className="text-white">MSME Working Capital Loan Assessment</strong>.</p>
+                      <p className="text-sm text-slate-400 mt-1">Requesting access to your <strong className="text-white">{country.tax_system} Returns</strong> and <strong className="text-white">Bank Statements</strong> for <strong className="text-white">Working Capital Assessment</strong>.</p>
                     </div>
                     <div className="text-right">
                       <div className="text-xs text-slate-500 uppercase font-bold tracking-wider mb-1">Duration</div>
@@ -210,8 +212,8 @@ export default function CitizenMainPage() {
           <V2InsightsFeed 
             title="Financial Health & Actions" 
             items={[
-              { icon: ShieldCheck, color: "text-emerald-400", bg: "bg-emerald-400/10", text: "Your Aadhaar footprint is secure. No unauthorized authentication requests detected in the last 30 days." },
-              { icon: AlertCircle, color: "text-amber-400", bg: "bg-amber-400/10", text: "Subscription alert: 3 new recurring UPI mandates detected. Review your active auto-pays." },
+              { icon: ShieldCheck, color: "text-emerald-400", bg: "bg-emerald-400/10", text: `Your ${country.digital_identity} footprint is secure. No unauthorized authentication requests detected in the last 30 days.` },
+              { icon: AlertCircle, color: "text-amber-400", bg: "bg-amber-400/10", text: `Subscription alert: 3 new recurring ${country.payment_networks.primary} mandates detected. Review your active auto-pays.` },
               { icon: TrendingUp, color: "text-cyan-400", bg: "bg-cyan-400/10", text: "Based on your steady savings rate, you are pre-approved for a sovereign-backed micro-investment plan." }
             ]}
           />

@@ -6,9 +6,11 @@ import { V2InsightsFeed } from "@/components/shared/v2/V2InsightsFeed";
 import { useScenario } from "@/components/ScenarioContext";
 import { InstitutionalReadinessBanner } from "@/components/shared/v2/InstitutionalReadinessBanner";
 import { ConnectivityIndicator } from "@/components/shared/v2/ConnectivityIndicator";
+import { useCountry } from "@/components/CountryContext";
 
 export default function GatewayMainPage() {
   const { scenario } = useScenario();
+  const { country } = useCountry();
   const isImpacted = scenario.isActive && scenario.demoStep >= 4;
 
   const throughput = isImpacted ? 14200 : 8500;
@@ -23,7 +25,7 @@ export default function GatewayMainPage() {
       <InstitutionalReadinessBanner
         portalName="Payment Gateway Portal"
         purpose="Is the national financial switch clearing transactions securely and without delay?"
-        dataSources={["NPCI Central Switch", "Bank Node Terminals", "RTGS Settlement Queues"]}
+        dataSources={[`${country.payment_networks.primary} Central Switch`, "Bank Node Terminals", "RTGS Settlement Queues"]}
         intelligenceGenerated={["Settlement Health Score", "Throughput Velocity (TPS)", "Network Latency Indexes"]}
         decisionEnabled="Gateway operator reroutes traffic, flags server latency, and matches liquidity clearings"
         legacyProcess="Gateway logs clearings retrospectively; bank outages and latency spikes go undetected until transaction failure rates cascade."
@@ -60,7 +62,7 @@ export default function GatewayMainPage() {
           trendValue={isImpacted ? 14.1 : 0.5}
           progress={networkHealth}
           explanation="Real-time aggregation of successful inter-bank clearings via the central switch." 
-          dataSources={["NPCI Switch", "Core Banking L2"]}
+          dataSources={[`${country.payment_networks.primary} Switch`, "Core Banking L2"]}
           contributors={[
             { label: "Clearing matching velocity", type: "positive" },
             { label: "Bank node downtime", type: isImpacted ? "negative" : "positive" }
@@ -73,7 +75,7 @@ export default function GatewayMainPage() {
           trendValue={isImpacted ? 67.0 : 4.5}
           progress={throughput / 150}
           explanation="Live packet volume clearing through the sovereign infrastructure." 
-          dataSources={["UPI Registry", "FASTag Gateway"]}
+          dataSources={[`${country.payment_networks.primary} Registry`, `${country.payment_networks.secondary} Gateway`]}
           contributors={[
             { label: "B2B payment volume", type: "positive" },
             { label: "Consumer peer-to-peer flows", type: "positive" }
@@ -86,7 +88,7 @@ export default function GatewayMainPage() {
           trendValue={isImpacted ? 113.0 : 2.1}
           progress={(isImpacted ? 145 : 32) / 2}
           explanation="Average millisecond response time across all connected financial nodes." 
-          dataSources={["NPCI Node Monitor"]}
+          dataSources={[`${country.payment_networks.primary} Node Monitor`]}
           contributors={[
             { label: "Server queue loads", type: isImpacted ? "negative" : "positive" },
             { label: "API connection limits", type: "positive" }
@@ -132,7 +134,7 @@ export default function GatewayMainPage() {
             title="Gateway Alerts" 
             items={[
               { icon: Network, color: "text-purple-400", bg: "bg-purple-400/10", text: "API load balance is functional. 99.8% transactions settled successfully." },
-              { icon: AlertCircle, color: "text-amber-400", bg: "bg-amber-400/10", text: "Warning: High transaction packet count detected on HDFC bank nodes." }
+              { icon: AlertCircle, color: "text-amber-400", bg: "bg-amber-400/10", text: "Warning: High transaction packet count detected on prime bank nodes." }
             ]}
           />
         </div>

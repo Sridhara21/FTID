@@ -8,9 +8,11 @@ import {
 import { useScenario } from "@/components/ScenarioContext";
 import { InstitutionalReadinessBanner } from "@/components/shared/v2/InstitutionalReadinessBanner";
 import { ConnectivityIndicator } from "@/components/shared/v2/ConnectivityIndicator";
+import { useCountry } from "@/components/CountryContext";
 
 export default function DeveloperMainPage() {
   const { scenario } = useScenario();
+  const { country } = useCountry();
   const [copied, setCopied] = useState(false);
   const [activeTab, setActiveTab] = useState("api");
   
@@ -72,7 +74,7 @@ export default function DeveloperMainPage() {
               calculated_score: scenario.activeEvent === "MSME_DEFAULT_SPIKE" ? 58 : 88.4,
               max_safe_exposure: parsed.amount ? Math.floor(parsed.amount * 0.9) : 450000000,
               interest_rate_prime: scenario.activeEvent === "ECONOMIC_SLOWDOWN" ? "12.50%" : "8.75%",
-              verification_sources: ["Account Aggregator", "GSTN API", "TReDS Platform"]
+              verification_sources: [country.open_finance_framework, `${country.tax_system} API`, "Supply Chain Finance Platform"]
             }
           }, null, 2));
         } else {
@@ -363,9 +365,9 @@ export default function DeveloperMainPage() {
               <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                 <Card className="bg-[#05101a] border-slate-800 hover:border-cyan-500/50 transition-all cursor-pointer group">
                   <CardContent className="p-6 text-xs">
-                    <h3 className="text-sm font-bold text-white mb-2">Setu AA Sandbox</h3>
+                    <h3 className="text-sm font-bold text-white mb-2">Open Finance Sandbox</h3>
                     <p className="text-slate-400 leading-normal mb-4">
-                      Mock bank statements flow via the Account Aggregator network.
+                      Mock bank statements flow via the {country.open_finance_framework} network.
                     </p>
                     <button className="w-full py-1.5 bg-slate-800 text-white rounded text-xs font-bold transition-colors">
                       Configure
@@ -374,9 +376,9 @@ export default function DeveloperMainPage() {
                 </Card>
                 <Card className="bg-[#05101a] border-slate-800 hover:border-cyan-500/50 transition-all cursor-pointer group">
                   <CardContent className="p-6 text-xs">
-                    <h3 className="text-sm font-bold text-white mb-2">Decentro KYC Sandbox</h3>
+                    <h3 className="text-sm font-bold text-white mb-2">Identity Verification Sandbox</h3>
                     <p className="text-slate-400 leading-normal mb-4">
-                      Pre-configured CKYC and virtual accounts verification endpoint.
+                      Pre-configured KYC and virtual accounts verification endpoint.
                     </p>
                     <button className="w-full py-1.5 bg-slate-800 text-white rounded text-xs font-bold transition-colors">
                       Configure

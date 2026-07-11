@@ -10,9 +10,11 @@ import { V2InsightsFeed } from "@/components/shared/v2/V2InsightsFeed";
 import { useScenario } from "@/components/ScenarioContext";
 import { InstitutionalReadinessBanner } from "@/components/shared/v2/InstitutionalReadinessBanner";
 import { ConnectivityIndicator } from "@/components/shared/v2/ConnectivityIndicator";
+import { useCountry } from "@/components/CountryContext";
 
 export default function BankMainPage() {
   const { scenario } = useScenario();
+  const { country } = useCountry();
   const [selectedApplicant, setSelectedApplicant] = useState("Vardhaman Electronics");
 
   const isDefaultSpike = scenario.activeEvent === "MSME_DEFAULT_SPIKE";
@@ -60,18 +62,18 @@ export default function BankMainPage() {
       interestRate: isEconomicSlowdown ? "12.5% (Risk Premium)" : "8.75% (Prime)",
       rationale: isDefaultSpike ? [
         "Systemic Default Spike detected in Tier-2 manufacturing sectors.",
-        "GST filing latency has deteriorated to 18 days (past due threshold).",
+        `${country.tax_system} filing latency has deteriorated to 18 days (past due threshold).`,
         "Buyer trust score dropped due to anchor buyer credit downgrade."
       ] : isEconomicSlowdown ? [
         "Cashflow volatility has increased over the last 60 days.",
         "Satisfactory debt servicing record but narrow reserve cushion.",
         "Recommend manual review with enhanced collateral terms."
       ] : [
-        "99.4% on-time GST filing streak over past 24 months.",
-        "Deterministic Account Aggregator analysis proves positive monthly cashflow surplus of 2.4x EMI.",
+        `99.4% on-time ${country.tax_system} filing streak over past 24 months.`,
+        `Deterministic ${country.open_finance_framework} analysis proves positive monthly cashflow surplus of 2.4x EMI.`,
         "Supplier and anchor buyer transaction loops are closed and verified."
       ],
-      sources: ["Account Aggregator", "GSTN API", "TReDS Platform", "Credit Bureau"]
+      sources: [country.open_finance_framework, `${country.tax_system} API`, "Supply Chain Finance", "Credit Bureau"]
     },
     "Apex Automotive Components": {
       name: "Apex Automotive Components",
@@ -85,11 +87,11 @@ export default function BankMainPage() {
       recommendedDecision: isEconomicSlowdown ? "Refer" : "Approved",
       interestRate: "8.25%",
       rationale: [
-        "Anchor supplier status for Tata Motors & Mahindra Auto.",
-        "Robust receivables invoice collateral registered on TReDS.",
+        "Anchor supplier status for major auto manufacturers.",
+        "Robust receivables invoice collateral registered on Supply Chain Finance platforms.",
         "Low systemic volatility; cash flow is secure."
       ],
-      sources: ["Account Aggregator", "TReDS Ledger", "GSTN", "MCA Filings"]
+      sources: [country.open_finance_framework, "Supply Chain Finance Ledger", country.tax_system, "Corporate Registry Filings"]
     },
     "Indus Logistics": {
       name: "Indus Logistics",
@@ -103,11 +105,11 @@ export default function BankMainPage() {
       recommendedDecision: "Approved",
       interestRate: "9.20%",
       rationale: [
-        "Recurring long-term contracts verified through GST invoices.",
-        "Average UPI Auto-pay failure rate at 0% over 18 months.",
+        `Recurring long-term contracts verified through ${country.tax_system} invoices.`,
+        `Average ${country.payment_networks.primary} Auto-pay failure rate at 0% over 18 months.`,
         "Supports ESG compliance framework (E-mobility subsidy qualified)."
       ],
-      sources: ["Account Aggregator", "UPI Autopay Registry", "GSTN"]
+      sources: [country.open_finance_framework, `${country.payment_networks.primary} Autopay Registry`, country.tax_system]
     }
   };
 
@@ -120,11 +122,11 @@ export default function BankMainPage() {
       <InstitutionalReadinessBanner
         portalName="Bank Portal"
         purpose="Can this MSME be safely financed based on verifiable digital public infrastructure signals?"
-        dataSources={["GST Returns", "AA Consent Flow", "TReDS Receivables", "Credit Bureau Registers"]}
+        dataSources={[`${country.tax_system} Returns`, `${country.open_finance_framework} Consent Flow`, "Supply Chain Receivables", "Credit Bureau Registers"]}
         intelligenceGenerated={["Underwriting Risk Grades", "Approval Probabilities", "Recommended Credit Limits"]}
         decisionEnabled="Bank credit officer approves working capital, sets risk premium rates, or refers for manual review"
-        legacyProcess="Bank collects physical paper statements, spends 5 to 14 days processing files manually, and relies on static CIBIL reports that fail to detect active business distress."
-        ftidProcess="Bank executes instant underwriting APIs matching real-time GST streaks, UPI velocity, and closed supplier loops in less than 8 milliseconds."
+        legacyProcess="Bank collects physical paper statements, spends 5 to 14 days processing files manually, and relies on static legacy bureau reports that fail to detect active business distress."
+        ftidProcess={`Bank executes instant underwriting APIs matching real-time ${country.tax_system} streaks, ${country.payment_networks.primary} velocity, and closed supplier loops in less than 8 milliseconds.`}
       />
 
       {/* Connectivity Indicator */}
@@ -154,7 +156,7 @@ export default function BankMainPage() {
           trendValue={Math.abs(riskIndex - riskIndexBase)}
           progress={riskIndex * 2}
           explanation="Aggregated probability of default across the current outstanding loan book." 
-          dataSources={["Credit Bureau", "GSTN", "National NPA Registry"]}
+          dataSources={["Credit Bureau", country.tax_system, "National NPA Registry"]}
           contributors={[
             { label: "MSME delinquencies", type: isDefaultSpike ? "negative" : "positive" },
             { label: "Retail loan performance", type: "positive" }
@@ -167,10 +169,10 @@ export default function BankMainPage() {
           trendValue={Math.abs(perfForecast - perfForecastBase)}
           progress={perfForecast}
           explanation="Projected on-time repayment rate for the next quarter based on macro indicators." 
-          dataSources={["Account Aggregator", "Macro Economic Models"]}
+          dataSources={[country.open_finance_framework, "Macro Economic Models"]}
           contributors={[
             { label: "Inflation-adjusted cashflows", type: isEconomicSlowdown ? "negative" : "positive" },
-            { label: "UPI auto-pay health", type: "positive" }
+            { label: `${country.payment_networks.primary} auto-pay health`, type: "positive" }
           ]}
         />
         <V2MetricWidget 
@@ -180,7 +182,7 @@ export default function BankMainPage() {
           trendValue={Math.abs(exposure - exposureBase) / 10}
           progress={exposure / 10}
           explanation="Total systemic exposure to high-risk sectors normalized against tier-1 capital." 
-          dataSources={["RBI Database", "Internal Core Banking"]}
+          dataSources={[`${country.central_bank} Database`, "Internal Core Banking"]}
           contributors={[
             { label: "MSME default correlation", type: isDefaultSpike ? "negative" : "positive" },
             { label: "Retail exposure buffer", type: "positive" }
@@ -255,7 +257,7 @@ export default function BankMainPage() {
               {/* Score Explainer Radar Mockup */}
               <div className="grid grid-cols-1 md:grid-cols-4 gap-3">
                 {[
-                  { label: "GST Compliance", score: applicant.gstScore, color: "text-emerald-400", bg: "bg-emerald-500/10", border: "border-emerald-500/30" },
+                  { label: `${country.tax_system} Compliance`, score: applicant.gstScore, color: "text-emerald-400", bg: "bg-emerald-500/10", border: "border-emerald-500/30" },
                   { label: "Cashflow Stability", score: applicant.cashflowStability, color: "text-blue-400", bg: "bg-blue-500/10", border: "border-blue-500/30" },
                   { label: "Buyer Trust Loop", score: applicant.buyerTrustScore, color: "text-amber-400", bg: "bg-amber-500/10", border: "border-amber-500/30" },
                   { label: "Macro Resilience", score: 100 - applicant.macroExposureRisk, color: "text-cyan-400", bg: "bg-cyan-500/10", border: "border-cyan-500/30" }
@@ -331,13 +333,13 @@ export default function BankMainPage() {
                 bg: isDefaultSpike ? "bg-rose-400/10" : "bg-amber-400/10", 
                 text: isDefaultSpike 
                   ? "CRITICAL: Systemic default cascade triggers automated risk filters for all Tier-2/Tier-3 MSME suppliers." 
-                  : "Warning: High correlation detected between regional GST revenue drops in Maharashtra and automotive parts manufacturing defaults." 
+                  : `Warning: High correlation detected between regional ${country.tax_system} revenue drops and automotive parts manufacturing defaults.` 
               },
               { 
                 icon: ShieldCheck, 
                 color: "text-emerald-400", 
                 bg: "bg-emerald-400/10", 
-                text: "Verification complete. 12,400 trade invoices cryptographically validated via ONDC and TReDS ledger in last 24 hours." 
+                text: `Verification complete. 12,400 trade invoices cryptographically validated via e-commerce and supply chain ledger in last 24 hours.` 
               }
             ]}
           />
